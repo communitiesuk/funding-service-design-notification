@@ -2,9 +2,6 @@
 import os
 
 
-# Application Config
-
-
 SESSION_COOKIE_NAME = os.environ.get("SESSION_COOKIE_NAME") or "session_cookie"
 STATIC_FOLDER = "static"
 TEMPLATES_FOLDER = "templates"
