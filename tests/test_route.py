@@ -37,7 +37,8 @@ def test_notification_failure_content(flask_test_client):
     """
     GIVEN: function sends template to send_notification route/endpoint.
     WHEN: template/message is delivered to the endpoint/recipient.
-    THEN: function checks if there was any error message while delivering template.
+    THEN: function checks if there was any error message while delivering
+    template/message.
     """
     
     response = flask_test_client.get(
