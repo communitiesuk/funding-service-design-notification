@@ -8,7 +8,7 @@ from flask import url_for
 class TestNotificationEndpoint:
     def test_notification_route_response(self):
         """
-        GIVEN: function runs to connect with the given route/endpoint.
+        GIVEN: function runs to connect with send_notification route/endpoint.
         WHEN: function successfully connects with the endpoint.
         THEN: function check the response 200(successful) in return.
        """
@@ -20,7 +20,7 @@ class TestNotificationEndpoint:
 @pytest.mark.usefixtures("live_server")
 def test_notification_successful_content(flask_test_client):
     """
-    GIVEN: function sends a registered template to the endpoint.
+    GIVEN: function sends template to send_notification route/endpoint.
     WHEN: template/message is successfully delivered to the endpoint/recipient.
     THEN: function checks the content of the message delivered as expected.
     """
@@ -35,7 +35,7 @@ def test_notification_successful_content(flask_test_client):
 @pytest.mark.usefixtures("live_server")
 def test_notification_failure_content(flask_test_client):
     """
-    GIVEN: function sends a registered template to the endpoint.
+    GIVEN: function sends template to send_notification route/endpoint.
     WHEN: template/message is delivered to the endpoint/recipient.
     THEN: function checks if there was any error message while delivering template.
     """
