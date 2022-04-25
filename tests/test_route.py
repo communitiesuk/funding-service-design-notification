@@ -1,54 +1,47 @@
 from urllib.request import urlopen
 
 import pytest
-from app.create_app import create_app
 from flask import url_for
 
 
-@pytest.fixture(scope="session")
-def app():
-    app = create_app()
-    return app
-
-
 @pytest.mark.usefixtures("live_server")
-class TestSearchPage:
-    """
-    GIVEN class checks if route for send_notification
-    is up & running
-    """
-
+class TestNotificationEndpoint:
     def test_notification_route_response(self):
+        """
+        GIVEN: function runs to connect with the given route/endpoint.
+        WHEN: function successfully connects with the endpoint.
+        THEN: function check the response 200(successful) in return.
+       """
         url = url_for("notification_bp.send_notification", _external=True)
         res = urlopen(url)
         assert res.code == 200
 
 
-@pytest.fixture()
-def flask_test_client():
-    """
-    Creates the test client we will be using to test the responses
-    from our app, this is a test fixture.
-    :return: A flask test client.
-    """
-    with create_app().test_client() as test_client:
-        yield test_client
-
-
 @pytest.mark.usefixtures("live_server")
 def test_notification_successful_content(flask_test_client):
-    """GIVEN test check the successful response of content"""
+    """
+    GIVEN: function sends a registered template to the endpoint.
+    WHEN: template/message is successfully delivered to the endpoint/recipient.
+    THEN: function checks the content of the message delivered as expected.
+    """
+
     response = flask_test_client.get(
         url_for("notification_bp.send_notification"),
         follow_redirects=True,
     )
-    assert b"content" in response.data
+    assert b"Service-is-being-tested" in response.data
 
-
+ 
 @pytest.mark.usefixtures("live_server")
 def test_notification_failure_content(flask_test_client):
+    """
+    GIVEN: function sends a registered template to the endpoint.
+    WHEN: template/message is delivered to the endpoint/recipient.
+    THEN: function checks if there was any error message while delivering template.
+    """
+    
     response = flask_test_client.get(
         url_for("notification_bp.send_notification"),
         follow_redirects=True,
     )
-    assert b"failure" not in response.data
+    assert b"error" not in response.data

@@ -17,7 +17,7 @@ notifications_client = NotificationsAPIClient(API_KEY)
 
 @notification_bp.route("/", methods=["GET", "POST"])
 def send_notification():
-    email_address = os.environ.get("STEVE_EMAIL_ADDRESS")
+    email_address = "demoatdemo-check-response@demoatdemo.dom"
     template_id = TEMPLATE_ID
     response = notifications_client.send_email_notification(
         email_address=email_address,
