@@ -37,6 +37,8 @@ def flask_test_client():
 
 @pytest.mark.usefixtures("live_server")
 def test_notification_successful_content(flask_test_client):
+    """ GIVEN test check the successful response
+    """
     response = flask_test_client.get(
         url_for("notification_bp.send_notification"),
         follow_redirects=True,
