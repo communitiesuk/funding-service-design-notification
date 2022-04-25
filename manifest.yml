@@ -8,6 +8,8 @@ applications:
   env:
     FUND_STORE_API_HOST: https://funding-service-design-fund-store-dev.london.cloudapps.digital
     ROUND_STORE_API_HOST: https://funding-service-design-round-store-dev.london.cloudapps.digital
+    GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
+    GOV_NOTIFY_TEMPLATE_KEY: ((GOV_NOTIFY_TEMPLATE_KEY))
 
 - name: funding-service-design-notification-uat
   memory: 64M
