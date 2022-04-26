@@ -10,6 +10,8 @@ applications:
     ROUND_STORE_API_HOST: https://funding-service-design-round-store-dev.london.cloudapps.digital
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
     GOV_NOTIFY_TEMPLATE_KEY: ((GOV_NOTIFY_TEMPLATE_KEY))
+    GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS: ((GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS))
+
 
 - name: funding-service-design-notification-uat
   memory: 64M
@@ -25,3 +27,4 @@ applications:
   env:
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
     GOV_NOTIFY_TEMPLATE_KEY: ((GOV_NOTIFY_TEMPLATE_KEY))
+    GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS: ((GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS))
