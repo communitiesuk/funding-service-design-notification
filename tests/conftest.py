@@ -13,7 +13,6 @@ def flask_test_client():
         yield test_client
 
 
-
 @pytest.fixture(scope="session")
 def app():
     app = create_app()
