@@ -18,4 +18,4 @@ EMAIL_ADDRESS = os.environ.get(
     "GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS"
 ) or os.environ.get("TEST_EMAIL_ADDRESS")
 
-print(EMAIL_ADDRESS)
+
