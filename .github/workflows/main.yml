@@ -31,6 +31,7 @@ jobs:
         env:
           GOV_NOTIFY_TEMPLATE_KEY: ${{secrets.GOV_NOTIFY_TEMPLATE_KEY}}
           GOV_NOTIFY_API_KEY: ${{secrets.GOV_NOTIFY_API_KEY}}
+          GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS: ${{secrets.GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS}}
       # - name: Install Chromium
       #   uses: browser-actions/setup-chrome@latest
       # - name: setup Chromedriver
