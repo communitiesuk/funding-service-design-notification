@@ -1,20 +1,20 @@
-from urllib.request import urlopen
-
 import pytest
 from flask import url_for
 
 
 @pytest.mark.usefixtures("live_server")
-class TestNotificationEndpoint:
-    def test_notification_route_response(self):
-        """
-        GIVEN: our service running on flask test client.
-        WHEN: route successfully connects with the send_notification endpoint.
-        THEN: we expect a successful response 200.
-        """
-        url = url_for("notification_bp.send_notification", _external=True)
-        res = urlopen(url)
-        assert res.code == 200
+def test_notification_route_response(flask_test_client):
+    """
+    GIVEN: our service running on flask test client.
+    WHEN: route successfully connects with the send_notification endpoint.
+    THEN: we expect a successful response 200.
+    """
+
+    response = flask_test_client.get(
+        url_for("notification_bp.send_notification"),
+        follow_redirects=True,
+    )
+    assert response.status_code == 200
 
 
 @pytest.mark.usefixtures("live_server")
@@ -31,7 +31,7 @@ def test_notification_successful_content(flask_test_client):
         url_for("notification_bp.send_notification"),
         follow_redirects=True,
     )
-    assert b"Funding service link" in response.data
+    assert b"Funding service access link" in response.data
 
 
 @pytest.mark.usefixtures("live_server")
