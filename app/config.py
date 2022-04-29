@@ -11,6 +11,8 @@ FLASK_ENV = os.environ.get("FLASK_ENV")
 API_KEY = os.environ.get("GOV_NOTIFY_API_KEY") or os.environ.get(
     "TEST_API_KEY"
 )
+
+# UPDATED GOV_NOTIFY_TEMPLATE_KEY WITH TEST_MAGIC_LINK_TEMPLATE_ID
 TEMPLATE_ID = os.environ.get("GOV_NOTIFY_TEMPLATE_KEY") or os.environ.get(
     "TEST_MAGIC_LINK_TEMPLATE_ID"
 )
