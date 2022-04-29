@@ -6,9 +6,9 @@ from app.notification.models.data import get_data
 @dataclass
 class Notification:
     """
-    Class processes notification data
+    Class processes notification data.
     Returns:
-        notification class object
+        notification class object.
     """
 
     template_type: str
