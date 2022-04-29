@@ -32,7 +32,6 @@ def send_notification() -> dict:
     response = notifications_client.send_email_notification(
         email_address=data.contact_info,
         template_id=TEMPLATE_ID,
-        # reference=data.contact_info,
         personalisation={
             "SUBJECT": "Funding service link",
             "MAGIC_LINK": data.content,
