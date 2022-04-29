@@ -6,7 +6,7 @@ from app.notification.models.data import get_data
 @dataclass
 class Notification:
     """
-    Class process notification data
+    Class processes notification data
     Returns:
         notification class object
     """
