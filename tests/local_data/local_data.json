@@ -1,5 +1,5 @@
  {
     "type": "TEST_MAGIC_LINK",
     "to": "test_recipient@email.com",
-    "content": "TEST-MAGIC-LINK-GOES-HERE"
+    "content": "Click on the link to access your account"
 }

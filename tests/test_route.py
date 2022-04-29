@@ -31,7 +31,7 @@ def test_notification_successful_content(flask_test_client):
         url_for("notification_bp.send_notification"),
         follow_redirects=True,
     )
-    assert b"Funding service access link" in response.data
+    assert b"Click on the link to access your account" in response.data
 
 
 @pytest.mark.usefixtures("live_server")
