@@ -23,8 +23,8 @@ def test_notification_successful_content(flask_test_client):
     GIVEN: our service running on flask test client.
     WHEN: we send template to the send_notification
     endpoint/recipient.
-    THEN: we checks the content of the message as expected
-    if message is delivered successfully.
+    THEN: we checks the subject content of the message as expected
+    to make sure message is delivered successfully.
     """
 
     response = flask_test_client.get(
