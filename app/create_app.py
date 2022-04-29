@@ -9,7 +9,7 @@ from jinja2 import PrefixLoader
 
 def create_app() -> Flask:
 
-    # -- set statis url path
+    # ---- SETUP STATIC URL PATH.
     flask_app = Flask(__name__, static_url_path="/assets")
 
     flask_app.config.from_pyfile("config.py")
@@ -26,7 +26,7 @@ def create_app() -> Flask:
     flask_app.jinja_env.trim_blocks = True
     flask_app.jinja_env.lstrip_blocks = True
 
-    # -- setup security configuration & csrf protection
+    # ---- SETUP SECURITY CONFIGURATION & CSRF PROTECTION.
     csp = {
         "default-src": "'self'",
         "script-src": [
@@ -58,7 +58,7 @@ def create_app() -> Flask:
 
     csrf.init_app(flask_app)
 
-    # -- setup global constants to be accessed from the app.
+    # ---- SETUP GLOBAL CONSTANTS (to be accessed from the app).
     @flask_app.context_processor
     def inject_global_constants():
         return dict(
@@ -71,26 +71,24 @@ def create_app() -> Flask:
             service_meta_author="DLUHC",
         )
 
-    # ----  IMPORT ALL BLUEPRINT ROUTES #
+    # ---- SETUP BLUEPRINT ROUTES.
 
-    # default error route
+    # import default error route.
     from app.default.error_routes import (
         default_bp,
         not_found,
         internal_server_error,
     )
 
-    # notification route
-    from app.notification.routes import notification_bp
-
-    # ---- REGISTER ALL BLUEPRINT ROUTES #
-
-    # default error route (blueprint from app/default/error_routes)
+    # register default error route (blueprint from app/default/error_routes).
     flask_app.register_blueprint(default_bp)
     flask_app.register_error_handler(404, not_found)
     flask_app.register_error_handler(500, internal_server_error)
 
-    # notification route (blueprint from app/notification/routes)
+    # import notification route.
+    from app.notification.routes import notification_bp
+
+    # register notification route (blueprint from app/notification/routes).
     flask_app.register_blueprint(notification_bp)
 
     return flask_app
