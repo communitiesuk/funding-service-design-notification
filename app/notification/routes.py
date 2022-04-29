@@ -19,12 +19,12 @@ notification_bp = Blueprint(
 @notification_bp.route("/", methods=["POST", "GET"])
 def send_notification() -> dict:
     """
-    route accepts post request, loads json data
-    & json data integrates with gov-uk notify service
-    to send magic link from json data to the recipient
+    route accepts post request with json data.
+    Json data integrates with gov-uk notify service
+    to send magic link(contents) from json data to recipient.
 
     Returns:
-        dict: recipient contact info, type of link & magic link
+        dict: recipient's contact info & access link
     """
     notification_data = request.get_json()
     data = Notification.process_notification_data(notification_data)
@@ -33,7 +33,7 @@ def send_notification() -> dict:
         email_address=data.contact_info,
         template_id=TEMPLATE_ID,
         personalisation={
-            "SUBJECT": "Funding service link",
+            "SUBJECT": "Funding service access link",
             "MAGIC_LINK": data.content,
         },
     )
