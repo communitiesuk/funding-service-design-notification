@@ -71,26 +71,26 @@ def create_app() -> Flask:
             service_meta_author="DLUHC",
         )
 
-    # ----  IMPORT ALL ROUTES #
+    # ----  IMPORT ALL BLUEPRINT ROUTES #
 
-    # import default error route
+    # default error route
     from app.default.error_routes import (
         default_bp,
         not_found,
         internal_server_error,
     )
 
-    # import notification route
+    # notification route
     from app.notification.routes import notification_bp
 
-    # ---- REGISTER ALL ROUTES #
+    # ---- REGISTER ALL BLUEPRINT ROUTES #
 
-    # register default blueprint from app/default/error_routes
+    # default error route (blueprint from app/default/error_routes)
     flask_app.register_blueprint(default_bp)
     flask_app.register_error_handler(404, not_found)
     flask_app.register_error_handler(500, internal_server_error)
 
-    # register notification blureprint from app/notification/routes
+    # notification route (blueprint from app/notification/routes)
     flask_app.register_blueprint(notification_bp)
 
     return flask_app
