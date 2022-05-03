@@ -31,7 +31,7 @@ def test_notification_successful_content(flask_test_client):
         url_for("notification_bp.send_notification"),
         follow_redirects=True,
     )
-    assert b"Click on the link to access your account" in response.data
+    assert b"MAGIC LINK GOES HERE" in response.data
 
 
 @pytest.mark.usefixtures("live_server")
