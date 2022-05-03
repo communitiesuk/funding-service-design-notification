@@ -1,5 +1,5 @@
  {
-    "type": "TEST_MAGIC_LINK",
-    "to": "test_recipient@email.com",
+    "type": "MAGIC_LINK",
+    "to": "recipient@email.com",
     "content": "MAGIC LINK GOES HERE"
 }
