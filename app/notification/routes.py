@@ -44,7 +44,7 @@ def send_notification() -> dict:
 
         return response
     else:
-        example_data = json.dumps(get_local_data())
+        example_data = json.dumps(get_local_data(), indent=2)
         return (
             "Bad request, please check the contents of the notification data:"
             f" {notification_data}\nExample: {example_data})"
