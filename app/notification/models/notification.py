@@ -19,9 +19,13 @@ class Notification:
     def process_notification_data(json_data):
         data = get_data(json_data)
         if (
-            "type" in data.keys()
-            and "to" in data.keys()
-            and "content" in data.keys()
+            (
+                "type" in data.keys()
+                and "to" in data.keys()
+                and "content" in data.keys()
+            )
+            and "" not in data.values()
+            and None not in data.values()
         ):
             notification_data = Notification(
                 template_type=data.get("type"),
