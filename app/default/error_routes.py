@@ -6,6 +6,11 @@ default_bp = Blueprint(
 )
 
 
+@default_bp.errorhandler(400)
+def bad_request(error):
+    return render_template("400.html"), 400
+
+
 @default_bp.errorhandler(404)
 def not_found(error):
     return render_template("404.html"), 404

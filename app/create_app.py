@@ -76,12 +76,14 @@ def create_app() -> Flask:
     # import default error route.
     from app.default.error_routes import (
         default_bp,
+        bad_request,
         not_found,
         internal_server_error,
     )
 
     # register default error route (blueprint from app/default/error_routes).
     flask_app.register_blueprint(default_bp)
+    flask_app.register_error_handler(400, bad_request)
     flask_app.register_error_handler(404, not_found)
     flask_app.register_error_handler(500, internal_server_error)
 

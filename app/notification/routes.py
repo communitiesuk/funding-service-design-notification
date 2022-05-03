@@ -1,6 +1,7 @@
 from app.config import API_KEY
 from app.config import TEMPLATE_ID
 from app.notification.models.notification import Notification
+from flask import abort
 from flask import Blueprint
 from flask import request
 from notifications_python_client.notifications import NotificationsAPIClient
@@ -28,14 +29,16 @@ def send_notification() -> dict:
     """
     notification_data = request.get_json()
     data = Notification.process_notification_data(notification_data)
+    if data:
+        response = notifications_client.send_email_notification(
+            email_address=data.contact_info,
+            template_id=TEMPLATE_ID,
+            personalisation={
+                "SUBJECT": "Funding service access link",
+                "MAGIC_LINK": data.content,
+            },
+        )
 
-    response = notifications_client.send_email_notification(
-        email_address=data.contact_info,
-        template_id=TEMPLATE_ID,
-        personalisation={
-            "SUBJECT": "Funding service access link",
-            "MAGIC_LINK": data.content,
-        },
-    )
-
-    return response
+        return response
+    else:
+        abort(400)

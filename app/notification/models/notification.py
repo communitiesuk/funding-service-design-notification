@@ -18,10 +18,15 @@ class Notification:
     @staticmethod
     def process_notification_data(json_data):
         data = get_data(json_data)
-        notification_data = Notification(
-            template_type=data["type"],
-            contact_info=data["to"],
-            content=data["content"],
-        )
+        if (
+            "type" in data.keys()
+            and "to" in data.keys()
+            and "content" in data.keys()
+        ):
+            notification_data = Notification(
+                template_type=data.get("type"),
+                contact_info=data.get("to"),
+                content=data.get("content"),
+            )
 
-        return notification_data
+            return notification_data
