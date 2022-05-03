@@ -20,12 +20,13 @@ notification_bp = Blueprint(
 @notification_bp.route("/", methods=["POST", "GET"])
 def send_notification() -> dict:
     """
-    route accepts post request with json data.
+    route accepts POST request with json data.
     Json data integrates with gov-uk notify service
     to send magic link(contents) from json data to recipient.
 
     Returns:
-        dict: recipient's contact info & access link
+        dict: if data received, recipient's contact info & access link.
+        400: if data is  not received or in incorrect format, returns 400.
     """
     notification_data = request.get_json()
     data = Notification.process_notification_data(notification_data)
