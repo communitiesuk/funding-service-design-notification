@@ -1,7 +1,6 @@
 from app.config import API_KEY
 from app.config import TEMPLATE_ID
 from app.notification.models.notification import Notification
-from flask import abort
 from flask import Blueprint
 from flask import request
 from notifications_python_client.notifications import NotificationsAPIClient
@@ -42,4 +41,4 @@ def send_notification() -> dict:
 
         return response
     else:
-        abort(400)
+        return "Bad request, please check contents of the data."
