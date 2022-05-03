@@ -1,5 +1,3 @@
-import json
-
 import pytest
 from flask import url_for
 
@@ -28,14 +26,9 @@ def test_notification_successful_content(flask_test_client):
     THEN: we checks the subject content of the message as expected
     to make sure message is delivered successfully.
     """
-    data = {
-        "type": "TEST_MAGIC_LINK",
-        "to": "test_recipient@email.com",
-        "content": "MAGIC LINK GOES HERE",
-    }
 
     response = flask_test_client.post(
-        url_for("notification_bp.send_notification", data=json.dumps(data)),
+        url_for("notification_bp.send_notification"),
         follow_redirects=True,
     )
 
