@@ -10,7 +10,7 @@ def test_notification_route_response(flask_test_client):
     THEN: we expect a successful response 200.
     """
 
-    response = flask_test_client.get(
+    response = flask_test_client.post(
         url_for("notification_bp.send_notification"),
         follow_redirects=True,
     )
@@ -27,7 +27,7 @@ def test_notification_successful_content(flask_test_client):
     to make sure message is delivered successfully.
     """
 
-    response = flask_test_client.get(
+    response = flask_test_client.post(
         url_for("notification_bp.send_notification"),
         follow_redirects=True,
     )
@@ -44,7 +44,7 @@ def test_notification_failure_content(flask_test_client):
     the message to the endpoint/recipient.
     """
 
-    response = flask_test_client.get(
+    response = flask_test_client.post(
         url_for("notification_bp.send_notification"),
         follow_redirects=True,
     )
