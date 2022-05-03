@@ -34,5 +34,3 @@ class Notification:
             )
 
             return notification_data
-        else:
-            return None
