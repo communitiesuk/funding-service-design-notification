@@ -41,4 +41,7 @@ def send_notification() -> dict:
 
         return response
     else:
-        return "Bad request, please check contents of the data."
+        return (
+            "Bad request, please check the contents of the notification data:"
+            f" {notification_data}"
+        )
