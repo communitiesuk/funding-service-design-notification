@@ -1,0 +1,5 @@
+{
+    "type": "MAGIC_LINK",
+    "to": "recipient@email.com",
+    "content": "MAGIC LINK GOES HERE"
+}
