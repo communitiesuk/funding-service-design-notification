@@ -1,10 +1,11 @@
 from flask import Flask
 from flask_compress import Compress
 from flask_talisman import Talisman
-from flask_wtf.csrf import CSRFProtect
 from jinja2 import ChoiceLoader
 from jinja2 import PackageLoader
 from jinja2 import PrefixLoader
+
+# from flask_wtf.csrf import CSRFProtect
 
 
 def create_app() -> Flask:
@@ -54,9 +55,9 @@ def create_app() -> Flask:
         flask_app, content_security_policy=csp, strict_transport_security=hss
     )
 
-    csrf = CSRFProtect()
+    # csrf = CSRFProtect()
 
-    csrf.init_app(flask_app)
+    # csrf.init_app(flask_app)
 
     # ---- SETUP GLOBAL CONSTANTS (to be accessed from the app).
     @flask_app.context_processor
