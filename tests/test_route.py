@@ -42,11 +42,7 @@ def test_notification_contents_expected_data(flask_test_client):
         json=expected_data,
         follow_redirects=True,
     )
-    response_data = response.get_json()
-    assert (
-        response_data["content"]["body"]
-        == "Click on the link to access your account:  MAGIC LINK GOES HERE"
-    )
+    assert b"MAGIC LINK GOES HERE" in response.data
 
 
 @pytest.mark.usefixtures("live_server")
