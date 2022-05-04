@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 
-from app.notification.models.data import get_data
-
 
 @dataclass
 class Notification:
@@ -16,8 +14,8 @@ class Notification:
     content: str
 
     @staticmethod
-    def process_notification_data(json_data):
-        data = get_data(json_data)
+    def process_notification_data(data):
+
         if (
             (
                 "type" in data.keys()
