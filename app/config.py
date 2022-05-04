@@ -1,7 +1,7 @@
 """Flask configuration."""
 import os
 
-
+SECRET_KEY = os.environ.get("SECRET_KEY") or "dev"
 SESSION_COOKIE_NAME = os.environ.get("SESSION_COOKIE_NAME") or "session_cookie"
 STATIC_FOLDER = "static"
 TEMPLATES_FOLDER = "templates"
