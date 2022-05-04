@@ -8,7 +8,6 @@ from flask import Blueprint
 from flask import request
 from notifications_python_client.notifications import NotificationsAPIClient
 
-
 notifications_client = NotificationsAPIClient(API_KEY)
 
 notification_bp = Blueprint(
@@ -41,11 +40,10 @@ def send_notification() -> dict:
                 "MAGIC_LINK": data.content,
             },
         )
-
         return response
     else:
         example_data = json.dumps(get_local_data(), indent=2)
         return (
             "Bad request, please check the contents of the notification data:"
-            f" {notification_data}\nExample: {example_data})"
+            f" {notification_data}\nExample {example_data})"
         )
