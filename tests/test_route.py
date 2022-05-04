@@ -1,52 +1,100 @@
 import pytest
-from flask import url_for
 
 
 @pytest.mark.usefixtures("live_server")
-def test_notification_route_response(flask_test_client):
+def test_notification_route_response_expected_data(flask_test_client):
     """
     GIVEN: our service running on flask test client.
-    WHEN: route successfully connects with the send_notification endpoint.
+    WHEN: we post expected data to the endpoint "/send".
     THEN: we expect a successful response 200.
     """
 
+    expected_data = {
+        "type": "TEST_MAGIC_LINK",
+        "to": "test_recipient@email.com",
+        "content": "MAGIC LINK GOES HERE",
+    }
     response = flask_test_client.post(
-        url_for("notification_bp.send_notification"),
+        "/send",
+        json=expected_data,
         follow_redirects=True,
     )
     assert response.status_code == 200
 
 
 @pytest.mark.usefixtures("live_server")
-def test_notification_successful_content(flask_test_client):
+def test_notification_contents_expected_data(flask_test_client):
     """
     GIVEN: our service running on flask test client.
-    WHEN: we send template to the send_notification
-    endpoint/recipient.
-    THEN: we checks the subject content of the message as expected
-    to make sure message is delivered successfully.
+    WHEN: we post expected data to the endpoint "/send".
+    THEN: we check if the contents of the message is successfully delivered
+    along with the pre-added template message
+     ("Click on the link to access your account:  ")
     """
 
+    expected_data = {
+        "type": "TEST_MAGIC_LINK",
+        "to": "test_recipient@email.com",
+        "content": "MAGIC LINK GOES HERE",
+    }
     response = flask_test_client.post(
-        url_for("notification_bp.send_notification"),
+        "/send",
+        json=expected_data,
         follow_redirects=True,
     )
-
-    assert b"MAGIC LINK GOES HERE" in response.data
+    response_data = response.get_json()
+    assert (
+        response_data["content"]["body"]
+        == "Click on the link to access your account:  MAGIC LINK GOES HERE"
+    )
 
 
 @pytest.mark.usefixtures("live_server")
-def test_notification_failure_content(flask_test_client):
+def test_notification_route_response_unexpected_data(flask_test_client):
     """
     GIVEN: our service running on flask test client.
-    WHEN: we send template to the send_notification
-    endpoint/recipient.
-    THEN: we checks if there was any error delivering
-    the message to the endpoint/recipient.
+    WHEN: we post unexpected data to the endpoint "/send".
+    THEN: we expect a successful response 200.
     """
 
+    unexpected_data = {
+        "tpe": "TEST_MAGIC_LINK",
+        "to": "test_recipient@email.com",
+        "content": "MAGIC LINK GOES HERE",
+    }
+
     response = flask_test_client.post(
-        url_for("notification_bp.send_notification"),
+        "/send",
+        json=unexpected_data,
         follow_redirects=True,
     )
-    assert b"error" not in response.data
+
+    assert response.status_code == 200
+
+
+@pytest.mark.usefixtures("live_server")
+def test_notification_contents_unexpected_data(flask_test_client):
+    """
+    GIVEN: our service running on flask test client.
+    WHEN: we post unexpected data to the endpoint "/send".
+    THEN: we check if the contents of the message are not delivered &
+    returns an error message includes
+    ("Bad request, please check the contents of the notification data:")
+    """
+
+    unexpected_data = {
+        "tpe": "TEST_MAGIC_LINK",
+        "to": "test_recipient@email.com",
+        "content": "MAGIC LINK GOES HERE",
+    }
+
+    response = flask_test_client.post(
+        "/send",
+        json=unexpected_data,
+        follow_redirects=True,
+    )
+
+    assert (
+        b"Bad request, please check the contents of the notification data:"
+        in response.data
+    )
