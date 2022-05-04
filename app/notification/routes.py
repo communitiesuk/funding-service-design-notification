@@ -2,7 +2,7 @@ import json
 
 from app.config import API_KEY
 from app.config import TEMPLATE_ID
-from app.notification.models.data import get_local_data
+from app.notification.models.data import get_example_data
 from app.notification.models.notification import Notification
 from flask import Blueprint
 from flask import request
@@ -42,7 +42,7 @@ def send_notification() -> dict:
         )
         return response
     else:
-        example_data = json.dumps(get_local_data(), indent=2)
+        example_data = json.dumps(get_example_data(), indent=2)
         return (
             "Bad request, please check the contents of the notification data:"
             f" {notification_data}\nExample {example_data})"
