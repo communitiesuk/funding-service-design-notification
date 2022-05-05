@@ -10,7 +10,7 @@ def test_notification_route_response_expected_data(flask_test_client):
     """
 
     expected_data = {
-        "type": "TEST_MAGIC_LINK",
+        "type": "MAGIC_LINK",
         "to": "test_recipient@email.com",
         "content": "MAGIC LINK GOES HERE",
     }
@@ -33,7 +33,7 @@ def test_notification_contents_expected_data(flask_test_client):
     """
 
     expected_data = {
-        "type": "TEST_MAGIC_LINK",
+        "type": "MAGIC_LINK",
         "to": "test_recipient@email.com",
         "content": "MAGIC LINK GOES HERE",
     }
@@ -54,7 +54,7 @@ def test_notification_route_response_unexpected_data(flask_test_client):
     """
 
     unexpected_data = {
-        "tpe": "TEST_MAGIC_LINK",
+        "tpe": "MAGIC_LINK",
         "to": "test_recipient@email.com",
         "content": "MAGIC LINK GOES HERE",
     }
@@ -79,7 +79,7 @@ def test_notification_contents_unexpected_data(flask_test_client):
     """
 
     unexpected_data = {
-        "tpe": "TEST_MAGIC_LINK",
+        "tpe": "MAGIC_LINK",
         "to": "test_recipient@email.com",
         "content": "MAGIC LINK GOES HERE",
     }
