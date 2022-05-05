@@ -1,6 +1,7 @@
 import json
 
 from app.config import API_KEY
+from app.notification.models.data import email_recipient
 from app.notification.models.data import get_example_data
 from app.notification.models.notification import Notification
 from flask import Blueprint
@@ -31,31 +32,13 @@ def send_notification() -> dict:
     notification_data = request.get_json()
 
     if notification_data:
-        if notification_data.get("type") == "MAGIC_LINK":
-            magic_link = Notification.send_magic_link(notification_data)
-            return magic_link
-        elif notification_data.get("type") == "NOTIFICATION":
-            return (
-                f"Currently {notification_data['type']} service is not"
-                " available."
-            )
-        elif notification_data.get("type") == "REMINDER":
-            return (
-                f"Currently {notification_data['type']} service is not"
-                " available."
-            )
-        elif notification_data.get("type") == "AWARD":
-            return (
-                f"Currently {notification_data['type']} service is not"
-                " available."
-            )
-        else:
-            return (
-                "Bad request, please check the contents of the notification"
-                f" data: {notification_data}.\n\nExpected type:('MAGIC_LINK'"
-                " or 'NOTIFICATION' or 'REMINDER' or 'AWARD' )\n\nExample"
-                f" data: {example_data}"
-            )
+        send_email = email_recipient(
+            data=notification_data,
+            example_data=example_data,
+            notification_class=Notification,
+        )
+        return send_email
+
     else:
         return (
             "Bad request, please check the contents of the notification data:"
