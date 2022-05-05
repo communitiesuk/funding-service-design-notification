@@ -27,34 +27,37 @@ def send_notification() -> dict:
     Returns:
         dict: if data received, recipient's contact info & access link.
     """
+    example_data = json.dumps(get_example_data(), indent=2)
     notification_data = request.get_json()
-    data = Notification.process_notification_data(notification_data)
 
-    if data:
-        if data.template_type == "MAGIC_LINK":
-            magic_link = Notification.send_magic_link(
-                contact_info=data.contact_info,
-                content=data.content,
-            )
+    if notification_data:
+        if notification_data.get("type") == "MAGIC_LINK":
+            magic_link = Notification.send_magic_link(notification_data)
             return magic_link
-
-        elif data.template_type == "NOTIFICATION":
-            return f"Currently {data.template_type} service is not available."
-        elif data.template_type == "REMINDER":
-            return f"Currently {data.template_type} service is not available."
-
-        elif data.template_type == "AWARD":
-            return f"Currently {data.template_type} service is not available."
-
+        elif notification_data.get("type") == "NOTIFICATION":
+            return (
+                f"Currently {notification_data['type']} service is not"
+                " available."
+            )
+        elif notification_data.get("type") == "REMINDER":
+            return (
+                f"Currently {notification_data['type']} service is not"
+                " available."
+            )
+        elif notification_data.get("type") == "AWARD":
+            return (
+                f"Currently {notification_data['type']} service is not"
+                " available."
+            )
         else:
             return (
-                "Please check value of the 'type' key.\nExpected"
-                " types:('MAGIC_LINK' or 'NOTIFICATION' or 'REMINDER' or"
-                " 'AWARD' )"
+                "Bad request, please check the contents of the notification"
+                f" data: {notification_data}.\n\nExpected type:('MAGIC_LINK'"
+                " or 'NOTIFICATION' or 'REMINDER' or 'AWARD' )\n\nExample"
+                f" data: {example_data}"
             )
     else:
-        example_data = json.dumps(get_example_data(), indent=2)
         return (
             "Bad request, please check the contents of the notification data:"
-            f" {notification_data}\nExample data: {example_data})"
+            f" {notification_data}\n\nExample data: {example_data})"
         )
