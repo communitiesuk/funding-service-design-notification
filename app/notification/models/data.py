@@ -18,11 +18,11 @@ def email_recipient(data: dict, example_data: dict, notification_class):
         magic_link = notification_class.send_magic_link(data)
         return magic_link
     elif data.get("type") == "NOTIFICATION":
-        return f"Currently {data['type']} service is not available."
+        return f"Currently {data.get('type')} service is not available."
     elif data.get("type") == "REMINDER":
-        return f"Currently {data['type']} service is not available."
+        return f"Currently {data.get('type')} service is not available."
     elif data.get("type") == "AWARD":
-        return f"Currently {data['type']} service is not available."
+        return f"Currently {data.get('type')} service is not available."
     else:
         return (
             "Bad request, please check the contents of the notification"
