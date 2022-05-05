@@ -17,9 +17,3 @@ API_KEY = os.environ.get("GOV_NOTIFY_API_KEY") or os.environ.get(
 MAGIC_LINK_TEMPLATE_ID = os.environ.get(
     "GOV_NOTIFY_TEMPLATE_KEY"
 ) or os.environ.get("TEST_MAGIC_LINK_TEMPLATE_ID")
-
-
-# TO BE REMOVED (NOT IN USE)
-EMAIL_ADDRESS = os.environ.get(
-    "GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS"
-) or os.environ.get("TEST_EMAIL_ADDRESS")
