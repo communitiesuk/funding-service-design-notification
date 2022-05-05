@@ -1,7 +1,6 @@
 import json
 
 from app.config import API_KEY
-from app.config import TEMPLATE_ID
 from app.notification.models.data import get_example_data
 from app.notification.models.notification import Notification
 from flask import Blueprint
@@ -23,7 +22,7 @@ def send_notification() -> dict:
     """
     route accepts POST request with json data.
     Json data integrates with gov-uk notify service
-    to send magic link(contents) from json data to recipient.
+    to send contents from json data to recipient.
 
     Returns:
         dict: if data received, recipient's contact info & access link.
@@ -31,19 +30,32 @@ def send_notification() -> dict:
     """
     notification_data = request.get_json()
     data = Notification.process_notification_data(notification_data)
+
     if data:
-        response = notifications_client.send_email_notification(
-            email_address=data.contact_info,
-            template_id=TEMPLATE_ID,
-            personalisation={
-                "SUBJECT": "Funding service access link",
-                "MAGIC_LINK": data.content,
-            },
-        )
-        return response
+        if data.template_type == "MAGIC_LINK":
+            magic_link = Notification.send_magic_link(
+                contact_info=data.contact_info,
+                content=data.content,
+            )
+            return magic_link
+
+        elif data.template_type == "NOTIFICATION":
+            return f"Currently {data.template_type} service is not available."
+        elif data.template_type == "REMINDER":
+            return f"Currently {data.template_type} service is not available."
+
+        elif data.template_type == "AWARD":
+            return f"Currently {data.template_type} service is not available."
+
+        else:
+            return (
+                "Please check value of the 'type' key.\nExpected"
+                " types:('MAGIC_LINK' or 'NOTIFICATION' or 'REMINDER' or"
+                " 'AWARD' )"
+            )
     else:
         example_data = json.dumps(get_example_data(), indent=2)
         return (
             "Bad request, please check the contents of the notification data:"
-            f" {notification_data}\nExample {example_data})"
+            f" {notification_data}\nExample data: {example_data})"
         )
