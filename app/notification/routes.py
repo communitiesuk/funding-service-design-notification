@@ -26,7 +26,6 @@ def send_notification() -> dict:
 
     Returns:
         dict: if data received, recipient's contact info & access link.
-        400: if data is  not received or in incorrect format, returns 400.
     """
     notification_data = request.get_json()
     data = Notification.process_notification_data(notification_data)
