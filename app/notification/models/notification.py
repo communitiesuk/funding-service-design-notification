@@ -40,13 +40,14 @@ class Notification:
             return notification_data
 
     @staticmethod
-    def send_magic_link(contact_info, content):
+    def send_magic_link(json_data):
+        data = Notification.process_notification_data(json_data)
         response = notifications_client.send_email_notification(
-            email_address=contact_info,
+            email_address=data.contact_info,
             template_id=MAGIC_LINK_TEMPLATE_ID,
             personalisation={
                 "SUBJECT": "Funding service access link",
-                "MAGIC_LINK": content,
+                "MAGIC_LINK": data.content,
             },
         )
         return response
