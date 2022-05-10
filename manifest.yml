@@ -22,6 +22,11 @@ applications:
   command: flask run --host 0.0.0.0 --port 8080
   routes:
   - route: funding-service-design-notification-uat.apps.internal
+  env:
+    GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
+    GOV_NOTIFY_TEMPLATE_KEY: ((GOV_NOTIFY_TEMPLATE_KEY))
+    GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS: ((GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS))
+
 
 - name: funding-service-design-notification-test
   memory: 64M

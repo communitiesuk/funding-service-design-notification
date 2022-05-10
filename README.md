@@ -40,6 +40,15 @@ Enter the virtual environment as described above, then:
 
     flask run
 
+## How to post data.
+To post data, use /send endpoint with POST method. Data must be in the following format.
+
+ {
+    "type": "TEST_MAGIC_LINK",
+    "to": "test_recipient@email.com",
+    "content": "MAGIC LINK GOES HERE"
+}
+
 # Pipelines
 
 Place brief descriptions of Pipelines here
