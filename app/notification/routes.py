@@ -40,7 +40,9 @@ def send_notification() -> dict:
         return send_email
 
     else:
+
         return (
-            "Bad request, please check the contents of the notification data:"
+            "Bad request. No data has been received. Please check the"
+            " contents of the notification data:"
             f" {notification_data}\n\nExample data: {example_data})"
         )
