@@ -42,7 +42,7 @@ class Notification:
                 email_address=data.contact_info,
                 template_id=MAGIC_LINK_TEMPLATE_ID,
                 personalisation={
-                    "name of fund": "Funding service",
+                    "name of fund": "Funding service.",
                     "link to application": data.content,
                     "contact details": (
                         "dummy_contact_info@funding-service-help.com"
