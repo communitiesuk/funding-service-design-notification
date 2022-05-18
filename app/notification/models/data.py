@@ -2,6 +2,7 @@ import json
 import os
 
 from app.config import FLASK_ROOT
+from app.notification.models.custom_exceptions import NotificationError
 
 
 def get_example_data() -> dict:
@@ -31,9 +32,11 @@ def email_recipient(data: dict, example_data: dict, notification_class):
     elif data.get("type") == "AWARD":
         return f"Currently {data.get('type')} service is not available."
     else:
-        return (
-            "Incorrect type, please check the key 'type' from notification "
-            f"data: {data}.\n\nExpected type:('MAGIC_LINK'"
-            " or 'NOTIFICATION' or 'REMINDER' or 'AWARD' )\n\nExample"
-            f" data: {example_data}"
+        raise NotificationError(
+            message=(
+                "Incorrect type, please check the key 'type' & other keys,"
+                f" values from notification data: {data}.\n\nExpected"
+                " type:('MAGIC_LINK' or 'NOTIFICATION' or 'REMINDER' or"
+                f" 'AWARD' )\n\nExample data: {example_data}"
+            )
         )

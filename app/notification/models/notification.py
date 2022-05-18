@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from app.config import API_KEY
 from app.config import MAGIC_LINK_TEMPLATE_ID
+from app.notification.models.custom_exceptions import NotificationError
 from app.notification.models.data import fund_name
 from app.notification.models.data import get_example_data
 from notifications_python_client.notifications import NotificationsAPIClient
@@ -55,9 +56,11 @@ class Notification:
 
         except (TypeError, KeyError, AttributeError):
             example_data = json.dumps(get_example_data(), indent=2)
-            return (
-                "Incorrect data, please check the contents of the notification"
-                f" data.\n\n Example data: {example_data}"
+            raise NotificationError(
+                message=(
+                    "Incorrect data, please check the contents of the"
+                    f" notification data.\n\n Example data: {example_data}"
+                )
             )
 
     @staticmethod
