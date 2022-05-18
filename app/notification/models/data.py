@@ -25,7 +25,7 @@ def email_recipient(data: dict, example_data: dict, notification_class):
         return f"Currently {data.get('type')} service is not available."
     else:
         return (
-            "Bad request, please check the key 'type' from notification "
+            "Incorrect type, please check the key 'type' from notification "
             f"data: {data}.\n\nExpected type:('MAGIC_LINK'"
             " or 'NOTIFICATION' or 'REMINDER' or 'AWARD' )\n\nExample"
             f" data: {example_data}"
