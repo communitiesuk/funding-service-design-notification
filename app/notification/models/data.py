@@ -13,6 +13,13 @@ def get_example_data() -> dict:
         return data
 
 
+def fund_name(data):
+    if data is None or data == "":
+        return "Funds"
+    else:
+        return data
+
+
 def email_recipient(data: dict, example_data: dict, notification_class):
     if data.get("type") == "MAGIC_LINK":
         magic_link = notification_class.send_magic_link(data)

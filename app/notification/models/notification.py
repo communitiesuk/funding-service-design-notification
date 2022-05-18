@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from app.config import API_KEY
 from app.config import MAGIC_LINK_TEMPLATE_ID
+from app.notification.models.data import fund_name
 from app.notification.models.data import get_example_data
 from notifications_python_client.notifications import NotificationsAPIClient
 
@@ -36,13 +37,14 @@ class Notification:
 
     @staticmethod
     def send_magic_link(json_data):
+
         try:
             data = Notification.process_notification_data(json_data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=MAGIC_LINK_TEMPLATE_ID,
                 personalisation={
-                    "name of fund": data.content["fund_name"],
+                    "name of fund": fund_name(data.content["fund_name"]),
                     "link to application": data.content["magic_link_url"],
                     "contact details": (
                         "dummy_contact_info@funding-service-help.com"
