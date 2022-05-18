@@ -167,32 +167,6 @@ def test_notification_contents_incorrect_key(flask_test_client):
 
 
 @pytest.mark.usefixtures("live_server")
-def test_notification_contents_empty_string_value(flask_test_client):
-    """
-    GIVEN: our service running on flask test client.
-    WHEN: we post empty string value to the endpoint "/send".
-    THEN: we check if it returns an error message.
-    """
-
-    unexpected_data = {
-        "type": "MAGIC_LINK",
-        "to": "test_recipient@email.com",
-        "content": "",
-    }
-
-    response = flask_test_client.post(
-        "/send",
-        json=unexpected_data,
-        follow_redirects=True,
-    )
-
-    assert (
-        b"Incorrect data, please check the contents of the notification data."
-        in response.data
-    )
-
-
-@pytest.mark.usefixtures("live_server")
 def test_notification_contents_multiple_key_errors(flask_test_client):
     """
     GIVEN: our service running on flask test client.
