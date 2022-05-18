@@ -42,8 +42,8 @@ class Notification:
                 email_address=data.contact_info,
                 template_id=MAGIC_LINK_TEMPLATE_ID,
                 personalisation={
-                    "name of fund": "Funding service.",
-                    "link to application": data.content,
+                    "name of fund": data.content["fund_name"],
+                    "link to application": data.content["link_to_application"],
                     "contact details": (
                         "dummy_contact_info@funding-service-help.com"
                     ),
@@ -54,7 +54,7 @@ class Notification:
         except (TypeError, KeyError, AttributeError):
             example_data = json.dumps(get_example_data(), indent=2)
             return (
-                "Bad request, please check the contents of the notification"
+                "Incorrect data, please check the contents of the notification"
                 f" data.\n\n Example data: {example_data}"
             )
 
@@ -69,38 +69,3 @@ class Notification:
     @staticmethod
     def send_award(contact_info, content):
         pass
-
-    @staticmethod
-    def send_application_record(json_data):
-        """
-        To be worked on mapping the application data & email
-        applicant with following contents:
-
-        1. Question and corresponding answer
-        2. Timestamp of submission (in a readable format, not EPOCH)
-        3. Fund name
-        4. Fund round
-        5. Application ID
-        6. A hash "receipt"
-
-        """
-        try:
-            data = Notification.process_notification_data(json_data)
-            response = notifications_client.send_email_notification(
-                email_address=data.contact_info,
-                template_id=MAGIC_LINK_TEMPLATE_ID,
-                personalisation={
-                    "SUBJECT": "Application submission record",
-                    "APPLICATION": (
-                        "Add logic function to retrieve the application data"
-                    ),
-                },
-            )
-            return response
-
-        except (TypeError, KeyError, AttributeError):
-            example_data = json.dumps(get_example_data(), indent=2)
-            return (
-                "Bad request, please check the contents of the notification"
-                f" data.\n\n Example data: {example_data}"
-            )
