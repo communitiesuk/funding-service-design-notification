@@ -43,7 +43,7 @@ class Notification:
                 template_id=MAGIC_LINK_TEMPLATE_ID,
                 personalisation={
                     "name of fund": data.content["fund_name"],
-                    "link to application": data.content["link_to_application"],
+                    "link to application": data.content["magic_link_url"],
                     "contact details": (
                         "dummy_contact_info@funding-service-help.com"
                     ),
