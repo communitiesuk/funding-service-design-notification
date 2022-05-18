@@ -91,7 +91,7 @@ def test_notification_contents_unexpected_key_type(flask_test_client):
     )
 
     assert (
-        b"Bad request, please check the key 'type' from notification data:"
+        b"Incorrect type, please check the key 'type' from notification data:"
         in response.data
     )
 
@@ -119,7 +119,7 @@ def test_notification_contents_unexpected_value_type(flask_test_client):
     )
 
     assert (
-        b"Bad request, please check the key 'type' from notification data:"
+        b"Incorrect type, please check the key 'type' from notification data:"
         in response.data
     )
 
@@ -147,7 +147,7 @@ def test_notification_contents_incorrect_key(flask_test_client):
     )
 
     assert (
-        b"Bad request, please check the contents of the notification data."
+        b"Incorrect data, please check the contents of the notification data."
         in response.data
     )
 
@@ -175,6 +175,6 @@ def test_notification_contents_empty_string_value(flask_test_client):
     )
 
     assert (
-        b"Bad request, please check the contents of the notification data."
+        b"Incorrect data, please check the contents of the notification data."
         in response.data
     )
