@@ -37,7 +37,7 @@ class Notification:
 
     @staticmethod
     def send_magic_link(json_data):
-        process_json_data = ProcessMagicLinkData.fund_name(json_data)
+        process_json_data = ProcessMagicLinkData.process_data(json_data)
         try:
             data = Notification.notification_data(process_json_data)
             response = notifications_client.send_email_notification(

@@ -14,13 +14,12 @@ class ProcessMagicLinkData:
     """
 
     @staticmethod
-    def fund_name(data):
+    def process_data(data):
         try:
-            if "fund_name" not in data["content"]:
-                data["content"].update(fund_name="Funds")
-                return data
-            else:
-                return data
+            data["content"].update(
+                {"fund_name": data["content"].get("fund_name", "Funds")}
+            )
+            return data
 
         except KeyError:
             example_data = json.dumps(get_example_data(), indent=2)
