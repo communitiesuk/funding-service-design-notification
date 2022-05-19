@@ -20,7 +20,7 @@ notification_bp = Blueprint(
 )
 
 
-@notification_bp.route("", methods=["POST", "GET"])
+@notification_bp.route("", methods=["POST"])
 def send_notification() -> dict:
     """
     route accepts POST request with json data.
