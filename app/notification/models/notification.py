@@ -3,9 +3,9 @@ from dataclasses import dataclass
 
 from app.config import API_KEY
 from app.config import MAGIC_LINK_TEMPLATE_ID
-from app.notification.models.custom_exceptions import NotificationError
+from app.notification.custom_exceptions import NotificationError
+from app.notification.magic_link.process_contents import ProcessMagicLinkData
 from app.notification.models.data import get_example_data
-from app.notification.models.process_contents import ProcessNotificationData
 from notifications_python_client.notifications import NotificationsAPIClient
 
 
@@ -37,7 +37,7 @@ class Notification:
 
     @staticmethod
     def send_magic_link(json_data):
-        process_json_data = ProcessNotificationData.fund_name(json_data)
+        process_json_data = ProcessMagicLinkData.fund_name(json_data)
         try:
             data = Notification.notification_data(process_json_data)
             response = notifications_client.send_email_notification(
