@@ -12,8 +12,12 @@ def test_notification_route_response_expected_data(flask_test_client):
     expected_data = {
         "type": "MAGIC_LINK",
         "to": "test_recipient@email.com",
-        "content": "MAGIC LINK GOES HERE",
+        "content": {
+            "magic_link_url": "MAGIC LINK GOES HERE",
+            "fund_name": "FUND NAME GOES HERE",
+        },
     }
+
     response = flask_test_client.post(
         "/send",
         json=expected_data,
@@ -28,14 +32,16 @@ def test_notification_contents_expected_data(flask_test_client):
     GIVEN: our service running on flask test client.
     WHEN: we post expected data to the endpoint "/send".
     THEN: we check if the contents of the message is successfully delivered
-    along with the pre-added template message
-     ("Click on the link to access your account:  ")
+    along with the pre-added template message.
     """
 
     expected_data = {
         "type": "MAGIC_LINK",
         "to": "test_recipient@email.com",
-        "content": "MAGIC LINK GOES HERE",
+        "content": {
+            "magic_link_url": "MAGIC LINK GOES HERE",
+            "fund_name": "FUND NAME GOES HERE",
+        },
     }
     response = flask_test_client.post(
         "/send",
@@ -50,13 +56,16 @@ def test_notification_route_response_unexpected_data(flask_test_client):
     """
     GIVEN: our service running on flask test client.
     WHEN: we post unexpected data to the endpoint "/send".
-    THEN: we expect a successful response 200.
+    THEN: we expect a unsuccessful response 400.
     """
 
     unexpected_data = {
-        "tpe": "MAGIC_LINK",
+        "te": "MAGIC_LINK",
         "to": "test_recipient@email.com",
-        "content": "MAGIC LINK GOES HERE",
+        "content": {
+            "magic_link_url": "MAGIC LINK GOES HERE",
+            "fund_name": "FUND NAME GOES HERE",
+        },
     }
 
     response = flask_test_client.post(
@@ -65,7 +74,7 @@ def test_notification_route_response_unexpected_data(flask_test_client):
         follow_redirects=True,
     )
 
-    assert response.status_code == 200
+    assert response.status_code == 400
 
 
 @pytest.mark.usefixtures("live_server")
@@ -73,15 +82,16 @@ def test_notification_contents_unexpected_key_type(flask_test_client):
     """
     GIVEN: our service running on flask test client.
     WHEN: we post incorrect key "type" to the endpoint "/send".
-    THEN: we check if the contents of the message are not delivered &
-    returns an error message includes
-    ("Bad request, please check the key 'type' from notification data:")
+    THEN: we check if it returns an error message.
     """
 
     unexpected_data = {
-        "tpe": "MAGIC_LINK",
+        "te": "MAGIC_LINK",
         "to": "test_recipient@email.com",
-        "content": "MAGIC LINK GOES HERE",
+        "content": {
+            "magic_link_url": "MAGIC LINK GOES HERE",
+            "fund_name": "FUND NAME GOES HERE",
+        },
     }
 
     response = flask_test_client.post(
@@ -91,7 +101,8 @@ def test_notification_contents_unexpected_key_type(flask_test_client):
     )
 
     assert (
-        b"Bad request, please check the key 'type' from notification data:"
+        b"Incorrect type, please check the key 'type' & other keys, values"
+        b" from notification data:"
         in response.data
     )
 
@@ -101,15 +112,16 @@ def test_notification_contents_unexpected_value_type(flask_test_client):
     """
     GIVEN: our service running on flask test client.
     WHEN: we post unexpected "value" of key "type" to the endpoint "/send".
-    THEN: we check if the contents of the message are not delivered &
-    returns an error message includes
-    ("Bad request, please check the key 'type' from notification data:")
+    THEN: we check if it returns an error message.
     """
 
     unexpected_data = {
-        "type": "MAGIC_LI",
+        "type": "MAGIC_",
         "to": "test_recipient@email.com",
-        "content": "MAGIC LINK GOES HERE",
+        "content": {
+            "magic_link_url": "MAGIC LINK GOES HERE",
+            "fund_name": "FUND NAME GOES HERE",
+        },
     }
 
     response = flask_test_client.post(
@@ -119,7 +131,8 @@ def test_notification_contents_unexpected_value_type(flask_test_client):
     )
 
     assert (
-        b"Bad request, please check the key 'type' from notification data:"
+        b"Incorrect type, please check the key 'type' & other keys, values"
+        b" from notification data:"
         in response.data
     )
 
@@ -129,15 +142,16 @@ def test_notification_contents_incorrect_key(flask_test_client):
     """
     GIVEN: our service running on flask test client.
     WHEN: we post unexpected key to the endpoint "/send".
-    THEN: we check if the contents of the message are not delivered &
-    returns an error message includes
-    ("Bad request, please check the contents of the notification data:")
+    THEN: we check if it returns an error message.
     """
 
     unexpected_data = {
         "type": "MAGIC_LINK",
         "to": "test_recipient@email.com",
-        "conten": "MAGIC LINK GOES HERE",
+        "con": {
+            "magic_link_url": "MAGIC LINK GOES HERE",
+            "fund_name": "FUND NAME GOES HERE",
+        },
     }
 
     response = flask_test_client.post(
@@ -147,25 +161,24 @@ def test_notification_contents_incorrect_key(flask_test_client):
     )
 
     assert (
-        b"Bad request, please check the contents of the notification data."
+        b"Incorrect data, please check the contents of the notification data."
         in response.data
     )
 
 
 @pytest.mark.usefixtures("live_server")
-def test_notification_contents_empty_string_value(flask_test_client):
+def test_notification_contents_multiple_key_errors(flask_test_client):
     """
     GIVEN: our service running on flask test client.
-    WHEN: we post empty string value to the endpoint "/send".
-    THEN: we check if the contents of the message are not delivered &
-    returns an error message includes
-    ("Bad request, please check the contents of the notification data:")
+    WHEN: we post incorrect key "type" and other incorrect keys & values
+    to the endpoint "/send".
+    THEN: we check if it returns an error message.
     """
 
     unexpected_data = {
-        "type": "MAGIC_LINK",
-        "to": "test_recipient@email.com",
-        "content": "",
+        "te": "MAGIC_LINK",
+        "t": "test_recipient@email.com",
+        "cot": "",
     }
 
     response = flask_test_client.post(
@@ -175,6 +188,7 @@ def test_notification_contents_empty_string_value(flask_test_client):
     )
 
     assert (
-        b"Bad request, please check the contents of the notification data."
+        b"Incorrect type, please check the key 'type' & other keys, values"
+        b" from notification data:"
         in response.data
     )
