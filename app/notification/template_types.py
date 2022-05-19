@@ -6,13 +6,7 @@ def email_recipient(data: dict, example_data: dict, notification_class):
         case "MAGIC_LINK":
             return notification_class.send_magic_link(data)
 
-        case "NOTIFICATION":
-            return f"Currently {data.get('type')} service is not available."
-
-        case "REMINDER":
-            return f"Currently {data.get('type')} service is not available."
-
-        case "AWARD":
+        case "NOTIFICATION" | "REMINDER" | "AWARD":
             return f"Currently {data.get('type')} service is not available."
 
         case _:
