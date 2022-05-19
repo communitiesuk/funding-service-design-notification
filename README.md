@@ -43,13 +43,11 @@ Enter the virtual environment as described above, then:
 ## How to post data.
 To post data, use /send endpoint with POST method. Data must be in the following format.
 
-   {
-    "type": "MAGIC_LINK",
+   {"type": "MAGIC_LINK",
     "to": "ramandeep.sharma@communities.gov.uk",
     "content": {"magic_link_url":"https://www.google.co.uk/",
     "fund_name":"Funding service"}
    }
-
 
 # Pipelines
 
