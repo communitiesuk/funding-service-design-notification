@@ -9,6 +9,9 @@ def email_recipient(data: dict, example_data: dict, notification_class):
         case "NOTIFICATION" | "REMINDER" | "AWARD":
             return f"Currently {data.get('type')} service is not available."
 
+        case "APPLICATION_RECORD_OF_SUBMISSION":
+            return f"Service {data.get('type')} is being developed. Contact admin" # noqa
+
         case _:
             raise NotificationError(
                 message=(

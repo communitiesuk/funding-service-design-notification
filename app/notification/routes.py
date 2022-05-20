@@ -1,6 +1,7 @@
 import json
 
 from app.config import API_KEY
+from app.notification.application_submission import process_contents  # noqa
 from app.notification.custom_exceptions import NotificationError
 from app.notification.models.data import get_example_data
 from app.notification.models.notification import Notification

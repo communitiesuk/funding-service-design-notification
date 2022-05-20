@@ -73,3 +73,15 @@ class Notification:
     @staticmethod
     def send_award(contact_info, content):
         pass
+
+    @staticmethod
+    def send_application():
+        """
+        To map the following data with application template
+        1. Question and corresponding answer
+        2. Timestamp of submission (in a readable format, not EPOCH)
+        3. Fund name
+        4. Fund round
+        5. Application ID
+        6. A hash "receipt"
+        """
