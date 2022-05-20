@@ -1,0 +1,64 @@
+
+import json
+from app.config import API_KEY
+from notifications_python_client import NotificationsAPIClient
+from app.config import MAGIC_LINK_TEMPLATE_ID
+from app.notification.custom_exceptions import NotificationError
+from app.notification.magic_link.process_contents import ProcessMagicLinkData
+from app.notification.models.data import get_example_data
+from app.notification.models.notification import NotificationData
+
+notifications_client = NotificationsAPIClient(API_KEY)
+
+
+class ProcessNotificationData:
+    @staticmethod
+    def send_magic_link(json_data):
+        process_json_data = ProcessMagicLinkData.process_data(json_data)
+        try:
+            data = NotificationData.notification_data(process_json_data)
+            response = notifications_client.send_email_notification(
+                email_address=data.contact_info,
+                template_id=MAGIC_LINK_TEMPLATE_ID,
+                personalisation={
+                    "name of fund": data.content["fund_name"],
+                    "link to application": data.content["magic_link_url"],
+                    "contact details": (
+                        "dummy_contact_info@funding-service-help.com"
+                    ),
+                },
+            )
+            return response
+
+        except (TypeError, KeyError, AttributeError):
+            example_data = json.dumps(get_example_data(), indent=2)
+            raise NotificationError(
+                message=(
+                    "Incorrect data, please check the contents of the"
+                    f" notification data.\n\n Example data: {example_data}"
+                )
+            )
+
+    @staticmethod
+    def send_notification(contact_info, content):
+        pass
+
+    @staticmethod
+    def send_reminder(contact_info, content):
+        pass
+
+    @staticmethod
+    def send_award(contact_info, content):
+        pass
+
+    @staticmethod
+    def send_application(json_data):
+        """
+        To map the following data with application template
+        1. Question and corresponding answer
+        2. Timestamp of submission (in a readable format, not EPOCH)
+        3. Fund name
+        4. Fund round
+        5. Application ID
+        6. A hash "receipt"
+        """
