@@ -64,7 +64,6 @@ class ProcessNotificationData:
                         "date submitted": data.submission_date,
                         "round name": data.fund_round,
                         "question": prepare_upload(f),
-                        "answer": "answers",
                     },
                 )
                 print("process_notification_data.py OK")
