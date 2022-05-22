@@ -21,5 +21,4 @@ class NotificationData:
                 contact_info=data["to"],
                 content=data["content"],
             )
-
             return notification_data

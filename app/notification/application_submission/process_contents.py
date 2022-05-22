@@ -1,46 +1,69 @@
 import json
-import os
 from dataclasses import dataclass
-from datetime import datetime
 
-from app.config import FLASK_ROOT
 from app.notification.models.notification import NotificationData
 
 
-def get_data():
-    """This is a dummy data for data mapping.
-    TO BE DELETED ONCE INTEGRATED WITH AUTHENTICATOR SERVICE.
-    """
-    file_path = os.path.join(
-        FLASK_ROOT,
-        "app",
-        "notification",
-        "application_submission",
-        "dummy_data.json",
-    )
-
-    json_data = open(file_path)
-    json.load(json_data)
-    json_data.close()
-
-
-get_data()
-
-
 @dataclass
-class ProcessApplicationData:
+class ApplicationData:
+    contact_info: str
     questions: dict
-    answers: dict
-    submission_date: datetime
+    submission_date: str
     fund_name: dict
     fund_round: dict
     application_id: dict
 
     @staticmethod
-    def get_questions(json_data):
-        notification_data = NotificationData.notification_data(json_data)
-        print(notification_data)
-        pass
+    def from_json(data):
+        json_data = NotificationData.notification_data(data)
+        application = json_data.content["application"]
+        return ApplicationData(
+            contact_info=json_data.contact_info,
+            questions=ApplicationData.create_text_file(json_data),
+            submission_date=application.get("date_submitted"),
+            fund_name=application.get("project_name"),
+            fund_round=application.get("round_id"),
+            application_id=application.get("id"),
+        )
 
-    def get_answers(json_data):
-        pass
+    @staticmethod
+    def get_sections(data) -> list:
+        sections = data.content["application"]["sections"]
+        return sections
+
+    @staticmethod
+    def get_section_names(data) -> list:
+        section_names = []
+        sections = ApplicationData.get_sections(data)
+        for section in sections:
+            section_names.append(section.get("section_name"))
+        return list(dict.fromkeys(section_names))
+
+    @staticmethod
+    def get_questions_answers(data) -> dict:
+        print("questions_answers")
+        question_answers = {}
+        sections = ApplicationData.get_sections(data)
+        section_names = ApplicationData.get_section_names(data)
+
+        for section_name in section_names:
+            for section in sections:
+                if section_name in section["section_name"]:
+                    for question in section["questions"]:
+                        for fields in question["fields"]:
+                            question_answers[fields["title"]] = fields.get(
+                                "answer"
+                            )
+
+        return question_answers
+
+    @staticmethod
+    def create_text_file(data):
+        print("create_file")
+        application_id = data.content["application"]
+
+        with open(
+            f"app/notification/application_submission/files/{application_id['id']}.txt",  # noqa
+            "w",
+        ) as file:
+            file.write(json.dumps(ApplicationData.get_questions_answers(data)))
