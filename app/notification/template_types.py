@@ -2,6 +2,10 @@ from app.notification.custom_exceptions import NotificationError
 
 
 def email_recipient(data: dict, example_data: dict, notification_class):
+    """
+    Function matches with the correct template type &
+    calls the relevant function from process_notification_data.py.
+    """
     match data.get("type"):
         case "MAGIC_LINK":
             return notification_class.send_magic_link(data)
