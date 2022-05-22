@@ -40,17 +40,11 @@ Enter the virtual environment as described above, then:
 
     flask run
 
-## How to post data.
-To post data, use /send endpoint with POST method. Data must be in the following format.
+## How to post data for notification service.
 
-{
-    "type": "MAGIC_LINK",
-    "to": "ramandeep.sharma@communities.gov.uk",
-    "content": {
-        "magic_link_url": "https://www.google.co.uk/",
-        "fund_name": "Funding service",
-    },
-}
+Go to relevant service. See example
+path: app/notification/magic_link/README.md for
+
 
 # Pipelines
 
