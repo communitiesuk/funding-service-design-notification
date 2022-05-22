@@ -15,7 +15,7 @@ To post data, use /send endpoint with POST method. Data must be in the following
 
 {
     "type": "APPLICATION_RECORD_OF_SUBMISSION",
-    "to": "ramandeep.sharma@communities.gov.uk",
+    "to": "example_email@test.com",
     "content": {
         "application":{
             "id": "4c11e4ba-680a-4d06-a862-c241bec77ec4",
@@ -46,90 +46,12 @@ To post data, use /send endpoint with POST method. Data must be in the following
                             "key": "applicant-email",
                             "title": "Email",
                             "type": "text",
-                            "answer": ""
+                            "answer": "example_email@test.com"
                         },
-                        {
-                            "key": "applicant-telephone-number",
-                            "title": "Telephone number",
-                            "type": "text",
-                            "answer": ""
-                        },
-                        {
-                            "key": "applicant-website",
-                            "title": "Website",
-                            "type": "text",
-                            "answer": ""
-                        }
                         ],
                         "category": null,
                         "index": null
                     },
-                    {
-                        "question": "Organisation information",
-                        "status": "NOT STARTED",
-                        "fields": [
-                        {
-                            "key": "organisation-name",
-                            "title": "Organisation name",
-                            "type": "text",
-                            "answer": ""
-                        },
-                        {
-                            "key": "organisation-address",
-                            "title": "Organisation address",
-                            "type": "text",
-                            "answer": ""
-                        },
-                        {
-                            "key": "type-of-organisation",
-                            "title": "Type of organisation",
-                            "type": "list",
-                            "answer": ""
-                        },
-                        {
-                            "key": "delivered-projects-like-this-before",
-                            "title": "Have you delivered projects like this before?",
-                            "type": "list",
-                            "answer": ""
-                        }
-                        ],
-                        "category": null,
-                        "index": null
-                    },
-                    {
-                        "question": "Responsible people",
-                        "status": "NOT STARTED",
-                        "fields": [
-                        {
-                            "key": "organisation-accountant",
-                            "title": "Your accountant",
-                            "type": "text",
-                            "answer": ""
-                        },
-                        {
-                            "key": "responsible-person",
-                            "title": "Responsible person",
-                            "type": "text",
-                            "answer": ""
-                        },
-                        {
-                            "key": "SpLmlI",
-                            "title": "Do you have endorsements for this ",
-                            "type": "list",
-                            "answer": ""
-                        },
-                        {
-                            "key": "organisation-do-you-have-endorsements",
-                            "title": "Do you have endorsements to support your application?",
-                            "type": "list",
-                            "answer": ""
-                        },
-                        {
-                            "key": "who-is-endorsing-your-application",
-                            "title": "Who is endorsing your application?",
-                            "type": "list",
-                            "answer": ""
-                        }
                         ],
                         "category": null,
                         "index": null

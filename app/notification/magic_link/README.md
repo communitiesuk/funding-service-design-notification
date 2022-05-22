@@ -15,7 +15,7 @@ To post data, use /send endpoint with POST method. Data must be in the following
 
 {
     "type": "MAGIC_LINK",
-    "to": "ramandeep.sharma@communities.gov.uk",
+    "to": "example_email@test.com",
     "content": {
         "magic_link_url": "https://www.google.co.uk/",
         "fund_name": "Funding service",
