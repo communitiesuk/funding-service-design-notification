@@ -6,6 +6,14 @@ from app.notification.models.notification import NotificationData
 
 @dataclass
 class ApplicationData:
+    """ class process the application data to map with 
+    APPLICATION_RECORD_OF_SUBMISSION template  from 
+    govuk-notify service.
+
+    Returns:
+        Mapped data with govuk-notify service & creates txt file 
+        for applicant to download the application contents.
+    """
     contact_info: str
     questions: dict
     submission_date: str
