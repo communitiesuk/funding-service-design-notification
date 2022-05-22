@@ -17,7 +17,7 @@ notifications_client = NotificationsAPIClient(API_KEY)
 
 
 class ProcessNotificationData:
-    """ class is set up to call notification-client library
+    """ class calls notification-client library
     with personalisation contents from govuk-notify service 
     to map the data with relevant service. 
 

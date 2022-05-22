@@ -8,7 +8,6 @@ def email_recipient(data: dict, example_data: dict, notification_class):
 
         case "APPLICATION_RECORD_OF_SUBMISSION":
             return notification_class.send_application(data)
-            # return f"Service {data.get('type')} is being developed. Contact admin" # noqa
 
         case "NOTIFICATION" | "REMINDER" | "AWARD":
             return f"Currently {data.get('type')} service is not available."
@@ -19,6 +18,6 @@ def email_recipient(data: dict, example_data: dict, notification_class):
                     "Incorrect type, please check the key 'type' & other keys,"
                     f" values from notification data: {data}.\n\nExpected"
                     " type:('MAGIC_LINK' or 'NOTIFICATION' or 'REMINDER' or"
-                    f" 'AWARD' )\n\nExample data: {example_data}"
+                    f" 'AWARD' or 'APPLICATION_RECORD_OF_SUBMISSION')\n\nExample data: {example_data}"
                 )
             )
