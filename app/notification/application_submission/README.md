@@ -7,7 +7,7 @@ Repo for the funding service design notification.
 
 Built with Flask.
 
-## Follow main README.md to install & run flask app. 
+## Follow main README.md to install & run flask app.
 path: FUNDING-SERVICE-DESIGN-NOTIFICATION/README.md
 
 ## How to post data for APPLICATION_RECORD_OF_SUBMISSION.
