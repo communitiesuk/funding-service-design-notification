@@ -47,15 +47,8 @@ class ProcessNotificationData:
     @staticmethod
     def send_application(json_data):
         try:
-            print("I am in process_notification_data.py - At start")
-
-            # process_application_data = (
-            #     " Add validation logic to application data ie data"
-            # )
-
+            # Add validations??
             data = ApplicationData.from_json(json_data)
-
-            print(data.application_id)
 
             with open(
                 f"app/notification/application_submission/files/{data.application_id}.txt",  # noqa

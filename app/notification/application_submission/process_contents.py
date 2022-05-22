@@ -41,7 +41,6 @@ class ApplicationData:
 
     @staticmethod
     def get_questions_answers(data) -> dict:
-        print("questions_answers")
         question_answers = {}
         sections = ApplicationData.get_sections(data)
         section_names = ApplicationData.get_section_names(data)
@@ -59,7 +58,6 @@ class ApplicationData:
 
     @staticmethod
     def create_text_file(data):
-        print("create_file")
         application_id = data.content["application"]
 
         with open(
