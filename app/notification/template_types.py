@@ -22,6 +22,6 @@ def email_recipient(data: dict, example_data: dict, notification_class):
                     "Incorrect type, please check the key 'type' & other keys,"
                     f" values from notification data: {data}.\n\nExpected"
                     " type:('MAGIC_LINK' or 'NOTIFICATION' or 'REMINDER' or"
-                    f" 'AWARD' or 'APPLICATION_RECORD_OF_SUBMISSION')\n\nExample data: {example_data}"
+                    f" 'AWARD' or 'APPLICATION_RECORD_OF_SUBMISSION')\n\nExample data: {example_data}" # noqa
                 )
             )
