@@ -32,6 +32,12 @@ class ProcessNotificationData:
 
     @staticmethod
     def send_magic_link(json_data):
+        """ Function send a magic link to the user.
+
+        IMPORTANT: process_json_data checks if any key eg "fund_name" or any
+        other keys, values are missing. If so it adds the "fund_name"
+        key etc & assigns value to default value.
+        """
         process_json_data = ProcessMagicLinkData.process_data(json_data)
         try:
             data = NotificationData.notification_data(process_json_data)
@@ -59,6 +65,15 @@ class ProcessNotificationData:
 
     @staticmethod
     def send_application(json_data):
+        """Function calls ApplicationData class object and assign
+        values to govuk-notify-service template as expected.
+        Uploads application contents ( questions/answers) from txt file
+        and attaches with the email response for applicant. Once the file has 
+        successfully delivered to applicant, it delivered the file from the service.
+
+        Raises error if any of the required  contents are incorrect 
+        or missing.
+        """
         try:
             data = ApplicationData.from_json(json_data)
             application_content_file = f"app/notification/application_submission/files/{data.application_id}.txt"  # noqa
