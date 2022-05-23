@@ -61,7 +61,7 @@ class ProcessNotificationData:
     def send_application(json_data):
         try:
             data = ApplicationData.from_json(json_data)
-            application_content_file = f"app/notification/application_submission/files/{data.   application_id}.txt"  # noqa
+            application_content_file = f"app/notification/application_submission/files/{data.application_id}.txt"  # noqa
 
             with open(
                 application_content_file,
