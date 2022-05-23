@@ -61,10 +61,10 @@ class ProcessNotificationData:
     def send_application(json_data):
         try:
             data = ApplicationData.from_json(json_data)
-            application_contents = f"app/notification/application_submission/files/{data.   application_id}.txt"  # noqa
+            application_content_file = f"app/notification/application_submission/files/{data.   application_id}.txt"  # noqa
 
             with open(
-                application_contents,
+                application_content_file,
                 "rb",
             ) as file:
 
@@ -79,7 +79,6 @@ class ProcessNotificationData:
                         "question": prepare_upload(file),
                     },
                 )
-                print("process_notification_data.py OK")
                 return response
 
         except (TypeError, KeyError, AttributeError):
@@ -92,8 +91,8 @@ class ProcessNotificationData:
             )
 
         finally:
-            if os.path.exists(application_contents):
-                os.remove(application_contents)
+            if os.path.exists(application_content_file):
+                os.remove(application_content_file)
             else:
                 print("The file does not exist")
 
