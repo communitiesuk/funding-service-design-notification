@@ -10,8 +10,9 @@ class ApplicationData:
     govuk-notify service.
 
     Returns:
-        Mapped data with govuk-notify service & creates txt file
-        for applicant to download the application contents.
+        mapped data object from application contents with
+        govuk-notify service template & creates txt file
+        for applicant to download.
     """
 
     contact_info: str
@@ -44,8 +45,10 @@ class ApplicationData:
         section_names = []
         sections = ApplicationData.get_sections(data)
         for section in sections:
-            section_names.append(section.get("section_name"))
+            section_names.append(section.get("section_name"))   
         return list(dict.fromkeys(section_names))
+
+       
 
     @staticmethod
     def get_questions_answers(data) -> dict:
