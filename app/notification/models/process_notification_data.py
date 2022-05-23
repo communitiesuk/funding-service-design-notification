@@ -32,9 +32,10 @@ class ProcessNotificationData:
 
     @staticmethod
     def send_magic_link(json_data):
-        """ Function send a magic link to the user.
+        """ Function send a magic link to the user along with other
+        expected contents.
 
-        IMPORTANT: process_json_data checks if any key eg "fund_name" or any
+        INFO: process_json_data checks if any key eg "fund_name" or any
         other keys, values are missing. If so it adds the "fund_name"
         key etc & assigns value to default value.
         """
