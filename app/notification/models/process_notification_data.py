@@ -17,17 +17,18 @@ notifications_client = NotificationsAPIClient(API_KEY)
 
 
 class ProcessNotificationData:
-    """ class calls notification-client library
-    with personalisation contents from govuk-notify service 
-    to map the data with relevant service. 
+    """class calls notification-client library
+    with personalisation contents from govuk-notify service
+    to map the data with relevant service.
 
     Raises:
-        NotificationError: raises error if required incoming data 
-        is not correctly formatted or missing. 
+        NotificationError: raises error if required incoming data
+        is not correctly formatted or missing.
 
     Returns:
         Mapped data with relevant govuk-notify-service.
     """
+
     @staticmethod
     def send_magic_link(json_data):
         process_json_data = ProcessMagicLinkData.process_data(json_data)
@@ -58,7 +59,6 @@ class ProcessNotificationData:
     @staticmethod
     def send_application(json_data):
         try:
-            # Add validations??
             data = ApplicationData.from_json(json_data)
 
             with open(
