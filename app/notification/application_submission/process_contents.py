@@ -5,12 +5,12 @@ from app.notification.models.notification import NotificationData
 
 @dataclass
 class ApplicationData:
-    """class process the application data to map with
+    """Class process the application data to map with
     APPLICATION_RECORD_OF_SUBMISSION template  from
     govuk-notify service.
 
     Returns:
-        mapped data object from application contents with
+        Mapped data object from application contents with
         govuk-notify service template & creates txt file
         for applicant to download.
     """
@@ -24,6 +24,16 @@ class ApplicationData:
 
     @staticmethod
     def from_json(data):
+        """Function calls ApplicationData class to map
+        the application contents.
+
+        Args:
+            data: Takes application data from NotificationData
+            class.
+
+        Returns:
+            ApplicationData object with application contents.
+        """
         json_data = NotificationData.notification_data(data)
         application = json_data.content["application"]
         return ApplicationData(
@@ -45,10 +55,8 @@ class ApplicationData:
         section_names = []
         sections = ApplicationData.get_sections(data)
         for section in sections:
-            section_names.append(section.get("section_name"))   
+            section_names.append(section.get("section_name"))
         return list(dict.fromkeys(section_names))
-
-       
 
     @staticmethod
     def get_questions_answers(data) -> dict:
