@@ -64,7 +64,7 @@ class ProcessNotificationData:
             with open(
                 f"app/notification/application_submission/files/{data.application_id}.txt",  # noqa
                 "rb",
-            ) as f:
+            ) as file:
 
                 response = notifications_client.send_email_notification(
                     email_address=data.contact_info,
@@ -74,7 +74,7 @@ class ProcessNotificationData:
                         "application id": data.application_id,
                         "date submitted": data.submission_date,
                         "round name": data.fund_round,
-                        "question": prepare_upload(f),
+                        "question": prepare_upload(file),
                     },
                 )
                 print("process_notification_data.py OK")
