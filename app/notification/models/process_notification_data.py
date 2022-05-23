@@ -21,13 +21,11 @@ class ProcessNotificationData:
     """class calls notification-client library
     with personalisation contents from govuk-notify service
     to map the data with relevant service.
+    Returns mapped data object with relevant govuk-notify-service.
 
     Raises:
         NotificationError: raises error if required incoming data
         is not correctly formatted or missing.
-
-    Returns:
-        Mapped data with relevant govuk-notify-service.
     """
 
     @staticmethod
