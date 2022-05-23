@@ -1,4 +1,3 @@
-import json
 from dataclasses import dataclass
 
 from app.notification.models.notification import NotificationData
@@ -6,14 +5,15 @@ from app.notification.models.notification import NotificationData
 
 @dataclass
 class ApplicationData:
-    """ class process the application data to map with 
-    APPLICATION_RECORD_OF_SUBMISSION template  from 
+    """class process the application data to map with
+    APPLICATION_RECORD_OF_SUBMISSION template  from
     govuk-notify service.
 
     Returns:
-        Mapped data with govuk-notify service & creates txt file 
+        Mapped data with govuk-notify service & creates txt file
         for applicant to download the application contents.
     """
+
     contact_info: str
     questions: dict
     submission_date: str
@@ -67,9 +67,12 @@ class ApplicationData:
     @staticmethod
     def create_text_file(data):
         application_id = data.content["application"]
+        json_file = ApplicationData.get_questions_answers(data)
 
         with open(
             f"app/notification/application_submission/files/{application_id['id']}.txt",  # noqa
             "w",
+            encoding="utf-8",
         ) as file:
-            file.write(json.dumps(ApplicationData.get_questions_answers(data)))
+            for question, answer in json_file.items():
+                file.write("%s: %s\n" % (question, answer))
