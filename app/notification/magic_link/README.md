@@ -21,4 +21,3 @@ To post data, use /send endpoint with POST method. Data must be in the following
         "fund_name": "Funding service",
     },
 }
-s
