@@ -26,7 +26,7 @@ To post data, use /send endpoint with POST method. Data must be in the following
             "fund_id": "fund-a",
             "round_id": "summer",
             "project_name": "Funding service",
-            "date_submitted": "21/05/2022",
+            "date_submitted": "2022-05-14 10:20:44",
             "started_at": "2022-05-20 14:47:12",
             "last_edited": null,
             "sections": [
