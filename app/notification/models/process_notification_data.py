@@ -1,4 +1,5 @@
 import json
+import os
 
 from app.config import API_KEY
 from app.config import APPLICATION_RECORD_TEMPLATE_ID
@@ -60,9 +61,10 @@ class ProcessNotificationData:
     def send_application(json_data):
         try:
             data = ApplicationData.from_json(json_data)
+            application_contents = f"app/notification/application_submission/files/{data.   application_id}.txt"  # noqa
 
             with open(
-                f"app/notification/application_submission/files/{data.application_id}.txt",  # noqa
+                application_contents,
                 "rb",
             ) as file:
 
@@ -88,6 +90,12 @@ class ProcessNotificationData:
                     f" notification data.\n\n Example data: {example_data}"
                 )
             )
+
+        finally:
+            if os.path.exists(application_contents):
+                os.remove(application_contents)
+            else:
+                print("The file does not exist")
 
     @staticmethod
     def send_notification(json_data):
