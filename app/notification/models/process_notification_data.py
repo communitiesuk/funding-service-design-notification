@@ -68,7 +68,7 @@ class ProcessNotificationData:
         values to govuk-notify-service template as expected.
         Uploads application contents ( questions/answers) from txt file
         and attaches with the email response for applicant. Once the file has 
-        successfully delivered to applicant, it delivered the file from the service.
+        successfully delivered to applicant, file get deleted from the service.
 
         Raises error if any of the required  contents are incorrect 
         or missing.
