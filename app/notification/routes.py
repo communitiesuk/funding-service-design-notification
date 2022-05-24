@@ -23,7 +23,7 @@ notification_bp = Blueprint(
 
 
 @notification_bp.route("", methods=["POST"])
-def send_notification() -> dict:
+def send_email() -> dict:
     """
     route accepts POST request with json data.
     Json data integrates with gov-uk notify service
