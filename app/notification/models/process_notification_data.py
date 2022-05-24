@@ -30,7 +30,7 @@ class ProcessNotificationData:
 
     @staticmethod
     def send_magic_link(json_data):
-        """ Function send a magic link to the user along with other
+        """Function send a magic link to the user along with other
         expected contents.
 
         INFO: process_json_data checks if any key eg "fund_name" or any
@@ -67,10 +67,10 @@ class ProcessNotificationData:
         """Function calls ApplicationData class object and assign
         values to govuk-notify-service template as expected.
         Uploads application contents ( questions/answers) from txt file
-        and attaches with the email response for applicant. Once the file has 
+        and attaches with the email response for applicant. Once the file has
         successfully delivered to applicant, file get deleted from the service.
 
-        Raises error if any of the required  contents are incorrect 
+        Raises error if any of the required  contents are incorrect
         or missing.
         """
         try:

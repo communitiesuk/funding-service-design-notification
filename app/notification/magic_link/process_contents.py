@@ -12,7 +12,7 @@ class ProcessMagicLinkData:
     Returns: notification data or updated notification data
     to map out with expected contents. If any of the key such as
     "fund_name" is missing from expected contents, it adds the the
-    key eg "fund_name" and assign value to default value. 
+    key eg "fund_name" and assign value to default value.
     """
 
     @staticmethod
