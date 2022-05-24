@@ -86,4 +86,4 @@ class ApplicationData:
             encoding="utf-8",
         ) as file:
             for question, answer in json_file.items():
-                file.write("%s: %s\n" % (question, answer))
+                file.write("-%s\n %s\n\n" % (question, answer))
