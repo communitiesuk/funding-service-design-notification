@@ -58,7 +58,7 @@ class ProcessNotificationData:
             raise NotificationError(
                 message=(
                     "Incorrect data, please check the contents of the"
-                    f" notification data.\n\n Example data: {example_data}"
+                    f" magic link data.\n\n Example data: {example_data}"
                 )
             )
 
@@ -100,7 +100,7 @@ class ProcessNotificationData:
             raise NotificationError(
                 message=(
                     "Incorrect data, please check the contents of the"
-                    f" notification data.\n\n Example data: {example_data}"
+                    f" application data.\n\n Example data: {example_data}"
                 )
             )
 
