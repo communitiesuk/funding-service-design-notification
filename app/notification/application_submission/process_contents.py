@@ -46,7 +46,7 @@ class ApplicationData:
         application = json_data.content["application"]
         return ApplicationData(
             contact_info=json_data.contact_info,
-            questions=ApplicationData.create_string_object(json_data),
+            questions=ApplicationData.create_memory_object(json_data),
             submission_date=application.get("date_submitted"),
             fund_name=application.get("project_name"),
             fund_round=application.get("round_id"),
