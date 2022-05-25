@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from datetime import datetime
+from io import StringIO
 
 from app.notification.models.notification import NotificationData
 
@@ -22,6 +24,12 @@ class ApplicationData:
     fund_round: dict
     application_id: dict
 
+    @property
+    def format_submission_date(self):
+        return datetime.strptime(
+            self.submission_date, "%Y-%m-%d %H:%M:%S"
+        ).strftime("%Y-%m-%d")
+
     @staticmethod
     def from_json(data):
         """Function calls ApplicationData class to map
@@ -38,7 +46,7 @@ class ApplicationData:
         application = json_data.content["application"]
         return ApplicationData(
             contact_info=json_data.contact_info,
-            questions=ApplicationData.create_text_file(json_data),
+            questions=ApplicationData.create_string_object(json_data),
             submission_date=application.get("date_submitted"),
             fund_name=application.get("project_name"),
             fund_round=application.get("round_id"),
@@ -72,18 +80,15 @@ class ApplicationData:
                             question_answers[fields["title"]] = fields.get(
                                 "answer"
                             )
-
         return question_answers
 
     @staticmethod
-    def create_text_file(data):
-        application_id = data.content["application"]
+    def create_memory_object(data):
+        """Function creates a memory object for question & answers."""
         json_file = ApplicationData.get_questions_answers(data)
+        output = StringIO()
+        for question, answer in json_file.items():
+            output.write(f"- {question}: ")
+            output.write(f"{answer}\n")
 
-        with open(
-            f"app/notification/application_submission/files/{application_id['id']}.txt",  # noqa
-            "w",
-            encoding="utf-8",
-        ) as file:
-            for question, answer in json_file.items():
-                file.write("-%s\n %s\n\n" % (question, answer))
+        return output
