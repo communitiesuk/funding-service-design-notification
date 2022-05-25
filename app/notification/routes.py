@@ -4,7 +4,7 @@ from app.config import API_KEY
 from app.notification.custom_exceptions import NotificationError
 from app.notification.models.data import get_example_data
 from app.notification.models.process_notification_data import (
-    ProcessNotificationData,
+    NotificationOperations,
 )
 from app.notification.template_types import email_recipient
 from flask import Blueprint
@@ -40,7 +40,7 @@ def send_email() -> Response:
             notify_response = email_recipient(
                 data=notification_data,
                 example_data=example_data,
-                notification_class=ProcessNotificationData,
+                notification_class=NotificationOperations,
             )
             return make_response(
                 {"notify_response": notify_response, "status": "ok"}, 200
