@@ -46,7 +46,7 @@ class ApplicationData:
         application = json_data.content["application"]
         return ApplicationData(
             contact_info=json_data.contact_info,
-            questions=ApplicationData.create_memory_object(json_data),
+            questions=ApplicationData.process_questions_and_answers(json_data),
             submission_date=application.get("date_submitted"),
             fund_name=application.get("project_name"),
             fund_round=application.get("round_id"),
@@ -67,7 +67,7 @@ class ApplicationData:
         return list(dict.fromkeys(section_names))
 
     @staticmethod
-    def get_questions_answers(data) -> dict:
+    def get_questions_and_answers(data) -> dict:
         question_answers = {}
         sections = ApplicationData.get_sections(data)
         section_names = ApplicationData.get_section_names(data)
@@ -83,12 +83,11 @@ class ApplicationData:
         return question_answers
 
     @staticmethod
-    def create_memory_object(data):
+    def process_questions_and_answers(data) -> str:
         """Function creates a memory object for question & answers."""
-        json_file = ApplicationData.get_questions_answers(data)
+        json_file = ApplicationData.get_questions_and_answers(data)
         output = StringIO()
         for question, answer in json_file.items():
             output.write(f"- {question}: ")
             output.write(f"{answer}\n")
-
         return output.getvalue()
