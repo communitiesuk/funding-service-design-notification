@@ -17,8 +17,7 @@ notifications_client = NotificationsAPIClient(API_KEY)
 
 
 class NotificationOperations:
-    """Class holds notification operations
-    """
+    """Class holds notification operations"""
 
     @staticmethod
     def send_magic_link(json_data):
@@ -57,7 +56,7 @@ class NotificationOperations:
 
     @staticmethod
     def send_application(json_data):
-        """ Function maps data eg. questions/answers along with other
+        """Function maps data eg. questions/answers along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
 
