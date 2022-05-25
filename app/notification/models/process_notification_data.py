@@ -1,5 +1,4 @@
 import json
-import os
 
 from app.config import API_KEY
 from app.config import APPLICATION_RECORD_TEMPLATE_ID
@@ -12,7 +11,8 @@ from app.notification.magic_link.process_contents import ProcessMagicLinkData
 from app.notification.models.data import get_example_data
 from app.notification.models.notification import NotificationData
 from notifications_python_client import NotificationsAPIClient
-from notifications_python_client import prepare_upload
+
+# from notifications_python_client import prepare_upload
 
 notifications_client = NotificationsAPIClient(API_KEY)
 
@@ -66,34 +66,25 @@ class ProcessNotificationData:
     def send_application(json_data):
         """Function calls ApplicationData class object and assign
         values to govuk-notify-service template as expected.
-        Uploads application contents ( questions/answers) from txt file
-        and attaches with the email response for applicant. Once the file has
-        successfully delivered to applicant, file get deleted from the service.
 
         Raises error if any of the required  contents are incorrect
         or missing.
         """
         try:
             data = ApplicationData.from_json(json_data)
-            application_content_file = f"app/notification/application_submission/files/{data.application_id}.txt"  # noqa
-
-            with open(
-                application_content_file,
-                "rb",
-            ) as file:
-
-                response = notifications_client.send_email_notification(
-                    email_address=data.contact_info,
-                    template_id=APPLICATION_RECORD_TEMPLATE_ID,
-                    personalisation={
-                        "name of fund": data.fund_name,
-                        "application id": data.application_id,
-                        "date submitted": data.submission_date,
-                        "round name": data.fund_round,
-                        "question": prepare_upload(file),
-                    },
-                )
-                return response
+            questions_answers = data.questions
+            response = notifications_client.send_email_notification(
+                email_address=data.contact_info,
+                template_id=APPLICATION_RECORD_TEMPLATE_ID,
+                personalisation={
+                    "name of fund": data.fund_name,
+                    "application id": data.application_id,
+                    "date submitted": data.format_submission_date,
+                    "round name": data.fund_round,
+                    "question": questions_answers.getvalue(),
+                },
+            )
+            return response
 
         except (TypeError, KeyError, AttributeError):
             example_data = json.dumps(get_example_data(), indent=2)
@@ -103,12 +94,6 @@ class ProcessNotificationData:
                     f" application data.\n\n Example data: {example_data}"
                 )
             )
-
-        finally:
-            if os.path.exists(application_content_file):
-                os.remove(application_content_file)
-            else:
-                print("The file does not exist")
 
     @staticmethod
     def send_notification(json_data):
