@@ -1,5 +1,7 @@
 import json
 
+from requests import Response
+
 from app.config import API_KEY
 from app.notification.custom_exceptions import NotificationError
 from app.notification.models.data import get_example_data
@@ -23,7 +25,7 @@ notification_bp = Blueprint(
 
 
 @notification_bp.route("", methods=["POST"])
-def send_email():
+def send_email() -> Response:
     """
     route accepts POST request with json data.
     Json data integrates with gov-uk notify service
