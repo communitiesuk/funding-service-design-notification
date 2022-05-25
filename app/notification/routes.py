@@ -3,12 +3,15 @@ import json
 from app.config import API_KEY
 from app.notification.custom_exceptions import NotificationError
 from app.notification.models.data import get_example_data
-from app.notification.models.notification import Notification
+from app.notification.models.process_notification_data import (
+    NotificationOperations,
+)
 from app.notification.template_types import email_recipient
 from flask import Blueprint
 from flask import make_response
 from flask import request
 from notifications_python_client.notifications import NotificationsAPIClient
+from requests import Response
 
 notifications_client = NotificationsAPIClient(API_KEY)
 
@@ -21,7 +24,7 @@ notification_bp = Blueprint(
 
 
 @notification_bp.route("", methods=["POST"])
-def send_notification() -> dict:
+def send_email() -> Response:
     """
     route accepts POST request with json data.
     Json data integrates with gov-uk notify service
@@ -37,7 +40,7 @@ def send_notification() -> dict:
             notify_response = email_recipient(
                 data=notification_data,
                 example_data=example_data,
-                notification_class=Notification,
+                notification_class=NotificationOperations,
             )
             return make_response(
                 {"notify_response": notify_response, "status": "ok"}, 200
