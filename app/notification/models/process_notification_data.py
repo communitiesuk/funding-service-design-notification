@@ -12,7 +12,6 @@ from app.notification.models.data import get_example_data
 from app.notification.models.notification import NotificationData
 from notifications_python_client import NotificationsAPIClient
 
-# from notifications_python_client import prepare_upload
 
 notifications_client = NotificationsAPIClient(API_KEY)
 
