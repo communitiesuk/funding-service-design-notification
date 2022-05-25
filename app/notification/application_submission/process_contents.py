@@ -91,4 +91,4 @@ class ApplicationData:
             output.write(f"- {question}: ")
             output.write(f"{answer}\n")
 
-        return output
+        return output.getvalue()

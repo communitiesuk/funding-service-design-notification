@@ -71,7 +71,6 @@ class ProcessNotificationData:
         """
         try:
             data = ApplicationData.from_json(json_data)
-            questions_answers = data.questions
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=APPLICATION_RECORD_TEMPLATE_ID,
@@ -80,7 +79,7 @@ class ProcessNotificationData:
                     "application id": data.application_id,
                     "date submitted": data.format_submission_date,
                     "round name": data.fund_round,
-                    "question": questions_answers.getvalue(),
+                    "question": data.questions,
                 },
             )
             return response

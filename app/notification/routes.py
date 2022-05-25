@@ -1,7 +1,5 @@
 import json
 
-from requests import Response
-
 from app.config import API_KEY
 from app.notification.custom_exceptions import NotificationError
 from app.notification.models.data import get_example_data
@@ -13,6 +11,7 @@ from flask import Blueprint
 from flask import make_response
 from flask import request
 from notifications_python_client.notifications import NotificationsAPIClient
+from requests import Response
 
 notifications_client = NotificationsAPIClient(API_KEY)
 
