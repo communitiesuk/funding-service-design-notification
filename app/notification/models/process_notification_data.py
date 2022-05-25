@@ -16,21 +16,15 @@ from notifications_python_client import NotificationsAPIClient
 notifications_client = NotificationsAPIClient(API_KEY)
 
 
-class ProcessNotificationData:
-    """class calls notification-client library
-    with personalisation contents from govuk-notify service
-    to map the data with relevant service.
-    Returns mapped data object with relevant govuk-notify-service.
-
-    Raises:
-        NotificationError: raises error if required incoming data
-        is not correctly formatted or missing.
+class NotificationOperations:
+    """Class holds notification operations
     """
 
     @staticmethod
     def send_magic_link(json_data):
-        """Function send a magic link to the user along with other
-        expected contents.
+        """Function maps data eg. magic link along with other
+        expected contents to the user as expected by the
+        govuk-notify-service template.
 
         INFO: process_json_data checks if any key eg "fund_name" or any
         other keys, values are missing. If so it adds the "fund_name"
@@ -63,8 +57,9 @@ class ProcessNotificationData:
 
     @staticmethod
     def send_application(json_data):
-        """Function calls ApplicationData class object and assign
-        values to govuk-notify-service template as expected.
+        """ Function maps data eg. questions/answers along with other
+        expected contents to the user as expected by the
+        govuk-notify-service template.
 
         Raises error if any of the required  contents are incorrect
         or missing.
