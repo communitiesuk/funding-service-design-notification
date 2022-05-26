@@ -43,7 +43,9 @@ Enter the virtual environment as described above, then:
 
     flask run
 
-### Set-up an API KEY that requires to connect with the govuk-notify-service.
+    Note: This service is an internal service so it doesn't have the frontend.
+
+### Set-up an API KEY that requires to connect with the govuk-notify-service
 
     Click on the link & follow the instructions to set-up an API KEY.
     https://docs.notifications.service.gov.uk/python.html#api-keys

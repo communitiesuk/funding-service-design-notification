@@ -1,31 +1,14 @@
 from flask import Flask
 from flask_compress import Compress
 from flask_talisman import Talisman
-from jinja2 import ChoiceLoader
-from jinja2 import PackageLoader
-from jinja2 import PrefixLoader
-
-# from flask_wtf.csrf import CSRFProtect
 
 
 def create_app() -> Flask:
 
     # ---- SETUP STATIC URL PATH.
-    flask_app = Flask(__name__, static_url_path="/assets")
+    flask_app = Flask(__name__)
 
     flask_app.config.from_pyfile("config.py")
-
-    flask_app.jinja_loader = ChoiceLoader(
-        [
-            PackageLoader("app"),
-            PrefixLoader(
-                {"govuk_frontend_jinja": PackageLoader("govuk_frontend_jinja")}
-            ),
-        ]
-    )
-
-    flask_app.jinja_env.trim_blocks = True
-    flask_app.jinja_env.lstrip_blocks = True
 
     # ---- SETUP SECURITY CONFIGURATION & CSRF PROTECTION.
     csp = {
@@ -58,10 +41,6 @@ def create_app() -> Flask:
         force_https=False,
     )
 
-    # csrf = CSRFProtect()
-
-    # csrf.init_app(flask_app)
-
     # ---- SETUP GLOBAL CONSTANTS (to be accessed from the app).
     @flask_app.context_processor
     def inject_global_constants():
@@ -76,18 +55,6 @@ def create_app() -> Flask:
         )
 
     # ---- SETUP BLUEPRINT ROUTES.
-
-    # import default error route.
-    from app.default.error_routes import (
-        default_bp,
-        not_found,
-        internal_server_error,
-    )
-
-    # register default error route (blueprint from app/default/error_routes).
-    flask_app.register_blueprint(default_bp)
-    flask_app.register_error_handler(404, not_found)
-    flask_app.register_error_handler(500, internal_server_error)
 
     # import notification route.
     from app.notification.routes import notification_bp
