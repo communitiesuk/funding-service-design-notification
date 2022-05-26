@@ -8,12 +8,7 @@ applications:
   routes:
   - route: funding-service-design-notification-dev.apps.internal
   env:
-    FUND_STORE_API_HOST: https://funding-service-design-fund-store-dev.london.cloudapps.digital
-    ROUND_STORE_API_HOST: https://funding-service-design-round-store-dev.london.cloudapps.digital
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
-    GOV_NOTIFY_TEMPLATE_KEY: ((GOV_NOTIFY_TEMPLATE_KEY))
-    GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS: ((GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS))
-
 
 - name: funding-service-design-notification-uat
   memory: 64M
@@ -24,9 +19,6 @@ applications:
   - route: funding-service-design-notification-uat.apps.internal
   env:
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
-    GOV_NOTIFY_TEMPLATE_KEY: ((GOV_NOTIFY_TEMPLATE_KEY))
-    GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS: ((GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS))
-
 
 - name: funding-service-design-notification-test
   memory: 64M
@@ -37,5 +29,3 @@ applications:
   - route: funding-service-design-notification-test.apps.internal
   env:
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
-    GOV_NOTIFY_TEMPLATE_KEY: ((GOV_NOTIFY_TEMPLATE_KEY))
-    GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS: ((GOV_NOTIFY_DEFAULT_EMAIL_ADDRESS))
