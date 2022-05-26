@@ -35,6 +35,11 @@ From the top-level directory enter the command to install pip and the dependenci
 
     python3 -m pip install --upgrade pip && pip install -r requirements.txt
 
+### Set-up an API KEY that requires to connect with the govuk-notify-service.
+
+    Click on the link & follow the instructions to set-up an API KEY.
+    https://docs.notifications.service.gov.uk/python.html#api-keys
+
 ## How to use
 Enter the virtual environment as described above, then:
 
