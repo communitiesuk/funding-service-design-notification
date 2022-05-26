@@ -50,6 +50,9 @@ Enter the virtual environment as described above, then:
     Click on the link & follow the instructions to set-up an API KEY.
     https://docs.notifications.service.gov.uk/python.html#api-keys
 
+    Set it as an environment variable e.g.
+    export TEST_API_KEY= "api-key-value"
+
 ## How to post data for notification service.
 
 Go to relevant service. See example
