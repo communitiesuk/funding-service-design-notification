@@ -21,7 +21,7 @@ def test_application_contents_with_expected_data(flask_test_client):
         json=expected_application_data,
         follow_redirects=True,
     )
-    assert b"List of questions & answers for application" in response.data
+    assert b"Jack-Simon" in response.data
 
 
 @pytest.mark.usefixtures("live_server")

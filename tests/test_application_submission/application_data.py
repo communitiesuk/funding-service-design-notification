@@ -25,7 +25,7 @@ expected_application_data = {
                                     "key": "application-name",
                                     "title": "Applicant name",
                                     "type": "text",
-                                    "answer": "Jack Simon",
+                                    "answer": "Jack-Simon",
                                 },
                             ],
                             "category": None,
