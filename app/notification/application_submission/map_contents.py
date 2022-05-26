@@ -2,7 +2,9 @@ from dataclasses import dataclass
 from datetime import datetime
 from io import StringIO
 
-from app.notification.models.notification import NotificationData
+from app.notification.notification_operations.initialise_data import (
+    NotificationData,
+)
 
 
 @dataclass

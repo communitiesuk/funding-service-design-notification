@@ -3,13 +3,17 @@ import json
 from app.config import API_KEY
 from app.config import APPLICATION_RECORD_TEMPLATE_ID
 from app.config import MAGIC_LINK_TEMPLATE_ID
-from app.notification.application_submission.process_contents import (
+from app.notification.application_submission.map_contents import (
     ApplicationData,
 )
-from app.notification.custom_exceptions import NotificationError
-from app.notification.magic_link.process_contents import ProcessMagicLinkData
-from app.notification.models.data import get_example_data
-from app.notification.models.notification import NotificationData
+from app.notification.magic_link.map_contents import ProcessMagicLinkData
+from app.notification.notification_operations.custom_exceptions import (
+    NotificationError,
+)
+from app.notification.notification_operations.data import get_example_data
+from app.notification.notification_operations.initialise_data import (
+    NotificationData,
+)
 from notifications_python_client import NotificationsAPIClient
 
 

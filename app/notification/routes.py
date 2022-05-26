@@ -1,12 +1,16 @@
 import json
 
 from app.config import API_KEY
-from app.notification.custom_exceptions import NotificationError
-from app.notification.models.data import get_example_data
-from app.notification.models.process_notification_data import (
+from app.notification.notification_operations.custom_exceptions import (
+    NotificationError,
+)
+from app.notification.notification_operations.data import get_example_data
+from app.notification.notification_operations.process_data import (
     NotificationOperations,
 )
-from app.notification.template_types import email_recipient
+from app.notification.notification_operations.template_types import (
+    email_recipient,
+)
 from flask import Blueprint
 from flask import make_response
 from flask import request

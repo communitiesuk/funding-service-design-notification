@@ -8,9 +8,11 @@ Repo for the funding service design notification.
 Built with Flask.
 
 ## Follow main README.md to install & run flask app.
+
 path: FUNDING-SERVICE-DESIGN-NOTIFICATION/README.md
 
 ## How to post data for MAGIC_LINK
+
 To post data, use /send endpoint with POST method. Data must be in the following format.
 
 {

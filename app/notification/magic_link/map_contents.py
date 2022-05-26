@@ -1,12 +1,14 @@
 import json
 
-from app.notification.custom_exceptions import NotificationError
-from app.notification.models.data import get_example_data
+from app.notification.notification_operations.custom_exceptions import (
+    NotificationError,
+)
+from app.notification.notification_operations.data import get_example_data
 
 
 class ProcessMagicLinkData:
     """
-    Class is set up for processing the data
+    Class is set up to map data
     from notification data contents.
 
     Returns: notification data or updated notification data

@@ -15,6 +15,14 @@ class NotificationData:
 
     @staticmethod
     def notification_data(data):
+        """
+        Function initialise the data by checking the required format
+        of the data which must contain keys("type", "content", "to")
+        & required values then
+        Function will be  called in relevant services to map
+        the incoming data from external services otherwise return the
+        error by relevant service based on given "template_type".
+        """
         if "" not in data.values() and None not in data.values():
             notification_data = NotificationData(
                 template_type=data["type"],
