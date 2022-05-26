@@ -1,7 +1,7 @@
 {% from "govuk_frontend_jinja/components/header/macro.html" import govukHeader -%}
 
 {{ govukHeader({
-  'homepageUrl': url_for('notification_bp.send_notification'),
+  'homepageUrl': url_for('notification_bp.send_email'),
   'serviceName': service_title,
-  'serviceUrl': url_for('notification_bp.send_notification')
+  'serviceUrl': url_for('notification_bp.send_email')
 }) }}
