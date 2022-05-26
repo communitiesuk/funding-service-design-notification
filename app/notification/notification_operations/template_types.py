@@ -1,7 +1,7 @@
 from app.notification.notification_operations.custom_exceptions import NotificationError # noqa
 
 
-def email_recipient(data: dict, example_data: dict, notification_class):
+def email_recipient(data: dict, notification_class):
     """
     Function matches with the correct template type &
     calls the relevant function from process_data.py.
@@ -22,6 +22,6 @@ def email_recipient(data: dict, example_data: dict, notification_class):
                     "Incorrect type, please check the key 'type' & other keys,"
                     f" values from notification data: {data}.\n\nExpected"
                     " type:('MAGIC_LINK' or 'NOTIFICATION' or 'REMINDER' or"
-                    f" 'AWARD' or 'APPLICATION_RECORD_OF_SUBMISSION')\n\nExample data: {example_data}" # noqa
+                    f" 'AWARD' or 'APPLICATION_RECORD_OF_SUBMISSION')." # noqa
                 )
             )

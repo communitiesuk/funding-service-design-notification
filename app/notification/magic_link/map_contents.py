@@ -1,9 +1,9 @@
-import json
-
 from app.notification.notification_operations.custom_exceptions import (
     NotificationError,
 )
-from app.notification.notification_operations.data import get_example_data
+from tests.test_magic_link.magic_link_data import (
+    expected_magic_link_data,
+)
 
 
 class ProcessMagicLinkData:
@@ -26,10 +26,10 @@ class ProcessMagicLinkData:
             return data
 
         except KeyError:
-            example_data = json.dumps(get_example_data(), indent=2)
             raise NotificationError(
                 message=(
-                    "Incorrect data, please check the contents of the"
-                    f" notification data.\n\n Example data: {example_data} "
+                    "Incorrect MAGIC LINK data, please check the contents of"
+                    " the MAGIC LINK data. \nExample data:"
+                    f"{expected_magic_link_data}"
                 )
             )

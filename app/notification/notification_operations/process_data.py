@@ -1,5 +1,3 @@
-import json
-
 from app.config import API_KEY
 from app.config import APPLICATION_RECORD_TEMPLATE_ID
 from app.config import MAGIC_LINK_TEMPLATE_ID
@@ -10,12 +8,16 @@ from app.notification.magic_link.map_contents import ProcessMagicLinkData
 from app.notification.notification_operations.custom_exceptions import (
     NotificationError,
 )
-from app.notification.notification_operations.data import get_example_data
 from app.notification.notification_operations.initialise_data import (
     NotificationData,
 )
 from notifications_python_client import NotificationsAPIClient
-
+from tests.test_application_submission.application_data import (
+    expected_application_data,
+)
+from tests.test_magic_link.magic_link_data import (
+    expected_magic_link_data,
+)
 
 notifications_client = NotificationsAPIClient(API_KEY)
 
@@ -48,13 +50,12 @@ class NotificationOperations:
                 },
             )
             return response
-
-        except (TypeError, KeyError, AttributeError):
-            example_data = json.dumps(get_example_data(), indent=2)
+        except:  # noqa
             raise NotificationError(
                 message=(
-                    "Incorrect data, please check the contents of the"
-                    f" magic link data.\n\n Example data: {example_data}"
+                    "Incorrect MAGIC LINK data, please check the contents of"
+                    " the MAGIC LINK data. \nExample data:"
+                    f" {expected_magic_link_data}"
                 )
             )
 
@@ -82,12 +83,12 @@ class NotificationOperations:
             )
             return response
 
-        except (TypeError, KeyError, AttributeError):
-            example_data = json.dumps(get_example_data(), indent=2)
+        except:  # noqa
             raise NotificationError(
                 message=(
-                    "Incorrect data, please check the contents of the"
-                    f" application data.\n\n Example data: {example_data}"
+                    "Incorrect APPLICATION data, please check the contents of"
+                    " the APPLICATION data. \nExample data:"
+                    f" {expected_application_data}"
                 )
             )
 

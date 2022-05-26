@@ -57,7 +57,7 @@ def create_app() -> Flask:
     # ---- SETUP BLUEPRINT ROUTES.
 
     # import notification route.
-    from app.notification.routes import notification_bp
+    from app.notification.notification_operations.routes import notification_bp
 
     # register notification route (blueprint from app/notification/routes).
     flask_app.register_blueprint(notification_bp)

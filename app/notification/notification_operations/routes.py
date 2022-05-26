@@ -1,10 +1,7 @@
-import json
-
 from app.config import API_KEY
 from app.notification.notification_operations.custom_exceptions import (
     NotificationError,
 )
-from app.notification.notification_operations.data import get_example_data
 from app.notification.notification_operations.process_data import (
     NotificationOperations,
 )
@@ -37,13 +34,11 @@ def send_email() -> Response:
     Returns:
         dict: if data received, recipient's contact info & access link.
     """
-    example_data = json.dumps(get_example_data(), indent=2)
     notification_data = request.get_json()
     if notification_data:
         try:
             notify_response = email_recipient(
                 data=notification_data,
-                example_data=example_data,
                 notification_class=NotificationOperations,
             )
             return make_response(
@@ -60,8 +55,7 @@ def send_email() -> Response:
                 "message": (
                     "Bad request. No data has been received.Please check the"
                     " contents of the notification data:"
-                    f"{notification_data}\n\nExample data:"
-                    f"{example_data})"
+                    f"{notification_data}"
                 ),
                 "status": "Error",
             },
