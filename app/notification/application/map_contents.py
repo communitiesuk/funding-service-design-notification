@@ -31,22 +31,22 @@ class Application:
         ).strftime("%Y-%m-%d")
 
     @staticmethod
-    def from_json(data):
+    def from_json(json_data):
         """Function calls ApplicationData class to map
         the application contents.
 
         Args:
-            data: Takes application data from NotificationData
-            class.
+            data: Takes incoming json_data & converts into class object
+            from Notification.from_json
 
         Returns:
             ApplicationData object with application contents.
         """
-        json_data = Notification.from_json(data)
-        application = json_data.content["application"]
+        data = Notification.from_json(json_data)
+        application = data.content["application"]
         return Application(
-            contact_info=json_data.contact_info,
-            questions=Application.process_questions_and_answers(json_data),
+            contact_info=data.contact_info,
+            questions=Application.process_questions_and_answers(data),
             submission_date=application.get("date_submitted"),
             fund_name=application.get("project_name"),
             fund_round=application.get("round_id"),
