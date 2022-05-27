@@ -1,8 +1,8 @@
 import pytest
-from tests.test_application_submission.application_data import (
+from tests.test_application.application_data import (
     expected_application_data,
 )
-from tests.test_application_submission.application_data import (
+from tests.test_application.application_data import (
     unexpected_application_data,
 )
 

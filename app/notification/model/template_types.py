@@ -1,4 +1,4 @@
-from app.notification.notification_operations.custom_exceptions import NotificationError # noqa
+from app.notification.model.exceptions import NotificationError
 
 
 def email_recipient(data: dict, notification_class):

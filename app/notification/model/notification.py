@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class NotificationData:
+class Notification:
     """
     Class processes notification data.
     Returns:
@@ -14,7 +14,7 @@ class NotificationData:
     content: str
 
     @staticmethod
-    def notification_data(data):
+    def from_json(data):
         """
         Function initialise the data by checking the required format
         of the data which must contain keys("type", "content", "to")
@@ -24,7 +24,7 @@ class NotificationData:
         error by relevant service based on given "template_type".
         """
         if "" not in data.values() and None not in data.values():
-            notification_data = NotificationData(
+            notification_data = Notification(
                 template_type=data["type"],
                 contact_info=data["to"],
                 content=data["content"],

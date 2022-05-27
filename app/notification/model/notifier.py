@@ -1,18 +1,14 @@
 from app.config import API_KEY
 from app.config import APPLICATION_RECORD_TEMPLATE_ID
 from app.config import MAGIC_LINK_TEMPLATE_ID
-from app.notification.application_submission.map_contents import (
-    ApplicationData,
+from app.notification.application.map_contents import (
+    Application,
 )
 from app.notification.magic_link.map_contents import ProcessMagicLinkData
-from app.notification.notification_operations.custom_exceptions import (
-    NotificationError,
-)
-from app.notification.notification_operations.initialise_data import (
-    NotificationData,
-)
+from app.notification.model.exceptions import NotificationError
+from app.notification.model.notification import Notification
 from notifications_python_client import NotificationsAPIClient
-from tests.test_application_submission.application_data import (
+from tests.test_application.application_data import (
     expected_application_data,
 )
 from tests.test_magic_link.magic_link_data import (
@@ -22,7 +18,7 @@ from tests.test_magic_link.magic_link_data import (
 notifications_client = NotificationsAPIClient(API_KEY)
 
 
-class NotificationOperations:
+class Notifier:
     """Class holds notification operations"""
 
     @staticmethod
@@ -37,7 +33,7 @@ class NotificationOperations:
         """
         process_json_data = ProcessMagicLinkData.process_data(json_data)
         try:
-            data = NotificationData.notification_data(process_json_data)
+            data = Notification.from_json(process_json_data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=MAGIC_LINK_TEMPLATE_ID,
@@ -69,7 +65,7 @@ class NotificationOperations:
         or missing.
         """
         try:
-            data = ApplicationData.from_json(json_data)
+            data = Application.from_json(json_data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=APPLICATION_RECORD_TEMPLATE_ID,
