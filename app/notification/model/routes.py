@@ -1,6 +1,5 @@
 from app.config import API_KEY
 from app.notification.model.exceptions import NotificationError
-from app.notification.model.notifier import Notifier
 from app.notification.model.template_types import email_recipient
 from flask import Blueprint
 from flask import make_response
@@ -31,14 +30,12 @@ def send_email() -> Response:
     notification_data = request.get_json()
     if notification_data:
         try:
-            notify_response = email_recipient(
-                data=notification_data,
-                notification_class=Notifier,
-            )
+            notify_response = email_recipient(notification_data)
             return make_response(
                 {"notify_response": notify_response, "status": "ok"}, 200
             )
         except NotificationError as e:
+
             return make_response(
                 {"message": e.message, "status": "Error"}, 400
             )
