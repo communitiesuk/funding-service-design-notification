@@ -17,7 +17,7 @@ def test_magic_link_contents_with_expected_data(flask_test_client):
         json=expected_magic_link_data,
         follow_redirects=True,
     )
-    assert b"MAGIC LINK GOES HERE" in response.data
+    assert b"MAGIC-LINK-GOES-HERE" in response.data
 
 
 @pytest.mark.usefixtures("live_server")
