@@ -45,7 +45,7 @@ def send_email() -> Response:
             {
                 "message": (
                     "Bad request. No data has been received.Please check the"
-                    " contents of the notification data:"
+                    " contents of the notification data: "
                     f"{notification_data}"
                 ),
                 "status": "Error",
