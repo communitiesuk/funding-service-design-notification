@@ -102,3 +102,4 @@ webdriver-manager==3.5.3
 Werkzeug==2.0.2
 wsproto==1.0.0
 WTForms==3.0.1
+pytest-mock==3.7.0
