@@ -5,6 +5,7 @@ from app.notification.model.notifier import Notifier
 from app.notification.model.routes import send_email
 from tests.test_magic_link.magic_link_data import email_recipient_data
 from tests.test_magic_link.magic_link_data import expected_magic_link_data
+from tests.test_magic_link.magic_link_data import incorrect_content_key_data
 from tests.test_magic_link.magic_link_data import (
     incorrect_template_type_value_data,
 )
@@ -64,6 +65,44 @@ def test_mocked_magic_link_incorrect_type(
 
     mock_email_recipient_func.assert_called_once()
 
+    assert (
+        send_email_route_response.json["notify_response"]
+        == mock_email_recipient_func.return_value
+    )
+
+
+@pytest.mark.usefixtures("live_server")
+@mock.patch("app.notification.model.routes.request.get_json")
+@mock.patch("app.notification.model.notifier.Notifier.send_magic_link")
+@mock.patch("app.notification.model.routes.email_recipient")
+def test_mocked_magic_link_incorrect_key(
+    mock_email_recipient_func, mock_send_magic_link_func, mock_request_get_json
+):
+    """
+    GIVEN: our service running on unittest mock library.
+    WHEN: (a) we call send_magic_link func & set return value to error message.
+        : (b) we post incorrect key from expected data to endpoint "/send".
+    THEN: (a) we check if send_magic_link func has been called with
+        incorrect_data.
+          (b) we check route "send_email()" returns an expected error message.
+    """
+
+    mock_request_get_json.return_value = incorrect_content_key_data
+
+    mock_send_magic_link_func.return_value = (
+        "Incorrect MAGIC LINK data, please check the contents of"
+        " the MAGIC LINK data. \nExample data:"
+        f" {expected_magic_link_data}"
+    )
+
+    Notifier.send_magic_link(incorrect_content_key_data)
+    mock_send_magic_link_func.assert_called_with(incorrect_content_key_data)
+
+    mock_email_recipient_func.return_value = (
+        mock_send_magic_link_func.return_value
+    )
+    send_email_route_response = send_email()
+    mock_email_recipient_func.assert_called_once()
     assert (
         send_email_route_response.json["notify_response"]
         == mock_email_recipient_func.return_value
