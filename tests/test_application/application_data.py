@@ -39,14 +39,6 @@ expected_application_data = {
     },
 }
 
-
-unexpected_application_data = {
-    "type": "APPLICATION_RECORD_OF_SUBMISSION",
-    "to": "example_email@test.com",
-    "content": {},
-}
-
-
 expected_application_response = {
     "notify_response": {
         "content": {

@@ -19,7 +19,7 @@ def test_mocked_application(mock_email_recipient_func):
         : (b) we make a call to govuk-notify-service with
         expected application data.
     THEN: (a) we check route "send_email()" returns the
-        expected mocked contents & status "ok" -> 200.
+        expected mocked contents & status "ok" represent 200.
         : (b) we check "Notifier.send_application" returns the
          expected mock contents.
     """

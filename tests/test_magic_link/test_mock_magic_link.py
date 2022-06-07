@@ -21,7 +21,7 @@ def test_mocked_magic_link(mock_email_recipient_func):
         : (b) we make a call to govuk-notify-service with
         expected magic link data.
     THEN: (a) we check route "send_email()" returns the
-        expected mocked contents & status "ok" -> 200.
+        expected mocked contents & status "ok" represent 200.
         : (b) we check "Notifier.send_magic_link" returns the
          expected mock contents.
     """
@@ -118,7 +118,8 @@ def test_mocked_magic_link_None_data():
     """
     GIVEN: our service running on unittest mock library.
     WHEN: we post "None" data to endpoint "/send".
-    THEN: we check route "send_email()" returns an expected error message.
+    THEN: we check route "send_email()" returns an expected error message
+        & check the status "Error" represent 400.
     """
     send_email_route_response = send_email()
     assert (
@@ -126,3 +127,4 @@ def test_mocked_magic_link_None_data():
         == "Bad request. No data has been received.Please check the"
         " contents of the notification data: None"
     )
+    assert "Error" in send_email_route_response.json["status"]
