@@ -3,8 +3,8 @@ from unittest import mock
 import pytest
 from app.notification.model.notifier import Notifier
 from app.notification.model.routes import send_email
-from tests.test_magic_link.magic_link_data import email_recipient_data
 from tests.test_magic_link.magic_link_data import expected_magic_link_data
+from tests.test_magic_link.magic_link_data import expected_magic_link_response
 from tests.test_magic_link.magic_link_data import incorrect_content_key_data
 from tests.test_magic_link.magic_link_data import (
     incorrect_template_type_value_data,
@@ -12,7 +12,7 @@ from tests.test_magic_link.magic_link_data import (
 
 
 @pytest.mark.usefixtures("live_server")
-@pytest.mark.usefixtures("mocked_magic_link_successful")
+@pytest.mark.usefixtures("mocked_magic_link")
 @mock.patch("app.notification.model.routes.email_recipient")
 def test_mocked_magic_link(mock_email_recipient_func):
     """
@@ -21,7 +21,7 @@ def test_mocked_magic_link(mock_email_recipient_func):
         : (b) we make a call to govuk-notify-service with
         expected magic link data.
     THEN: (a) we check route "send_email()" returns the
-        expected mock data contents.
+        expected mocked contents & status "ok" -> 200.
         : (b) we check "Notifier.send_magic_link" returns the
          expected mock contents.
     """
@@ -31,12 +31,16 @@ def test_mocked_magic_link(mock_email_recipient_func):
         "MAGIC-LINK-GOES-HERE"
         in send_email_route_response["notify_response"]["content"]["body"]
     )
+    assert "ok" in send_email_route_response["status"]
     mock_email_recipient_func.assert_called_once()
 
     response_from_notify_service = Notifier.send_magic_link(
         expected_magic_link_data
     )
-    assert response_from_notify_service == email_recipient_data
+    assert (
+        response_from_notify_service
+        == expected_magic_link_response["notify_response"]
+    )
 
 
 @pytest.mark.usefixtures("live_server")

@@ -35,33 +35,7 @@ incorrect_template_type_value_data = {
 }
 
 
-email_recipient_data = {
-    "content": {
-        "body": (
-            "You asked us for a link to your application:  \r\nMAGIC-LINK-"
-            "GOES-HERE \r\n\r\nThe link will work for 24 hours."
-            " \r\n\r\n\r\nFUND NAME GOES HERE\r\n---\r\nThis is an"
-            " automated message. Do not reply to this email. If you need"
-            " help, contact dummy_contact_info@funding-service-help.com."
-        ),
-        "from_email": "test_sender@email.com",
-        "subject": "Access your application for the FUND NAME GOES HERE",
-    },
-    "id": "1234567890-a",
-    "reference": None,
-    "scheduled_for": None,
-    "template": {
-        "id": "1234567890-b",
-        "uri": (  # noqa
-            "https://test.api.notification.co.uk/services/1234567890-c"
-        ),
-        "version": 29,
-    },
-    "uri": "https://test.api.notification.co.uk/v2/notifications/",  # noqa
-}
-
-
-make_response_data = {
+expected_magic_link_response = {
     "notify_response": {
         "content": {
             "body": (
