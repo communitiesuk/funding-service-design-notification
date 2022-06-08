@@ -7,7 +7,7 @@ from tests.test_magic_link.magic_link_data import expected_magic_link_data
 from tests.test_magic_link.magic_link_data import expected_magic_link_response
 from tests.test_magic_link.magic_link_data import incorrect_content_key_data
 from tests.test_magic_link.magic_link_data import (
-    incorrect_template_type_value_data,
+    incorrect_template_type_data,
 )
 
 
@@ -55,12 +55,12 @@ def test_mocked_magic_link_incorrect_type(
     THEN: we check route "send_email()" returns an expected error message.
     """
 
-    mock_request_get_json.return_value = incorrect_template_type_value_data
+    mock_request_get_json.return_value = incorrect_template_type_data
 
     mock_email_recipient_func.return_value = (
         "Incorrect type, please check the key 'type' & other keys, values"
         " from notification data:"
-        f" {incorrect_template_type_value_data}.\n\nExpected"
+        f" {incorrect_template_type_data}.\n\nExpected"
         " type:('MAGIC_LINK' or 'NOTIFICATION' or 'REMINDER' or 'AWARD' or"
         " 'APPLICATION_RECORD_OF_SUBMISSION')."
     )

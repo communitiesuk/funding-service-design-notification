@@ -25,7 +25,7 @@ incorrect_template_type_key_data = {
     },
 }
 
-incorrect_template_type_value_data = {
+incorrect_template_type_data = {
     "type": "TEST_KEY",
     "to": "test_recipient@email.com",
     "content": {
