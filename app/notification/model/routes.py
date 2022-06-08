@@ -1,12 +1,6 @@
-import json
-
 from app.config import API_KEY
-from app.notification.custom_exceptions import NotificationError
-from app.notification.models.data import get_example_data
-from app.notification.models.process_notification_data import (
-    NotificationOperations,
-)
-from app.notification.template_types import email_recipient
+from app.notification.model.exceptions import NotificationError
+from app.notification.model.template_types import email_recipient
 from flask import Blueprint
 from flask import make_response
 from flask import request
@@ -33,19 +27,15 @@ def send_email() -> Response:
     Returns:
         dict: if data received, recipient's contact info & access link.
     """
-    example_data = json.dumps(get_example_data(), indent=2)
     notification_data = request.get_json()
     if notification_data:
         try:
-            notify_response = email_recipient(
-                data=notification_data,
-                example_data=example_data,
-                notification_class=NotificationOperations,
-            )
+            notify_response = email_recipient(notification_data)
             return make_response(
                 {"notify_response": notify_response, "status": "ok"}, 200
             )
         except NotificationError as e:
+
             return make_response(
                 {"message": e.message, "status": "Error"}, 400
             )
@@ -55,9 +45,8 @@ def send_email() -> Response:
             {
                 "message": (
                     "Bad request. No data has been received.Please check the"
-                    " contents of the notification data:"
-                    f"{notification_data}\n\nExample data:"
-                    f"{example_data})"
+                    " contents of the notification data: "
+                    f"{notification_data}"
                 ),
                 "status": "Error",
             },

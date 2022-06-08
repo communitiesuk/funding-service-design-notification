@@ -8,6 +8,7 @@ Repo for the funding service design notification.
 Built with Flask.
 
 ## Prerequisites
+
 - python ^= 3.10
 
 # Getting started
@@ -31,14 +32,26 @@ Clone the repository
     .venv\Scripts\activate.bat
 
 ### Install dependencies
+
 From the top-level directory enter the command to install pip and the dependencies of the project
 
     python3 -m pip install --upgrade pip && pip install -r requirements.txt
 
 ## How to use
+
 Enter the virtual environment as described above, then:
 
     flask run
+
+    Note: This service is an internal service so it doesn't have the frontend.
+
+### Set-up an API KEY that requires to connect with the govuk-notify-service
+
+    Click on the link & follow the instructions to set-up an API KEY.
+    https://docs.notifications.service.gov.uk/python.html#api-keys
+
+    Set it as an environment variable e.g.
+    export TEST_API_KEY= "api-key-value"
 
 ## How to post data for notification service.
 
@@ -50,7 +63,7 @@ path: app/notification/magic_link/README.md for
 
 Place brief descriptions of Pipelines here
 
-* Deploy to Gov PaaS - This is a simple pipeline to demonstrate capabilities.  Builds, tests and deploys a simple python application to the PaaS for evaluation in Dev and Test Only.
+- Deploy to Gov PaaS - This is a simple pipeline to demonstrate capabilities.  Builds, tests and deploys a simple python application to the PaaS for evaluation in Dev and Test Only.
 
 Testing
 

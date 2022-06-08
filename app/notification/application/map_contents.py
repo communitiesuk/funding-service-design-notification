@@ -2,11 +2,11 @@ from dataclasses import dataclass
 from datetime import datetime
 from io import StringIO
 
-from app.notification.models.notification import NotificationData
+from app.notification.model.notification import Notification
 
 
 @dataclass
-class ApplicationData:
+class Application:
     """Class process the application data to map with
     APPLICATION_RECORD_OF_SUBMISSION template  from
     govuk-notify service.
@@ -31,22 +31,22 @@ class ApplicationData:
         ).strftime("%Y-%m-%d")
 
     @staticmethod
-    def from_json(data):
+    def from_json(json_data):
         """Function calls ApplicationData class to map
         the application contents.
 
         Args:
-            data: Takes application data from NotificationData
-            class.
+            data: Takes incoming json_data & converts into class object
+            from Notification.from_json
 
         Returns:
             ApplicationData object with application contents.
         """
-        json_data = NotificationData.notification_data(data)
-        application = json_data.content["application"]
-        return ApplicationData(
-            contact_info=json_data.contact_info,
-            questions=ApplicationData.process_questions_and_answers(json_data),
+        data = Notification.from_json(json_data)
+        application = data.content["application"]
+        return Application(
+            contact_info=data.contact_info,
+            questions=Application.process_questions_and_answers(data),
             submission_date=application.get("date_submitted"),
             fund_name=application.get("project_name"),
             fund_round=application.get("round_id"),
@@ -61,7 +61,7 @@ class ApplicationData:
     @staticmethod
     def get_section_names(data) -> list:
         section_names = []
-        sections = ApplicationData.get_sections(data)
+        sections = Application.get_sections(data)
         for section in sections:
             section_names.append(section.get("section_name"))
         return list(dict.fromkeys(section_names))
@@ -69,8 +69,8 @@ class ApplicationData:
     @staticmethod
     def get_questions_and_answers(data) -> dict:
         question_answers = {}
-        sections = ApplicationData.get_sections(data)
-        section_names = ApplicationData.get_section_names(data)
+        sections = Application.get_sections(data)
+        section_names = Application.get_section_names(data)
 
         for section_name in section_names:
             for section in sections:
@@ -85,7 +85,7 @@ class ApplicationData:
     @staticmethod
     def process_questions_and_answers(data) -> str:
         """Function creates a memory object for question & answers."""
-        json_file = ApplicationData.get_questions_and_answers(data)
+        json_file = Application.get_questions_and_answers(data)
         output = StringIO()
         for question, answer in json_file.items():
             output.write(f"- {question}: ")
