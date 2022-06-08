@@ -59,7 +59,7 @@ Go to relevant service. See example
 path: app/notification/magic_link/README.md for
 
 
-## Pipelines
+# Pipelines
 
 Place brief descriptions of Pipelines here
 
