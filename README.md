@@ -11,7 +11,7 @@ Built with Flask.
 
 - python ^= 3.10
 
-## Getting started
+# Getting started
 
 ## Installation
 
