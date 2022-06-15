@@ -1,5 +1,5 @@
-from app.config import API_KEY
 from app.config import APPLICATION_RECORD_TEMPLATE_ID
+from app.config import GOV_NOTIFY_API_KEY
 from app.config import MAGIC_LINK_TEMPLATE_ID
 from app.notification.application.map_contents import (
     Application,
@@ -15,7 +15,7 @@ from tests.test_magic_link.magic_link_data import (
     expected_magic_link_data,
 )
 
-notifications_client = NotificationsAPIClient(API_KEY)
+notifications_client = NotificationsAPIClient(GOV_NOTIFY_API_KEY)
 
 
 class Notifier:

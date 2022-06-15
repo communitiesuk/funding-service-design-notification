@@ -1,4 +1,4 @@
-from app.config import API_KEY
+from app.config import GOV_NOTIFY_API_KEY
 from app.notification.model.exceptions import NotificationError
 from app.notification.model.template_types import email_recipient
 from flask import Blueprint
@@ -7,7 +7,7 @@ from flask import request
 from notifications_python_client.notifications import NotificationsAPIClient
 from requests import Response
 
-notifications_client = NotificationsAPIClient(API_KEY)
+notifications_client = NotificationsAPIClient(GOV_NOTIFY_API_KEY)
 
 notification_bp = Blueprint(
     "notification_bp",

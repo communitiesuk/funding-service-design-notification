@@ -5,7 +5,7 @@ FLASK_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 FLASK_ENV = os.environ.get("FLASK_ENV")
 
 # CURRENTLY TEST API KEY IS BEING USED LOCALLY & ON CF.
-API_KEY = os.environ.get("GOV_NOTIFY_API_KEY") or os.environ.get(
+GOV_NOTIFY_API_KEY = os.environ.get("GOV_NOTIFY_API_KEY") or os.environ.get(
     "TEST_API_KEY"
 )
 
