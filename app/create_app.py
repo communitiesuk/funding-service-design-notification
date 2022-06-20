@@ -1,9 +1,6 @@
-from os import environ
-
 from flask import Flask
 from flask_compress import Compress
 from flask_talisman import Talisman
-from fsd_tech.load_config import load_config
 
 
 def create_app() -> Flask:
@@ -11,18 +8,7 @@ def create_app() -> Flask:
     # ---- SETUP STATIC URL PATH.
     flask_app = Flask(__name__)
 
-    # flask_app.config.from_pyfile("config.py")
-
-    # get current env name from os environ
-    current_env = environ.get("env", "default")
-
-    # update the current flask config with the resolved
-    # env vars from fsd_tech config loader
-    flask_app.config.update(
-        **load_config(
-            "config/.env.default.example", f"config/.env.{current_env}.example"
-        )
-    )
+    flask_app.config.from_object("config.default.DefaultConfig")
 
     # ---- SETUP SECURITY CONFIGURATION & CSRF PROTECTION.
     csp = {
