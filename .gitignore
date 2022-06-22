@@ -140,5 +140,5 @@ app/.DS_Store
 
 # FS-641-frontend-fund-discovery
 app/static
-.vscode/settings.json
+.vscode/
 accessibility_report.json
