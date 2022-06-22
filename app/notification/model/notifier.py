@@ -1,12 +1,10 @@
-from app.config import APPLICATION_RECORD_TEMPLATE_ID
-from app.config import GOV_NOTIFY_API_KEY
-from app.config import MAGIC_LINK_TEMPLATE_ID
 from app.notification.application.map_contents import (
     Application,
 )
 from app.notification.magic_link.map_contents import ProcessMagicLinkData
 from app.notification.model.exceptions import NotificationError
 from app.notification.model.notification import Notification
+from config import Config
 from notifications_python_client import NotificationsAPIClient
 from tests.test_application.application_data import (
     expected_application_data,
@@ -15,7 +13,7 @@ from tests.test_magic_link.magic_link_data import (
     expected_magic_link_data,
 )
 
-notifications_client = NotificationsAPIClient(GOV_NOTIFY_API_KEY)
+notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
 
 
 class Notifier:
@@ -36,7 +34,7 @@ class Notifier:
             data = Notification.from_json(process_json_data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
-                template_id=MAGIC_LINK_TEMPLATE_ID,
+                template_id=Config.MAGIC_LINK_TEMPLATE_ID,
                 personalisation={
                     "name of fund": data.content["fund_name"],
                     "link to application": data.content["magic_link_url"],
@@ -68,7 +66,7 @@ class Notifier:
             data = Application.from_json(json_data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
-                template_id=APPLICATION_RECORD_TEMPLATE_ID,
+                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID,
                 personalisation={
                     "name of fund": data.fund_name,
                     "application id": data.application_id,

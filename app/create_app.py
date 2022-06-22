@@ -1,23 +1,14 @@
-import os
-
 from flask import Flask
 from flask_compress import Compress
 from flask_talisman import Talisman
 
 
-def create_app(testing=False) -> Flask:
+def create_app() -> Flask:
 
     # ---- SETUP STATIC URL PATH.
     flask_app = Flask(__name__)
 
-    # If testing or in dev print current config
-    if (os.environ.get("FLASK_ENV") == "development") | testing:
-        flask_app.config.from_object("config.development.DevelopmentConfig")
-        from config.development import DevelopmentConfig
-
-        DevelopmentConfig.pretty_print()
-    else:
-        flask_app.config.from_object("config.default.DefaultConfig")
+    flask_app.config.from_object("config.Config")
 
     # ---- SETUP SECURITY CONFIGURATION & CSRF PROTECTION.
     csp = {
