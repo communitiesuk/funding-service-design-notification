@@ -6,11 +6,6 @@ from fsd_utils import configclass
 @configclass
 class DefaultConfig:
 
-    if "FLASK_ENV" in os.environ:
-        FLASK_ENV = os.getenv("FLASK_ENV")
-    else:
-        raise KeyError("FLASK_ENV does not exist in environ")
-
     GOV_NOTIFY_API_KEY = os.environ.get(
         "GOV_NOTIFY_API_KEY", "gov_notify_api_key"
     )
