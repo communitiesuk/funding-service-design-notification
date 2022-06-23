@@ -68,20 +68,6 @@ Place brief descriptions of Pipelines here
 
 # Testing
 
-Unit & Accessibility Testing
-To run all tests including aXe accessibility tests (using Chrome driver for Selenium) in a development environment run:
-
-...on macOS
-
-    pytest --driver Chrome --driver-path .venv/lib/python3.10/site-packages/chromedriver_py/chromedriver_mac64
-...on linux64
-
-    pytest --driver Chrome --driver-path .venv/lib/python3.10/site-packages/chromedriver_py/chromedriver_linux64
-...on win32
-
-    pytest --driver Chrome --driver-path .venv/lib/python3.10/site-packages/chromedriver_py/chromedriver_win32.exe
-The aXe reports are printed at /axe_reports
-
 This repo comes with a `.pre-commit-config.yaml`, if you wish to use this do
 the following while in your virtual enviroment:
 

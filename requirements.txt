@@ -11,7 +11,6 @@ certifi==2021.10.8
 cffi==1.15.0
 cfgv==3.3.1
 charset-normalizer==2.0.11
-chromedriver-py==99.0.4844.51
 click==8.0.3
 colorama==0.4.4
 configparser==5.2.0
@@ -76,7 +75,6 @@ pytest-sugar==0.9.4
 pytest-variables==1.9.0
 pytest-xdist==2.5.0
 python-dateutil==2.8.2
-python-dotenv==0.20.0
 python-slugify==6.0.1
 pytz==2021.3
 PyYAML==6.0
