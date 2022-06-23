@@ -38,20 +38,21 @@ From the top-level directory enter the command to install pip and the dependenci
     python3 -m pip install --upgrade pip && pip install -r requirements.txt
 
 ## How to use
-
-Enter the virtual environment as described above, then:
-
-    flask run
-
-    Note: This service is an internal service so it doesn't have the frontend.
-
-### Set-up an API KEY that requires to connect with the govuk-notify-service
+1. Set-up an API KEY that requires to connect with the govuk-notify-service
 
     Click on the link & follow the instructions to set-up an API KEY.
     https://docs.notifications.service.gov.uk/python.html#api-keys
 
     Set it as an environment variable e.g.
-    export TEST_API_KEY= "api-key-value"
+    `export GOV_NOTIFY_API_KEY="api-key-value"`
+
+    Note: For unit (integration) testing, you also need to set this in `pytest.ini`
+
+1. Enter the virtual environment as described above, then:
+
+        flask run
+
+    Note: This service is an internal service so it doesn't have the frontend.
 
 ## How to post data for notification service.
 
@@ -65,23 +66,23 @@ Place brief descriptions of Pipelines here
 
 - Deploy to Gov PaaS - This is a simple pipeline to demonstrate capabilities.  Builds, tests and deploys a simple python application to the PaaS for evaluation in Dev and Test Only.
 
-Testing
+# Testing
 
 Unit & Accessibility Testing
 To run all tests including aXe accessibility tests (using Chrome driver for Selenium) in a development environment run:
 
 ...on macOS
 
-pytest --driver Chrome --driver-path .venv/lib/python3.10/site-packages/chromedriver_py/chromedriver_mac64
+    pytest --driver Chrome --driver-path .venv/lib/python3.10/site-packages/chromedriver_py/chromedriver_mac64
 ...on linux64
 
-pytest --driver Chrome --driver-path .venv/lib/python3.10/site-packages/chromedriver_py/chromedriver_linux64
+    pytest --driver Chrome --driver-path .venv/lib/python3.10/site-packages/chromedriver_py/chromedriver_linux64
 ...on win32
 
-pytest --driver Chrome --driver-path .venv/lib/python3.10/site-packages/chromedriver_py/chromedriver_win32.exe
+    pytest --driver Chrome --driver-path .venv/lib/python3.10/site-packages/chromedriver_py/chromedriver_win32.exe
 The aXe reports are printed at /axe_reports
 
-This repo comes with a .pre-commit-config.yaml, if you wish to use this do
+This repo comes with a `.pre-commit-config.yaml`, if you wish to use this do
 the following while in your virtual enviroment:
 
     pip install pre-commit black
