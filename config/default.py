@@ -1,6 +1,6 @@
 import os
 
-from fsd_tech import configclass
+from fsd_utils import configclass
 
 
 @configclass
