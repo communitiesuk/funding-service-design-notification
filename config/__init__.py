@@ -1,3 +1,4 @@
+# flake8: noqa
 import os
 
 FLASK_ENV = os.environ.get("FLASK_ENV")
@@ -7,15 +8,15 @@ if not FLASK_ENV:
 
 match FLASK_ENV:
     case "development":
-        from config.environments.development import (  # noqa
-            DevelopmentConfig as Config,  # noqa
-        )  # noqa
+        from config.environments.development import (
+            DevelopmentConfig as Config,
+        )
     case "unit_test":
-        from config.environments.unit_test import (  # noqa
-            UnitTestConfig as Config,  # noqa
-        )  # noqa
+        from config.environments.unit_test import (
+            UnitTestConfig as Config,
+        )
     case _:
-        from config.environments.default import DefaultConfig as Config  # noqa
+        from config.environments.default import DefaultConfig as Config
 
 try:
     Config.pretty_print()
