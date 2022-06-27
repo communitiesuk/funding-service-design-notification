@@ -8,7 +8,7 @@ def create_app() -> Flask:
     # ---- SETUP STATIC URL PATH.
     flask_app = Flask(__name__)
 
-    flask_app.config.from_pyfile("config.py")
+    flask_app.config.from_object("config.Config")
 
     # ---- SETUP SECURITY CONFIGURATION & CSRF PROTECTION.
     csp = {

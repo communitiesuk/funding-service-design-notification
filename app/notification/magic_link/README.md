@@ -15,11 +15,11 @@ path: FUNDING-SERVICE-DESIGN-NOTIFICATION/README.md
 
 To post data, use /send endpoint with POST method. Data must be in the following format.
 
-{
-    "type": "MAGIC_LINK",
-    "to": "example_email@test.com",
-    "content": {
-        "magic_link_url": "https://www.example.com/",
-        "fund_name": "Funding service",
-    },
-}
+    {
+        "type": "MAGIC_LINK",
+        "to": "example_email@test.com",
+        "content": {
+            "magic_link_url": "https://www.example.com/",
+            "fund_name": "Funding service",
+        },
+    }
