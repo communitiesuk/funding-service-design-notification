@@ -1,3 +1,5 @@
+import multiprocessing
+
 import pytest
 from app.create_app import create_app
 from tests.test_application.application_data import expected_application_data
@@ -6,6 +8,8 @@ from tests.test_application.application_data import (
 )
 from tests.test_magic_link.magic_link_data import expected_magic_link_data
 from tests.test_magic_link.magic_link_data import expected_magic_link_response
+
+multiprocessing.set_start_method("fork")  # Required on macOSX
 
 
 @pytest.fixture()

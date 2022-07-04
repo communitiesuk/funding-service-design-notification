@@ -111,20 +111,3 @@ def test_mocked_magic_link_incorrect_key(
         send_email_route_response.json["notify_response"]
         == mock_email_recipient_func.return_value
     )
-
-
-@pytest.mark.usefixtures("live_server")
-def test_mocked_magic_link_None_data():
-    """
-    GIVEN: our service running on unittest mock library.
-    WHEN: we post "None" data to endpoint "/send".
-    THEN: we check route "send_email()" returns an expected error message
-        & check the status "Error" represent 400.
-    """
-    send_email_route_response = send_email()
-    assert (
-        send_email_route_response.json["message"]
-        == "Bad request. No data has been received.Please check the"
-        " contents of the notification data: None"
-    )
-    assert "Error" in send_email_route_response.json["status"]

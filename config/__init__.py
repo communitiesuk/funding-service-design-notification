@@ -8,15 +8,11 @@ if not FLASK_ENV:
 
 match FLASK_ENV:
     case "development":
-        from config.environments.development import (
-            DevelopmentConfig as Config,
-        )
+        from config.envs.development import DevelopmentConfig as Config
     case "unit_test":
-        from config.environments.unit_test import (
-            UnitTestConfig as Config,
-        )
+        from config.envs.unit_test import UnitTestConfig as Config
     case _:
-        from config.environments.default import DefaultConfig as Config
+        from config.envs.default import DefaultConfig as Config
 
 try:
     Config.pretty_print()
