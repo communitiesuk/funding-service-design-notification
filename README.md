@@ -55,11 +55,23 @@ Then run:
 
     Note: For unit (integration) testing, you also need to set this in `pytest.ini`
 
-1. Enter the virtual environment as described above, then:
+2. Enter the virtual environment as described above, then:
 
-        flask run
+    `flask run`
 
     Note: This service is an internal service so it doesn't have the frontend.
+
+# Run with Gunicorn
+
+In deployed environments the service is run with gunicorn. You can run the service locally with gunicorn to test
+
+First set the FLASK_ENV environment you wish to test eg:
+
+    export FLASK_ENV=dev
+
+Then run gunicorn using the following command:
+
+    gunicorn wsgi:app -c run/gunicorn/local.py
 
 ## How to post data for notification service.
 
