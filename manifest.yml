@@ -8,6 +8,7 @@ applications:
   routes:
   - route: funding-service-design-notification-dev.apps.internal
   env:
+    FLASK_ENV: dev
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
 
 - name: funding-service-design-notification-uat
@@ -18,6 +19,7 @@ applications:
   routes:
   - route: funding-service-design-notification-uat.apps.internal
   env:
+    FLASK_ENV: test
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
 
 - name: funding-service-design-notification-test
@@ -28,4 +30,5 @@ applications:
   routes:
   - route: funding-service-design-notification-test.apps.internal
   env:
+    FLASK_ENV: test
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
