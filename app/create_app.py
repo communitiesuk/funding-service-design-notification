@@ -13,7 +13,7 @@ def create_app() -> Flask:
     logging.init_app(flask_app)
 
     # Configure application security with Talisman
-    # Talisman(flask_app, **Config.TALISMAN_SETTINGS)
+    Talisman(flask_app, **Config.TALISMAN_SETTINGS)
 
     # ---- SETUP GLOBAL CONSTANTS (to be accessed from the app).
     @flask_app.context_processor
