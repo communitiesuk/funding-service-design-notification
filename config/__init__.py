@@ -17,6 +17,7 @@ match FLASK_ENV:
     case _:
         from config.envs.default import DefaultConfig as Config
 
+
 try:
     Config.pretty_print()
 except AttributeError:

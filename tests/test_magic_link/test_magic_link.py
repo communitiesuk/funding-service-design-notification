@@ -36,8 +36,7 @@ def test_magic_link_contents_with_incorrect_content_key(flask_test_client):
 
     assert (
         b"Incorrect MAGIC LINK data, please check the contents of the MAGIC"
-        b" LINK data."
-        in response.data
+        b" LINK data." in response.data
     )
 
 
