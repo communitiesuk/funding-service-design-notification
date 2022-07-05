@@ -40,8 +40,7 @@ def test_application_contents_with_unexpected_data(flask_test_client):
     )
     assert (
         b"Incorrect APPLICATION data, please check the contents of the"
-        b" APPLICATION data"
-        in response.data
+        b" APPLICATION data" in response.data
     )
 
 

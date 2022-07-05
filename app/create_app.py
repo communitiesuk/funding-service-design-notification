@@ -1,7 +1,7 @@
 from flask import Flask
-from flask_talisman import Talisman
-from config import Config
 from fsd_utils.logging import logging
+
+# from flask_talisman import Talisman
 
 
 def create_app() -> Flask:
