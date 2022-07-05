@@ -1,6 +1,6 @@
+from config import Config
 from flask import Flask
 from flask_talisman import Talisman
-from config import Config
 from fsd_utils.logging import logging
 
 
