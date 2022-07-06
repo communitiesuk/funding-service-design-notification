@@ -40,8 +40,7 @@ def test_application_contents_with_unexpected_data(flask_test_client):
     )
     assert (
         b"Incorrect APPLICATION data, please check the contents of the"
-        b" APPLICATION data"
-        in response.data
+        b" APPLICATION data" in response.data
     )
 
 
@@ -59,8 +58,4 @@ def test_application_contents_with_none_contents(flask_test_client):
         follow_redirects=True,
     )
 
-    assert (
-        b"Bad request. No data has been received.Please check the contents of"
-        b" the notification data:"
-        in response.data
-    )
+    assert response.status_code == 400

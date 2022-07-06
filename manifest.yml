@@ -4,28 +4,31 @@ applications:
   memory: 64M
   buildpacks:
   - https://github.com/cloudfoundry/python-buildpack.git
-  command: flask run --host 0.0.0.0 --port 8080
+  command: gunicorn wsgi:app -c run/gunicorn/devtest.py
   routes:
   - route: funding-service-design-notification-dev.apps.internal
   env:
+    FLASK_ENV: dev
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
 
 - name: funding-service-design-notification-uat
   memory: 64M
   buildpacks:
   - https://github.com/cloudfoundry/python-buildpack.git
-  command: flask run --host 0.0.0.0 --port 8080
+  command: gunicorn wsgi:app -c run/gunicorn/devtest.py
   routes:
   - route: funding-service-design-notification-uat.apps.internal
   env:
+    FLASK_ENV: test
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
 
 - name: funding-service-design-notification-test
   memory: 64M
   buildpacks:
   - https://github.com/cloudfoundry/python-buildpack.git
-  command: flask run --host 0.0.0.0 --port 8080
+  command: gunicorn wsgi:app -c run/gunicorn/devtest.py
   routes:
   - route: funding-service-design-notification-test.apps.internal
   env:
+    FLASK_ENV: test
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))

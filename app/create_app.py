@@ -1,45 +1,19 @@
+from config import Config
 from flask import Flask
-from flask_compress import Compress
 from flask_talisman import Talisman
+from fsd_utils.logging import logging
 
 
 def create_app() -> Flask:
-
-    # ---- SETUP STATIC URL PATH.
-    flask_app = Flask(__name__)
+    flask_app = Flask("Notification")
 
     flask_app.config.from_object("config.Config")
 
-    # ---- SETUP SECURITY CONFIGURATION & CSRF PROTECTION.
-    csp = {
-        "default-src": "'self'",
-        "script-src": [
-            "'self'",
-            "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
-            "'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ='",
-        ],
-        "img-src": ["data:", "'self'"],
-    }
+    # Initialise logging
+    logging.init_app(flask_app)
 
-    hss = {
-        "Strict-Transport-Security": (
-            "max-age=31536000; includeSubDomains; preload"
-        ),
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "SAMEORIGIN",
-        "X-XSS-Protection": "1; mode=block",
-        "Feature_Policy": (
-            "microphone 'none'; camera 'none'; geolocation 'none'"
-        ),
-    }
-
-    Compress(flask_app)
-    Talisman(
-        flask_app,
-        content_security_policy=csp,
-        strict_transport_security=hss,
-        force_https=False,
-    )
+    # Configure application security with Talisman
+    Talisman(flask_app, **Config.TALISMAN_SETTINGS)
 
     # ---- SETUP GLOBAL CONSTANTS (to be accessed from the app).
     @flask_app.context_processor

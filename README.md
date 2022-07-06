@@ -32,10 +32,17 @@ Clone the repository
     .venv\Scripts\activate.bat
 
 ### Install dependencies
-
 From the top-level directory enter the command to install pip and the dependencies of the project
 
-    python3 -m pip install --upgrade pip && pip install -r requirements.txt
+    python3 -m pip install --upgrade pip && pip install -r requirements-dev.txt
+
+NOTE: requirements-dev.txt and requirements.txt are updated using [pip-tools pip-compile](https://github.com/jazzband/pip-tools)
+To update requirements please manually add the dependencies in the .in files (not the requirements.txt files)
+Then run:
+
+    pip-compile requirements.in
+
+    pip-compile requirements-dev.in
 
 ## How to use
 1. Set-up an API KEY that requires to connect with the govuk-notify-service
@@ -48,11 +55,23 @@ From the top-level directory enter the command to install pip and the dependenci
 
     Note: For unit (integration) testing, you also need to set this in `pytest.ini`
 
-1. Enter the virtual environment as described above, then:
+2. Enter the virtual environment as described above, then:
 
-        flask run
+    `flask run`
 
     Note: This service is an internal service so it doesn't have the frontend.
+
+# Run with Gunicorn
+
+In deployed environments the service is run with gunicorn. You can run the service locally with gunicorn to test
+
+First set the FLASK_ENV environment you wish to test eg:
+
+    export FLASK_ENV=dev
+
+Then run gunicorn using the following command:
+
+    gunicorn wsgi:app -c run/gunicorn/local.py
 
 ## How to post data for notification service.
 
