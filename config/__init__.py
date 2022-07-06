@@ -3,6 +3,9 @@ from os import environ
 
 FLASK_ENV = environ.get("FLASK_ENV")
 
+if not FLASK_ENV:
+    raise KeyError("FLASK_ENV does not exist in environ")
+
 match FLASK_ENV:
     case "development":
         from config.envs.development import DevelopmentConfig as Config
