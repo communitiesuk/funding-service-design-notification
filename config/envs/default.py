@@ -23,7 +23,7 @@ class DefaultConfig:
     FSD_LOG_LEVEL = logging.WARNING
 
     # Talisman Config
-    FORCE_HTTPS = True
+    FORCE_HTTPS = False
 
     # Content Security Policy
     SECURE_CSP = {

@@ -1,6 +1,4 @@
-from config import Config
 from flask import Flask
-from flask_talisman import Talisman
 from fsd_utils.logging import logging
 
 
@@ -11,9 +9,6 @@ def create_app() -> Flask:
 
     # Initialise logging
     logging.init_app(flask_app)
-
-    # Configure application security with Talisman
-    Talisman(flask_app, **Config.TALISMAN_SETTINGS)
 
     # ---- SETUP GLOBAL CONSTANTS (to be accessed from the app).
     @flask_app.context_processor
