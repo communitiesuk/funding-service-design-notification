@@ -1,7 +1,7 @@
 ---
 applications:
 - name: funding-service-design-notification-dev
-  memory: 256M
+  memory: 64M
   buildpacks:
   - https://github.com/cloudfoundry/python-buildpack.git
   command: gunicorn wsgi:app -c run/gunicorn/devtest.py
@@ -12,7 +12,7 @@ applications:
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
 
 - name: funding-service-design-notification-uat
-  memory: 256M
+  memory: 64M
   buildpacks:
   - https://github.com/cloudfoundry/python-buildpack.git
   command: gunicorn wsgi:app -c run/gunicorn/devtest.py
@@ -23,7 +23,7 @@ applications:
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
 
 - name: funding-service-design-notification-test
-  memory: 256M
+  memory: 64M
   buildpacks:
   - https://github.com/cloudfoundry/python-buildpack.git
   command: gunicorn wsgi:app -c run/gunicorn/devtest.py
