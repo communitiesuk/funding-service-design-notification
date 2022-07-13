@@ -2,8 +2,9 @@ from app.notification.application.map_contents import (
     Application,
 )
 from app.notification.magic_link.map_contents import ProcessMagicLinkData
-from app.notification.model.exceptions import NotificationError
 from app.notification.model.notification import Notification
+from app.notification.model.response import application_submission_error
+from app.notification.model.response import magic_link_error
 from config import Config
 from notifications_python_client import NotificationsAPIClient
 from tests.test_application.application_data import (
@@ -45,13 +46,7 @@ class Notifier:
             )
             return response
         except:  # noqa
-            raise NotificationError(
-                message=(
-                    "Incorrect MAGIC LINK data, please check the contents of"
-                    " the MAGIC LINK data. \nExample data:"
-                    f" {expected_magic_link_data}"
-                )
-            )
+            return magic_link_error(expected_magic_link_data)
 
     @staticmethod
     def send_application(json_data):
@@ -78,13 +73,7 @@ class Notifier:
             return response
 
         except:  # noqa
-            raise NotificationError(
-                message=(
-                    "Incorrect APPLICATION data, please check the contents of"
-                    " the APPLICATION data. \nExample data:"
-                    f" {expected_application_data}"
-                )
-            )
+            return application_submission_error(expected_application_data)
 
     @staticmethod
     def send_notification(json_data):
