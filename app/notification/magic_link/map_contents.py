@@ -1,4 +1,5 @@
 from app.notification.model.exceptions import NotificationError
+from app.notification.model.response import magic_link_error
 from tests.test_magic_link.magic_link_data import (
     expected_magic_link_data,
 )
@@ -25,9 +26,5 @@ class ProcessMagicLinkData:
 
         except KeyError:
             raise NotificationError(
-                message=(
-                    "Incorrect MAGIC LINK data, please check the contents of"
-                    " the MAGIC LINK data. \nExample data:"
-                    f"{expected_magic_link_data}"
-                )
+                message=magic_link_error(expected_magic_link_data)
             )
