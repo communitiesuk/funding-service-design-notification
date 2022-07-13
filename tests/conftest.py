@@ -34,16 +34,12 @@ def app():
 @pytest.fixture()
 def mocked_magic_link(mocker):
     mocker.patch(
-        "app.notification.model.routes.request.get_json",
+        "app.notification.model.request.get_json",
         return_value=expected_magic_link_data,
     )
 
     mocker.patch(
-        "app.notification.model.notifier.notifications_client.send_email_notification",  # noqa
-        return_value=expected_magic_link_response["notify_response"],
-    )
-    mocker.patch(
-        "app.notification.model.routes.make_response",
+        "app.notification.model.template_types.email_recipient",
         return_value=expected_magic_link_response,
     )
 
@@ -51,15 +47,11 @@ def mocked_magic_link(mocker):
 @pytest.fixture()
 def mocked_application(mocker):
     mocker.patch(
-        "app.notification.model.routes.request.get_json",
+        "app.notification.model.request.get_json",
         return_value=expected_application_data,
     )
 
     mocker.patch(
-        "app.notification.model.notifier.notifications_client.send_email_notification",  # noqa
-        return_value=expected_application_response["notify_response"],
-    )
-    mocker.patch(
-        "app.notification.model.routes.make_response",
+        "app.notification.model.template_types.email_recipient",
         return_value=expected_application_response,
     )
