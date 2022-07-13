@@ -25,7 +25,7 @@ def test_magic_link_contents_with_incorrect_content_key(flask_test_client):
     """
     GIVEN: our service running on flask test client.
     WHEN: we post unexpected magic_link_data key to the endpoint "/send".
-    THEN: we check if it returns an error message.
+    THEN: we check if it returns status code 400.
     """
 
     response = flask_test_client.post(
@@ -34,10 +34,7 @@ def test_magic_link_contents_with_incorrect_content_key(flask_test_client):
         follow_redirects=True,
     )
 
-    assert (
-        b"Incorrect MAGIC LINK data, please check the contents of the MAGIC"
-        b" LINK data." in response.data
-    )
+    assert response.status_code == 400
 
 
 @pytest.mark.usefixtures("live_server")
@@ -45,7 +42,7 @@ def test_magic_link_contents_with_none_contents(flask_test_client):
     """
     GIVEN: our service running on flask test client.
     WHEN: we post no data to the endpoint "/send".
-    THEN: we check if it returns an error message.
+    THEN: we check if it returns status code 400.
     """
 
     response = flask_test_client.post(

@@ -9,7 +9,7 @@ def test_template_type_with_unexpected_key_type(flask_test_client):
     GIVEN: our service running on flask test client.
     WHEN: we post incorrect key "type" to the endpoint
     "/send" using magic_link_data.
-    THEN: we check if it returns an error message.
+    THEN: we check if it returns status code 400.
     """
 
     response = flask_test_client.post(
@@ -18,15 +18,12 @@ def test_template_type_with_unexpected_key_type(flask_test_client):
         follow_redirects=True,
     )
 
-    assert (
-        b"Incorrect type, please check the key 'type' & other keys, values"
-        b" from notification data:"
-        in response.data
-    )
+    assert response.status_code == 400
 
 
 @pytest.mark.usefixtures("live_server")
-def test_template_type_with_unexpected_value_type(flask_test_client):
+def test_template_type_with_unexpected_value_type(
+    flask_test_client, debug=True): # noqa
     """
     GIVEN: our service running on flask test client.
     WHEN: we post unexpected "value" of key "type"
@@ -40,8 +37,4 @@ def test_template_type_with_unexpected_value_type(flask_test_client):
         follow_redirects=True,
     )
 
-    assert (
-        b"Incorrect type, please check the key 'type' & other keys, values"
-        b" from notification data:"
-        in response.data
-    )
+    assert b"Incorrect type, please check the value of key 'type'" in response.data # noqa
