@@ -39,11 +39,8 @@ def test_application_contents_with_unexpected_data(flask_test_client):
         follow_redirects=True,
     )
 
-    assert (
-        b"Incorrect APPLICATION data, please check the contents of the"
-        b" APPLICATION data"
-        in response.data
-    )
+    assert b"Incorrect APPLICATION data" in response.data
+    assert response.status_code == 400
 
 
 @pytest.mark.usefixtures("live_server")
