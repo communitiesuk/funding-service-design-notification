@@ -20,7 +20,7 @@ paths:
               $ref: '#/components/schemas/Notification'
             example:
               type: 'MAGIC_LINK'
-              to: 'example@email.com' 
+              to: 'example@email.com'
               content: {"magic_link_url": "https://www.example.com/",}
       responses:
         200:
@@ -31,7 +31,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralError'
-                       
+
 components:
   schemas:
     GeneralError:
@@ -46,15 +46,15 @@ components:
         status:
           type: integer
           format: int32
-          example: 400 
+          example: 400
         detail:
           type: string
-          example: "'type' is a required key"  
+          example: "'type' is a required key"
     Notification:
       description:
         "Service requires three keys
         (type-string, to-email, content-dict)"
-      required: 
+      required:
         - type
         - to
         - content
@@ -71,8 +71,6 @@ components:
             magic_link_url:
               type: string
             fund_name:
-              type: string  
+              type: string
           example: {"magic_link_url": "https://www.example.com/",
                     "fund_name": "Funding service"}
-         
-   
