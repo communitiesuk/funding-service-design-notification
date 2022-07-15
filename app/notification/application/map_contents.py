@@ -31,7 +31,7 @@ class Application:
         ).strftime("%Y-%m-%d")
 
     @staticmethod
-    def from_json(json_data):
+    def from_json(json_data: dict):
         """Function calls ApplicationData class to map
         the application contents.
 

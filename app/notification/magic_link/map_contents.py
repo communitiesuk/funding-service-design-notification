@@ -17,7 +17,7 @@ class ProcessMagicLinkData:
     """
 
     @staticmethod
-    def process_data(data):
+    def process_data(data: dict):
         try:
             data["content"].update(
                 {"fund_name": data["content"].get("fund_name", "Funds")}

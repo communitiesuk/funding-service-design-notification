@@ -14,7 +14,7 @@ class Notification:
     content: dict
 
     @staticmethod
-    def from_json(data):
+    def from_json(data: dict):
         """
         Function will be  called in relevant services to map
         the json contents
