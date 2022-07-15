@@ -14,7 +14,7 @@ def send_email() -> Response:
     to send requested contents to the recipient.
 
     Returns:
-        dict: if data received, recipient's contact info & access link.
+        dict: requested contents to the assessor /applicant.
     """
     notification_data = request.get_json()
 
