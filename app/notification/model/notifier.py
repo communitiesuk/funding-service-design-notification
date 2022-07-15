@@ -21,7 +21,7 @@ class Notifier:
     """Class holds notification operations"""
 
     @staticmethod
-    def send_magic_link(json_data):
+    def send_magic_link(json_data: dict, code: int = 200):
         """Function maps data eg. magic link along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
@@ -43,13 +43,13 @@ class Notifier:
                         "dummy_contact_info@funding-service-help.com"
                     ),
                 },
-            )
-            return response
+            ), code
+            return response, code
         except:  # noqa
             return magic_link_error(expected_magic_link_data)
 
     @staticmethod
-    def send_application(json_data):
+    def send_application(json_data: dict, code: int = 200):
         """Function maps data eg. questions/answers along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
@@ -69,8 +69,8 @@ class Notifier:
                     "round name": data.fund_round,
                     "question": data.questions,
                 },
-            )
-            return response
+            ), code
+            return response, code
 
         except:  # noqa
             return application_submission_error(expected_application_data)
