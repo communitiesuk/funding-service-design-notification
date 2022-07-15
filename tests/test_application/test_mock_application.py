@@ -1,10 +1,15 @@
 import pytest
 from app.notification.model import send_email
+from unittest import mock
+from tests.test_application.application_data import (
+    expected_application_response,
+)
 
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.usefixtures("mocked_application")
-def test_mocked_application():
+@mock.patch("app.notification.model.send_email")
+def test_mocked_application(mock_send_email):
     """
     GIVEN: our service running on unittest mock & pytest-mock library.
     WHEN: (a) we mock expected application json & response contents.
@@ -13,6 +18,6 @@ def test_mocked_application():
         expected mocked contents.
     """
 
-    send_email_route_response = send_email()
-    print(f"BBBBBBBB::::{send_email_route_response}")
-    assert "Jack-Simon" in send_email_route_response[0][0]["content"]["body"]
+    mock_send_email.return_value = expected_application_response 
+    email_response = send_email()
+    assert "Jack-Simon" in email_response[0][0]["content"]["body"]
