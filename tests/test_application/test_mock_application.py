@@ -14,4 +14,5 @@ def test_mocked_application():
     """
 
     send_email_route_response = send_email()
-    assert "Jack-Simon" in send_email_route_response["content"]["body"]
+    print(f"BBBBBBBB::::{send_email_route_response}")
+    assert "Jack-Simon" in send_email_route_response[0][0]["content"]["body"]

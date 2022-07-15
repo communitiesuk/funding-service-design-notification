@@ -15,5 +15,5 @@ def test_mocked_magic_link():
 
     send_email_route_response = send_email()
     assert (
-        "MAGIC-LINK-GOES-HERE" in send_email_route_response["content"]["body"]
+        "MAGIC-LINK-GOES-HERE" in send_email_route_response[0][0]["content"]["body"]
     )

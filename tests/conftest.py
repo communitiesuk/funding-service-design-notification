@@ -34,6 +34,10 @@ def app():
 @pytest.fixture()
 def mocked_magic_link(mocker):
     mocker.patch(
+        "app.notification.model.send_email",
+        return_value = expected_magic_link_response
+    )
+    mocker.patch(
         "app.notification.model.request.get_json",
         return_value=expected_magic_link_data,
     )
@@ -46,6 +50,10 @@ def mocked_magic_link(mocker):
 
 @pytest.fixture()
 def mocked_application(mocker):
+    mocker.patch(
+        "app.notification.model.send_email",
+        return_value = expected_application_response
+    )
     mocker.patch(
         "app.notification.model.request.get_json",
         return_value=expected_application_data,
