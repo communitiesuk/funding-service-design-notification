@@ -21,7 +21,7 @@ class Notifier:
     """Class holds notification operations"""
 
     @staticmethod
-    def send_magic_link(json_data: dict, code: int = 200):
+    def send_magic_link(json_data: dict, code: int = 200) -> tuple:
         """Function maps data eg. magic link along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
@@ -49,7 +49,7 @@ class Notifier:
             return magic_link_error(expected_magic_link_data)
 
     @staticmethod
-    def send_application(json_data: dict, code: int = 200):
+    def send_application(json_data: dict, code: int = 200) -> tuple:
         """Function maps data eg. questions/answers along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
