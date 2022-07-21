@@ -6,12 +6,13 @@ from app.notification.model.exceptions import NotificationError
 from app.notification.model.notification import Notification
 from config import Config
 from notifications_python_client import NotificationsAPIClient
-from tests.test_application.application_data import (
-    expected_application_data,
-)
-from tests.test_magic_link.magic_link_data import (
-    expected_magic_link_data,
-)
+
+# from tests.test_application.application_data import (
+#     expected_application_data,
+# )
+# from tests.test_magic_link.magic_link_data import (
+#     expected_magic_link_data,
+# )
 
 notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
 
@@ -49,7 +50,7 @@ class Notifier:
                 message=(
                     "Incorrect MAGIC LINK data, please check the contents of"
                     " the MAGIC LINK data. \nExample data:"
-                    f" {expected_magic_link_data}"
+                    # f" {expected_magic_link_data}"
                 )
             )
 
@@ -82,7 +83,7 @@ class Notifier:
                 message=(
                     "Incorrect APPLICATION data, please check the contents of"
                     " the APPLICATION data. \nExample data:"
-                    f" {expected_application_data}"
+                    # f" {expected_application_data}"
                 )
             )
 
