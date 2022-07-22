@@ -1,12 +1,11 @@
-FROM alpine:latest
-
-RUN apk update
-RUN apk add py-pip
-RUN apk add --no-cache python3-dev
-RUN pip install --upgrade pip
+FROM python:3.10-bullseye
 
 WORKDIR /app
-COPY . /app
-RUN pip --no-cache-dir install --ignore-installed distlib -r requirements.txt
+COPY requirements.txt requirements.txt
+RUN python3 -m pip install --upgrade pip && pip install -r requirements.txt
+COPY . .
 
-CMD ["flask", "run", "--host=0.0.0.0"]
+EXPOSE 8080
+ENV FLASK_ENV=development
+
+CMD ["flask", "run", "--host", "0.0.0.0", "--port", "8080"]
