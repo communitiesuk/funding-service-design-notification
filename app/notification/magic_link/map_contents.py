@@ -1,5 +1,5 @@
 from app.notification.model.exceptions import NotificationError
-
+from app.notification.examplar_data import examplar_magic_link_data
 
 
 
