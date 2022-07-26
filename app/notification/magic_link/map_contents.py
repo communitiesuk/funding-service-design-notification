@@ -1,13 +1,6 @@
 from app.notification.model.exceptions import NotificationError
 
-examplar_magic_link_data = {
-    "type": "MAGIC_LINK",
-    "to": "test_recipient@email.com",
-    "content": {
-        "magic_link_url": "MAGIC-LINK-GOES-HERE",
-        "fund_name": "FUND NAME GOES HERE",
-    },
-}
+
 
 
 class ProcessMagicLinkData:
