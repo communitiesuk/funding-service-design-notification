@@ -1,3 +1,6 @@
+
+import notifications_python_client
+from pydantic import ValidationError
 from app.notification.application.map_contents import (
     Application,
 )
@@ -6,7 +9,7 @@ from app.notification.model.notification import Notification
 from app.notification.model.response import application_submission_error
 from app.notification.model.response import magic_link_error
 from config import Config
-from notifications_python_client import NotificationsAPIClient
+from notifications_python_client import NotificationsAPIClient, errors
 from tests.test_application.application_data import (
     expected_application_data,
 )
@@ -45,7 +48,7 @@ class Notifier:
                 },
             ), code
             return response, code
-        except:  # noqa
+        except errors.HTTPError:  # noqa
             return magic_link_error(expected_magic_link_data)
 
     @staticmethod
@@ -72,7 +75,7 @@ class Notifier:
             ), code
             return response, code
 
-        except:  # noqa
+        except errors.HTTPError:  # noqa
             return application_submission_error(expected_application_data)
 
     @staticmethod
