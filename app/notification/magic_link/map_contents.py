@@ -1,7 +1,5 @@
 from app.notification.model.exceptions import NotificationError
-from tests.test_magic_link.magic_link_data import (
-    expected_magic_link_data,
-)
+from tests.test_magic_link.magic_link_data import expected_magic_link_data
 
 
 class ProcessMagicLinkData:
