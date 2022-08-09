@@ -1,3 +1,5 @@
+expected_application_content = "Key content must contain Application data that is expected to deliver to the user & data must be in the JSON format"
+
 expected_application_data = {
     "type": "APPLICATION_RECORD_OF_SUBMISSION",
     "to": "example_email@test.com",
