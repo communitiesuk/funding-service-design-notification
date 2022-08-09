@@ -39,7 +39,7 @@ def test_application_contents_with_unexpected_data(flask_test_client):
         follow_redirects=True,
     )
 
-    assert b"Incorrect APPLICATION data" in response.data
+    assert b"Incorrect or missing APPLICATION data" in response.data
     assert response.status_code == 400
 
 
