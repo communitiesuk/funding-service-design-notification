@@ -10,9 +10,6 @@ from tests.test_application.application_data import (
 from tests.test_magic_link.magic_link_data import expected_magic_link_data
 from tests.test_magic_link.magic_link_data import expected_magic_link_response
 
-if platform.system() == "Darwin":
-    multiprocessing.set_start_method("fork")  # Required on macOSX
-
 
 @pytest.fixture()
 def flask_test_client():
