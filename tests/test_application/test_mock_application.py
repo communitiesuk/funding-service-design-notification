@@ -1,6 +1,7 @@
+from unittest import mock
+
 import pytest
 from app.notification.model import send_email
-from unittest import mock
 from tests.test_application.application_data import (
     expected_application_response,
 )
@@ -18,6 +19,6 @@ def test_mocked_application(mock_send_email):
         expected mocked contents.
     """
 
-    mock_send_email.return_value = expected_application_response 
+    mock_send_email.return_value = expected_application_response
     email_response = send_email()
     assert "Jack-Simon" in email_response[0][0]["content"]["body"]

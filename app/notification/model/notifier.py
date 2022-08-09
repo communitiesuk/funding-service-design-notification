@@ -3,16 +3,16 @@ from app.notification.application.map_contents import (
 )
 from app.notification.magic_link.map_contents import ProcessMagicLinkData
 from app.notification.model.notification import Notification
-from app.notification.model.response import application_submission_error, invalid_email_address_error
+from app.notification.model.response import application_submission_error
+from app.notification.model.response import invalid_email_address_error
 from app.notification.model.response import magic_link_error
 from config import Config
-from notifications_python_client import NotificationsAPIClient, errors
+from notifications_python_client import errors
+from notifications_python_client import NotificationsAPIClient
 from tests.test_application.application_data import (
- expected_application_content
+    expected_application_content,
 )
-from tests.test_magic_link.magic_link_data import (
-    expected_magic_link_content
-)
+from tests.test_magic_link.magic_link_data import expected_magic_link_content
 
 notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
 
@@ -34,19 +34,22 @@ class Notifier:
         try:
             data = Notification.from_json(process_json_data)
             print(data)
-            response = notifications_client.send_email_notification(
-                email_address=data.contact_info,
-                template_id=Config.MAGIC_LINK_TEMPLATE_ID,
-                personalisation={
-                    "name of fund": data.content["fund_name"],
-                    "link to application": data.content["magic_link_url"],
-                    "contact details": (
-                        "dummy_contact_info@funding-service-help.com"
-                    ),
-                },
-            ), code
+            response = (
+                notifications_client.send_email_notification(
+                    email_address=data.contact_info,
+                    template_id=Config.MAGIC_LINK_TEMPLATE_ID,
+                    personalisation={
+                        "name of fund": data.content["fund_name"],
+                        "link to application": data.content["magic_link_url"],
+                        "contact details": (
+                            "dummy_contact_info@funding-service-help.com"
+                        ),
+                    },
+                ),
+                code,
+            )
             return response, code
-        except errors.HTTPError: 
+        except errors.HTTPError:
             data = Notification.from_json(process_json_data)
             return invalid_email_address_error(data.contact_info)
         except KeyError:
@@ -63,18 +66,20 @@ class Notifier:
         """
         try:
             data = Application.from_json(json_data)
-            print(data)
-            response = notifications_client.send_email_notification(
-                email_address=data.contact_info,
-                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID,
-                personalisation={
-                    "name of fund": data.fund_name,
-                    "application id": data.application_id,
-                    "date submitted": data.format_submission_date,
-                    "round name": data.fund_round,
-                    "question": data.questions,
-                },
-            ), code
+            response = (
+                notifications_client.send_email_notification(
+                    email_address=data.contact_info,
+                    template_id=Config.APPLICATION_RECORD_TEMPLATE_ID,
+                    personalisation={
+                        "name of fund": data.fund_name,
+                        "application id": data.application_id,
+                        "date submitted": data.format_submission_date,
+                        "round name": data.fund_round,
+                        "question": data.questions,
+                    },
+                ),
+                code,
+            )
             return response, code
 
         except errors.HTTPError:
@@ -82,7 +87,6 @@ class Notifier:
             return invalid_email_address_error(data.contact_info)
         except KeyError:
             return application_submission_error(expected_application_content)
-            
 
     @staticmethod
     def send_notification(json_data):

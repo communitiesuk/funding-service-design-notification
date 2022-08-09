@@ -1,4 +1,7 @@
-expected_magic_link_content = "Key content must contain Magic Link data that is expected to deliver to the user & data must be in the JSON format"
+expected_magic_link_content = (
+    "Key content must contain Magic Link data that is expected to deliver to"
+    " the user & data must be in the JSON format"
+)
 
 expected_magic_link_data = {
     "type": "MAGIC_LINK",

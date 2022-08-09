@@ -1,6 +1,3 @@
-import multiprocessing
-import platform
-
 import pytest
 from app.create_app import create_app
 from tests.test_application.application_data import expected_application_data

@@ -1,6 +1,7 @@
+from unittest import mock
+
 import pytest
 from app.notification.model import send_email
-from unittest import mock
 from tests.test_magic_link.magic_link_data import expected_magic_link_response
 
 
@@ -18,6 +19,4 @@ def test_mocked_magic_link(mock_send_email):
 
     mock_send_email.return_value = expected_magic_link_response
     email_response = send_email()
-    assert (
-        "MAGIC-LINK-GOES-HERE" in email_response[0][0]["content"]["body"]
-    )
+    assert "MAGIC-LINK-GOES-HERE" in email_response[0][0]["content"]["body"]

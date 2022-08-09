@@ -1,7 +1,5 @@
-
 import connexion
 from config import Config
-
 from flask import Flask
 from fsd_utils.logging import logging
 
@@ -22,7 +20,6 @@ def create_app() -> Flask:
 
     # Initialise logging
     logging.init_app(flask_app)
-
 
     # ---- SETUP GLOBAL CONSTANTS (to be accessed from the app).
     @flask_app.context_processor

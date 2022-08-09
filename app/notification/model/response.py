@@ -12,7 +12,7 @@ def magic_link_error(message: str, code: int = 400):
     )
 
 
-def application_submission_error(message: str, code : int = 400):
+def application_submission_error(message: str, code: int = 400):
     return (
         jsonify(
             detail="Incorrect APPLICATION data",
@@ -22,7 +22,8 @@ def application_submission_error(message: str, code : int = 400):
         code,
     )
 
-def invalid_email_address_error(message: str, code: int =400):
+
+def invalid_email_address_error(message: str, code: int = 400):
     return (
         jsonify(
             detail="Not a valid email address",
@@ -31,7 +32,7 @@ def invalid_email_address_error(message: str, code: int =400):
         ),
         code,
     )
-    
+
 
 def template_type_error(message: str, code: int = 400):
     return (
