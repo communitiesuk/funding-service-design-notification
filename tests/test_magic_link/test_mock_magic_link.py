@@ -3,10 +3,10 @@ from unittest import mock
 import pytest
 from app.notification.model.notifier import Notifier
 from app.notification.model.routes import send_email
-from tests.test_magic_link.magic_link_data import expected_magic_link_data
-from tests.test_magic_link.magic_link_data import expected_magic_link_response
-from tests.test_magic_link.magic_link_data import incorrect_content_key_data
-from tests.test_magic_link.magic_link_data import (
+from examplar_data.magic_link_data import expected_magic_link_data
+from examplar_data.magic_link_data import expected_magic_link_response
+from examplar_data.magic_link_data import incorrect_content_key_data
+from examplar_data.magic_link_data import (
     incorrect_template_type_data,
 )
 
