@@ -37,14 +37,6 @@ def create_app() -> Flask:
             service_meta_author="DLUHC",
         )
 
-    # ---- SETUP BLUEPRINT ROUTES.
-
-    # import notification route.
-    from app.notification.model.routes import notification_bp
-
-    # register notification route (blueprint from app/notification/routes).
-    flask_app.register_blueprint(notification_bp)
-
     return flask_app
 
 
