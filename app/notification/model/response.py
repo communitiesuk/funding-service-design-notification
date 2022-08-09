@@ -22,6 +22,16 @@ def application_submission_error(message: dict, code : int = 400):
         code,
     )
 
+def invalid_email_address_error(message: dict, code: int =400):
+    return (
+        jsonify(
+            detail="Not a valid email address",
+            status=code,
+            expected_data=f"{message}",
+        ),
+        code,
+    )
+    
 
 def template_type_error(message: str, code: int = 400):
     return (
