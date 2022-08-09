@@ -1,33 +1,33 @@
 from flask import jsonify
 
 
-def magic_link_error(message: dict, code: int = 400):
+def magic_link_error(message: str, code: int = 400):
     return (
         jsonify(
             detail="Incorrect MAGIC LINK data",
             status=code,
-            expected_data=f"{message}",
+            error=f"{message}",
         ),
         code,
     )
 
 
-def application_submission_error(message: dict, code : int = 400):
+def application_submission_error(message: str, code : int = 400):
     return (
         jsonify(
             detail="Incorrect APPLICATION data",
             status=code,
-            expected_data=f"{message}",
+            error=f"{message}",
         ),
         code,
     )
 
-def invalid_email_address_error(message: dict, code: int =400):
+def invalid_email_address_error(message: str, code: int =400):
     return (
         jsonify(
             detail="Not a valid email address",
             status=code,
-            expected_data=f"{message}",
+            error=f"{message}",
         ),
         code,
     )

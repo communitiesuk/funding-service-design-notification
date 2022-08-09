@@ -8,10 +8,10 @@ from app.notification.model.response import magic_link_error
 from config import Config
 from notifications_python_client import NotificationsAPIClient, errors
 from tests.test_application.application_data import (
-    expected_application_data,
+ expected_application_content
 )
 from tests.test_magic_link.magic_link_data import (
-    expected_magic_link_data,
+    expected_magic_link_content
 )
 
 notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
@@ -33,6 +33,7 @@ class Notifier:
         process_json_data = ProcessMagicLinkData.process_data(json_data)
         try:
             data = Notification.from_json(process_json_data)
+            print(data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=Config.MAGIC_LINK_TEMPLATE_ID,
@@ -45,10 +46,11 @@ class Notifier:
                 },
             ), code
             return response, code
-        except errors.HTTPError:  # noqa
-            return invalid_email_address_error(expected_magic_link_data)
+        except errors.HTTPError: 
+            data = Notification.from_json(process_json_data)
+            return invalid_email_address_error(data.contact_info)
         except KeyError:
-            return magic_link_error(expected_magic_link_data)
+            return magic_link_error(expected_magic_link_content)
 
     @staticmethod
     def send_application(json_data: dict, code: int = 200) -> tuple:
@@ -61,6 +63,7 @@ class Notifier:
         """
         try:
             data = Application.from_json(json_data)
+            print(data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=Config.APPLICATION_RECORD_TEMPLATE_ID,
@@ -74,10 +77,11 @@ class Notifier:
             ), code
             return response, code
 
-        except errors.HTTPError:  # noqa
-            return invalid_email_address_error(expected_application_data)
+        except errors.HTTPError:
+            data = Application.from_json(json_data)
+            return invalid_email_address_error(data.contact_info)
         except KeyError:
-            return application_submission_error(expected_application_data)
+            return application_submission_error(expected_application_content)
             
 
     @staticmethod
