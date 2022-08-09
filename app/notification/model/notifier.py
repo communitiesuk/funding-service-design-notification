@@ -3,9 +3,11 @@ from app.notification.application.map_contents import (
 )
 from app.notification.magic_link.map_contents import ProcessMagicLinkData
 from app.notification.model.notification import Notification
-from app.notification.model.response import application_submission_error
-from app.notification.model.response import invalid_email_address_error
+from app.notification.model.response import application_error
+from app.notification.model.response import application_key_error
+from app.notification.model.response import invalid_data_error
 from app.notification.model.response import magic_link_error
+from app.notification.model.response import magic_link_key_error
 from config import Config
 from notifications_python_client import errors
 from notifications_python_client import NotificationsAPIClient
@@ -50,9 +52,15 @@ class Notifier:
             return response, code
         except errors.HTTPError:
             data = Notification.from_json(process_json_data)
-            return invalid_email_address_error(data.contact_info)
+            return invalid_data_error(
+                magic_link_error(
+                    data.contact_info,
+                    data.content.get("fund_name"),
+                    data.content.get("magic_link_url"),
+                )
+            )
         except KeyError:
-            return magic_link_error(expected_magic_link_content)
+            return magic_link_key_error(expected_magic_link_content)
 
     @staticmethod
     def send_application(json_data: dict, code: int = 200) -> tuple:
@@ -83,9 +91,18 @@ class Notifier:
 
         except errors.HTTPError:
             data = Application.from_json(json_data)
-            return invalid_email_address_error(data.contact_info)
+            return invalid_data_error(
+                application_error(
+                    data.contact_info,
+                    data.fund_name,
+                    data.application_id,
+                    data.format_submission_date,
+                    data.fund_round,
+                    data.questions,
+                )
+            )
         except KeyError:
-            return application_submission_error(expected_application_content)
+            return application_key_error(expected_application_content)
 
     @staticmethod
     def send_notification(json_data):
