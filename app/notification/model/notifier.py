@@ -33,7 +33,6 @@ class Notifier:
         process_json_data = ProcessMagicLinkData.process_data(json_data)
         try:
             data = Notification.from_json(process_json_data)
-            print(data)
             response = (
                 notifications_client.send_email_notification(
                     email_address=data.contact_info,
