@@ -74,6 +74,9 @@ class Notifier:
 
         except errors.HTTPError:  # noqa
             return application_submission_error(expected_application_data)
+        except KeyError:
+            return application_submission_error(expected_application_data)
+            
 
     @staticmethod
     def send_notification(json_data):
