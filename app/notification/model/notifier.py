@@ -1,6 +1,3 @@
-
-import notifications_python_client
-from pydantic import ValidationError
 from app.notification.application.map_contents import (
     Application,
 )
