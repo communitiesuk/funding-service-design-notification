@@ -24,13 +24,10 @@ class Notifier:
         """Function maps data eg. magic link along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
-
-        INFO: process_json_data checks if any key eg "fund_name" or any
-        other keys, values are missing. If so it adds the "fund_name"
-        key etc & assigns value to default value.
+        
+        Raises error if any of the required  contents are incorrect
+        or missing.
         """
-        # process_json_data = MagicLink.process_data(json_data)
-        # print(MagicLink.from_json(json_data))
         try:
             data = MagicLink.from_json(json_data)
             response = (
@@ -40,7 +37,7 @@ class Notifier:
                     personalisation={
                         "name of fund": data.fund_name,
                         "link to application": data.magic_link,
-                        "contact details": (data.contact_details),
+                        "contact details": data.contact_details,
                     },
                 ),
                 code,
@@ -57,7 +54,7 @@ class Notifier:
         expected contents to the user as expected by the
         govuk-notify-service template.
 
-        Raises error if any of the required  contents are incorrect
+        Raises error if any of the required contents are incorrect
         or missing.
         """
         try:
