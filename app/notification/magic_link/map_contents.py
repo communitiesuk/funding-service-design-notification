@@ -1,11 +1,6 @@
 from dataclasses import dataclass
 
-from app.notification.model.exceptions import NotificationError
 from app.notification.model.notification import Notification
-from app.notification.model.response import magic_link_key_error
-from tests.test_magic_link.magic_link_data import (
-    expected_magic_link_data,
-)
 
 
 @dataclass
@@ -38,18 +33,16 @@ class MagicLink:
     @staticmethod
     def process_data(data: dict) -> dict:
         """Function process the incoming json for magic link
-        such as if the fund name is not provided by the user then 
+        such as if the fund name is not provided by the user then
         by default function adds the fund name as "FUNDS"
-        
+
         Args:
             data (dict): takes the json
-            
+
         Returns:
-           data(dict): returns processed json 
+           data(dict): returns processed json
         """
         data["content"].update(
             {"fund_name": data["content"].get("fund_name", "Funds")}
         )
         return data
-
-     

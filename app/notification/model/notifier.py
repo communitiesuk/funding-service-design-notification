@@ -24,7 +24,7 @@ class Notifier:
         """Function maps data eg. magic link along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
-        
+
         Raises error if any of the required  contents are incorrect
         or missing.
         """
