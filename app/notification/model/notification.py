@@ -3,12 +3,6 @@ from dataclasses import dataclass
 
 @dataclass
 class Notification:
-    """
-    Class processes notification json contents.
-    Returns:
-        notification class object.
-    """
-
     template_type: str
     contact_info: str
     content: dict
