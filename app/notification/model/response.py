@@ -1,14 +1,6 @@
 from flask import jsonify
 
 
-def magic_link_error(email, fund_name, magic_link_url):
-    return {
-        "email_address": email,
-        "fund_name": fund_name,
-        "magic_link": magic_link_url,
-    }
-
-
 def magic_link_key_error(message: str, code: int = 400):
     return (
         jsonify(
@@ -18,19 +10,6 @@ def magic_link_key_error(message: str, code: int = 400):
         ),
         code,
     )
-
-
-def application_error(
-    email, fund_name, application_id, date_submitted, round_name, questions
-):
-    return {
-        "email_address": email,
-        "fund_name": fund_name,
-        "application_id": application_id,
-        "date_submitted": date_submitted,
-        "round_name": round_name,
-        "questions": questions,
-    }
 
 
 def application_key_error(message: str, code: int = 400):
@@ -51,8 +30,8 @@ def invalid_data_error(
     return (
         jsonify(
             detail=(
-                "Please check following data that may contain invalid email"
-                " and incorrect data"
+                "Incorrect data, check following contents that may contain"
+                " invalid email and incorrect values"
             ),
             status=code,
             error=message,
@@ -76,17 +55,6 @@ def template_type_error(message: str, code: int = 400):
                 "AWARD",
                 "APPLICATION_RECORD_OF_SUBMISSION",
             ),
-        ),
-        code,
-    )
-
-
-def invalid_email_address_error(message: str, code: int = 400):
-    return (
-        jsonify(
-            detail="Not a valid email address",
-            status=code,
-            error=f"{message}",
         ),
         code,
     )
