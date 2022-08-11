@@ -8,7 +8,6 @@ class MagicLink:
     contact_info: str
     fund_name: str
     magic_link: str
-    contact_details: str = "dummy_contact_info@funding-service-help.com"
 
     @staticmethod
     def from_json(json_data: dict):

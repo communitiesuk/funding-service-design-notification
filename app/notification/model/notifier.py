@@ -37,7 +37,7 @@ class Notifier:
                     personalisation={
                         "name of fund": data.fund_name,
                         "link to application": data.magic_link,
-                        "contact details": data.contact_details,
+                        "contact details": "help_contact@example.com",
                     },
                 ),
                 code,
