@@ -22,11 +22,11 @@ class MagicLink:
             MagicLink object with magic link contents.
         """
         data = Notification.from_json(json_data)
-        processed_data = MagicLink.process_data(json_data)
+        content = MagicLink.process_data(json_data).get("content")
         return MagicLink(
             contact_info=data.contact_info,
-            fund_name=processed_data["content"]["fund_name"],
-            magic_link=data.content["magic_link_url"],
+            fund_name=content.get("fund_name"),
+            magic_link=data.content.get("magic_link_url"),
         )
 
     @staticmethod
