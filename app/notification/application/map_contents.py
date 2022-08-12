@@ -16,9 +16,10 @@ class Application:
 
     @property
     def format_submission_date(self):
-        return datetime.strptime(
-            self.submission_date, "%Y-%m-%d %H:%M:%S"
-        ).strftime("%Y-%m-%d")
+        if self.submission_date is not None:
+            return datetime.strptime(
+                self.submission_date, "%Y-%m-%d %H:%M:%S"
+            ).strftime("%Y-%m-%d")
 
     @staticmethod
     def from_json(json_data: dict):
@@ -34,6 +35,7 @@ class Application:
         """
         data = Notification.from_json(json_data)
         application = data.content["application"]
+        print(application)
         return Application(
             contact_info=data.contact_info,
             questions=Application.process_questions_and_answers(data),
