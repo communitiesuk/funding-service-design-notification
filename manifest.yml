@@ -10,6 +10,8 @@ applications:
   env:
     FLASK_ENV: dev
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
+  health-check-http-endpoint: /healthcheck
+  health-check-type: http
 
 - name: funding-service-design-notification-uat
   memory: 64M
@@ -21,6 +23,8 @@ applications:
   env:
     FLASK_ENV: test
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
+  health-check-http-endpoint: /healthcheck
+  health-check-type: http
 
 - name: funding-service-design-notification-test
   memory: 64M
@@ -32,3 +36,5 @@ applications:
   env:
     FLASK_ENV: test
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
+  health-check-http-endpoint: /healthcheck
+  health-check-type: http
