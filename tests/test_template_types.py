@@ -1,6 +1,6 @@
 import pytest
-from tests.test_magic_link.magic_link_data import (incorrect_template_type_data) # noqa
-from tests.test_magic_link.magic_link_data import incorrect_template_type_key_data # noqa
+from examplar_data.magic_link_data import (incorrect_template_type_data) # noqa
+from examplar_data.magic_link_data import incorrect_template_type_key_data # noqa
 
 
 @pytest.mark.usefixtures("live_server")

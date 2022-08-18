@@ -1,6 +1,6 @@
 import pytest
-from tests.test_magic_link.magic_link_data import expected_magic_link_data
-from tests.test_magic_link.magic_link_data import incorrect_content_key_data
+from examplar_data.magic_link_data import expected_magic_link_data
+from examplar_data.magic_link_data import incorrect_content_key_data
 
 
 @pytest.mark.usefixtures("live_server")

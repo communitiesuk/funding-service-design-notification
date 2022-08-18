@@ -8,10 +8,9 @@ from app.notification.model.response import magic_link_key_error
 from config import Config
 from notifications_python_client import errors
 from notifications_python_client import NotificationsAPIClient
-from tests.test_application.application_data import (
-    expected_application_content,
-)
-from tests.test_magic_link.magic_link_data import expected_magic_link_content
+
+from examplar_data.magic_link_data import expected_magic_link_content
+from examplar_data.application_data import expected_application_content
 
 notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
 

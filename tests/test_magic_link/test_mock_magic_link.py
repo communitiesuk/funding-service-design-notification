@@ -1,8 +1,13 @@
 from unittest import mock
 
 import pytest
+
 from app.notification.model import send_email
-from tests.test_magic_link.magic_link_data import expected_magic_link_response
+from examplar_data.magic_link_data import expected_magic_link_response
+from app.notification.model import send_email
+from examplar_data.magic_link_data import expected_magic_link_response
+
+
 
 
 @pytest.mark.usefixtures("live_server")
