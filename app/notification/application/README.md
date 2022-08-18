@@ -16,60 +16,61 @@ path: FUNDING-SERVICE-DESIGN-NOTIFICATION/README.md
 To post data, use /send endpoint with POST method. Data must be in the following format.
 
     {
-    "type": "APPLICATION_RECORD_OF_SUBMISSION",
-    "to": "example_email@test.com",
-    "content": {
-        "application":{
-            "id": "123456789-jack",
-            "account_id": "string",
-            "status": "NOT_STARTED",
-            "fund_id": "fund-a",
-            "round_id": "summer",
-            "project_name": "Funding service",
-            "date_submitted": "2022-05-14 10:20:44",
-            "started_at": "2022-05-20 14:47:12",
-            "last_edited": null,
-            "sections": [
-                {
-                    "section_name": "about-your-org",
-                    "status": "NOT_STARTED",
-                    "questions": [
+        "type": "APPLICATION_RECORD_OF_SUBMISSION",
+        "to": "example_email@test.com",
+        "content": {
+            "application": {
+                "id": "5176687c-3c5a-44f5-8580-fa6e552bfb3e",
+                "round_id": "summer",
+                "project_name": "Funding service",
+                "started_at": "2022-08-18 15:14:14",
+                "date_submitted": "2022-05-20 14:47:12",
+                "forms": [
                     {
-                        "question": "Application information",
-                        "status": "NOT STARTED",
-                        "fields": [
-                        {
-                            "key": "application-name",
-                            "title": "Applicant name",
-                            "type": "text",
-                            "answer": "Jack Simon"
-                        },
-                        {
-                            "key": "applicant-email",
-                            "title": "Email",
-                            "type": "text",
-                            "answer": "test@example.com"
-                        },
-                        {
-                            "key": "applicant-telephone-number",
-                            "title": "Telephone number",
-                            "type": "text",
-                            "answer": "012345678"
-                        },
-                        {
-                            "key": "applicant-website",
-                            "title": "Website",
-                            "type": "text",
-                            "answer": "www.example.com"
-                        }
-                        ],
-                        "category": null,
-                        "index": null
+                        "form_name": "community-benefits",
+                        "questions": [
+                            {
+                                "question": "Potential to deliver community benefits",
+                                "fields": [
+                                    {
+                                        "key": "QjJtbs",
+                                        "title": "What community benefits do you expect to deliver with this project? ",
+                                        "type": "list",
+                                        "answer": [
+                                            "community-pride",
+                                            "JACK"
+                                        ]
+                                    },
+                                    {
+                                        "key": "gDTsgG",
+                                        "title": "Tell us about these benefits in detail, and explain how you'll measure the benefits it'll bring for the community",
+                                        "type": "text",
+                                        "answer": "Explaining benefits"
+                                    }
+                                ],
+                                "status": "COMPLETED"
+                            }
+                        ]
+                    },
+                    {
+                        "form_name": "declarations",
+                        "questions": [
+                            {
+                                "question": "Declarations",
+                                "fields": [
+                                    {
+                                        "key": "LlvhYl",
+                                        "title": "Confirm you have considered subsidy control and state aid implications for your project, and the information you have given us is correct",
+                                        "type": "list",
+                                        "answer": "YESSSSSS"
+                                    }
+                                ],
+                                "status": "COMPLETED"
+                            }
+                        ]
                     }
-                    ],
-                    "metadata": {
-                    "paymentSkipped": null
-                    }
-                }
                 ]
-            }}}
+            }
+        }
+    }
+ 
