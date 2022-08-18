@@ -45,27 +45,27 @@ class Application:
         )
 
     @staticmethod
-    def get_sections(data) -> list:
-        sections = data.content["application"]["sections"]
+    def get_forms(data) -> list:
+        sections = data.content["application"]["forms"]
         return sections
 
     @staticmethod
-    def get_section_names(data) -> list:
+    def get_form_names(data) -> list:
         section_names = []
-        sections = Application.get_sections(data)
+        sections = Application.get_forms(data)
         for section in sections:
-            section_names.append(section.get("section_name"))
+            section_names.append(section.get("form_name"))
         return list(dict.fromkeys(section_names))
 
     @staticmethod
     def get_questions_and_answers(data) -> dict:
         question_answers = {}
-        sections = Application.get_sections(data)
-        section_names = Application.get_section_names(data)
+        sections = Application.get_forms(data)
+        section_names = Application.get_form_names(data)
 
         for section_name in section_names:
             for section in sections:
-                if section_name in section["section_name"]:
+                if section_name in section["form_name"]:
                     for question in section["questions"]:
                         for fields in question["fields"]:
                             question_answers[fields["title"]] = fields.get(
