@@ -35,7 +35,6 @@ class Application:
         """
         data = Notification.from_json(json_data)
         application = data.content["application"]
-        print(application)
         return Application(
             contact_info=data.contact_info,
             questions=Application.process_questions_and_answers(data),
