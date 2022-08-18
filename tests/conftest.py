@@ -3,12 +3,12 @@ import platform
 
 import pytest
 from app.create_app import create_app
-from tests.test_application.application_data import expected_application_data
-from tests.test_application.application_data import (
+from examplar_data.application_data import expected_application_data
+from examplar_data.application_data import (
     expected_application_response,
 )
-from tests.test_magic_link.magic_link_data import expected_magic_link_data
-from tests.test_magic_link.magic_link_data import expected_magic_link_response
+from examplar_data.magic_link_data import expected_magic_link_data
+from examplar_data.magic_link_data import expected_magic_link_response
 
 if platform.system() == "Darwin":
     multiprocessing.set_start_method("fork")  # Required on macOSX

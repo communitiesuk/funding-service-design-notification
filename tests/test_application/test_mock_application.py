@@ -3,8 +3,8 @@ from unittest import mock
 import pytest
 from app.notification.model.notifier import Notifier
 from app.notification.model.routes import send_email
-from tests.test_application.application_data import expected_application_data
-from tests.test_application.application_data import (
+from examplar_data.application_data import expected_application_data
+from examplar_data.application_data import (
     expected_application_response,
 )
 

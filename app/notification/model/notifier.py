@@ -6,10 +6,10 @@ from app.notification.model.exceptions import NotificationError
 from app.notification.model.notification import Notification
 from config import Config
 from notifications_python_client import NotificationsAPIClient
-from tests.test_application.application_data import (
+from examplar_data.application_data import (
     expected_application_data,
 )
-from tests.test_magic_link.magic_link_data import (
+from examplar_data.magic_link_data import (
     expected_magic_link_data,
 )
 
