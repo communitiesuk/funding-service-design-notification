@@ -1,3 +1,5 @@
+import connexion
+from config import Config
 from flask import Flask
 from fsd_utils.healthchecks.checkers import FlaskRunningChecker
 from fsd_utils.healthchecks.healthcheck import Healthcheck
@@ -5,8 +7,17 @@ from fsd_utils.logging import logging
 
 
 def create_app() -> Flask:
-    flask_app = Flask("Notification")
 
+    connexion_options = {"swagger_url": "/"}
+    connexion_app = connexion.FlaskApp(
+        __name__,
+        specification_dir=Config.FLASK_ROOT + "/openapi/",
+        options=connexion_options,
+    )
+    connexion_app.add_api(Config.FLASK_ROOT + "/openapi/api.yml")
+
+    # Configure Flask App
+    flask_app = connexion_app.app
     flask_app.config.from_object("config.Config")
 
     # Initialise logging
@@ -24,14 +35,6 @@ def create_app() -> Flask:
             service_meta_keywords="Funding Service Design - Notification Hub",
             service_meta_author="DLUHC",
         )
-
-    # ---- SETUP BLUEPRINT ROUTES.
-
-    # import notification route.
-    from app.notification.model.routes import notification_bp
-
-    # register notification route (blueprint from app/notification/routes).
-    flask_app.register_blueprint(notification_bp)
 
     health = Healthcheck(flask_app)
     health.add_check(FlaskRunningChecker())

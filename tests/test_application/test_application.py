@@ -38,11 +38,11 @@ def test_application_contents_with_unexpected_data(flask_test_client):
         json=unexpected_application_data,
         follow_redirects=True,
     )
-    assert (
-        b"Incorrect APPLICATION data, please check the contents of the"
-        b" APPLICATION data"
-        in response.data
-    )
+
+    assert b"Incorrect or missing APPLICATION data" in response.data
+    assert response.status_code == 400
+
+
 
 
 @pytest.mark.usefixtures("live_server")
@@ -50,7 +50,7 @@ def test_application_contents_with_none_contents(flask_test_client):
     """
     GIVEN: our service running on flask test client.
     WHEN: we post no data to the endpoint "/send".
-    THEN: we check if it returns an error message.
+    THEN: we check if it returns status code 400.
     """
 
     response = flask_test_client.post(

@@ -1,3 +1,8 @@
+expected_magic_link_content = (
+    "Key 'content' must contain the required Magic Link data & the data must"
+    " be in the JSON format"
+)
+
 expected_magic_link_data = {
     "type": "MAGIC_LINK",
     "to": "test_recipient@email.com",

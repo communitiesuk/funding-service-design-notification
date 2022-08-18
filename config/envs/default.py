@@ -1,11 +1,17 @@
 import logging
 import os
+from pathlib import Path
 
 from fsd_utils import configclass
 
 
 @configclass
 class DefaultConfig:
+
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+    SESSION_COOKIE_NAME = os.environ.get("SESSION_COOKIE_NAME")
+    FLASK_ROOT = str(Path(__file__).parent.parent.parent)
+    FLASK_ENV = os.environ.get("FLASK_ENV")
 
     GOV_NOTIFY_API_KEY = os.environ.get(
         "GOV_NOTIFY_API_KEY", "gov_notify_api_key"

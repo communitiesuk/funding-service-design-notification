@@ -1,5 +1,5 @@
-from app.notification.model.exceptions import NotificationError
 from app.notification.model.notifier import Notifier
+from app.notification.model.response import template_type_error
 
 
 def email_recipient(json_data: dict):
@@ -18,11 +18,4 @@ def email_recipient(json_data: dict):
             return f"Currently {json_data.get('type')} service is not available." # noqa
 
         case _:
-            raise NotificationError(
-                message=(
-                    "Incorrect type, please check the key 'type' & other keys,"
-                    f" values from notification data: {json_data}.\n\nExpected"
-                    " type:('MAGIC_LINK' or 'NOTIFICATION' or 'REMINDER' or"
-                    f" 'AWARD' or 'APPLICATION_RECORD_OF_SUBMISSION')." # noqa
-                )
-            )
+            return template_type_error(json_data)

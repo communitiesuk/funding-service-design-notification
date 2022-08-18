@@ -7,16 +7,6 @@ from app.notification.model.notification import Notification
 
 @dataclass
 class Application:
-    """Class process the application data to map with
-    APPLICATION_RECORD_OF_SUBMISSION template  from
-    govuk-notify service.
-
-    Returns:
-        Mapped data object from application contents with
-        govuk-notify service template & creates txt file
-        for applicant to download.
-    """
-
     contact_info: str
     questions: dict
     submission_date: str
@@ -26,12 +16,13 @@ class Application:
 
     @property
     def format_submission_date(self):
-        return datetime.strptime(
-            self.submission_date, "%Y-%m-%d %H:%M:%S"
-        ).strftime("%Y-%m-%d")
+        if self.submission_date is not None:
+            return datetime.strptime(
+                self.submission_date, "%Y-%m-%d %H:%M:%S"
+            ).strftime("%Y-%m-%d")
 
     @staticmethod
-    def from_json(json_data):
+    def from_json(json_data: dict):
         """Function calls ApplicationData class to map
         the application contents.
 

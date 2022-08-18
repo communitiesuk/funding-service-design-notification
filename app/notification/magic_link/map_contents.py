@@ -1,30 +1,45 @@
-from app.notification.model.exceptions import NotificationError
-from examplar_data.magic_link_data import expected_magic_link_data
+from dataclasses import dataclass
 
-class ProcessMagicLinkData:
-    """
-    Class is set up to map data
-    from notification data contents.
-
-    Returns: notification data or updated notification data
-    to map out with expected contents. If any of the key such as
-    "fund_name" is missing from expected contents, it adds the the
-    key eg "fund_name" and assign value to default value.
-    """
+from app.notification.model.notification import Notification
+@dataclass
+class MagicLink:
+    contact_info: str
+    fund_name: str
+    magic_link: str
 
     @staticmethod
-    def process_data(data):
-        try:
-            data["content"].update(
-                {"fund_name": data["content"].get("fund_name", "Funds")}
-            )
-            return data
+    def from_json(json_data: dict):
+        """Function calls MagicLink class to map
+        the application contents.
 
-        except KeyError:
-            raise NotificationError(
-                message=(
-                    "Incorrect MAGIC LINK data, please check the contents of"
-                    " the MAGIC LINK data. \nExample data:"
-                    f"{expected_magic_link_data}"
-                )
-            )
+        Args:
+            data: Takes incoming json_data & converts into class object
+            from Notification.from_json
+
+        Returns:
+            MagicLink object with magic link contents.
+        """
+        data = Notification.from_json(json_data)
+        content = MagicLink.process_data(json_data).get("content")
+        return MagicLink(
+            contact_info=data.contact_info,
+            fund_name=content.get("fund_name"),
+            magic_link=data.content.get("magic_link_url"),
+        )
+
+    @staticmethod
+    def process_data(data: dict) -> dict:
+        """Function process the incoming json for magic link
+        such as if the fund name is not provided by the user then
+        by default function adds the fund name as "FUNDS"
+
+        Args:
+            data (dict): takes the json
+
+        Returns:
+           data(dict): returns processed json
+        """
+        data["content"].update(
+            {"fund_name": data["content"].get("fund_name", "Funds")}
+        )
+        return data
