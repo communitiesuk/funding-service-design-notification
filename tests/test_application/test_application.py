@@ -43,6 +43,8 @@ def test_application_contents_with_unexpected_data(flask_test_client):
     assert response.status_code == 400
 
 
+
+
 @pytest.mark.usefixtures("live_server")
 def test_application_contents_with_none_contents(flask_test_client):
     """
@@ -58,3 +60,10 @@ def test_application_contents_with_none_contents(flask_test_client):
     )
 
     assert response.status_code == 400
+
+
+def testHealthcheckEndpoint(flask_test_client):
+    response = flask_test_client.get("/healthcheck")
+    expected_dict = {"checks": [{"check_flask_running": "OK"}]}
+    assert 200 == response.status_code, "Unexpected status code"
+    assert expected_dict == response.json, "Unexpected json body"

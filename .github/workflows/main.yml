@@ -102,7 +102,9 @@ jobs:
           cf_password: ${{secrets.CF_PASSWORD}}
           command: push funding-service-design-notification-test  --var GOV_NOTIFY_API_KEY=${{secrets.GOV_NOTIFY_API_KEY}}
 
+# TODO reinstate performance tests once applicaiton refctoring complete
   run_performance_tests:
+    if: ${{ false }}
     needs: deploy_test
     runs-on: ubuntu-latest
     environment: test

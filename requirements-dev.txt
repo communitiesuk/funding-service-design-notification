@@ -29,7 +29,9 @@ certifi==2022.6.15
     #   requests
     #   urllib3
 cffi==1.15.1
-    # via cryptography
+    # via
+    #   -r requirements.txt
+    #   cryptography
 cfgv==3.3.1
     # via pre-commit
 chardet==4.0.0
@@ -58,8 +60,10 @@ commonmark==0.9.1
     #   rich
 connexion==2.14.0
     # via -r requirements.txt
-cryptography==37.0.2
+cryptography==37.0.4
     # via
+    #   -r requirements.txt
+    #   pyjwt
     #   pyopenssl
     #   urllib3
 deepdiff==5.8.1
@@ -82,7 +86,7 @@ flask==2.1.1
     #   pytest-flask
 flask-talisman==0.8.1
     # via -r requirements.txt
-funding-service-design-utils @ git+https://github.com/communitiesuk/funding-service-design-utils.git@main
+funding-service-design-utils @ https://github.com/communitiesuk/funding-service-design-utils/archive/refs/tags/0.0.14.tar.gz
     # via -r requirements.txt
 gitdb==4.0.9
     # via gitpython
@@ -173,18 +177,19 @@ prance==0.21.8.0
 pre-commit==2.19.0
     # via -r requirements-dev.in
 py==1.11.0
-    # via
-    #   pytest
-    #   pytest-forked
+    # via pytest
 pycparser==2.21
-    # via cffi
+    # via
+    #   -r requirements.txt
+    #   cffi
 pygments==2.12.0
     # via
     #   -r requirements.txt
     #   rich
-pyjwt==2.4.0
+pyjwt[crypto]==2.4.0
     # via
     #   -r requirements.txt
+    #   funding-service-design-utils
     #   notifications-python-client
 pyopenssl==22.0.0
     # via urllib3
@@ -205,7 +210,6 @@ pytest==7.1.2
     #   pytest-base-url
     #   pytest-env
     #   pytest-flask
-    #   pytest-forked
     #   pytest-html
     #   pytest-metadata
     #   pytest-mock
@@ -216,8 +220,6 @@ pytest-base-url==2.0.0
 pytest-env==0.6.2
     # via -r requirements-dev.in
 pytest-flask==1.2.0
-    # via -r requirements-dev.in
-pytest-forked==1.4.0
     # via -r requirements-dev.in
 pytest-html==3.1.1
     # via pytest-selenium
