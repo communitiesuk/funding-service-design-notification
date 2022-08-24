@@ -54,7 +54,7 @@ class Application:
         form_names = []
         forms = Application.get_forms(data)
         for form in forms:
-            form_names.append(form.get("form_name"))
+            form_names.append(form.get("name"))
         return list(dict.fromkeys(form_names))
 
     @staticmethod
@@ -65,7 +65,7 @@ class Application:
 
         for form_name in form_names:
             for form in forms:
-                if form_name in form["form_name"]:
+                if form_name in form["name"]:
                     for question in form["questions"]:
                         for fields in question["fields"]:
                             question_answers[fields["title"]] = fields.get(

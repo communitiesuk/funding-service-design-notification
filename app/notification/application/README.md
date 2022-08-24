@@ -27,7 +27,7 @@ To post data, use /send endpoint with POST method. Data must be in the following
                 "date_submitted": "2022-05-20 14:47:12",
                 "forms": [
                     {
-                        "form_name": "community-benefits",
+                        "name": "community-benefits",
                         "questions": [
                             {
                                 "question": "Potential to deliver community benefits",
