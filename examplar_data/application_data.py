@@ -19,7 +19,7 @@ expected_application_data = {
             "last_edited": None,
             "forms": [
                 {
-                    "name": "about-your-org",
+                    "form_name": "about-your-org",
                     "status": "NOT_STARTED",
                     "questions": [
                         {
