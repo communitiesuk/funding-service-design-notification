@@ -17,9 +17,9 @@ expected_application_data = {
             "date_submitted": "2022-05-14 10:20:44",
             "started_at": "2022-05-20 14:47:12",
             "last_edited": None,
-            "sections": [
+            "forms": [
                 {
-                    "section_name": "about-your-org",
+                    "form_name": "about-your-org",
                     "status": "NOT_STARTED",
                     "questions": [
                         {

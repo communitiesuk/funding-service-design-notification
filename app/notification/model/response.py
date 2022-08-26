@@ -31,7 +31,7 @@ def invalid_data_error(
         jsonify(
             detail=(
                 "Incorrect data, check following contents that may contain"
-                " invalid email and incorrect values"
+                " invalid email and incorrect or null values"
             ),
             status=code,
             error=message,
