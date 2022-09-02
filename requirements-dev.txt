@@ -74,7 +74,7 @@ docopt==0.6.2
     # via
     #   -r requirements.txt
     #   notifications-python-client
-dparse==0.5.1
+dparse==0.5.2
     # via safety
 filelock==3.7.1
     # via virtualenv
@@ -250,7 +250,6 @@ pyyaml==6.0
     #   bandit
     #   clickclick
     #   connexion
-    #   dparse
     #   funding-service-design-utils
     #   openapi-spec-validator
     #   pre-commit
