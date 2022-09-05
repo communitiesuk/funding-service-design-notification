@@ -18,9 +18,9 @@ class Application:
     def format_submission_date(self):
         if self.submission_date is not None:
             return datetime.strptime(
-                self.submission_date, "%Y-%m-%d %H:%M:%S"
+            self.submission_date, "%Y-%m-%dT%H:%M:%S.%f"
             ).strftime("%Y-%m-%d")
-
+     
     @staticmethod
     def from_json(json_data: dict):
         """Function calls ApplicationData class to map
