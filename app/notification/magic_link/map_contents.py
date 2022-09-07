@@ -28,12 +28,16 @@ class MagicLink:
         content = MagicLink.process_data(json_data).get("content")
         return MagicLink(
             contact_info=data.contact_info,
-            fund_name=content.get(Config.NOTFN_ML_FUND_NAME),
-            magic_link=content.get(Config.NOTFN_ML_MAGIC_LINK_URL),
-            request_new_link_url=content.get(
-                Config.NOTFN_ML_REQUEST_NEW_EMAIL_URL
+            fund_name=content.get(Config.NOTIFICATION_MAGIC_LINK_FUND_NAME),
+            magic_link=content.get(
+                Config.NOTIFICATION_MAGIC_LINK_MAGIC_LINK_URL
             ),
-            contact_help_email=content.get(Config.NOTFN_ML_CONTACT_HELP_EMAIL),
+            request_new_link_url=content.get(
+                Config.NOTIFICATION_MAGIC_LINK_REQUEST_NEW_EMAIL_URL
+            ),
+            contact_help_email=content.get(
+                Config.NOTIFICATION_MAGIC_LINK_CONTACT_HELP_EMAIL
+            ),
         )
 
     @staticmethod
