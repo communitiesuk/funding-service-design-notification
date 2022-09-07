@@ -38,7 +38,7 @@ class Application:
         application = data.content["application"]
         return Application(
             contact_info=data.contact_info,
-            questions=Application.process_questions_and_answers(data),
+            questions=Application.bytes_object_for_questions_answers(data),
             submission_date=application.get("date_submitted"),
             fund_name=application.get("project_name"),
             fund_round=application.get("round_id"),
@@ -75,7 +75,7 @@ class Application:
         return question_answers
 
     @staticmethod
-    def format_questions_with_stringIO(data) -> str:
+    def format_questions_answers_with_stringIO(data) -> str:
         """Function formats the data for readability with StringIO.
         """
         json_file = Application.get_questions_and_answers(data)
@@ -87,11 +87,11 @@ class Application:
         return output.getvalue()
 
     @staticmethod
-    def process_questions_and_answers(data) -> BytesIO:
+    def bytes_object_for_questions_answers(data) -> BytesIO:
         """Function creates a memory object for question & answers
         with ByteIO from StringIO.
         """
-        stringIO_data = Application.format_questions_with_stringIO(data)
+        stringIO_data = Application.format_questions_answers_with_stringIO(data)
         convert_to_bytes = bytes(stringIO_data, "utf-8")
         bytes_object = BytesIO(convert_to_bytes)
         print(f"OUTPUT BytesIO: {type(bytes_object)}")
