@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 
 from app.notification.model.notification import Notification
+
+
 @dataclass
 class MagicLink:
     contact_info: str
