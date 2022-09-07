@@ -81,7 +81,6 @@ jobs:
     needs: security
     runs-on: ubuntu-latest
     environment: test
-    if: github.ref != 'refs/heads/fs1352-req-new-link'
     steps:
       - name: checkout code
         uses: actions/checkout@v2
