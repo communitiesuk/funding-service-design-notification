@@ -46,8 +46,12 @@ class Notifier:
             )
             return response, code
         except errors.HTTPError:
+            current_app.logger.exception(
+                "HTTPError while sending notification"
+            )
             return invalid_data_error(MagicLink.from_json(json_data))
         except KeyError:
+            current_app.logger.exception("KeyError while sending notification")
             return magic_link_key_error(expected_magic_link_content)
 
     @staticmethod
