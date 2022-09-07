@@ -17,6 +17,7 @@ def test_magic_link_contents_with_expected_data(flask_test_client):
         json=expected_magic_link_data,
         follow_redirects=True,
     )
+    assert 200 == response.status_code, "Unexpected response code"
     assert b"MAGIC-LINK-GOES-HERE" in response.data
 
 

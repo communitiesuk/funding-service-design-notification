@@ -1,11 +1,15 @@
 from dataclasses import dataclass
 
 from app.notification.model.notification import Notification
+
+
 @dataclass
 class MagicLink:
     contact_info: str
     fund_name: str
     magic_link: str
+    request_new_link_url: str
+    contact_help_email: str
 
     @staticmethod
     def from_json(json_data: dict):
@@ -24,7 +28,9 @@ class MagicLink:
         return MagicLink(
             contact_info=data.contact_info,
             fund_name=content.get("fund_name"),
-            magic_link=data.content.get("magic_link_url"),
+            magic_link=content.get("magic_link_url"),
+            request_new_link_url=content.get("request_new_link_url"),
+            contact_help_email=content.get("contact_help_email"),
         )
 
     @staticmethod

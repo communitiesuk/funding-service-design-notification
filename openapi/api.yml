@@ -21,7 +21,12 @@ paths:
             example:
               type: 'MAGIC_LINK'
               to: 'example@email.com'
-              content: {"magic_link_url": "https://www.example.com/",}
+              content: {
+                "magic_link_url": "https://www.example.com/",
+                "fund_name": "Funding service",
+                "request_new_link_url": "https://www.example.com/new_link",
+                "contact_help_email": "help@example.com"
+              }
       responses:
         200:
           description: "Contents have successfully been delivered"
@@ -72,5 +77,11 @@ components:
               type: string
             fund_name:
               type: string
+            contact_help_email:
+              type: string
+            request_new_link_url:
+              type: string
           example: {"magic_link_url": "https://www.example.com/",
-                    "fund_name": "Funding service"}
+                    "fund_name": "Funding service",
+                    "request_new_link_url": "https://www.example.com/new_link",
+                    "contact_help_email": "help@example.com"}

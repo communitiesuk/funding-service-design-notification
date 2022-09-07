@@ -9,6 +9,8 @@ expected_magic_link_data = {
     "content": {
         "magic_link_url": "MAGIC-LINK-GOES-HERE",
         "fund_name": "FUND NAME GOES HERE",
+        "contact_help_email": "HELP EMAIL GOES HERE",
+        "request_new_link_url": "NEW LINK URL GOES HERE",
     },
 }
 
@@ -18,6 +20,8 @@ incorrect_content_key_data = {
     "con": {
         "magic_link_url": "MAGIC LINK GOES HERE",
         "fund_name": "FUND NAME GOES HERE",
+        "contact_help_email": "HELP EMAIL GOES HERE",
+        "request_new_link_url": "NEW LINK URL GOES HERE",
     },
 }
 
@@ -27,6 +31,8 @@ incorrect_template_type_key_data = {
     "content": {
         "magic_link_url": "MAGIC LINK GOES HERE",
         "fund_name": "FUND NAME GOES HERE",
+        "contact_help_email": "HELP EMAIL GOES HERE",
+        "request_new_link_url": "NEW LINK URL GOES HERE",
     },
 }
 
