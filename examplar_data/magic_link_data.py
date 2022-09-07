@@ -1,3 +1,12 @@
+from config import Config
+
+valid_content = {
+    Config.NOTFN_ML_MAGIC_LINK_URL: "MAGIC-LINK-GOES-HERE",
+    Config.NOTFN_ML_FUND_NAME: "FUND NAME GOES HERE",
+    Config.NOTFN_ML_CONTACT_HELP_EMAIL: "HELP EMAIL GOES HERE",
+    Config.NOTFN_ML_REQUEST_NEW_EMAIL_URL: "NEW LINK URL GOES HERE",
+}
+
 expected_magic_link_content = (
     "Key 'content' must contain the required Magic Link data & the data must"
     " be in the JSON format"
@@ -6,43 +15,25 @@ expected_magic_link_content = (
 expected_magic_link_data = {
     "type": "MAGIC_LINK",
     "to": "test_recipient@email.com",
-    "content": {
-        "magic_link_url": "MAGIC-LINK-GOES-HERE",
-        "fund_name": "FUND NAME GOES HERE",
-        "contact_help_email": "HELP EMAIL GOES HERE",
-        "request_new_link_url": "NEW LINK URL GOES HERE",
-    },
+    "content": valid_content,
 }
 
 incorrect_content_key_data = {
     "type": "MAGIC_LINK",
     "to": "test_recipient@email.com",
-    "con": {
-        "magic_link_url": "MAGIC LINK GOES HERE",
-        "fund_name": "FUND NAME GOES HERE",
-        "contact_help_email": "HELP EMAIL GOES HERE",
-        "request_new_link_url": "NEW LINK URL GOES HERE",
-    },
+    "con": valid_content,
 }
 
 incorrect_template_type_key_data = {
     "te": "MAGIC_LINK",
     "to": "test_recipient@email.com",
-    "content": {
-        "magic_link_url": "MAGIC LINK GOES HERE",
-        "fund_name": "FUND NAME GOES HERE",
-        "contact_help_email": "HELP EMAIL GOES HERE",
-        "request_new_link_url": "NEW LINK URL GOES HERE",
-    },
+    "content": valid_content,
 }
 
 incorrect_template_type_data = {
     "type": "TEST_KEY",
     "to": "test_recipient@email.com",
-    "content": {
-        "magic_link_url": "CONTENTS GOES HERE",
-        "fund_name": "FUND NAME GOES HERE",
-    },
+    "content": valid_content,
 }
 
 
