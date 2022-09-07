@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from app.notification.model.notification import Notification
+from config import Config
 
 
 @dataclass
@@ -27,10 +28,12 @@ class MagicLink:
         content = MagicLink.process_data(json_data).get("content")
         return MagicLink(
             contact_info=data.contact_info,
-            fund_name=content.get("fund_name"),
-            magic_link=content.get("magic_link_url"),
-            request_new_link_url=content.get("request_new_link_url"),
-            contact_help_email=content.get("contact_help_email"),
+            fund_name=content.get(Config.NOTFN_ML_FUND_NAME),
+            magic_link=content.get(Config.NOTFN_ML_MAGIC_LINK_URL),
+            request_new_link_url=content.get(
+                Config.NOTFN_ML_REQUEST_NEW_EMAIL_URL
+            ),
+            contact_help_email=content.get(Config.NOTFN_ML_CONTACT_HELP_EMAIL),
         )
 
     @staticmethod

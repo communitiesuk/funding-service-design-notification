@@ -2,6 +2,7 @@ import logging
 import os
 from pathlib import Path
 
+from fsd_utils import CommonConfig
 from fsd_utils import configclass
 
 
@@ -24,6 +25,14 @@ class DefaultConfig:
         "APPLICATION_RECORD_TEMPLATE_ID",
         "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
     )
+
+    # Magic Link Fields
+    NOTFN_ML_CONTACT_HELP_EMAIL = CommonConfig.NOTFN_ML_CONTACT_HELP_EMAIL
+    NOTFN_ML_MAGIC_LINK_URL = CommonConfig.NOTFN_ML_MAGIC_LINK_URL
+    NOTFN_ML_REQUEST_NEW_EMAIL_URL = (
+        CommonConfig.NOTFN_ML_REQUEST_NEW_EMAIL_URL
+    )
+    NOTFN_ML_FUND_NAME = CommonConfig.NOTFN_ML_FUND_NAME
 
     # Logging
     FSD_LOG_LEVEL = logging.WARNING
