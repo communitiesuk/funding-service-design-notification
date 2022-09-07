@@ -21,4 +21,7 @@ def test_mocked_application(mock_send_email):
 
     mock_send_email.return_value = expected_application_response
     email_response = send_email()
-    assert "Jack-Simon" in email_response[0][0]["content"]["body"]
+    assert (
+        "Fund name:  Funding service"
+        in email_response[0][0]["content"]["body"]
+    )
