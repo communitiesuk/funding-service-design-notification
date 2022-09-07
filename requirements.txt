@@ -40,7 +40,7 @@ flask-babel==2.0.0
     # via funding-service-design-utils
 flask-talisman==0.8.1
     # via -r requirements.in
-funding-service-design-utils @ git+https://github.com/communitiesuk/funding-service-design-utils@fs1352-req-new-link
+funding-service-design-utils @ https://github.com/communitiesuk/funding-service-design-utils/archive/refs/tags/0.0.19.tar.gz
     # via -r requirements.in
 gunicorn==20.1.0
     # via funding-service-design-utils
