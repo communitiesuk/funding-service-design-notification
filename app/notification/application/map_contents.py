@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from io import BytesIO
 from io import StringIO
 
 from app.notification.model.notification import Notification
@@ -18,9 +19,9 @@ class Application:
     def format_submission_date(self):
         if self.submission_date is not None:
             return datetime.strptime(
-            self.submission_date, "%Y-%m-%dT%H:%M:%S.%f"
+                self.submission_date, "%Y-%m-%dT%H:%M:%S.%f"
             ).strftime("%Y-%m-%d")
-     
+
     @staticmethod
     def from_json(json_data: dict):
         """Function calls ApplicationData class to map
@@ -74,11 +75,25 @@ class Application:
         return question_answers
 
     @staticmethod
-    def process_questions_and_answers(data) -> str:
-        """Function creates a memory object for question & answers."""
+    def format_questions_with_stringIO(data) -> str:
+        """Function formats the data for readability with StringIO.
+        """
         json_file = Application.get_questions_and_answers(data)
         output = StringIO()
         for question, answer in json_file.items():
             output.write(f"- {question}: ")
             output.write(f"{answer}\n")
+        print(f"OUTPUT StringIO: {type(output.getvalue())}")
         return output.getvalue()
+
+    @staticmethod
+    def process_questions_and_answers(data) -> BytesIO:
+        """Function creates a memory object for question & answers
+        with ByteIO from StringIO.
+        """
+        stringIO_data = Application.format_questions_with_stringIO(data)
+        convert_to_bytes = bytes(stringIO_data, "utf-8")
+        bytes_object = BytesIO(convert_to_bytes)
+        print(f"OUTPUT BytesIO: {type(bytes_object)}")
+        return bytes_object
+    

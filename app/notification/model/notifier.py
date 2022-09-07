@@ -1,16 +1,14 @@
-from app.notification.application.map_contents import (
-    Application,
-)
+from app.notification.application.map_contents import Application
 from app.notification.magic_link.map_contents import MagicLink
 from app.notification.model.response import application_key_error
 from app.notification.model.response import invalid_data_error
 from app.notification.model.response import magic_link_key_error
 from config import Config
+from examplar_data.application_data import expected_application_content
+from examplar_data.magic_link_data import expected_magic_link_content
 from notifications_python_client import errors
 from notifications_python_client import NotificationsAPIClient
-
-from examplar_data.magic_link_data import expected_magic_link_content
-from examplar_data.application_data import expected_application_content
+from notifications_python_client import prepare_upload
 
 notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
 
@@ -67,7 +65,7 @@ class Notifier:
                         "application id": data.application_id,
                         "date submitted": data.format_submission_date,
                         "round name": data.fund_round,
-                        "question": data.questions,
+                        "question": prepare_upload(data.questions),
                     },
                 ),
                 code,
