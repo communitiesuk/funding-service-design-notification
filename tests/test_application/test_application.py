@@ -21,7 +21,24 @@ def test_application_contents_with_expected_data(flask_test_client):
         json=expected_application_data,
         follow_redirects=True,
     )
-    assert b"Jack-Simon" in response.data
+    assert b"Fund name:  Funding service" in response.data
+
+
+@pytest.mark.usefixtures("live_server")
+def test_application_contents_with_formatted_date(flask_test_client):
+    """
+    GIVEN: our service running on flask test client.
+    WHEN: we post expected application data to the endpoint "/send".
+    THEN: we check if the contents of the message is successfully delivered
+    along with formatted date.
+    """
+
+    response = flask_test_client.post(
+        "/send",
+        json=expected_application_data,
+        follow_redirects=True,
+    )
+    assert b"Application submitted: 2022-05-14" in response.data
 
 
 @pytest.mark.usefixtures("live_server")
@@ -41,8 +58,6 @@ def test_application_contents_with_unexpected_data(flask_test_client):
 
     assert b"Incorrect or missing APPLICATION data" in response.data
     assert response.status_code == 400
-
-
 
 
 @pytest.mark.usefixtures("live_server")
