@@ -13,7 +13,7 @@ class MagicLink:
     contact_help_email: str
 
     @staticmethod
-    def from_json(json_data):
+    def from_json(magic_link_data):
         """Function calls MagicLink class to map
         the application contents.
 
@@ -28,7 +28,7 @@ class MagicLink:
         current_app.logger.debug(
             "Third step - map contents with Magic_Link Template"
         )
-        data = MagicLink.process_data(json_data)
+        data = MagicLink.process_data(magic_link_data)
         return MagicLink(
             contact_info=data.contact_info,
             fund_name=data.content.get(NotifyConstants.FIELD_FUND_NAME),
