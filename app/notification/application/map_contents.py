@@ -3,7 +3,7 @@ from datetime import datetime
 from io import BytesIO
 from io import StringIO
 
-from app.notification.model.notification import Notification
+from flask import current_app
 
 
 @dataclass
@@ -23,7 +23,7 @@ class Application:
             ).strftime("%Y-%m-%d")
 
     @staticmethod
-    def from_json(json_data: dict):
+    def from_json(data):
         """Function calls ApplicationData class to map
         the application contents.
 
@@ -34,17 +34,16 @@ class Application:
         Returns:
             ApplicationData object with application contents.
         """
-        data = Notification.from_json(json_data)
-        if data.template_type == "APPLICATION_RECORD_OF_SUBMISSION":
-            application = data.content["application"]
-            return Application(
-                contact_info=data.contact_info,
-                questions=Application.bytes_object_for_questions_answers(data),
-                submission_date=application.get("date_submitted"),
-                fund_name=application.get("project_name"),
-                fund_round=application.get("round_id"),
-                application_id=application.get("id"),
-            )
+        current_app.logger.debug("Third step - process contents")
+        application = data.content["application"]
+        return Application(
+            contact_info=data.contact_info,
+            questions=Application.bytes_object_for_questions_answers(data),
+            submission_date=application.get("date_submitted"),
+            fund_name=application.get("project_name"),
+            fund_round=application.get("round_id"),
+            application_id=application.get("id"),
+        )
 
     @staticmethod
     def get_forms(data) -> list:
