@@ -6,11 +6,11 @@ from app.notification.model.response import application_key_error
 from app.notification.model.response import invalid_data_error
 from app.notification.model.response import magic_link_key_error
 from config import Config
+from examplar_data.application_data import expected_application_content
+from examplar_data.magic_link_data import expected_magic_link_content
+from flask import current_app
 from notifications_python_client import errors
 from notifications_python_client import NotificationsAPIClient
-
-from examplar_data.magic_link_data import expected_magic_link_content
-from examplar_data.application_data import expected_application_content
 
 notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
 
@@ -36,15 +36,20 @@ class Notifier:
                     personalisation={
                         "name of fund": data.fund_name,
                         "link to application": data.magic_link,
-                        "contact details": "help_contact@example.com",
+                        "request new link url": data.request_new_link_url,
+                        "contact details": data.contact_help_email,
                     },
                 ),
                 code,
             )
             return response, code
         except errors.HTTPError:
+            current_app.logger.exception(
+                "HTTPError while sending notification"
+            )
             return invalid_data_error(MagicLink.from_json(json_data))
         except KeyError:
+            current_app.logger.exception("KeyError while sending notification")
             return magic_link_key_error(expected_magic_link_content)
 
     @staticmethod
