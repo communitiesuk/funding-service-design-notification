@@ -29,8 +29,6 @@ class Notifier:
         """
         try:
             data = MagicLink.from_json(json_data)
-            current_app.logger.debug("Sending notification:")
-            current_app.logger.debug(data)
             response = (
                 notifications_client.send_email_notification(
                     email_address=data.contact_info,

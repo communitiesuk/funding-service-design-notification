@@ -1,12 +1,10 @@
-from config import Config
+from fsd_utils.config.notify_constants import NotifyConstants
 
 valid_content = {
-    Config.NOTIFICATION_MAGIC_LINK_MAGIC_LINK_URL: "MAGIC-LINK-GOES-HERE",
-    Config.NOTIFICATION_MAGIC_LINK_FUND_NAME: "FUND NAME GOES HERE",
-    Config.NOTIFICATION_MAGIC_LINK_CONTACT_HELP_EMAIL: "HELP EMAIL GOES HERE",
-    Config.NOTIFICATION_MAGIC_LINK_REQUEST_NEW_EMAIL_URL: (
-        "NEW LINK URL GOES HERE"
-    ),
+    NotifyConstants.FIELD_MAGIC_LINK_URL: "MAGIC-LINK-GOES-HERE",
+    NotifyConstants.FIELD_FUND_NAME: "FUND NAME GOES HERE",
+    NotifyConstants.FIELD_CONTACT_HELP_EMAIL: "help@email.com",
+    NotifyConstants.FIELD_REQUEST_NEW_LINK_URL: "NEW LINK URL GOES HERE",
 }
 
 expected_magic_link_content = (
@@ -15,33 +13,33 @@ expected_magic_link_content = (
 )
 
 expected_magic_link_data = {
-    "type": "MAGIC_LINK",
-    "to": "test_recipient@email.com",
-    "content": valid_content,
+    NotifyConstants.FIELD_TYPE: "MAGIC_LINK",
+    NotifyConstants.FIELD_TO: "test_recipient@email.com",
+    NotifyConstants.FIELD_CONTENT: valid_content,
 }
 
 incorrect_content_key_data = {
-    "type": "MAGIC_LINK",
-    "to": "test_recipient@email.com",
+    NotifyConstants.FIELD_TYPE: "MAGIC_LINK",
+    NotifyConstants.FIELD_TO: "test_recipient@email.com",
     "con": valid_content,
 }
 
 incorrect_template_type_key_data = {
     "te": "MAGIC_LINK",
-    "to": "test_recipient@email.com",
-    "content": valid_content,
+    NotifyConstants.FIELD_TO: "test_recipient@email.com",
+    NotifyConstants.FIELD_CONTENT: valid_content,
 }
 
 incorrect_template_type_data = {
-    "type": "TEST_KEY",
-    "to": "test_recipient@email.com",
-    "content": valid_content,
+    NotifyConstants.FIELD_TYPE: "TEST_KEY",
+    NotifyConstants.FIELD_TO: "test_recipient@email.com",
+    NotifyConstants.FIELD_CONTENT: valid_content,
 }
 
 
 expected_magic_link_response = {
     "notify_response": {
-        "content": {
+        NotifyConstants.FIELD_CONTENT: {
             "body": (
                 "You asked us for a link to your application:  \r\nMAGIC-LINK-"
                 "GOES-HERE \r\n\r\nThe link will work for 24 hours."

@@ -2,7 +2,6 @@ import logging
 import os
 from pathlib import Path
 
-from fsd_utils import CommonConfig
 from fsd_utils import configclass
 
 
@@ -24,20 +23,6 @@ class DefaultConfig:
     APPLICATION_RECORD_TEMPLATE_ID = os.environ.get(
         "APPLICATION_RECORD_TEMPLATE_ID",
         "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
-    )
-
-    # Magic Link Fields
-    NOTIFICATION_MAGIC_LINK_CONTACT_HELP_EMAIL = (
-        CommonConfig.NOTIFICATION_MAGIC_LINK_CONTACT_HELP_EMAIL
-    )
-    NOTIFICATION_MAGIC_LINK_MAGIC_LINK_URL = (
-        CommonConfig.NOTIFICATION_MAGIC_LINK_MAGIC_LINK_URL
-    )
-    NOTIFICATION_MAGIC_LINK_REQUEST_NEW_EMAIL_URL = (
-        CommonConfig.NOTIFICATION_MAGIC_LINK_REQUEST_NEW_EMAIL_URL
-    )
-    NOTIFICATION_MAGIC_LINK_FUND_NAME = (
-        CommonConfig.NOTIFICATION_MAGIC_LINK_FUND_NAME
     )
 
     # Logging
