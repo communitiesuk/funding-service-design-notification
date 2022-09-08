@@ -11,12 +11,12 @@ def email_recipient(json_data: dict):
     """
     match json_data.get("type"):
         case NotifyConstants.TEMPLATE_TYPE_MAGIC_LINK:
-            current_app.logger.info(
+            current_app.logger.debug(
                 "First step - connect with MAGIC_LINK to send an email")
             return Notifier.send_magic_link(json_data)
 
         case "APPLICATION_RECORD_OF_SUBMISSION":
-            current_app.logger.info(
+            current_app.logger.debug(
                 "First step - connect with APPLICATION to send an email")
             return Notifier.send_application(json_data)
 
