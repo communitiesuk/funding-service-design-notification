@@ -35,7 +35,7 @@ class Application:
             ApplicationData object with application contents.
         """
         data = Notification.from_json(json_data)
-        if data.template_type =="APPLICATION_RECORD_OF_SUBMISSION":
+        if data.template_type == "APPLICATION_RECORD_OF_SUBMISSION":
             application = data.content["application"]
             return Application(
                 contact_info=data.contact_info,
@@ -77,8 +77,7 @@ class Application:
 
     @staticmethod
     def format_questions_answers_with_stringIO(data) -> str:
-        """Function formats the data for readability with StringIO.
-        """
+        """Function formats the data for readability with StringIO."""
         json_file = Application.get_questions_and_answers(data)
         output = StringIO()
         for question, answer in json_file.items():
@@ -91,8 +90,9 @@ class Application:
         """Function creates a memory object for question & answers
         with ByteIO from StringIO.
         """
-        stringIO_data = Application.format_questions_answers_with_stringIO(data)
+        stringIO_data = Application.format_questions_answers_with_stringIO(
+            data
+        )
         convert_to_bytes = bytes(stringIO_data, "utf-8")
         bytes_object = BytesIO(convert_to_bytes)
         return bytes_object
-    

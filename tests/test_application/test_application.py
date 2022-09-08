@@ -21,6 +21,7 @@ def test_application_contents_with_expected_data(flask_test_client):
         json=expected_application_data,
         follow_redirects=True,
     )
+
     assert b"Fund name:  Funding service" in response.data
 
 
@@ -39,6 +40,7 @@ def test_application_contents_with_formatted_date(flask_test_client):
         follow_redirects=True,
     )
     assert b"Application submitted: 2022-05-14" in response.data
+    assert response.status_code == 200, "Unexpected status code"
 
 
 @pytest.mark.usefixtures("live_server")
@@ -56,7 +58,9 @@ def test_application_contents_with_unexpected_data(flask_test_client):
         follow_redirects=True,
     )
 
+    assert response.status_code == 400, "Unexpected status code"
     assert b"Incorrect or missing APPLICATION data" in response.data
+
     assert response.status_code == 400
 
 

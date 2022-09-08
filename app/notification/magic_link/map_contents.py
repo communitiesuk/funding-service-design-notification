@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from app.notification.model.notification import Notification
+from fsd_utils.config.notify_constants import NotifyConstants
 
 
 @dataclass
@@ -8,6 +9,8 @@ class MagicLink:
     contact_info: str
     fund_name: str
     magic_link: str
+    request_new_link_url: str
+    contact_help_email: str
 
     @staticmethod
     def from_json(json_data: dict):
@@ -25,8 +28,14 @@ class MagicLink:
         content = MagicLink.process_data(json_data).get("content")
         return MagicLink(
             contact_info=data.contact_info,
-            fund_name=content.get("fund_name"),
-            magic_link=data.content.get("magic_link_url"),
+            fund_name=content.get(NotifyConstants.FIELD_FUND_NAME),
+            magic_link=content.get(NotifyConstants.FIELD_MAGIC_LINK_URL),
+            request_new_link_url=content.get(
+                NotifyConstants.FIELD_REQUEST_NEW_LINK_URL
+            ),
+            contact_help_email=content.get(
+                NotifyConstants.FIELD_CONTACT_HELP_EMAIL
+            ),
         )
 
     @staticmethod
@@ -42,6 +51,10 @@ class MagicLink:
            data(dict): returns processed json
         """
         data["content"].update(
-            {"fund_name": data["content"].get("fund_name", "Funds")}
+            {
+                NotifyConstants.FIELD_FUND_NAME: data["content"].get(
+                    NotifyConstants.FIELD_FUND_NAME, "Funds"
+                )
+            }
         )
         return data
