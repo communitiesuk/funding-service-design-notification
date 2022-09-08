@@ -25,18 +25,19 @@ class MagicLink:
             MagicLink object with magic link contents.
         """
         data = Notification.from_json(json_data)
-        content = MagicLink.process_data(json_data).get("content")
-        return MagicLink(
-            contact_info=data.contact_info,
-            fund_name=content.get(NotifyConstants.FIELD_FUND_NAME),
-            magic_link=content.get(NotifyConstants.FIELD_MAGIC_LINK_URL),
-            request_new_link_url=content.get(
-                NotifyConstants.FIELD_REQUEST_NEW_LINK_URL
-            ),
-            contact_help_email=content.get(
-                NotifyConstants.FIELD_CONTACT_HELP_EMAIL
-            ),
-        )
+        if data.template_type == NotifyConstants.TEMPLATE_TYPE_MAGIC_LINK:
+            content = MagicLink.process_data(json_data).get("content")
+            return MagicLink(
+                contact_info=data.contact_info,
+                fund_name=content.get(NotifyConstants.FIELD_FUND_NAME),
+                magic_link=content.get(NotifyConstants.FIELD_MAGIC_LINK_URL),
+                request_new_link_url=content.get(
+                    NotifyConstants.FIELD_REQUEST_NEW_LINK_URL
+                ),
+                contact_help_email=content.get(
+                    NotifyConstants.FIELD_CONTACT_HELP_EMAIL
+                ),
+            )
 
     @staticmethod
     def process_data(data: dict) -> dict:
