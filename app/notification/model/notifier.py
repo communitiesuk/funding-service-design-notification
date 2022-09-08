@@ -1,5 +1,6 @@
 from app.notification.application.map_contents import Application
 from app.notification.magic_link.map_contents import MagicLink
+from app.notification.model.notification import Notification
 from app.notification.model.response import application_key_error
 from app.notification.model.response import invalid_data_error
 from app.notification.model.response import magic_link_key_error
@@ -28,7 +29,10 @@ class Notifier:
         or missing.
         """
         try:
-            data = MagicLink.from_json(json_data)
+            data = Notification.process_data(json_data)
+            current_app.logger.debug(
+                "Last step - map contents with MAGIC LINK TEMPLATE"
+            )
             response = (
                 notifications_client.send_email_notification(
                     email_address=data.contact_info,
@@ -62,7 +66,10 @@ class Notifier:
         or missing.
         """
         try:
-            data = Application.from_json(json_data)
+            data = Notification.process_data(json_data)
+            current_app.logger.info(
+                "Last step - map contents with APPLICATION TEMPLATE"
+            )
             response = (
                 notifications_client.send_email_notification(
                     email_address=data.contact_info,
