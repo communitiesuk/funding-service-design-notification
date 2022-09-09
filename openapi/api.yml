@@ -71,7 +71,7 @@ components:
           example: "MAGIC_LINK"
         to:
           type: string
-          example: "example@email.com"
+          example: "email@example.com"
         content:
           type: object
           required:
@@ -88,14 +88,23 @@ components:
               type: string
             request_new_link_url:
               type: string
+      example: {"content": {
+        "contact_help_email": "help@example.com",
+        "fund_name": "Funding service",
+        "magic_link_url": "https://www.example.com/",
+        "request_new_link_url": "https://www.example.com/new_link"
+            }
+          }
     Application:
       description:
-        "Post Application Confirmation JSON for applicant"
+        "Post JSON for application submission confirmation"
       properties:
         type:
           type: string
+          example: "APPLICATION_SUBMISSION"
         to:
           type: string
+          example: "email@example.com"
         content:
           type: object
           properties:
@@ -152,7 +161,33 @@ components:
                 - forms
           required:
             - application
+
       required:
         - type
         - to
         - content
+      example: {"content": {
+        "application": {
+          "id": "5176687c-3c5a-44f5-8580-fa6e552bfb3e",
+          "round_id": "summer",
+          "project_name": "Funding service community fund",
+          "date_submitted": "2022-05-20T14:47:12.111511",
+          "forms": [
+            {
+              "name": "community-benefits",
+              "questions": [
+                {
+                  "question": "Potential to deliver community benefits",
+                  "fields": [
+                    {
+                      "title": "Question one",
+                      "answer": "Answer one"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+       }
+      }
