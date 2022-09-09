@@ -40,7 +40,7 @@ def test_application_contents_with_formatted_date(flask_test_client):
         follow_redirects=True,
     )
     assert b"Application submitted: 2022-05-14" in response.data
-    assert response.status_code == 200, "Unexpected status code"
+    assert response.status_code == 200
 
 
 @pytest.mark.usefixtures("live_server")
