@@ -17,7 +17,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Notification'
+              anyOf:
+                - $ref: '#/components/schemas/Magic_Link'
+                - $ref: '#/components/schemas/Application'
+
             example:
               type: 'MAGIC_LINK'
               to: 'example@email.com'
@@ -55,10 +58,9 @@ components:
         detail:
           type: string
           example: "'type' is a required key"
-    Notification:
+    Magic_Link:
       description:
-        "Service requires three keys
-        (type-string, to-email, content-dict)"
+        "Post JSON to request Magic link"
       required:
         - type
         - to
@@ -72,6 +74,11 @@ components:
           example: "example@email.com"
         content:
           type: object
+          required:
+            - magic_link_url
+            - fund_name
+            - contact_help_email
+            - request_new_link_url
           properties:
             magic_link_url:
               type: string
@@ -81,7 +88,71 @@ components:
               type: string
             request_new_link_url:
               type: string
-          example: {"magic_link_url": "https://www.example.com/",
-                    "fund_name": "Funding service",
-                    "request_new_link_url": "https://www.example.com/new_link",
-                    "contact_help_email": "help@example.com"}
+    Application:
+      description:
+        "Post Application Confirmation JSON for applicant"
+      properties:
+        type:
+          type: string
+        to:
+          type: string
+        content:
+          type: object
+          properties:
+            application:
+              type: object
+              properties:
+                id:
+                  type: string
+                round_id:
+                  type: string
+                project_name:
+                  type: string
+                date_submitted:
+                  type: string
+                forms:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      questions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            question:
+                              type: string
+                            fields:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                    title:
+                                      type: string
+                                    answer:
+                                      oneOf:
+                                        - type: string
+                                        - type: array
+                                required:
+                                    - title
+                                    - answer
+                          required:
+                            - question
+                            - fields
+                    required:
+                      - name
+                      - questions
+              required:
+                - id
+                - round_id
+                - project_name
+                - date_submitted
+                - forms
+          required:
+            - application
+      required:
+        - type
+        - to
+        - content
