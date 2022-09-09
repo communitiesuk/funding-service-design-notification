@@ -59,7 +59,7 @@ def test_application_contents_with_unexpected_data(flask_test_client):
     )
 
     assert response.status_code == 400, "Unexpected status code"
-    assert b"Incorrect or missing APPLICATION data" in response.data
+    
 
 
 @pytest.mark.usefixtures("live_server")
