@@ -5,7 +5,7 @@ expected_application_content = (
 
 expected_application_data = {
     "type": "APPLICATION_RECORD_OF_SUBMISSION",
-    "to": "example_email@test.com",
+    "to": "test_application@example.com",
     "content": {
         "application": {
             "id": "123456789",

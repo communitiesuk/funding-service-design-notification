@@ -32,7 +32,7 @@ incorrect_template_type_key_data = {
 
 incorrect_template_type_data = {
     NotifyConstants.FIELD_TYPE: "TEST_KEY",
-    NotifyConstants.FIELD_TO: "test_recipient@email.com",
+    NotifyConstants.FIELD_TO: "test_magic_link@example.com",
     NotifyConstants.FIELD_CONTENT: valid_content,
 }
 
