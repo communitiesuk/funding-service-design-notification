@@ -80,7 +80,7 @@ class Application:
         json_file = Application.get_questions_and_answers(data)
         output = StringIO()
         for question, answer in json_file.items():
-            output.write(f"- {question}: ")
+            output.write(f". {question}: ")
             output.write(f"{answer}\n")
         return output.getvalue()
 
