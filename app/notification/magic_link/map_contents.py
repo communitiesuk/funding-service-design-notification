@@ -32,9 +32,7 @@ class MagicLink:
         return MagicLink(
             contact_info=data.contact_info,
             fund_name=data.content.get(NotifyConstants.FIELD_FUND_NAME),
-            magic_link=data.content.get(
-                NotifyConstants.FIELD_MAGIC_LINK_URL
-            ),
+            magic_link=data.content.get(NotifyConstants.FIELD_MAGIC_LINK_URL),
             request_new_link_url=data.content.get(
                 NotifyConstants.FIELD_REQUEST_NEW_LINK_URL
             ),
