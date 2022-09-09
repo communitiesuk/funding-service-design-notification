@@ -17,59 +17,46 @@ To post data, use /send endpoint with POST method. Data must be in the following
 
     {
         "type": "APPLICATION_RECORD_OF_SUBMISSION",
-        "to": "example_email@test.com",
+        "to": "testing_application@example.com",
         "content": {
             "application": {
-                "id": "5176687c-3c5a-44f5-8580-fa6e552bfb3e",
-                "round_id": "summer",
-                "project_name": "Funding service",
-                "started_at": "2022-08-18 15:14:14",
-                "date_submitted": "2022-05-20 14:47:12",
-                "forms": [
+            "id": "5176687c-3c5a-44f5-8580-fa6e552bfb3e",
+            "round_id": "summer",
+            "project_name": "Funding service community fund",
+            "date_submitted": "2022-05-20T14:47:12.111511",
+            "forms": [
+                {
+                "name": "community-benefits",
+                "questions": [
                     {
-                        "form_name": "community-benefits",
-                        "questions": [
-                            {
-                                "question": "Potential to deliver community benefits",
-                                "fields": [
-                                    {
-                                        "key": "QjJtbs",
-                                        "title": "What community benefits do you expect to deliver with this project? ",
-                                        "type": "list",
-                                        "answer": [
-                                            "community-pride",
-                                            "JACK"
-                                        ]
-                                    },
-                                    {
-                                        "key": "gDTsgG",
-                                        "title": "Tell us about these benefits in detail, and explain how you'll measure the benefits it'll bring for the community",
-                                        "type": "text",
-                                        "answer": "Explaining benefits"
-                                    }
-                                ],
-                                "status": "COMPLETED"
-                            }
-                        ]
-                    },
-                    {
-                        "form_name": "declarations",
-                        "questions": [
-                            {
-                                "question": "Declarations",
-                                "fields": [
-                                    {
-                                        "key": "LlvhYl",
-                                        "title": "Confirm you have considered subsidy control and state aid implications for your project, and the information you have given us is correct",
-                                        "type": "list",
-                                        "answer": "YESSSSSS"
-                                    }
-                                ],
-                                "status": "COMPLETED"
-                            }
-                        ]
+                    "question": "Potential to deliver community benefits",
+                    "fields": [
+                        {
+                        "title": "Question one",
+                        "answer": "Answer one"
+                        }
+                    ]
                     }
                 ]
+                },
+                {
+                "name": "declarations",
+                "questions": [
+                    {
+                    "question": "Declarations",
+                    "fields": [
+                        {
+                        "title": "Question two",
+                        "answer": [
+                            "Answer two (item one)",
+                            "Answer two (item two)"
+                        ]
+                        }
+                    ]
+                    }
+                ]
+                }
+            ]
             }
         }
     }
