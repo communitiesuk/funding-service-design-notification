@@ -70,9 +70,10 @@ components:
           type: string
           example: "MAGIC_LINK"
         to:
+          description: An email address.
           type: string
           format: email
-          pattern: ^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$
+          pattern: '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
           example: "email@example.com"
         content:
           type: object
@@ -105,10 +106,11 @@ components:
           type: string
           example: "APPLICATION_SUBMISSION"
         to:
+          description: An email address.
           type: string
-          example: "email@example.com"
           format: email
-          pattern: ^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$
+          pattern: '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
+          example: "email@example.com"
         content:
           type: object
           properties:
