@@ -88,7 +88,11 @@ components:
             fund_name:
               type: string
             contact_help_email:
+              description: An email address.
               type: string
+              format: email
+              pattern: '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
+              example: "help@example.com"
             request_new_link_url:
               type: string
       example: {"content": {
