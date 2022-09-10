@@ -71,6 +71,8 @@ components:
           example: "MAGIC_LINK"
         to:
           type: string
+          format: email
+          pattern: ^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$
           example: "email@example.com"
         content:
           type: object
@@ -105,6 +107,8 @@ components:
         to:
           type: string
           example: "email@example.com"
+          format: email
+          pattern: ^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$
         content:
           type: object
           properties:
@@ -191,3 +195,53 @@ components:
         }
        }
       }
+
+# components:
+#   schemas:
+#     GeneralError:
+#       type: object
+#       properties:
+#         title:
+#           type: string
+#           example: "Bad request"
+#         type:
+#           type: object
+#           example: "about:blank"
+#         status:
+#           type: integer
+#           format: int32
+#           example: 400
+#         detail:
+#           type: string
+#           example: "'type' is a required key"
+#     Notification:
+#       description:
+#         "Service requires three keys
+#         (type-string, to-email, content-dict)"
+#       required:
+#         - type
+#         - to
+#         - content
+#       properties:
+#         type:
+#           type: string
+#           example: "MAGIC_LINK"
+#         to:
+#           type: string
+#           example: "example@email.com"
+#         content:
+#           type: object
+#           properties:
+#             magic_link_url:
+#               type: string
+#             fund_name:
+#               type: string
+#             contact_help_email:
+#               type: string
+#             request_new_link_url:
+#               type: string
+#           example: {"magic_link_url": "https://www.example.com/",
+#                     "fund_name": "Funding service",
+#                     "request_new_link_url": "https://www.example.com/new_link",
+#                     "contact_help_email": "help@example.com"}
+                                   
