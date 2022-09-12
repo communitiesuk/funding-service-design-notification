@@ -37,4 +37,4 @@ def test_template_type_with_unexpected_value_type(
         follow_redirects=True,
     )
 
-    assert b"Incorrect type, please check the value of key 'type'" in response.data # noqa
+    assert b"Incorrect template type" in response.data # noqa
