@@ -1,3 +1,4 @@
+import collections
 from dataclasses import dataclass
 from datetime import datetime
 from io import BytesIO
@@ -60,7 +61,7 @@ class Application:
 
     @staticmethod
     def get_questions_and_answers(data) -> dict:
-        question_answers = {}
+        question_answers = collections.defaultdict(dict)
         forms = Application.get_forms(data)
         form_names = Application.get_form_names(data)
 
@@ -69,9 +70,9 @@ class Application:
                 if form_name in form["name"]:
                     for question in form["questions"]:
                         for fields in question["fields"]:
-                            question_answers[fields["title"]] = fields.get(
-                                "answer"
-                            )
+                            question_answers[form_name][
+                                fields["title"]
+                            ] = fields.get("answer")
         return question_answers
 
     @staticmethod
@@ -79,9 +80,11 @@ class Application:
         """Function formats the data for readability with StringIO."""
         json_file = Application.get_questions_and_answers(data)
         output = StringIO()
-        for question, answer in json_file.items():
-            output.write(f". {question}: ")
-            output.write(f"{answer}\n")
+        for form_name, values in json_file.items():
+            output.write(f"- {form_name}\n")
+            for questions, answers in values.items():
+                output.write(f" . {questions}: ")
+                output.write(f"{answers}\n")
         return output.getvalue()
 
     @staticmethod
