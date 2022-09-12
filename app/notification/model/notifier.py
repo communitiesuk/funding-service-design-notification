@@ -44,8 +44,7 @@ class Notifier:
                         "request new link url": data.request_new_link_url,
                         "contact details": data.contact_help_email,
                     },
-                ),
-                code,
+                )
             )
             current_app.logger.info("Contents have been mapped")
             return response, code
@@ -84,8 +83,7 @@ class Notifier:
                         "round name": data.fund_round,
                         "question": prepare_upload(data.questions),
                     },
-                ),
-                code,
+                )
             )
             current_app.logger.info("Contents have been mapped")
             return response, code
