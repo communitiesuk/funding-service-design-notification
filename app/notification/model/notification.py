@@ -44,8 +44,5 @@ class Notification:
                 )
                 return Application.from_json(data)
 
-            case "NOTIFICATION" | "REMINDER" | "AWARD":
-                return f"Currently {data.get('type')} service is not available."  # noqa
-
             case _:
                 return "Incorrect template type - testing"
