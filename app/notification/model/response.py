@@ -44,7 +44,7 @@ def template_type_error(message: str, code: int = 400):
     return (
         jsonify(
             detail=(
-                "Incorrect type, please check the value of key 'type':"
+                "Incorrect template type, please check the template type:"
                 f" {message.get('type')}"
             ),
             status=code,
