@@ -24,10 +24,7 @@ class MagicLink:
         Returns:
             MagicLink object with magic link contents.
         """
-
-        current_app.logger.debug(
-            "Third step - map contents with Magic_Link Template"
-        )
+        current_app.logger.info("Mapping contents for MAGIC_LINK")
         data = MagicLink.process_data(magic_link_data)
         return MagicLink(
             contact_info=data.contact_info,

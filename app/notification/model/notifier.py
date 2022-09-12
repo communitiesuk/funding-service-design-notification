@@ -29,10 +29,11 @@ class Notifier:
         or missing.
         """
         try:
-            data = Notification.process_data(json_data)
-            current_app.logger.debug(
-                "Last step - map contents with MAGIC LINK TEMPLATE"
+            current_app.logger.info(
+                f"Connecting with {json_data.get('type')} service to process"
+                " contents"
             )
+            data = Notification.process_data(json_data)
             response = (
                 notifications_client.send_email_notification(
                     email_address=data.contact_info,
@@ -46,6 +47,7 @@ class Notifier:
                 ),
                 code,
             )
+            current_app.logger.info("Contents have been mapped")
             return response, code
         except errors.HTTPError:
             current_app.logger.exception(
@@ -66,10 +68,11 @@ class Notifier:
         or missing.
         """
         try:
-            data = Notification.process_data(json_data)
             current_app.logger.info(
-                "Last step - map contents with APPLICATION TEMPLATE"
+                f"Connecting with {json_data.get('type')} service to process"
+                " contents"
             )
+            data = Notification.process_data(json_data)
             response = (
                 notifications_client.send_email_notification(
                     email_address=data.contact_info,
@@ -84,6 +87,7 @@ class Notifier:
                 ),
                 code,
             )
+            current_app.logger.info("Contents have been mapped")
             return response, code
 
         except errors.HTTPError:

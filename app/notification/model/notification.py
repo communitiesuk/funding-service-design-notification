@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from app.notification.application.map_contents import Application
 from app.notification.magic_link.map_contents import MagicLink
+from app.notification.model.response import template_type_error
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
 
@@ -31,18 +32,13 @@ class Notification:
         match data.template_type:
 
             case NotifyConstants.TEMPLATE_TYPE_MAGIC_LINK:
-                current_app.logger.debug(
-                    "Second step - connect data with MAGIC_LINK service class"
-                    " to  process contents"
-                )
                 return MagicLink.from_json(data)
 
             case "APPLICATION_RECORD_OF_SUBMISSION":
-                current_app.logger.info(
-                    "Second step - connect data with APPLICATION service"
-                    " class to  process_data"
-                )
                 return Application.from_json(data)
 
             case _:
-                return "Incorrect template type - testing"
+                current_app.logger.exception(
+                    f"Incorrect template type {json_data.get('type')}"
+                )
+                return template_type_error(json_data)

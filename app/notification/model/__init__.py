@@ -1,3 +1,4 @@
+import logging
 from app.notification.model.template_types import email_recipient
 from config import Config
 from flask import current_app
@@ -18,10 +19,10 @@ def send_email() -> Response:
         dict: requested contents to the assessor /applicant.
     """
     notification_data = request.get_json()
-    print("\n")
-    current_app.logger.debug("Entry point - incoming data")
+ 
+    current_app.logger.info("\nJSON contents received")
 
     notify_response = email_recipient(notification_data)
-    current_app.logger.debug("Email Successfully Sent")
-    print("\n")
+    current_app.logger.info("\nEmail Successfully Sent")
+
     return notify_response

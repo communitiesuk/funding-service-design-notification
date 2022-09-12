@@ -35,7 +35,7 @@ class Application:
         Returns:
             ApplicationData object with application contents.
         """
-        current_app.logger.debug("Third step - process contents")
+        current_app.logger.info("Mapping contents for APPLICATION")
         application = data.content["application"]
         return Application(
             contact_info=data.contact_info,
