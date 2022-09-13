@@ -1,6 +1,5 @@
 from app.notification.application.map_contents import Application
 from app.notification.magic_link.map_contents import MagicLink
-from app.notification.model.notification import Notification
 from app.notification.model.response import invalid_data_error
 from config import Config
 from flask import current_app
@@ -25,11 +24,7 @@ class Notifier:
         or missing.
         """
         try:
-            current_app.logger.info(
-                f"Connecting with {json_data.get('type')} service to process"
-                " contents"
-            )
-            data = Notification.process_data(json_data)
+            data = MagicLink.from_json(json_data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=Config.MAGIC_LINK_TEMPLATE_ID,
@@ -58,11 +53,7 @@ class Notifier:
         or missing.
         """
         try:
-            current_app.logger.info(
-                f"Connecting with {json_data.get('type')} service to process"
-                " contents"
-            )
-            data = Notification.process_data(json_data)
+            data = Application.from_json(json_data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=Config.APPLICATION_RECORD_TEMPLATE_ID,
