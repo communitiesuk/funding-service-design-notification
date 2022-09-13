@@ -46,10 +46,10 @@ class Notification:
                 return Notifier.send_application(data)
 
             case "NOTIFICATION" | "REMINDER" | "AWARD":
-                return f"Currently {json_data.get('type')} service is not available."  # noqa
+                return f"Currently {data.template_type} service is not available."  # noqa
 
             case _:
                 current_app.logger.exception(
-                    f"Incorrect template type {json_data.get('type')}"
+                    f"Incorrect template type {data.template_type}"
                 )
                 return template_type_error(json_data)
