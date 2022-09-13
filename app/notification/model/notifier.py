@@ -40,7 +40,7 @@ class Notifier:
                     "contact details": data.contact_help_email,
                 },
             )
-            current_app.logger.info("Contents have been mapped")
+            current_app.logger.info("Call made to govuk Notify API")
             return response, code
         except errors.HTTPError:
             current_app.logger.exception(
@@ -74,7 +74,7 @@ class Notifier:
                     "question": prepare_upload(data.questions),
                 },
             )
-            current_app.logger.info("Contents have been mapped")
+            current_app.logger.info("Call made to govuk Notify API")
             return response, code
 
         except errors.HTTPError:
