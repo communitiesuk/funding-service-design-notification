@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
-from app.notification.application.map_contents import Application
-from app.notification.magic_link.map_contents import MagicLink
+from app.notification.model.notifier import Notifier
 from app.notification.model.response import template_type_error
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
@@ -27,15 +26,27 @@ class Notification:
         return notification_data
 
     @staticmethod
-    def process_data(json_data):
+    def email_recipient(json_data: dict):
+        """
+        Function matches with the correct template type &
+        calls the relevant function from process_data.py.
+        """
         data = Notification.from_json(json_data)
-        match data.template_type:
-
+        match json_data.get("type"):
             case NotifyConstants.TEMPLATE_TYPE_MAGIC_LINK:
-                return MagicLink.from_json(data)
+                current_app.logger.info(
+                    f"Validating template type: {data.template_type}"
+                )
+                return Notifier.send_magic_link(data)
 
             case "APPLICATION_RECORD_OF_SUBMISSION":
-                return Application.from_json(data)
+                current_app.logger.info(
+                    f"Validating template type: {data.template_type})"
+                )
+                return Notifier.send_application(data)
+
+            case "NOTIFICATION" | "REMINDER" | "AWARD":
+                return f"Currently {json_data.get('type')} service is not available."  # noqa
 
             case _:
                 current_app.logger.exception(
