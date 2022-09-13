@@ -24,7 +24,7 @@ class MagicLink:
         Returns:
             MagicLink object with magic link contents.
         """
-        current_app.logger.info("Mapping contents for MAGIC_LINK")
+        current_app.logger.info(f"Mapping contents for {data.template_type}")
 
         return MagicLink(
             contact_info=data.contact_info,

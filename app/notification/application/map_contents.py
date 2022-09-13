@@ -35,7 +35,7 @@ class Application:
         Returns:
             ApplicationData object with application contents.
         """
-        current_app.logger.info("Mapping contents for APPLICATION")
+        current_app.logger.info(f"Mapping contents for {data.template_type}")
         application = data.content["application"]
         return Application(
             contact_info=data.contact_info,
