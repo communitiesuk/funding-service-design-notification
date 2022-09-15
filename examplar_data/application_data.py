@@ -6,7 +6,7 @@ expected_application_content = (
 )
 
 expected_application_data = {
-    NotifyConstants.FIELD_TYPE: "APPLICATION_RECORD_OF_SUBMISSION",
+    NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
     NotifyConstants.FIELD_TO: "test_application@example.com",
     NotifyConstants.FIELD_CONTENT: {
         NotifyConstants.APPLICATION_FIELD: {
@@ -47,7 +47,7 @@ expected_application_data = {
 
 
 unexpected_application_data = {
-    NotifyConstants.FIELD_TYPE: "APPLICATION_RECORD_OF_SUBMISSION",
+    NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
     NotifyConstants.FIELD_TO: "example_email@test.com",
     NotifyConstants.FIELD_CONTENT: {},
 }
