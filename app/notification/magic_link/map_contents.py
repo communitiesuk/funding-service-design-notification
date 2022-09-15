@@ -28,13 +28,15 @@ class MagicLink:
 
         return MagicLink(
             contact_info=data.contact_info,
-            fund_name=data.content.get(NotifyConstants.FIELD_FUND_NAME),
-            magic_link=data.content.get(NotifyConstants.FIELD_MAGIC_LINK_URL),
+            fund_name=data.content.get(
+                NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD
+            ),
+            magic_link=data.content.get(NotifyConstants.MAGIC_LINK_URL_FIELD),
             request_new_link_url=data.content.get(
-                NotifyConstants.FIELD_REQUEST_NEW_LINK_URL
+                NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD
             ),
             contact_help_email=data.content.get(
-                NotifyConstants.FIELD_CONTACT_HELP_EMAIL
+                NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
             ),
         )
 

@@ -5,6 +5,7 @@ from io import BytesIO
 from io import StringIO
 
 from flask import current_app
+from fsd_utils.config.notify_constants import NotifyConstants
 
 
 @dataclass
@@ -36,7 +37,7 @@ class Application:
             ApplicationData object with application contents.
         """
         current_app.logger.info(f"Mapping contents for {data.template_type}")
-        application = data.content["application"]
+        application = data.content[NotifyConstants.APPLICATION_FIELD]
         return Application(
             contact_info=data.contact_info,
             questions=Application.bytes_object_for_questions_answers(data),
@@ -48,7 +49,9 @@ class Application:
 
     @staticmethod
     def get_forms(data) -> list:
-        forms = data.content["application"]["forms"]
+        forms = data.content[NotifyConstants.APPLICATION_FIELD][
+            NotifyConstants.APPLICATION_FORMS_FIELD
+        ]
         return forms
 
     @staticmethod
@@ -56,7 +59,7 @@ class Application:
         form_names = []
         forms = Application.get_forms(data)
         for form in forms:
-            form_names.append(form.get("name"))
+            form_names.append(form.get(NotifyConstants.APPLICATION_NAME_FIELD))
         return list(dict.fromkeys(form_names))
 
     @staticmethod
@@ -67,8 +70,10 @@ class Application:
 
         for form_name in form_names:
             for form in forms:
-                if form_name in form["name"]:
-                    for question in form["questions"]:
+                if form_name in form[NotifyConstants.APPLICATION_NAME_FIELD]:
+                    for question in form[
+                        NotifyConstants.APPLICATION_QUESTIONS_FIELD
+                    ]:
                         for fields in question["fields"]:
                             question_answers[form_name][
                                 fields["title"]

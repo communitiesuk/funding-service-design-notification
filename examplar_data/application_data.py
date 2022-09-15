@@ -1,13 +1,15 @@
+from fsd_utils.config.notify_constants import NotifyConstants
+
 expected_application_content = (
     "Key 'content' must contain the required Application data & the data must"
     " be in the JSON format"
 )
 
 expected_application_data = {
-    "type": "APPLICATION_RECORD_OF_SUBMISSION",
-    "to": "test_application@example.com",
-    "content": {
-        "application": {
+    NotifyConstants.FIELD_TYPE: "APPLICATION_RECORD_OF_SUBMISSION",
+    NotifyConstants.FIELD_TO: "test_application@example.com",
+    NotifyConstants.FIELD_CONTENT: {
+        NotifyConstants.APPLICATION_FIELD: {
             "id": "123456789",
             "account_id": "string",
             "status": "NOT_STARTED",
@@ -17,11 +19,10 @@ expected_application_data = {
             "date_submitted": "2022-05-14T10:20:44.124542",
             "started_at": "2022-05-20 14:47:12",
             "last_edited": None,
-            "forms": [
+            NotifyConstants.APPLICATION_FORMS_FIELD: [
                 {
-                    "name": "about-your-org",
-                    "status": "NOT_STARTED",
-                    "questions": [
+                    NotifyConstants.APPLICATION_NAME_FIELD: "about-your-org",
+                    NotifyConstants.APPLICATION_QUESTIONS_FIELD: [
                         {
                             "question": "Application information",
                             "status": "NOT STARTED",
@@ -46,15 +47,15 @@ expected_application_data = {
 
 
 unexpected_application_data = {
-    "type": "APPLICATION_RECORD_OF_SUBMISSION",
-    "to": "example_email@test.com",
-    "content": {},
+    NotifyConstants.FIELD_TYPE: "APPLICATION_RECORD_OF_SUBMISSION",
+    NotifyConstants.FIELD_TO: "example_email@test.com",
+    NotifyConstants.FIELD_CONTENT: {},
 }
 
 
 expected_application_response = {
     "notify_response": {
-        "content": {
+        NotifyConstants.FIELD_CONTENT: {
             "body": (
                 "#Fund name - Funding service   \r\n---\r\nApplication id:"
                 " 123456789 \r\n---\r\nDate submitted: 2022-05-14\r\n---    "
