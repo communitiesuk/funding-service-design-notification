@@ -36,5 +36,4 @@ def test_template_type_with_unexpected_value_type(
         json=incorrect_template_type_data,
         follow_redirects=True,
     )
-
-    assert b"Incorrect type, please check the value of key 'type'" in response.data # noqa
+    assert response.status_code == 400

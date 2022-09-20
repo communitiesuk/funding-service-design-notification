@@ -1,0 +1,161 @@
+components:
+  schemas:
+    GeneralError:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Bad request"
+        type:
+          type: object
+          example: "about:blank"
+        status:
+          type: integer
+          format: int32
+          example: 400
+        detail:
+          type: string
+          example: "'type' is a required key"
+    Magic_Link:
+      description:
+        "Post JSON to request Magic link"
+      required:
+        - type
+        - to
+        - content
+      properties:
+        type:
+          type: string
+          example: "MAGIC_LINK"
+        to:
+          description: An email address.
+          type: string
+          format: email
+          pattern: '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
+          example: "email@example.com"
+        content:
+          type: object
+          required:
+            - magic_link_url
+            - fund_name
+            - contact_help_email
+            - request_new_link_url
+          properties:
+            magic_link_url:
+              type: string
+            fund_name:
+              type: string
+            contact_help_email:
+              description: An email address.
+              type: string
+              format: email
+              pattern: '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
+              example: "help@example.com"
+            request_new_link_url:
+              type: string
+      example: {"content": {
+        "contact_help_email": "help@example.com",
+        "fund_name": "Funding service",
+        "magic_link_url": "https://www.example.com/",
+        "request_new_link_url": "https://www.example.com/new_link"
+            }
+          }
+    Application:
+      description:
+        "Post JSON for application submission confirmation"
+      properties:
+        type:
+          type: string
+          example: "APPLICATION_SUBMISSION"
+        to:
+          description: An email address.
+          type: string
+          format: email
+          pattern: '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
+          example: "email@example.com"
+        content:
+          type: object
+          properties:
+            application:
+              type: object
+              properties:
+                id:
+                  type: string
+                round_id:
+                  type: string
+                project_name:
+                  type: string
+                date_submitted:
+                  type: string
+                forms:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      questions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            question:
+                              type: string
+                            fields:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                    title:
+                                      type: string
+                                    answer:
+                                      oneOf:
+                                        - type: string
+                                        - type: array
+                                required:
+                                    - title
+                                    - answer
+                          required:
+                            - question
+                            - fields
+                    required:
+                      - name
+                      - questions
+              required:
+                - id
+                - round_id
+                - project_name
+                - date_submitted
+                - forms
+          required:
+            - application
+
+      required:
+        - type
+        - to
+        - content
+      example: {"content": {
+        "application": {
+          "id": "5176687c-3c5a-44f5-8580-fa6e552bfb3e",
+          "round_id": "summer",
+          "project_name": "Funding service community fund",
+          "date_submitted": "2022-05-20T14:47:12.111511",
+          "forms": [
+            {
+              "name": "community-benefits",
+              "questions": [
+                {
+                  "question": "Potential to deliver community benefits",
+                  "fields": [
+                    {
+                      "title": "Question one",
+                      "answer": "Answer one"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+       }
+      }

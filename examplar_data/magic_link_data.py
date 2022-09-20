@@ -1,10 +1,12 @@
 from fsd_utils.config.notify_constants import NotifyConstants
 
 valid_content = {
-    NotifyConstants.FIELD_MAGIC_LINK_URL: "MAGIC-LINK-GOES-HERE",
-    NotifyConstants.FIELD_FUND_NAME: "FUND NAME GOES HERE",
-    NotifyConstants.FIELD_CONTACT_HELP_EMAIL: "help@email.com",
-    NotifyConstants.FIELD_REQUEST_NEW_LINK_URL: "NEW LINK URL GOES HERE",
+    NotifyConstants.MAGIC_LINK_URL_FIELD: "MAGIC-LINK-GOES-HERE",
+    NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD: "FUND NAME GOES HERE",
+    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: "help@email.com",
+    NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD: (
+        "NEW LINK URL GOES HERE"
+    ),
 }
 
 expected_magic_link_content = (
@@ -32,7 +34,7 @@ incorrect_template_type_key_data = {
 
 incorrect_template_type_data = {
     NotifyConstants.FIELD_TYPE: "TEST_KEY",
-    NotifyConstants.FIELD_TO: "test_recipient@email.com",
+    NotifyConstants.FIELD_TO: "test_magic_link@example.com",
     NotifyConstants.FIELD_CONTENT: valid_content,
 }
 

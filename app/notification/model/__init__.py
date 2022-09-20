@@ -1,4 +1,5 @@
-from app.notification.model.template_types import email_recipient
+# from app.notification.model.template_types import email_recipient
+from app.notification.model.notification import Notification
 from config import Config
 from flask import request
 from notifications_python_client.notifications import NotificationsAPIClient
@@ -18,5 +19,5 @@ def send_email() -> Response:
     """
     notification_data = request.get_json()
 
-    notify_response = email_recipient(notification_data)
+    notify_response = Notification.email_recipient(notification_data)
     return notify_response

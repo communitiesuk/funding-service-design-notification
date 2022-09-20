@@ -1,28 +1,6 @@
 from flask import jsonify
 
 
-def magic_link_key_error(message: str, code: int = 400):
-    return (
-        jsonify(
-            detail="Incorrect MAGIC LINK data",
-            status=code,
-            error=f"{message}",
-        ),
-        code,
-    )
-
-
-def application_key_error(message: str, code: int = 400):
-    return (
-        jsonify(
-            detail="Incorrect or missing APPLICATION data",
-            status=code,
-            error=f"{message}",
-        ),
-        code,
-    )
-
-
 def invalid_data_error(
     message: dict,
     code: int = 400,
@@ -44,7 +22,7 @@ def template_type_error(message: str, code: int = 400):
     return (
         jsonify(
             detail=(
-                "Incorrect type, please check the value of key 'type':"
+                "Incorrect template type, please check the template type:"
                 f" {message.get('type')}"
             ),
             status=code,

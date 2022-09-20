@@ -1,16 +1,13 @@
 import multiprocessing
 import platform
+
 import pytest
 from app.create_app import create_app
-from examplar_data.application_data import expected_application_data
-from examplar_data.application_data import (
-    expected_application_response,
-)
-from examplar_data.magic_link_data import expected_magic_link_data
-from examplar_data.magic_link_data import expected_magic_link_response
+
 
 if platform.system() == "Darwin":
     multiprocessing.set_start_method("fork")  # Required on macOSX
+
 
 @pytest.fixture()
 def flask_test_client():
@@ -27,29 +24,3 @@ def flask_test_client():
 def app():
     app = create_app()
     return app
-
-
-@pytest.fixture()
-def mocked_magic_link(mocker):
-    mocker.patch(
-        "app.notification.model.request.get_json",
-        return_value=expected_magic_link_data,
-    )
-
-    mocker.patch(
-        "app.notification.model.template_types.email_recipient",
-        return_value=expected_magic_link_response,
-    )
-
-
-@pytest.fixture()
-def mocked_application(mocker):
-    mocker.patch(
-        "app.notification.model.request.get_json",
-        return_value=expected_application_data,
-    )
-
-    mocker.patch(
-        "app.notification.model.template_types.email_recipient",
-        return_value=expected_application_response,
-    )

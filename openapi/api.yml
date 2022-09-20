@@ -17,7 +17,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Notification'
+              anyOf:
+                - $ref: 'components.yml#/components/schemas/Magic_Link'
+                - $ref: 'components.yml#/components/schemas/Application'
+
             example:
               type: 'MAGIC_LINK'
               to: 'example@email.com'
@@ -35,53 +38,4 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GeneralError'
-
-components:
-  schemas:
-    GeneralError:
-      type: object
-      properties:
-        title:
-          type: string
-          example: "Bad request"
-        type:
-          type: object
-          example: "about:blank"
-        status:
-          type: integer
-          format: int32
-          example: 400
-        detail:
-          type: string
-          example: "'type' is a required key"
-    Notification:
-      description:
-        "Service requires three keys
-        (type-string, to-email, content-dict)"
-      required:
-        - type
-        - to
-        - content
-      properties:
-        type:
-          type: string
-          example: "MAGIC_LINK"
-        to:
-          type: string
-          example: "example@email.com"
-        content:
-          type: object
-          properties:
-            magic_link_url:
-              type: string
-            fund_name:
-              type: string
-            contact_help_email:
-              type: string
-            request_new_link_url:
-              type: string
-          example: {"magic_link_url": "https://www.example.com/",
-                    "fund_name": "Funding service",
-                    "request_new_link_url": "https://www.example.com/new_link",
-                    "contact_help_email": "help@example.com"}
+                $ref: 'components.yml#/components/schemas/GeneralError'

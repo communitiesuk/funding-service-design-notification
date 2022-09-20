@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from app.notification.model.notification import Notification
+from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
 
 
@@ -13,7 +13,7 @@ class MagicLink:
     contact_help_email: str
 
     @staticmethod
-    def from_json(json_data: dict):
+    def from_json(data):
         """Function calls MagicLink class to map
         the application contents.
 
@@ -24,17 +24,19 @@ class MagicLink:
         Returns:
             MagicLink object with magic link contents.
         """
-        data = Notification.from_json(json_data)
-        content = MagicLink.process_data(json_data).get("content")
+        current_app.logger.info(f"Mapping contents for {data.template_type}")
+
         return MagicLink(
             contact_info=data.contact_info,
-            fund_name=content.get(NotifyConstants.FIELD_FUND_NAME),
-            magic_link=content.get(NotifyConstants.FIELD_MAGIC_LINK_URL),
-            request_new_link_url=content.get(
-                NotifyConstants.FIELD_REQUEST_NEW_LINK_URL
+            fund_name=data.content.get(
+                NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD
             ),
-            contact_help_email=content.get(
-                NotifyConstants.FIELD_CONTACT_HELP_EMAIL
+            magic_link=data.content.get(NotifyConstants.MAGIC_LINK_URL_FIELD),
+            request_new_link_url=data.content.get(
+                NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD
+            ),
+            contact_help_email=data.content.get(
+                NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
             ),
         )
 
@@ -50,9 +52,9 @@ class MagicLink:
         Returns:
            data(dict): returns processed json
         """
-        data["content"].update(
+        data.content.update(
             {
-                NotifyConstants.FIELD_FUND_NAME: data["content"].get(
+                NotifyConstants.FIELD_FUND_NAME: data.content.get(
                     NotifyConstants.FIELD_FUND_NAME, "Funds"
                 )
             }
