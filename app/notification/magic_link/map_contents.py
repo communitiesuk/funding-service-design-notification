@@ -54,9 +54,9 @@ class MagicLink:
         """
         data.content.update(
             {
-                NotifyConstants.FIELD_FUND_NAME: data.content.get(
-                    NotifyConstants.FIELD_FUND_NAME, "Funds"
-                )
+                NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD: data[
+                    "content"
+                ].get(NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD, "Funds")
             }
         )
         return data
