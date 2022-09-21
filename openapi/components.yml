@@ -109,9 +109,11 @@ components:
                                     title:
                                       type: string
                                     answer:
-                                      oneOf:
+                                      anyOf:
                                         - type: string
                                         - type: array
+                                        - type: boolean
+                                        - nullable: true
                                 required:
                                     - title
                                     - answer
