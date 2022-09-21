@@ -75,18 +75,25 @@ class Application:
                         NotifyConstants.APPLICATION_QUESTIONS_FIELD
                     ]:
                         for fields in question["fields"]:
-                            question_answers[form_name][
-                                fields["title"]
-                            ] = fields.get("answer")
+                            if fields["type"] == "file":
+                                answer = fields.get("answer").split("/")
+                                question_answers[form_name][
+                                    fields["title"]
+                                ] = "/".join(answer[1:])
+
+                            else:
+                                question_answers[form_name][
+                                    fields["title"]
+                                ] = fields.get("answer")
         return question_answers
 
     @staticmethod
     def format_questions_answers_with_stringIO(data) -> str:
-        """Function formats the data for readability with StringIO."""  
+        """Function formats the data for readability with StringIO."""
         application = data.content[NotifyConstants.APPLICATION_FIELD]
         json_file = Application.get_questions_and_answers(data)
         output = StringIO()
-        output.write()
+
         output.write(f"{application.get('project_name')}\n")
         for form_name, values in json_file.items():
             output.write(f"\n- {form_name}\n")
