@@ -29,13 +29,12 @@ expected_application_data = {
                                     "answer": "Jack-Simon",
                                 },
                                 {
-                                    "key": "application-name",
-                                    "title": "Applicant name",
+                                    "key": "upload-file",
+                                    "title": "Upload file",
                                     "type": "file",
-                                    "answer": "012ba4c7-e4971/test-one_two.three/programmer.jpeg",
+                                    "answer": "012ba4c7-e4971/test-one_two.three/programmer.jpeg",  # noqa
                                 },
                             ],
-                            
                         }
                     ],
                 }
