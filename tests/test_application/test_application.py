@@ -80,7 +80,7 @@ def test_application_contents_with_none_contents(flask_test_client):
     assert response.status_code == 400
 
 
-def test_application_upload_file_logic(app_context):
+def test_application_map_contents_response(app_context):
     """
     GIVEN: our service running with app_context fixture.
     WHEN: we post expected data to Application class to map contents.
@@ -89,12 +89,12 @@ def test_application_upload_file_logic(app_context):
 
     expected_json = expected_application_data
     data = Notification.from_json(expected_json)
-    file_upload_func = Application.from_json(data)
-    questions = file_upload_func.questions
+    application_class_object = Application.from_json(data)
+    questions = application_class_object.questions
 
     expected_contents_response = (
         b"Funding service\n\n- about-your-org\n . Applicant name: Jack-Simon\n"
-        b" . Upload file: test-one_two.three/programmer.jpeg\n"
+        b" . Upload file: programmer.jpeg\n"
     )
 
     assert expected_contents_response in questions.getvalue()
