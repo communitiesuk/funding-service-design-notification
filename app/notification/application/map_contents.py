@@ -76,10 +76,10 @@ class Application:
                     ]:
                         for fields in question["fields"]:
                             if fields["type"] == "file":
-                                answer = fields.get("answer").split("/")
+                                answer = fields.get("answer").split("/")[-1]
                                 question_answers[form_name][
                                     fields["title"]
-                                ] = "/".join(answer[1:])
+                                ] = answer
 
                             else:
                                 question_answers[form_name][
