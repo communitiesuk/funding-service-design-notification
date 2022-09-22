@@ -90,7 +90,6 @@ def test_application_upload_file_response(flask_test_client):
         json=expected_application_data,
         follow_redirects=True,
     )
-    print(response.json)
     assert response.status_code == 200
 
 def testHealthcheckEndpoint(flask_test_client):
