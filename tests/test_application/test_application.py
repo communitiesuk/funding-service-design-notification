@@ -77,6 +77,21 @@ def test_application_contents_with_none_contents(flask_test_client):
 
     assert response.status_code == 400
 
+@pytest.mark.usefixtures("live_server")
+def test_application_upload_file_response(flask_test_client):
+    """
+    GIVEN: our service running on flask test client.
+    WHEN: we post expected data with type "file" to endpoint "/send".
+    THEN: we check if it returns status code 200.
+    """
+
+    response = flask_test_client.post(
+        "/send",
+        json=expected_application_data,
+        follow_redirects=True,
+    )
+    print(response.json)
+    assert response.status_code == 200
 
 def testHealthcheckEndpoint(flask_test_client):
     response = flask_test_client.get("/healthcheck")
