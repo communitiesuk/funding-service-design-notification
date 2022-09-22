@@ -1,4 +1,6 @@
 import pytest
+from app.notification.application.map_contents import Application
+from app.notification.model.notification import Notification
 from examplar_data.application_data import (
     expected_application_data,
 )
@@ -77,20 +79,26 @@ def test_application_contents_with_none_contents(flask_test_client):
 
     assert response.status_code == 400
 
-@pytest.mark.usefixtures("live_server")
-def test_application_upload_file_response(flask_test_client):
+
+def test_application_upload_file_logic(app_context):
     """
-    GIVEN: our service running on flask test client.
-    WHEN: we post expected data with type "file" to endpoint "/send".
-    THEN: we check if it returns status code 200.
+    GIVEN: our service running with app_context fixture.
+    WHEN: we post expected data to Application class to map contents.
+    THEN: we check if expected contents are returned.
     """
 
-    response = flask_test_client.post(
-        "/send",
-        json=expected_application_data,
-        follow_redirects=True,
+    expected_json = expected_application_data
+    data = Notification.from_json(expected_json)
+    file_upload_func = Application.from_json(data)
+    questions = file_upload_func.questions
+
+    expected_contents_response = (
+        b"Funding service\n\n- about-your-org\n . Applicant name: Jack-Simon\n"
+        b" . Upload file: test-one_two.three/programmer.jpeg\n"
     )
-    assert response.status_code == 200
+
+    assert expected_contents_response in questions.getvalue()
+
 
 def testHealthcheckEndpoint(flask_test_client):
     response = flask_test_client.get("/healthcheck")
