@@ -29,7 +29,7 @@ class Notification:
     def email_recipient(json_data: dict):
         """
         Function matches with the correct template type &
-        calls the relevant function from process_data.py.
+        calls the relevant function.
         """
         data = Notification.from_json(json_data)
         match json_data.get("type"):
