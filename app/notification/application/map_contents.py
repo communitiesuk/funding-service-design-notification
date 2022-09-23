@@ -70,7 +70,7 @@ class Application:
 
         returns: dict of questions & answers from all forms.
         """
-        question_answers = collections.defaultdict(dict)
+        questions_answers = collections.defaultdict(dict)
         forms = Application.get_forms(data)
         form_names = Application.get_form_names(data)
 
@@ -88,19 +88,19 @@ class Application:
                                     and type(answer) is not bool
                                 ):
 
-                                    question_answers[form_name][
+                                    questions_answers[form_name][
                                         fields["title"]
                                     ] = answer.split("/")[-1]
                                 else:
-                                    question_answers[form_name][
+                                    questions_answers[form_name][
                                         fields["title"]
                                     ] = fields.get("answer")
 
                             else:
-                                question_answers[form_name][
+                                questions_answers[form_name][
                                     fields["title"]
                                 ] = fields.get("answer")
-        return question_answers
+        return questions_answers
 
     @staticmethod
     def format_questions_answers_with_stringIO(data) -> str:
