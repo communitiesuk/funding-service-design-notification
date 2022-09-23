@@ -13,9 +13,9 @@ class Application:
     contact_info: str
     questions: dict
     submission_date: str
-    fund_name: dict
-    fund_round: dict
-    application_id: dict
+    fund_name: str
+    fund_round: str
+    reference: str
 
     @property
     def format_submission_date(self):
@@ -44,7 +44,7 @@ class Application:
             submission_date=application.get("date_submitted"),
             fund_name=application.get("project_name"),
             fund_round=application.get("round_name"),
-            application_id=application.get("id"),
+            reference=application.get("id"),
         )
 
     @staticmethod
