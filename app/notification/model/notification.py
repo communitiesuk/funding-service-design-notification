@@ -16,7 +16,7 @@ class Notification:
     def from_json(data: dict):
         """
         Function will be  called in relevant services to map
-        the json contents
+        json contents
         """
         notification_data = Notification(
             template_type=data.get("type"),
