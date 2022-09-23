@@ -65,8 +65,9 @@ class Application:
     @staticmethod
     def get_questions_and_answers(data) -> dict:
         """function grabs all the forms & checks the question type "file"
-        is None or bool the returns None or boolean value.
-        If not, then removes the attached database from the file answer.
+        has  None or bool value then returns None or boolean value.
+        If not, then removes the attached database key from the "file" value 
+        and return the file name only.
 
         returns: dict of questions & answers from all forms.
         """
