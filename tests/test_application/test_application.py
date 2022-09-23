@@ -83,7 +83,7 @@ def test_application_contents_with_none_contents(flask_test_client):
 def test_application_map_contents_response(app_context):
     """
     GIVEN: our service running with app_context fixture.
-    WHEN: we post expected data to Application class to map contents.
+    WHEN: we send expected data to Application class to map contents.
     THEN: we check if expected contents are returned.
     """
 
