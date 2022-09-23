@@ -81,7 +81,7 @@ components:
               properties:
                 id:
                   type: string
-                round_id:
+                round_name:
                   type: string
                 project_name:
                   type: string
@@ -125,7 +125,7 @@ components:
                       - questions
               required:
                 - id
-                - round_id
+                - round_name
                 - project_name
                 - date_submitted
                 - forms
