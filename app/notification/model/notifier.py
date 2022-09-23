@@ -59,7 +59,7 @@ class Notifier:
                 template_id=Config.APPLICATION_RECORD_TEMPLATE_ID,
                 personalisation={
                     "name of fund": data.fund_name,
-                    "application id": data.application_id,
+                    "application reference": data.application_id,
                     "date submitted": data.format_submission_date,
                     "round name": data.fund_round,
                     "question": prepare_upload(data.questions),
