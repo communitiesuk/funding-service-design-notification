@@ -12,6 +12,7 @@ expected_application_data = {
         NotifyConstants.APPLICATION_FIELD: {
             "id": "123456789",
             "account_id": "string",
+            "reference": "TEST-REF",
             "status": "NOT_STARTED",
             "fund_id": "fund-a",
             "round_id": "summer",
