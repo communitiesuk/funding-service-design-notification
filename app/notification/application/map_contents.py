@@ -43,7 +43,7 @@ class Application:
             questions=Application.bytes_object_for_questions_answers(data),
             submission_date=application.get("date_submitted"),
             fund_name=application.get("project_name"),
-            fund_round=application.get("round_id"),
+            fund_round=application.get("round_name"),
             application_id=application.get("id"),
         )
 
