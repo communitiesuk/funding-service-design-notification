@@ -64,6 +64,12 @@ class Application:
 
     @staticmethod
     def get_questions_and_answers(data) -> dict:
+        """function grabs all the forms & checks the question type "file"
+        is None or bool the returns None or boolean value.
+        If not, then removes the attached database from the file answer.
+
+        returns: dict of questions & answers from all forms.
+        """
         question_answers = collections.defaultdict(dict)
         forms = Application.get_forms(data)
         form_names = Application.get_form_names(data)
@@ -76,10 +82,19 @@ class Application:
                     ]:
                         for fields in question["fields"]:
                             if fields["type"] == "file":
-                                answer = fields.get("answer").split("/")[-1]
-                                question_answers[form_name][
-                                    fields["title"]
-                                ] = answer
+                                answer = fields.get("answer")
+                                if (
+                                    answer is not None
+                                    and type(answer) is not bool
+                                ):
+
+                                    question_answers[form_name][
+                                        fields["title"]
+                                    ] = answer.split("/")[-1]
+                                else:
+                                    question_answers[form_name][
+                                        fields["title"]
+                                    ] = fields.get("answer")
 
                             else:
                                 question_answers[form_name][
