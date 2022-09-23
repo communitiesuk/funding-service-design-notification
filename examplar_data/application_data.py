@@ -12,10 +12,9 @@ expected_application_data = {
         NotifyConstants.APPLICATION_FIELD: {
             "id": "123456789",
             "fund_id": "fund-a",
-            "round_id": "summer",
+            "round_name": "summer",
             "project_name": "Funding service",
             "date_submitted": "2022-05-14T10:20:44.124542",
-            "round_name": "Round 2 Window 2",
             NotifyConstants.APPLICATION_FORMS_FIELD: [
                 {
                     NotifyConstants.APPLICATION_NAME_FIELD: "about-your-org",
