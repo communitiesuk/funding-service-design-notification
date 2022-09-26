@@ -81,8 +81,8 @@ class Application:
                             answer = field.get("answer")
                             if field["type"] == "file":
                                 # we check if the question type is "file"
-                                # then we remove the aws key attached to the
-                                # answer
+                                # then we remove the aws
+                                # key attached to the answer
 
                                 if isinstance(answer, str):
                                     questions_answers[form_name][
