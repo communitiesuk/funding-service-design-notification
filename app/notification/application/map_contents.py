@@ -11,7 +11,7 @@ from fsd_utils.config.notify_constants import NotifyConstants
 @dataclass
 class Application:
     contact_info: str
-    questions: dict
+    questions: bytes
     submission_date: str
     fund_name: str
     round_name: str
@@ -64,11 +64,8 @@ class Application:
 
     @staticmethod
     def get_questions_and_answers(data) -> dict:
-        """function loops through all the forms & checks the question type "file"
-        has  None or bool value then returns None or boolean value.
-        If not, then removes the attached database key from the "file" value.
-
-        returns: dict of questions & answers from all forms.
+        """function takes the form data and returns
+        dict of questions & answers.
         """
         questions_answers = collections.defaultdict(dict)
         forms = Application.get_forms(data)
@@ -80,27 +77,26 @@ class Application:
                     for question in form[
                         NotifyConstants.APPLICATION_QUESTIONS_FIELD
                     ]:
-                        for fields in question["fields"]:
-                            if fields["type"] == "file":
-                                """
-                                we check if the question type is "file"
-                                then we remove the aws key attached to the
-                                answer
-                                """
-                                answer = fields.get("answer")
+                        for field in question["fields"]:
+                            answer = field.get("answer")
+                            if field["type"] == "file":
+                                # we check if the question type is "file"
+                                # then we remove the aws key attached to the
+                                # answer
+
                                 if isinstance(answer, str):
                                     questions_answers[form_name][
-                                        fields["title"]
+                                        field["title"]
                                     ] = answer.split("/")[-1]
                                 else:
                                     questions_answers[form_name][
-                                        fields["title"]
+                                        field["title"]
                                     ] = answer
 
                             else:
                                 questions_answers[form_name][
-                                    fields["title"]
-                                ] = fields.get("answer")
+                                    field["title"]
+                                ] = answer
         return questions_answers
 
     @staticmethod
