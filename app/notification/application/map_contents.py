@@ -14,7 +14,7 @@ class Application:
     questions: dict
     submission_date: str
     fund_name: str
-    fund_round: str
+    round_name: str
     reference: str
 
     @property
@@ -25,7 +25,7 @@ class Application:
             ).strftime("%Y-%m-%d")
 
     @staticmethod
-    def from_json(data):
+    def contents(data):
         """Function calls ApplicationData class to map
         the application contents.
 
@@ -43,7 +43,7 @@ class Application:
             questions=Application.bytes_object_for_questions_answers(data),
             submission_date=application.get("date_submitted"),
             fund_name=application.get("project_name"),
-            fund_round=application.get("round_name"),
+            round_name=application.get("round_name"),
             reference=application.get("id"),
         )
 
@@ -64,10 +64,9 @@ class Application:
 
     @staticmethod
     def get_questions_and_answers(data) -> dict:
-        """function grabs all the forms & checks the question type "file"
+        """function loops through all the forms & checks the question type "file"
         has  None or bool value then returns None or boolean value.
-        If not, then removes the attached database key from the "file" value 
-        and return the file name only.
+        If not, then removes the attached database key from the "file" value.
 
         returns: dict of questions & answers from all forms.
         """
@@ -83,19 +82,20 @@ class Application:
                     ]:
                         for fields in question["fields"]:
                             if fields["type"] == "file":
+                                """
+                                we check if the question type is "file"
+                                then we remove the aws key attached to the
+                                answer before emailing to the applicant
+                                """
                                 answer = fields.get("answer")
-                                if (
-                                    answer is not None
-                                    and type(answer) is not bool
-                                ):
-
+                                if isinstance(answer, str):
                                     questions_answers[form_name][
                                         fields["title"]
                                     ] = answer.split("/")[-1]
                                 else:
                                     questions_answers[form_name][
                                         fields["title"]
-                                    ] = fields.get("answer")
+                                    ] = answer
 
                             else:
                                 questions_answers[form_name][
