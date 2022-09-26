@@ -15,7 +15,7 @@ class Notifier:
     """Class holds notification operations"""
 
     @staticmethod
-    def send_magic_link(json_data: dict, code: int = 200) -> tuple:
+    def send_magic_link(data: dict, code: int = 200) -> tuple:
         """Function maps data eg. magic link along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
@@ -24,15 +24,15 @@ class Notifier:
         or missing.
         """
         try:
-            data = MagicLink.contents(json_data)
+            contents = MagicLink.contents(data)
             response = notifications_client.send_email_notification(
-                email_address=data.contact_info,
+                email_address=contents.contact_info,
                 template_id=Config.MAGIC_LINK_TEMPLATE_ID,
                 personalisation={
-                    "name of fund": data.fund_name,
-                    "link to application": data.magic_link,
-                    "request new link url": data.request_new_link_url,
-                    "contact details": data.contact_help_email,
+                    "name of fund": contents.fund_name,
+                    "link to application": contents.magic_link,
+                    "request new link url": contents.request_new_link_url,
+                    "contact details": contents.contact_help_email,
                 },
             )
             current_app.logger.info("Call made to govuk Notify API")
@@ -41,7 +41,7 @@ class Notifier:
             current_app.logger.exception(
                 "HTTPError while sending notification"
             )
-            return invalid_data_error(MagicLink.contents(json_data))
+            return invalid_data_error(MagicLink.contents(data))
 
     @staticmethod
     def send_application(data: dict, code: int = 200) -> tuple:
