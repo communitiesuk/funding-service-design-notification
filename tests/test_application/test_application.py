@@ -83,13 +83,14 @@ def test_application_contents_with_none_contents(flask_test_client):
 def test_application_map_contents_response(app_context):
     """
     GIVEN: our service running with app_context fixture.
-    WHEN: we send expected data to Application class to map contents.
-    THEN: we check if expected contents are returned.
+    WHEN: two separate methods on different classes chained together with given
+     expected incoming JSON.
+    THEN: we check if expected output is returned.
     """
 
     expected_json = expected_application_data
     data = Notification.from_json(expected_json)
-    application_class_object = Application.from_json(data)
+    application_class_object = Application.contents(data)
     questions = application_class_object.questions
 
     expected_contents_response = (
