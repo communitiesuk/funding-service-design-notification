@@ -44,7 +44,7 @@ class Notifier:
             return invalid_data_error(MagicLink.contents(json_data))
 
     @staticmethod
-    def send_application(json_data: dict, code: int = 200) -> tuple:
+    def send_application(data: dict, code: int = 200) -> tuple:
         """Function maps data eg. questions/answers along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
@@ -53,16 +53,16 @@ class Notifier:
         or missing.
         """
         try:
-            data = Application.contents(json_data)
+            contents = Application.contents(data)
             response = notifications_client.send_email_notification(
-                email_address=data.contact_info,
+                email_address=contents.contact_info,
                 template_id=Config.APPLICATION_RECORD_TEMPLATE_ID,
                 personalisation={
-                    "name of fund": data.fund_name,
-                    "application reference": data.reference,
-                    "date submitted": data.format_submission_date,
-                    "round name": data.round_name,
-                    "question": prepare_upload(data.questions),
+                    "name of fund": contents.fund_name,
+                    "application reference": contents.reference,
+                    "date submitted": contents.format_submission_date,
+                    "round name": contents.round_name,
+                    "question": prepare_upload(contents.questions),
                 },
             )
             current_app.logger.info("Call made to govuk Notify API")
@@ -72,7 +72,7 @@ class Notifier:
             current_app.logger.exception(
                 "HTTPError while sending notification"
             )
-            return invalid_data_error(Application.contents(json_data))
+            return invalid_data_error(Application.contents(data))
 
     @staticmethod
     def send_notification(json_data):
