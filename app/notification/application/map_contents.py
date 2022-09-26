@@ -85,7 +85,7 @@ class Application:
                                 """
                                 we check if the question type is "file"
                                 then we remove the aws key attached to the
-                                answer before emailing to the applicant
+                                answer before sending email to the applicant
                                 """
                                 answer = fields.get("answer")
                                 if isinstance(answer, str):
