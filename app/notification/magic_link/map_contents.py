@@ -13,7 +13,7 @@ class MagicLink:
     contact_help_email: str
 
     @staticmethod
-    def from_json(data):
+    def contents(data):
         """Function calls MagicLink class to map
         the application contents.
 

@@ -24,7 +24,7 @@ class Notifier:
         or missing.
         """
         try:
-            data = MagicLink.from_json(json_data)
+            data = MagicLink.contents(json_data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=Config.MAGIC_LINK_TEMPLATE_ID,
@@ -41,7 +41,7 @@ class Notifier:
             current_app.logger.exception(
                 "HTTPError while sending notification"
             )
-            return invalid_data_error(MagicLink.from_json(json_data))
+            return invalid_data_error(MagicLink.contents(json_data))
 
     @staticmethod
     def send_application(json_data: dict, code: int = 200) -> tuple:
@@ -53,7 +53,7 @@ class Notifier:
         or missing.
         """
         try:
-            data = Application.from_json(json_data)
+            data = Application.contents(json_data)
             response = notifications_client.send_email_notification(
                 email_address=data.contact_info,
                 template_id=Config.APPLICATION_RECORD_TEMPLATE_ID,
@@ -61,7 +61,7 @@ class Notifier:
                     "name of fund": data.fund_name,
                     "application reference": data.reference,
                     "date submitted": data.format_submission_date,
-                    "round name": data.fund_round,
+                    "round name": data.round_name,
                     "question": prepare_upload(data.questions),
                 },
             )
@@ -72,7 +72,7 @@ class Notifier:
             current_app.logger.exception(
                 "HTTPError while sending notification"
             )
-            return invalid_data_error(Application.from_json(json_data))
+            return invalid_data_error(Application.contents(json_data))
 
     @staticmethod
     def send_notification(json_data):
