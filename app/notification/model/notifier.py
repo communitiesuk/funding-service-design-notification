@@ -22,11 +22,12 @@ class Notifier:
 
     @staticmethod
     def send_magic_link(notification: Notification, code: int = 200) -> tuple:
-        """Function maps data eg. magic link along with other
-        expected contents to the user as expected by the
-        govuk-notify-service template.
+        """Function makes a call to govuk-notify-service with mapped contents
+        that are expected by the govuk-notify-service template.
+        
+        Args: Takes an instance of Notification class.
 
-        Raises HTTPError if any of the required  contents are incorrect
+        Raises HTTPError if any of the required contents are incorrect
         or missing.
         """
         try:
@@ -53,9 +54,10 @@ class Notifier:
 
     @staticmethod
     def send_application(notification: Notification, code: int = 200) -> tuple:
-        """Function maps data eg. questions/answers along with other
-        expected contents to the user as expected by the
-        govuk-notify-service template.
+        """Function makes a call to govuk-notify-service with mapped contents
+        that are expected by the govuk-notify-service template.
+        
+        Args: Takes an instance of Notification class.
 
         Raises HTTPError if any of the required contents are incorrect
         or missing.

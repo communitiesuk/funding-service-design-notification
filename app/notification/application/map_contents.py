@@ -32,15 +32,14 @@ class Application:
 
     @staticmethod
     def from_notification(notification: Notification):
-        """Function calls ApplicationData class to map
-        the application contents.
+        """Function calls Application class to map
+        application contents.
 
         Args:
-            data: Takes incoming json_data & converts into class object
-            from Notification.from_json
+            data: Takes an instance of Notification class.
 
         Returns:
-            ApplicationData object with application contents.
+            Application object containing application contents.
         """
         current_app.logger.info(
             f"Mapping contents for {notification.template_type}"
@@ -115,7 +114,7 @@ class Application:
     def format_questions_answers_with_stringIO(
         notification: Notification,
     ) -> str:
-        """Function formats the data for readability with StringIO."""
+        """Function formats dict of questions/answers for readability with StringIO."""
         application = notification.content[NotifyConstants.APPLICATION_FIELD]
         json_file = Application.get_questions_and_answers(notification)
         output = StringIO()

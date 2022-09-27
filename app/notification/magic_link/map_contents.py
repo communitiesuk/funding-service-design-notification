@@ -21,14 +21,13 @@ class MagicLink:
     @staticmethod
     def from_notification(notification: Notification):
         """Function calls MagicLink class to map
-        the application contents.
+        application contents.
 
         Args:
-            data: Takes incoming json_data & converts into class object
-            from Notification.from_json
+            data: Takes an instance of Notification class.
 
         Returns:
-            MagicLink object with magic link contents.
+            MagicLink class object containing magic link contents.
         """
         current_app.logger.info(
             f"Mapping contents for {notification.template_type}"
@@ -52,15 +51,11 @@ class MagicLink:
 
     @staticmethod
     def process_data(notification: Notification) -> dict:
-        """Function process the incoming json for magic link
-        such as if the fund name is not provided by the user then
-        by default function adds the fund name as "FUNDS"
+        """Function checks if the fund_name exists in the notification 
+        class object. If no, then adds the fund_name as "FUNDS"
 
         Args:
-            data (dict): takes the json
-
-        Returns:
-           data(dict): returns processed json
+            data (dict): takes instance of Notification class
         """
         notification.content.update(
             {
