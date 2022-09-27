@@ -79,7 +79,7 @@ components:
             application:
               type: object
               properties:
-                id:
+                reference:
                   type: string
                 round_name:
                   type: string
@@ -124,7 +124,7 @@ components:
                       - name
                       - questions
               required:
-                - id
+                - reference
                 - round_name
                 - project_name
                 - date_submitted
