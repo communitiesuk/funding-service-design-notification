@@ -90,7 +90,7 @@ def test_application_map_contents_response(app_context):
 
     expected_json = expected_application_data
     data = Notification.from_json(expected_json)
-    application_class_object = Application.contents(data)
+    application_class_object = Application.from_notification(data)
     questions = application_class_object.questions
 
     expected_contents_response = (

@@ -3,9 +3,13 @@ from dataclasses import dataclass
 from datetime import datetime
 from io import BytesIO
 from io import StringIO
+from typing import TYPE_CHECKING
 
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
+
+if TYPE_CHECKING:
+    from app.notification.model.notification import Notification
 
 
 @dataclass
@@ -25,7 +29,7 @@ class Application:
             ).strftime("%Y-%m-%d")
 
     @staticmethod
-    def contents(data):
+    def from_notification(notification: "Notification"):
         """Function calls ApplicationData class to map
         the application contents.
 
@@ -36,40 +40,46 @@ class Application:
         Returns:
             ApplicationData object with application contents.
         """
-        current_app.logger.info(f"Mapping contents for {data.template_type}")
-        application = data.content[NotifyConstants.APPLICATION_FIELD]
+        current_app.logger.info(
+            f"Mapping contents for {notification.template_type}"
+        )
+        application_data = notification.content[
+            NotifyConstants.APPLICATION_FIELD
+        ]
         return Application(
-            contact_info=data.contact_info,
-            questions=Application.bytes_object_for_questions_answers(data),
-            submission_date=application.get("date_submitted"),
-            fund_name=application.get("project_name"),
-            round_name=application.get("round_name"),
-            reference=application.get("id"),
+            contact_info=notification.contact_info,
+            questions=Application.bytes_object_for_questions_answers(
+                notification
+            ),
+            submission_date=application_data.get("date_submitted"),
+            fund_name=application_data.get("project_name"),
+            round_name=application_data.get("round_name"),
+            reference=application_data.get("reference"),
         )
 
     @staticmethod
-    def get_forms(data) -> list:
-        forms = data.content[NotifyConstants.APPLICATION_FIELD][
+    def get_forms(notification: "Notification") -> list:
+        forms = notification.content[NotifyConstants.APPLICATION_FIELD][
             NotifyConstants.APPLICATION_FORMS_FIELD
         ]
         return forms
 
     @staticmethod
-    def get_form_names(data) -> list:
+    def get_form_names(notification: "Notification") -> list:
         form_names = []
-        forms = Application.get_forms(data)
+        forms = Application.get_forms(notification)
         for form in forms:
             form_names.append(form.get(NotifyConstants.APPLICATION_NAME_FIELD))
         return list(dict.fromkeys(form_names))
 
     @staticmethod
-    def get_questions_and_answers(data) -> dict:
+    def get_questions_and_answers(notification: "Notification") -> dict:
         """function takes the form data and returns
         dict of questions & answers.
         """
         questions_answers = collections.defaultdict(dict)
-        forms = Application.get_forms(data)
-        form_names = Application.get_form_names(data)
+        forms = Application.get_forms(notification)
+        form_names = Application.get_form_names(notification)
 
         for form_name in form_names:
             for form in forms:
@@ -100,10 +110,12 @@ class Application:
         return questions_answers
 
     @staticmethod
-    def format_questions_answers_with_stringIO(data) -> str:
+    def format_questions_answers_with_stringIO(
+        notification: "Notification",
+    ) -> str:
         """Function formats the data for readability with StringIO."""
-        application = data.content[NotifyConstants.APPLICATION_FIELD]
-        json_file = Application.get_questions_and_answers(data)
+        application = notification.content[NotifyConstants.APPLICATION_FIELD]
+        json_file = Application.get_questions_and_answers(notification)
         output = StringIO()
 
         output.write(f"{application.get('project_name')}\n")
@@ -115,12 +127,14 @@ class Application:
         return output.getvalue()
 
     @staticmethod
-    def bytes_object_for_questions_answers(data) -> BytesIO:
+    def bytes_object_for_questions_answers(
+        notification: "Notification",
+    ) -> BytesIO:
         """Function creates a memory object for question & answers
         with ByteIO from StringIO.
         """
         stringIO_data = Application.format_questions_answers_with_stringIO(
-            data
+            notification
         )
         convert_to_bytes = bytes(stringIO_data, "utf-8")
         bytes_object = BytesIO(convert_to_bytes)

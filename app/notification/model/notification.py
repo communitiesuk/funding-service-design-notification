@@ -31,25 +31,25 @@ class Notification:
         Function matches with the correct template type &
         calls the relevant function.
         """
-        data = Notification.from_json(json_data)
+        notification = Notification.from_json(json_data)
         match json_data.get("type"):
             case NotifyConstants.TEMPLATE_TYPE_MAGIC_LINK:
                 current_app.logger.info(
-                    f"Validating template type: {data.template_type}"
+                    f"Validating template type: {notification.template_type}"
                 )
-                return Notifier.send_magic_link(data)
+                return Notifier.send_magic_link(notification)
 
             case "APPLICATION_RECORD_OF_SUBMISSION":
                 current_app.logger.info(
-                    f"Validating template type: {data.template_type})"
+                    f"Validating template type: {notification.template_type})"
                 )
-                return Notifier.send_application(data)
+                return Notifier.send_application(notification)
 
             case "NOTIFICATION" | "REMINDER" | "AWARD":
-                return f"Currently {data.template_type} service is not available."  # noqa
+                return f"Currently {notification.template_type} service is not available."  # noqa
 
             case _:
                 current_app.logger.exception(
-                    f"Incorrect template type {data.template_type}"
+                    f"Incorrect template type {notification.template_type}"
                 )
                 return template_type_error(json_data)
