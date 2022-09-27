@@ -24,14 +24,18 @@ class MagicLink:
         Returns:
             MagicLink object with magic link contents.
         """
-        current_app.logger.info(f"Mapping contents for {notification.template_type}")
+        current_app.logger.info(
+            f"Mapping contents for {notification.template_type}"
+        )
 
         return MagicLink(
             contact_info=notification.contact_info,
             fund_name=notification.content.get(
                 NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD
             ),
-            magic_link=notification.content.get(NotifyConstants.MAGIC_LINK_URL_FIELD),
+            magic_link=notification.content.get(
+                NotifyConstants.MAGIC_LINK_URL_FIELD
+            ),
             request_new_link_url=notification.content.get(
                 NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD
             ),

@@ -1,10 +1,10 @@
 from __future__ import annotations
+
 import collections
 from dataclasses import dataclass
 from datetime import datetime
 from io import BytesIO
 from io import StringIO
-
 from typing import TYPE_CHECKING
 
 from flask import current_app

@@ -1,7 +1,6 @@
-
 from __future__ import annotations
-from typing import TYPE_CHECKING
 
+from typing import TYPE_CHECKING
 
 from app.notification.application.map_contents import Application
 from app.notification.magic_link.map_contents import MagicLink
@@ -48,12 +47,12 @@ class Notifier:
             current_app.logger.exception(
                 "HTTPError while sending notification"
             )
-            return invalid_data_error(MagicLink.from_notification(notification))
+            return invalid_data_error(
+                MagicLink.from_notification(notification)
+            )
 
     @staticmethod
-    def send_application(
-        notification: Notification, code: int = 200
-    ) -> tuple:
+    def send_application(notification: Notification, code: int = 200) -> tuple:
         """Function maps data eg. questions/answers along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
