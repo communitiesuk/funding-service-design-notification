@@ -1,7 +1,13 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
+
+if TYPE_CHECKING:
+    from app.notification.model.notification import Notification
 
 
 @dataclass
@@ -13,7 +19,7 @@ class MagicLink:
     contact_help_email: str
 
     @staticmethod
-    def from_notification(notification):
+    def from_notification(notification: Notification):
         """Function calls MagicLink class to map
         the application contents.
 
@@ -45,7 +51,7 @@ class MagicLink:
         )
 
     @staticmethod
-    def process_data(notification: dict) -> dict:
+    def process_data(notification: Notification) -> dict:
         """Function process the incoming json for magic link
         such as if the fund name is not provided by the user then
         by default function adds the fund name as "FUNDS"
