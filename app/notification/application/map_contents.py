@@ -1,8 +1,10 @@
+from __future__ import annotations
 import collections
 from dataclasses import dataclass
 from datetime import datetime
 from io import BytesIO
 from io import StringIO
+
 from typing import TYPE_CHECKING
 
 from flask import current_app
@@ -29,7 +31,7 @@ class Application:
             ).strftime("%Y-%m-%d")
 
     @staticmethod
-    def from_notification(notification: "Notification"):
+    def from_notification(notification: Notification):
         """Function calls ApplicationData class to map
         the application contents.
 
@@ -58,14 +60,14 @@ class Application:
         )
 
     @staticmethod
-    def get_forms(notification: "Notification") -> list:
+    def get_forms(notification: Notification) -> list:
         forms = notification.content[NotifyConstants.APPLICATION_FIELD][
             NotifyConstants.APPLICATION_FORMS_FIELD
         ]
         return forms
 
     @staticmethod
-    def get_form_names(notification: "Notification") -> list:
+    def get_form_names(notification: Notification) -> list:
         form_names = []
         forms = Application.get_forms(notification)
         for form in forms:
@@ -73,7 +75,7 @@ class Application:
         return list(dict.fromkeys(form_names))
 
     @staticmethod
-    def get_questions_and_answers(notification: "Notification") -> dict:
+    def get_questions_and_answers(notification: Notification) -> dict:
         """function takes the form data and returns
         dict of questions & answers.
         """
@@ -111,7 +113,7 @@ class Application:
 
     @staticmethod
     def format_questions_answers_with_stringIO(
-        notification: "Notification",
+        notification: Notification,
     ) -> str:
         """Function formats the data for readability with StringIO."""
         application = notification.content[NotifyConstants.APPLICATION_FIELD]
@@ -128,7 +130,7 @@ class Application:
 
     @staticmethod
     def bytes_object_for_questions_answers(
-        notification: "Notification",
+        notification: Notification,
     ) -> BytesIO:
         """Function creates a memory object for question & answers
         with ByteIO from StringIO.

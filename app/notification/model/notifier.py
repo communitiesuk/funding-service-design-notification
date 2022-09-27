@@ -1,4 +1,7 @@
+
+from __future__ import annotations
 from typing import TYPE_CHECKING
+
 
 from app.notification.application.map_contents import Application
 from app.notification.magic_link.map_contents import MagicLink
@@ -19,7 +22,7 @@ class Notifier:
     """Class holds notification operations"""
 
     @staticmethod
-    def send_magic_link(data: dict, code: int = 200) -> tuple:
+    def send_magic_link(notification: Notification, code: int = 200) -> tuple:
         """Function maps data eg. magic link along with other
         expected contents to the user as expected by the
         govuk-notify-service template.
@@ -28,7 +31,7 @@ class Notifier:
         or missing.
         """
         try:
-            contents = MagicLink.contents(data)
+            contents = MagicLink.from_notification(notification)
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 template_id=Config.MAGIC_LINK_TEMPLATE_ID,
@@ -45,11 +48,11 @@ class Notifier:
             current_app.logger.exception(
                 "HTTPError while sending notification"
             )
-            return invalid_data_error(MagicLink.contents(data))
+            return invalid_data_error(MagicLink.from_notification(notification))
 
     @staticmethod
     def send_application(
-        notification: "Notification", code: int = 200
+        notification: Notification, code: int = 200
     ) -> tuple:
         """Function maps data eg. questions/answers along with other
         expected contents to the user as expected by the

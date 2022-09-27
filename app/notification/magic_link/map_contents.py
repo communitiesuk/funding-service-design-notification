@@ -13,7 +13,7 @@ class MagicLink:
     contact_help_email: str
 
     @staticmethod
-    def contents(data):
+    def from_notification(notification):
         """Function calls MagicLink class to map
         the application contents.
 
@@ -24,24 +24,24 @@ class MagicLink:
         Returns:
             MagicLink object with magic link contents.
         """
-        current_app.logger.info(f"Mapping contents for {data.template_type}")
+        current_app.logger.info(f"Mapping contents for {notification.template_type}")
 
         return MagicLink(
-            contact_info=data.contact_info,
-            fund_name=data.content.get(
+            contact_info=notification.contact_info,
+            fund_name=notification.content.get(
                 NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD
             ),
-            magic_link=data.content.get(NotifyConstants.MAGIC_LINK_URL_FIELD),
-            request_new_link_url=data.content.get(
+            magic_link=notification.content.get(NotifyConstants.MAGIC_LINK_URL_FIELD),
+            request_new_link_url=notification.content.get(
                 NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD
             ),
-            contact_help_email=data.content.get(
+            contact_help_email=notification.content.get(
                 NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
             ),
         )
 
     @staticmethod
-    def process_data(data: dict) -> dict:
+    def process_data(notification: dict) -> dict:
         """Function process the incoming json for magic link
         such as if the fund name is not provided by the user then
         by default function adds the fund name as "FUNDS"
@@ -52,11 +52,11 @@ class MagicLink:
         Returns:
            data(dict): returns processed json
         """
-        data.content.update(
+        notification.content.update(
             {
-                NotifyConstants.FIELD_FUND_NAME: data.content.get(
+                NotifyConstants.FIELD_FUND_NAME: notification.content.get(
                     NotifyConstants.FIELD_FUND_NAME, "Funds"
                 )
             }
         )
-        return data
+        return notification
