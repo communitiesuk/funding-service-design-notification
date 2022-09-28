@@ -83,8 +83,6 @@ components:
                   type: string
                 round_name:
                   type: string
-                project_name:
-                  type: string
                 date_submitted:
                   type: string
                 forms:
@@ -126,7 +124,6 @@ components:
               required:
                 - reference
                 - round_name
-                - project_name
                 - date_submitted
                 - forms
           required:
