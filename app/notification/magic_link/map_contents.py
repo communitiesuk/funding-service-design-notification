@@ -51,7 +51,7 @@ class MagicLink:
 
     @staticmethod
     def process_data(notification: Notification) -> dict:
-        """Function checks if the fund_name exists in the notification 
+        """Function checks if the fund_name exists in the notification
         class object. If no, then adds the fund_name as "FUNDS"
 
         Args:
