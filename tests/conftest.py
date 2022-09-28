@@ -24,3 +24,9 @@ def flask_test_client():
 def app():
     app = create_app()
     return app
+
+
+@pytest.fixture()
+def app_context():
+    with create_app().app_context():
+        yield

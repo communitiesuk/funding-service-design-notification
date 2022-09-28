@@ -1,4 +1,6 @@
 import pytest
+from app.notification.application.map_contents import Application
+from app.notification.model.notification import Notification
 from examplar_data.application_data import (
     expected_application_data,
 )
@@ -22,7 +24,7 @@ def test_application_contents_with_expected_data(flask_test_client):
         follow_redirects=True,
     )
 
-    assert b"Fund name:  Funding service" in response.data
+    assert b"Fund name:  Community Ownership Fund" in response.data
 
 
 @pytest.mark.usefixtures("live_server")
@@ -76,6 +78,27 @@ def test_application_contents_with_none_contents(flask_test_client):
     )
 
     assert response.status_code == 400
+
+
+def test_application_map_contents_response(app_context):
+    """
+    GIVEN: our service running with app_context fixture.
+    WHEN: two separate methods on different classes chained together with given
+     expected incoming JSON.
+    THEN: we check if expected output is returned.
+    """
+
+    expected_json = expected_application_data
+    data = Notification.from_json(expected_json)
+    application_class_object = Application.from_notification(data)
+    questions = application_class_object.questions
+
+    expected_contents_response = (
+        b"Community Ownership Fund\n\n- about-your-org\n . Applicant name:"
+        b" Jack-Simon\n . Upload file: programmer.jpeg\n"
+    )
+
+    assert expected_contents_response in questions.getvalue()
 
 
 def testHealthcheckEndpoint(flask_test_client):

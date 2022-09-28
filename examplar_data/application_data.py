@@ -11,21 +11,16 @@ expected_application_data = {
     NotifyConstants.FIELD_CONTENT: {
         NotifyConstants.APPLICATION_FIELD: {
             "id": "123456789",
-            "account_id": "string",
-            "status": "NOT_STARTED",
+            "reference": "1564564564-56-4-54-4654",
             "fund_id": "fund-a",
-            "round_id": "summer",
-            "project_name": "Funding service",
+            "round_name": "summer",
             "date_submitted": "2022-05-14T10:20:44.124542",
-            "started_at": "2022-05-20 14:47:12",
-            "last_edited": None,
             NotifyConstants.APPLICATION_FORMS_FIELD: [
                 {
                     NotifyConstants.APPLICATION_NAME_FIELD: "about-your-org",
                     NotifyConstants.APPLICATION_QUESTIONS_FIELD: [
                         {
                             "question": "Application information",
-                            "status": "NOT STARTED",
                             "fields": [
                                 {
                                     "key": "application-name",
@@ -33,12 +28,15 @@ expected_application_data = {
                                     "type": "text",
                                     "answer": "Jack-Simon",
                                 },
+                                {
+                                    "key": "upload-file",
+                                    "title": "Upload file",
+                                    "type": "file",
+                                    "answer": "012ba4c7-e4971/test-one_two.three/programmer.jpeg",  # noqa
+                                },
                             ],
-                            "category": None,
-                            "index": None,
                         }
                     ],
-                    "metadata": {"paymentSkipped": None},
                 }
             ],
         }

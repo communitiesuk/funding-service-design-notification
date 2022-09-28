@@ -79,11 +79,9 @@ components:
             application:
               type: object
               properties:
-                id:
+                reference:
                   type: string
-                round_id:
-                  type: string
-                project_name:
+                round_name:
                   type: string
                 date_submitted:
                   type: string
@@ -109,9 +107,11 @@ components:
                                     title:
                                       type: string
                                     answer:
-                                      oneOf:
+                                      anyOf:
                                         - type: string
                                         - type: array
+                                        - type: boolean
+                                        - nullable: true
                                 required:
                                     - title
                                     - answer
@@ -122,9 +122,8 @@ components:
                       - name
                       - questions
               required:
-                - id
-                - round_id
-                - project_name
+                - reference
+                - round_name
                 - date_submitted
                 - forms
           required:
