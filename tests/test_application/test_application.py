@@ -24,7 +24,7 @@ def test_application_contents_with_expected_data(flask_test_client):
         follow_redirects=True,
     )
 
-    assert b"Fund name:  Funding service" in response.data
+    assert b"Fund name:  Community Ownership Fund" in response.data
 
 
 @pytest.mark.usefixtures("live_server")
@@ -94,8 +94,8 @@ def test_application_map_contents_response(app_context):
     questions = application_class_object.questions
 
     expected_contents_response = (
-        b"Funding service\n\n- about-your-org\n . Applicant name: Jack-Simon\n"
-        b" . Upload file: programmer.jpeg\n"
+        b"Community Ownership Fund\n\n- about-your-org\n . Applicant name:"
+        b" Jack-Simon\n . Upload file: programmer.jpeg\n"
     )
 
     assert expected_contents_response in questions.getvalue()

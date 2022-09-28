@@ -7,6 +7,7 @@ from io import BytesIO
 from io import StringIO
 from typing import TYPE_CHECKING
 
+from config import Config
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
 
@@ -53,7 +54,7 @@ class Application:
                 notification
             ),
             submission_date=application_data.get("date_submitted"),
-            fund_name=application_data.get("project_name"),
+            fund_name=Config.FUND_NAME,
             round_name=application_data.get("round_name"),
             reference=application_data.get("reference"),
         )
@@ -114,12 +115,12 @@ class Application:
     def format_questions_answers_with_stringIO(
         notification: Notification,
     ) -> str:
-        """Function formats dict of questions/answers for readability with StringIO."""
-        application = notification.content[NotifyConstants.APPLICATION_FIELD]
+        """Function formats dict of questions/answers
+        for readability with StringIO."""
         json_file = Application.get_questions_and_answers(notification)
         output = StringIO()
 
-        output.write(f"{application.get('project_name')}\n")
+        output.write(f"{Config.FUND_NAME}\n")
         for form_name, values in json_file.items():
             output.write(f"\n- {form_name}\n")
             for questions, answers in values.items():
