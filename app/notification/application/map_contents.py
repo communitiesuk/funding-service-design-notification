@@ -120,12 +120,13 @@ class Application:
         json_file = Application.get_questions_and_answers(notification)
         output = StringIO()
 
-        output.write(f"{Config.FUND_NAME}\n")
-        for form_name, values in json_file.items():
-            output.write(f"\n- {form_name}\n")
+        output.write(f"********* {Config.FUND_NAME} **********\n")
+        for section_name, values in json_file.items():
+            title = section_name.split("-")
+            output.write(f"\n* {' '.join(title).capitalize()}\n\n")
             for questions, answers in values.items():
-                output.write(f" . {questions}: ")
-                output.write(f"{answers}\n")
+                output.write(f"  Q) {questions}\n")
+                output.write(f"  A) {answers}\n\n")
         return output.getvalue()
 
     @staticmethod
