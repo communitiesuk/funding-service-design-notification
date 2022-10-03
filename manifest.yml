@@ -10,6 +10,8 @@ applications:
   env:
     FLASK_ENV: dev
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
+    # Sentry DSN is OK to be public see: https://docs.sentry.io/product/sentry-basics/dsn-explainer/#dsn-utilization
+    SENTRY_DSN: https://8092c54bdc3a4b4ba124dea42b836504@o1432034.ingest.sentry.io/4503918903820288
   health-check-http-endpoint: /healthcheck
   health-check-type: http
 
@@ -23,6 +25,8 @@ applications:
   env:
     FLASK_ENV: test
     GOV_NOTIFY_API_KEY: ((GOV_NOTIFY_API_KEY))
+    # Sentry DSN is OK to be public see: https://docs.sentry.io/product/sentry-basics/dsn-explainer/#dsn-utilization
+    SENTRY_DSN: https://8092c54bdc3a4b4ba124dea42b836504@o1432034.ingest.sentry.io/4503918903820288
   health-check-http-endpoint: /healthcheck
   health-check-type: http
 
