@@ -103,6 +103,7 @@ pyyaml==6.0
     #   openapi-spec-validator
 requests==2.28.1
     # via
+    #   -r requirements.in
     #   connexion
     #   notifications-python-client
     #   prance

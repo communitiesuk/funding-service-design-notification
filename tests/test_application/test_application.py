@@ -94,8 +94,9 @@ def test_application_map_contents_response(app_context):
     questions = application_class_object.questions
 
     expected_contents_response = (
-        b"Community Ownership Fund\n\n- about-your-org\n . Applicant name:"
-        b" Jack-Simon\n . Upload file: programmer.jpeg\n"
+        b"********* Community Ownership Fund **********\n\n* About your"
+        b" org\n\n  Q) Applicant name\n  A) Jack-Simon\n\n  Q) Upload file\n "
+        b" A) programmer.jpeg\n\n"
     )
 
     assert expected_contents_response in questions.getvalue()

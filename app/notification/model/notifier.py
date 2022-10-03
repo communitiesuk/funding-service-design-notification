@@ -24,7 +24,7 @@ class Notifier:
     def send_magic_link(notification: Notification, code: int = 200) -> tuple:
         """Function makes a call to govuk-notify-service with mapped contents
         that are expected by the govuk-notify-service template.
-        
+
         Args: Takes an instance of Notification class.
 
         Raises HTTPError if any of the required contents are incorrect
@@ -56,7 +56,7 @@ class Notifier:
     def send_application(notification: Notification, code: int = 200) -> tuple:
         """Function makes a call to govuk-notify-service with mapped contents
         that are expected by the govuk-notify-service template.
-        
+
         Args: Takes an instance of Notification class.
 
         Raises HTTPError if any of the required contents are incorrect
