@@ -13,6 +13,7 @@ on:
 
 jobs:
   testing:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     environment: Dev
     steps:
@@ -77,6 +78,7 @@ jobs:
           allow_issue_writing: False
 
   deploy_test:
+    if: ${{ github.ref == 'refs/heads/main' }}
     # TODO: restore this once security check can pass, see https://communities-govuk.slack.com/archives/C02PHBER287/p1664794101631599
     # needs: security
     runs-on: ubuntu-latest
