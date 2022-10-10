@@ -30,6 +30,7 @@ jobs:
           GOV_NOTIFY_API_KEY: ${{secrets.GOV_NOTIFY_API_KEY}}
 
   deploy_dev:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     needs: testing
     runs-on: ubuntu-latest
     environment: Dev
