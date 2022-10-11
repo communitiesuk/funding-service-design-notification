@@ -129,7 +129,7 @@ jobs:
         run: ls && python -m pip install locust && python -m locust
         working-directory: ./funding-service-design-performance-tests
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: performance-test-report
           path: ./funding-service-design-performance-tests/locust_html_report.html
