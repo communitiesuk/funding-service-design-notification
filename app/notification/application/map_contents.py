@@ -19,10 +19,10 @@ if TYPE_CHECKING:
 class Application:
     contact_info: str
     questions: bytes
-    submission_date: str
     fund_name: str
     round_name: str
     reference: str
+    submission_date: str = None
 
     @property
     def format_submission_date(self):
