@@ -19,7 +19,8 @@ paths:
             schema:
               anyOf:
                 - $ref: 'components.yml#/components/schemas/Magic_Link'
-                - $ref: 'components.yml#/components/schemas/Application'
+                - $ref: 'components.yml#/components/schemas/Submitted_Application'
+                - $ref: 'components.yml#/components/schemas/Incomplete_Application'
 
             example:
               type: 'MAGIC_LINK'
