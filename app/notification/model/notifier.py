@@ -53,7 +53,9 @@ class Notifier:
             )
 
     @staticmethod
-    def send_application(notification: Notification, code: int = 200) -> tuple:
+    def send_submitted_application(
+        notification: Notification, code: int = 200
+    ) -> tuple:
         """Function makes a call to govuk-notify-service with mapped contents
         that are expected by the govuk-notify-service template.
 
@@ -71,6 +73,42 @@ class Notifier:
                     "name of fund": contents.fund_name,
                     "application reference": contents.reference,
                     "date submitted": contents.format_submission_date,
+                    "round name": contents.round_name,
+                    "question": prepare_upload(contents.questions),
+                },
+            )
+            current_app.logger.info("Call made to govuk Notify API")
+            return response, code
+
+        except errors.HTTPError:
+            current_app.logger.exception(
+                "HTTPError while sending notification"
+            )
+            return invalid_data_error(
+                Application.from_notification(notification)
+            )
+
+    @staticmethod
+    def send_incomplete_application(
+        notification: Notification, code: int = 200
+    ) -> tuple:
+        """Function makes a call to govuk-notify-service with mapped contents
+        that are expected by the govuk-notify-service template.
+
+        Args: Takes an instance of Notification class.
+
+        Raises HTTPError if any of the required contents are incorrect
+        or missing.
+        """
+        try:
+            contents = Application.from_notification(notification)
+
+            response = notifications_client.send_email_notification(
+                email_address=contents.contact_info,
+                template_id=Config.INCOMPLETE_APPLICATION_TEMPLATE_ID,
+                personalisation={
+                    "name of fund": contents.fund_name,
+                    "application reference": contents.reference,
                     "round name": contents.round_name,
                     "question": prepare_upload(contents.questions),
                 },
