@@ -43,7 +43,13 @@ class Notification:
                 current_app.logger.info(
                     f"Validating template type: {notification.template_type})"
                 )
-                return Notifier.send_application(notification)
+                return Notifier.send_submitted_application(notification)
+
+            case "INCOMPLETE_APPLICATION_RECORDS":
+                current_app.logger.info(
+                    f"Validating template type: {notification.template_type})"
+                )
+                return Notifier.send_incomplete_application(notification)
 
             case "NOTIFICATION" | "REMINDER" | "AWARD":
                 return f"Currently {notification.template_type} service is not available."  # noqa
