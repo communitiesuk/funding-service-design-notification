@@ -60,7 +60,7 @@ components:
         "request_new_link_url": "https://www.example.com/new_link"
             }
           }
-    Application:
+    Submitted_Application:
       description:
         "Post JSON for application submission confirmation"
       properties:
@@ -139,6 +139,99 @@ components:
           "round_id": "summer",
           "project_name": "Funding service community fund",
           "date_submitted": "2022-05-20T14:47:12.111511",
+          "forms": [
+            {
+              "name": "community-benefits",
+              "questions": [
+                {
+                  "question": "Potential to deliver community benefits",
+                  "fields": [
+                    {
+                      "title": "Question one",
+                      "answer": "Answer one"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+       }
+      }
+    Incomplete_Application:
+      description:
+        "Post JSON for incomplete application records"
+      properties:
+        type:
+          type: string
+          example: "INCOMPLETE_APPLICATION_RECORDS"
+        to:
+          description: An email address.
+          type: string
+          format: email
+          pattern: '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
+          example: "email@example.com"
+        content:
+          type: object
+          properties:
+            application:
+              type: object
+              properties:
+                reference:
+                  type: string
+                round_name:
+                  type: string
+                forms:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      questions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            question:
+                              type: string
+                            fields:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                    title:
+                                      type: string
+                                    answer:
+                                      anyOf:
+                                        - type: string
+                                        - type: array
+                                        - type: boolean
+                                        - nullable: true
+                                required:
+                                    - title
+                                    - answer
+                          required:
+                            - question
+                            - fields
+                    required:
+                      - name
+                      - questions
+              required:
+                - reference
+                - round_name
+                - forms
+          required:
+            - application
+
+      required:
+        - type
+        - to
+        - content
+      example: {"content": {
+        "application": {
+          "round_name": "summer",
+          "fund_name": "Funding service community fund",
           "forms": [
             {
               "name": "community-benefits",
