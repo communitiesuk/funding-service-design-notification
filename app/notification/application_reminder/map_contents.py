@@ -18,15 +18,15 @@ class ApplicationReminder:
     round_name: str
     reference: str
     deadline_date: str
-    
-    @classmethod
-    def format_deadline_date(cls, date):
-            return datetime.strptime(
-                date, "%Y-%m-%d %H:%M:%S"
-            ).strftime("%Y-%m-%d")
 
     @classmethod
-    def from_notification(cls,notification: Notification):
+    def format_deadline_date(cls, date):
+        return datetime.strptime(date, "%Y-%m-%d %H:%M:%S").strftime(
+            "%Y-%m-%d"
+        )
+
+    @classmethod
+    def from_notification(cls, notification: Notification):
         """Function calls Application class to map
         application contents.
 
@@ -39,10 +39,12 @@ class ApplicationReminder:
         current_app.logger.info(
             f"Mapping contents for {notification.template_type}"
         )
-        application_data = notification.content['application']
+        application_data = notification.content["application"]
         return ApplicationReminder(
             contact_info=notification.contact_info,
-            deadline_date=cls.format_deadline_date(application_data.get("deadline_date")),
+            deadline_date=cls.format_deadline_date(
+                application_data.get("deadline_date")
+            ),
             fund_name=Config.FUND_NAME,
             round_name=application_data.get("round_name"),
             reference=application_data.get("reference"),
