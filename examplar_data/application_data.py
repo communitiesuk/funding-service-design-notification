@@ -43,6 +43,17 @@ expected_application_data = {
     },
 }
 
+expected_application_reminder_data = {
+    NotifyConstants.FIELD_TYPE: "APPLICATION_DEADLINE_REMINDER",
+    NotifyConstants.FIELD_TO: "test_application_reminder@example.com",
+    NotifyConstants.FIELD_CONTENT: {
+        NotifyConstants.APPLICATION_FIELD: {
+            "round_name": "WINDOW 2 ROUND 2",
+            "reference": "WUHJFDWJ",
+            "deadline_date": "2022-05-20 14:47:12",
+        }
+    },
+}
 
 unexpected_application_data = {
     NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
