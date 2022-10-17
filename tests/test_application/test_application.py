@@ -1,8 +1,14 @@
 import pytest
 from app.notification.application.map_contents import Application
+from app.notification.application_reminder.map_contents import (
+    ApplicationReminder,
+)
 from app.notification.model.notification import Notification
 from examplar_data.application_data import (
     expected_application_data,
+)
+from examplar_data.application_data import (
+    expected_application_reminder_data,
 )
 from examplar_data.application_data import (
     unexpected_application_data,
@@ -100,6 +106,22 @@ def test_application_map_contents_response(app_context):
     )
 
     assert expected_contents_response in questions.getvalue()
+
+
+def test_application_reminder_contents(app_context):
+    """
+    GIVEN: our service running with app_context fixture.
+    WHEN: two separate methods on different classes chained together with given
+     expected incoming JSON.
+    THEN: we check if expected output is returned.
+    """
+
+    expected_json = expected_application_reminder_data
+    data = Notification.from_json(expected_json)
+    application_class_object = ApplicationReminder.from_notification(data)
+    fund_deadline = application_class_object.deadline_date
+
+    assert "2022-05-20" == fund_deadline
 
 
 def testHealthcheckEndpoint(flask_test_client):
