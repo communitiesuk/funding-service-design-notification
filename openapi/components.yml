@@ -289,7 +289,7 @@ components:
       example: {"content": {
         "application": {
           "round_name": "summer",
-          "fund_name": "Funding service community fund",
+          "reference":"WUHJFDWJ",
           "deadline_date":"2022-05-20 14:47:12"
         }
        }
