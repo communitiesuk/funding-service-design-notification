@@ -27,9 +27,12 @@ class Application:
     @property
     def format_submission_date(self):
         if self.submission_date is not None:
-            return datetime.strptime(
-                self.submission_date, "%Y-%m-%dT%H:%M:%S.%f"
-            ).strftime("%Y-%m-%d")
+            return (
+                datetime.strptime(self.submission_date, "%Y-%m-%dT%H:%M:%S.%f")
+                .strftime(f"{'%d %B %Y'} at {'%I:%M%p'}")
+                .replace("AM", "am")
+                .replace("PM", "pm")
+            )
 
     @staticmethod
     def from_notification(notification: Notification):
