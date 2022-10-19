@@ -21,9 +21,12 @@ class ApplicationReminder:
 
     @classmethod
     def format_deadline_date(cls, date):
-        return datetime.strptime(date, "%Y-%m-%d %H:%M:%S").strftime(
-            "%Y-%m-%d"
-        )
+        return (
+                datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+                .strftime(f"{'%d %B %Y'} at {'%I:%M%p'}")
+                .replace("AM", "am")
+                .replace("PM", "pm")
+            )
 
     @classmethod
     def from_notification(cls, notification: Notification):
