@@ -121,7 +121,7 @@ def test_application_reminder_contents(app_context):
     application_class_object = ApplicationReminder.from_notification(data)
     fund_deadline = application_class_object.deadline_date
 
-    assert "2022-05-20" == fund_deadline
+    assert "20 May 2022 at 02:47pm" == fund_deadline
 
 
 def testHealthcheckEndpoint(flask_test_client):
