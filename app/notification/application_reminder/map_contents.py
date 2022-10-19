@@ -40,7 +40,7 @@ class ApplicationReminder:
             f"Mapping contents for {notification.template_type}"
         )
         application_data = notification.content["application"]
-        return ApplicationReminder(
+        return cls(
             contact_info=notification.contact_info,
             deadline_date=cls.format_deadline_date(
                 application_data.get("deadline_date")

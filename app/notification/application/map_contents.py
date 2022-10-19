@@ -31,8 +31,8 @@ class Application:
                 self.submission_date, "%Y-%m-%dT%H:%M:%S.%f"
             ).strftime("%Y-%m-%d")
 
-    @staticmethod
-    def from_notification(notification: Notification):
+    @classmethod
+    def from_notification(cls, notification: Notification):
         """Function calls Application class to map
         application contents.
 
@@ -48,9 +48,9 @@ class Application:
         application_data = notification.content[
             NotifyConstants.APPLICATION_FIELD
         ]
-        return Application(
+        return cls(
             contact_info=notification.contact_info,
-            questions=Application.bytes_object_for_questions_answers(
+            questions=cls.bytes_object_for_questions_answers(
                 notification
             ),
             submission_date=application_data.get("date_submitted"),
@@ -59,29 +59,29 @@ class Application:
             reference=application_data.get("reference"),
         )
 
-    @staticmethod
-    def get_forms(notification: Notification) -> list:
+    @classmethod
+    def get_forms(cls, notification: Notification) -> list:
         forms = notification.content[NotifyConstants.APPLICATION_FIELD][
             NotifyConstants.APPLICATION_FORMS_FIELD
         ]
         return forms
 
-    @staticmethod
-    def get_form_names(notification: Notification) -> list:
+    @classmethod
+    def get_form_names(cls, notification: Notification) -> list:
         form_names = []
-        forms = Application.get_forms(notification)
+        forms = cls.get_forms(notification)
         for form in forms:
             form_names.append(form.get(NotifyConstants.APPLICATION_NAME_FIELD))
         return list(dict.fromkeys(form_names))
 
-    @staticmethod
-    def get_questions_and_answers(notification: Notification) -> dict:
+    @classmethod
+    def get_questions_and_answers(cls, notification: Notification) -> dict:
         """function takes the form data and returns
         dict of questions & answers.
         """
         questions_answers = collections.defaultdict(dict)
-        forms = Application.get_forms(notification)
-        form_names = Application.get_form_names(notification)
+        forms = cls.get_forms(notification)
+        form_names = cls.get_form_names(notification)
 
         for form_name in form_names:
             for form in forms:
@@ -111,13 +111,13 @@ class Application:
                                 ] = answer
         return questions_answers
 
-    @staticmethod
+    @classmethod
     def format_questions_answers_with_stringIO(
-        notification: Notification,
+        cls, notification: Notification,
     ) -> str:
         """Function formats dict of questions/answers
         for readability with StringIO."""
-        json_file = Application.get_questions_and_answers(notification)
+        json_file = cls.get_questions_and_answers(notification)
         output = StringIO()
 
         output.write(f"********* {Config.FUND_NAME} **********\n")
@@ -129,14 +129,14 @@ class Application:
                 output.write(f"  A) {answers}\n\n")
         return output.getvalue()
 
-    @staticmethod
+    @classmethod
     def bytes_object_for_questions_answers(
-        notification: Notification,
+        cls, notification: Notification,
     ) -> BytesIO:
         """Function creates a memory object for question & answers
         with ByteIO from StringIO.
         """
-        stringIO_data = Application.format_questions_answers_with_stringIO(
+        stringIO_data = cls.format_questions_answers_with_stringIO(
             notification
         )
         convert_to_bytes = bytes(stringIO_data, "utf-8")
