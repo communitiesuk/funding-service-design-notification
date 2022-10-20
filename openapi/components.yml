@@ -251,3 +251,46 @@ components:
         }
        }
       }
+    Application_Reminder:
+      description:
+        "Post JSON for application deadline reminder"
+      properties:
+        type:
+          type: string
+          example: "APPLICATION_DEADLINE_REMINDER"
+        to:
+          description: An email address.
+          type: string
+          format: email
+          pattern: '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
+          example: "email@example.com"
+        content:
+          type: object
+          properties:
+            application:
+              type: object
+              properties:
+                reference:
+                  type: string
+                round_name:
+                  type: string
+                deadline_date:
+                  type: string
+              required:
+                - reference
+                - round_name
+                - deadline_date
+          required:
+            - application
+      required:
+        - type
+        - to
+        - content
+      example: {"content": {
+        "application": {
+          "round_name": "summer",
+          "reference":"WUHJFDWJ",
+          "deadline_date":"2022-05-20 14:47:12"
+        }
+       }
+      }

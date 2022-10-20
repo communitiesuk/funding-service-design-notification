@@ -51,7 +51,13 @@ class Notification:
                 )
                 return Notifier.send_incomplete_application(notification)
 
-            case "NOTIFICATION" | "REMINDER" | "AWARD":
+            case "APPLICATION_DEADLINE_REMINDER":
+                current_app.logger.info(
+                    f"Validating template type: {notification.template_type})"
+                )
+                return Notifier.send_application_reminder(notification)
+
+            case "NOTIFICATION" | "AWARD":
                 return f"Currently {notification.template_type} service is not available."  # noqa
 
             case _:

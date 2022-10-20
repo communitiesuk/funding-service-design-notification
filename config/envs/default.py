@@ -30,6 +30,10 @@ class DefaultConfig:
         "INCOMPLETE_APPLICATION_TEMPLATE_ID",
         "fc8cff7c-a595-4590-a1a4-eccda48d8604",
     )
+    APPLICATION_DEADLINE_REMINDER_TEMPLATE_ID = os.environ.get(
+        "APPLICATION_DEADLINE_REMINDER_TEMPLATE_ID",
+        "e41cc73d-6947-4cbb-aedd-4ab2f470a2d2",
+    )
 
     # Logging
     FSD_LOG_LEVEL = logging.WARNING

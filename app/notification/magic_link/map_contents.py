@@ -18,8 +18,8 @@ class MagicLink:
     request_new_link_url: str
     contact_help_email: str
 
-    @staticmethod
-    def from_notification(notification: Notification):
+    @classmethod
+    def from_notification(cls, notification: Notification):
         """Function calls MagicLink class to map
         application contents.
 
@@ -33,7 +33,7 @@ class MagicLink:
             f"Mapping contents for {notification.template_type}"
         )
 
-        return MagicLink(
+        return cls(
             contact_info=notification.contact_info,
             fund_name=notification.content.get(
                 NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD

@@ -21,6 +21,7 @@ paths:
                 - $ref: 'components.yml#/components/schemas/Magic_Link'
                 - $ref: 'components.yml#/components/schemas/Submitted_Application'
                 - $ref: 'components.yml#/components/schemas/Incomplete_Application'
+                - $ref: 'components.yml#/components/schemas/Application_Reminder'
 
             example:
               type: 'MAGIC_LINK'
