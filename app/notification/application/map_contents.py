@@ -30,11 +30,9 @@ class Application:
         if self.submission_date is not None:
             UTC_timezone = pytz.timezone("UTC")
             UK_timezone = pytz.timezone("Europe/London")
-            formatted_submission_date = datetime.strptime(
-                self.submission_date, "%Y-%m-%dT%H:%M:%S.%f"
-            )
-            UTC_datetime = UTC_timezone.localize(formatted_submission_date)
-            UK_datetime = UTC_datetime.astimezone(UK_timezone)
+            UK_datetime = UTC_timezone.localize(
+                datetime.strptime(self.submission_date, "%Y-%m-%dT%H:%M:%S.%f")
+            ).astimezone(UK_timezone)
 
             return (
                 UK_datetime.strftime(f"{'%d %B %Y'} at {'%I:%M%p'}")
