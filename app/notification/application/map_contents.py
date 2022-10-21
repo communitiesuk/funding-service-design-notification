@@ -7,6 +7,7 @@ from io import BytesIO
 from io import StringIO
 from typing import TYPE_CHECKING
 
+import pytz
 from config import Config
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
@@ -27,9 +28,17 @@ class Application:
     @property
     def format_submission_date(self):
         if self.submission_date is not None:
-            return datetime.strptime(
-                self.submission_date, "%Y-%m-%dT%H:%M:%S.%f"
-            ).strftime("%Y-%m-%d")
+            UTC_timezone = pytz.timezone("UTC")
+            UK_timezone = pytz.timezone("Europe/London")
+            UK_datetime = UTC_timezone.localize(
+                datetime.strptime(self.submission_date, "%Y-%m-%dT%H:%M:%S.%f")
+            ).astimezone(UK_timezone)
+
+            return (
+                UK_datetime.strftime(f"{'%d %B %Y'} at {'%I:%M%p'}")
+                .replace("AM", "am")
+                .replace("PM", "pm")
+            )
 
     @classmethod
     def from_notification(cls, notification: Notification):

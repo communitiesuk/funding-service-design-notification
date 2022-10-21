@@ -47,7 +47,7 @@ def test_application_contents_with_formatted_date(flask_test_client):
         json=expected_application_data,
         follow_redirects=True,
     )
-    assert b"Application submitted: 2022-05-14" in response.data
+    assert b"Application submitted: 14 May 2022 at 11:20am." in response.data
     assert response.status_code == 200
 
 
