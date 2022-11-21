@@ -15,6 +15,7 @@ expected_application_data = {
             "fund_id": "fund-a",
             "round_name": "summer",
             "date_submitted": "2022-05-14T10:20:44.124542",
+            "language": "en",
             NotifyConstants.APPLICATION_FORMS_FIELD: [
                 {
                     NotifyConstants.APPLICATION_NAME_FIELD: "about-your-org",
