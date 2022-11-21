@@ -17,11 +17,18 @@ paths:
         content:
           application/json:
             schema:
-              anyOf:
+              oneOf:
                 - $ref: 'components.yml#/components/schemas/Magic_Link'
                 - $ref: 'components.yml#/components/schemas/Submitted_Application'
                 - $ref: 'components.yml#/components/schemas/Incomplete_Application'
                 - $ref: 'components.yml#/components/schemas/Application_Reminder'
+              discriminator:
+                propertyName: type
+                mapping:
+                  MAGIC_LINK: 'components.yml#/components/schemas/Magic_Link'
+                  APPLICATION_RECORD_OF_SUBMISSION: 'components.yml#/components/schemas/Submitted_Application'
+                  INCOMPLETE_APPLICATION_RECORDS: 'components.yml#/components/schemas/Incomplete_Application'
+                  APPLICATION_DEADLINE_REMINDER: 'components.yml#/components/schemas/Application_Reminder'
 
             example:
               type: 'MAGIC_LINK'

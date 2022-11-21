@@ -33,7 +33,7 @@ class Notification:
         """
         notification = Notification.from_json(json_data)
         match json_data.get("type"):
-            case NotifyConstants.TEMPLATE_TYPE_MAGIC_LINK:
+            case "MAGIC_LINK":
                 current_app.logger.info(
                     f"Validating template type: {notification.template_type}"
                 )
