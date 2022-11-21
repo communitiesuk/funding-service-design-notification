@@ -1,23 +1,23 @@
 #-----------------------------------
 #   FSD Utils
 #-----------------------------------
-funding-service-design-utils>=1.0.7,<1.1.0
+funding-service-design-utils
 requests
 
 #-----------------------------------
 #   Flask Version
 #-----------------------------------
-Flask==2.1.1
+Flask
 
 #-----------------------------------
 #   Security
 #-----------------------------------
-flask-talisman==0.8.1
+flask-talisman
 
 #-----------------------------------
 #   Notification API
 #-----------------------------------
-notifications_python_client==6.3.0
+notifications_python_client
 
 #-----------------------------------
 #   Connexion APIs
