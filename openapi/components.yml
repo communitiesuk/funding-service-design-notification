@@ -78,6 +78,7 @@ components:
           properties:
             application:
               type: object
+              additionalProperties: true
               properties:
                 reference:
                   type: string
