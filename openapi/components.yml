@@ -104,18 +104,7 @@ components:
                               type: array
                               items:
                                 type: object
-                                properties:
-                                    title:
-                                      type: string
-                                    answer:
-                                      anyOf:
-                                        - type: string
-                                        - type: array
-                                        - type: boolean
-                                        - nullable: true
-                                required:
-                                    - title
-                                    - answer
+                                additionalProperties: true
                           required:
                             - question
                             - fields
