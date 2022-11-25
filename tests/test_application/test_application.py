@@ -5,7 +5,7 @@ from app.notification.application_reminder.map_contents import (
 )
 from app.notification.model.notification import Notification
 from examplar_data.application_data import (
-    expected_application_data,
+    expected_application_data, expected_application_data_contains_none_answers
 )
 from examplar_data.application_data import (
     expected_application_reminder_data,
@@ -31,25 +31,27 @@ def test_application_contents_with_expected_data(flask_test_client):
     )
 
     assert b"Fund name:  Community Ownership Fund" in response.data
-
+    assert b"Application submitted: 14 May 2022 at 10:25am." in response.data
+    assert response.status_code == 200
 
 @pytest.mark.usefixtures("live_server")
-def test_application_contents_with_formatted_date(flask_test_client):
+def test_application_contents_with_expected_data_containing_none_answers(flask_test_client):
     """
     GIVEN: our service running on flask test client.
-    WHEN: we post expected application data to the endpoint "/send".
+    WHEN: we post expected application data containing null answers to the endpoint "/send".
     THEN: we check if the contents of the message is successfully delivered
-    along with formatted date.
+    along with the pre-added template message.
     """
 
     response = flask_test_client.post(
         "/send",
-        json=expected_application_data,
+        json=expected_application_data_contains_none_answers,
         follow_redirects=True,
     )
-    assert b"Application submitted: 14 May 2022 at 11:20am." in response.data
-    assert response.status_code == 200
 
+    assert b"Fund name:  Community Ownership Fund" in response.data
+    assert b"Application submitted: 14 May 2022 at 03:25pm." in response.data
+    assert response.status_code == 200
 
 @pytest.mark.usefixtures("live_server")
 def test_application_contents_with_unexpected_data(flask_test_client):

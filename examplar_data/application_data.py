@@ -14,7 +14,7 @@ expected_application_data = {
             "reference": "1564564564-56-4-54-4654",
             "fund_id": "fund-a",
             "round_name": "summer",
-            "date_submitted": "2022-05-14T10:20:44.124542",
+            "date_submitted": "2022-05-14T09:25:44.124542",
             NotifyConstants.APPLICATION_FORMS_FIELD: [
                 {
                     NotifyConstants.APPLICATION_NAME_FIELD: "about-your-org",
@@ -42,6 +42,45 @@ expected_application_data = {
         }
     },
 }
+
+expected_application_data_contains_none_answers = {
+    NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
+    NotifyConstants.FIELD_TO: "test_application@example.com",
+    NotifyConstants.FIELD_CONTENT: {
+        NotifyConstants.APPLICATION_FIELD: {
+            "id": "123456789",
+            "reference": "1564564564-56-4-54-4654",
+            "fund_id": "fund-a",
+            "round_name": "summer",
+            "date_submitted": "2022-05-14T14:25:44.124542",
+            NotifyConstants.APPLICATION_FORMS_FIELD: [
+                {
+                    NotifyConstants.APPLICATION_NAME_FIELD: "about-your-org",
+                    NotifyConstants.APPLICATION_QUESTIONS_FIELD: [
+                        {
+                            "question": "Application information",
+                            "fields": [
+                                {
+                                    "key": "application-name",
+                                    "title": "Applicant name",
+                                    "type": "text",
+                                    "answer": None,
+                                },
+                                {
+                                    "key": "upload-file",
+                                    "title": "Upload file",
+                                    "type": "file",
+                                    "answer": None,  # noqa
+                                },
+                            ],
+                        }
+                    ],
+                }
+            ],
+        }
+    },
+}
+
 
 expected_application_reminder_data = {
     NotifyConstants.FIELD_TYPE: "APPLICATION_DEADLINE_REMINDER",
