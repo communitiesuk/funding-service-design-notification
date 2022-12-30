@@ -52,7 +52,7 @@ jobs:
           cf_api:      ${{secrets.CF_API}}
           cf_org:      ${{secrets.CF_ORG}}
           cf_space:    ${{secrets.CF_SPACE }}
-          cf_username: ${{secrets.CF_USER}}
+          cf_username: ${{secrets.CF_USERNAME}}
           cf_password: ${{secrets.CF_PASSWORD}}
           command: push funding-service-design-notification-dev  --var GOV_NOTIFY_API_KEY=${{secrets.GOV_NOTIFY_API_KEY}} --var GITHUB_SHA="${{ github.sha }}"
 
@@ -116,7 +116,7 @@ jobs:
           cf_api:      ${{secrets.CF_API}}
           cf_org:      ${{secrets.CF_ORG}}
           cf_space:    ${{secrets.CF_SPACE }}
-          cf_username: ${{secrets.CF_USER}}
+          cf_username: ${{secrets.CF_USERNAME}}
           cf_password: ${{secrets.CF_PASSWORD}}
           command: push funding-service-design-notification-test  --var GOV_NOTIFY_API_KEY=${{secrets.GOV_NOTIFY_API_KEY}} --var GITHUB_SHA="${{ github.sha }}"
 
