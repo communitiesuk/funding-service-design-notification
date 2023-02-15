@@ -100,6 +100,11 @@ class Application:
                             answer = field.get("answer")
                             match field["type"]:
                                 case "file":
+                                    current_app.logger.error(
+                                        "GIDEON TESTING FILE CASE Type of"
+                                        " answer is: "
+                                        + str(answer.__class__)
+                                    )
                                     # we check if the question type is "file"
                                     # then we remove the aws
                                     # key attached to the answer
@@ -112,7 +117,7 @@ class Application:
                                             field["title"]
                                         ] = answer
                                 case "YesNoField":
-                                    current_app.logger.info(
+                                    current_app.logger.error(
                                         "GIDEON TESTING Type of answer is: "
                                         + str(answer.__class__)
                                     )
