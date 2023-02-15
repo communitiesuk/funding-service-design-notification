@@ -59,9 +59,7 @@ class Application:
         ]
         return cls(
             contact_info=notification.contact_info,
-            questions=cls.bytes_object_for_questions_answers(
-                notification
-            ),
+            questions=cls.bytes_object_for_questions_answers(notification),
             submission_date=application_data.get("date_submitted"),
             fund_name=Config.FUND_NAME,
             round_name=application_data.get("round_name"),
@@ -113,7 +111,13 @@ class Application:
                                     questions_answers[form_name][
                                         field["title"]
                                     ] = answer
-
+                            elif (
+                                isinstance(answer, bool)
+                                and field["type"] == "list"
+                            ):
+                                questions_answers[form_name][
+                                    field["title"]
+                                ] = ("Yes" if answer else "No")
                             else:
                                 questions_answers[form_name][
                                     field["title"]
@@ -122,7 +126,8 @@ class Application:
 
     @classmethod
     def format_questions_answers_with_stringIO(
-        cls, notification: Notification,
+        cls,
+        notification: Notification,
     ) -> str:
         """Function formats dict of questions/answers
         for readability with StringIO."""
@@ -140,7 +145,8 @@ class Application:
 
     @classmethod
     def bytes_object_for_questions_answers(
-        cls, notification: Notification,
+        cls,
+        notification: Notification,
     ) -> BytesIO:
         """Function creates a memory object for question & answers
         with ByteIO from StringIO.
