@@ -59,9 +59,7 @@ class Application:
         ]
         return cls(
             contact_info=notification.contact_info,
-            questions=cls.bytes_object_for_questions_answers(
-                notification
-            ),
+            questions=cls.bytes_object_for_questions_answers(notification),
             submission_date=application_data.get("date_submitted"),
             fund_name=Config.FUND_NAME,
             round_name=application_data.get("round_name"),
@@ -100,29 +98,37 @@ class Application:
                     ]:
                         for field in question["fields"]:
                             answer = field.get("answer")
-                            if field["type"] == "file":
-                                # we check if the question type is "file"
-                                # then we remove the aws
-                                # key attached to the answer
-
-                                if isinstance(answer, str):
-                                    questions_answers[form_name][
-                                        field["title"]
-                                    ] = answer.split("/")[-1]
-                                else:
+                            match field["type"]:
+                                case "file":
+                                    # we check if the question type is "file"
+                                    # then we remove the aws
+                                    # key attached to the answer
+                                    if isinstance(answer, str):
+                                        questions_answers[form_name][
+                                            field["title"]
+                                        ] = answer.split("/")[-1]
+                                    else:
+                                        questions_answers[form_name][
+                                            field["title"]
+                                        ] = answer
+                                case "YesNoField":
+                                    current_app.logger.info(
+                                        "GIDEON TESTING Type of answer is: "
+                                        + str(answer.__class__)
+                                    )
                                     questions_answers[form_name][
                                         field["title"]
                                     ] = answer
-
-                            else:
-                                questions_answers[form_name][
-                                    field["title"]
-                                ] = answer
+                                case _:
+                                    questions_answers[form_name][
+                                        field["title"]
+                                    ] = answer
         return questions_answers
 
     @classmethod
     def format_questions_answers_with_stringIO(
-        cls, notification: Notification,
+        cls,
+        notification: Notification,
     ) -> str:
         """Function formats dict of questions/answers
         for readability with StringIO."""
@@ -140,7 +146,8 @@ class Application:
 
     @classmethod
     def bytes_object_for_questions_answers(
-        cls, notification: Notification,
+        cls,
+        notification: Notification,
     ) -> BytesIO:
         """Function creates a memory object for question & answers
         with ByteIO from StringIO.
