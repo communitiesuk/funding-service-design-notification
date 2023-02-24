@@ -4,8 +4,9 @@ from app.notification.application_reminder.map_contents import (
     ApplicationReminder,
 )
 from app.notification.model.notification import Notification
+from examplar_data.application_data import expected_application_data
 from examplar_data.application_data import (
-    expected_application_data, expected_application_data_contains_none_answers
+    expected_application_data_contains_none_answers,
 )
 from examplar_data.application_data import (
     expected_application_reminder_data,
@@ -34,11 +35,14 @@ def test_application_contents_with_expected_data(flask_test_client):
     assert b"Application submitted: 14 May 2022 at 10:25am." in response.data
     assert response.status_code == 200
 
+
 @pytest.mark.usefixtures("live_server")
-def test_application_contents_with_expected_data_containing_none_answers(flask_test_client):
+def test_application_contents_with_expected_data_containing_none_answers(
+    flask_test_client,
+):
     """
     GIVEN: our service running on flask test client.
-    WHEN: we post expected application data containing null answers to the endpoint "/send".
+    WHEN: we post expected application data containing null answers to the endpoint "/send". # noqa: E501
     THEN: we check if the contents of the message is successfully delivered
     along with the pre-added template message.
     """
@@ -52,6 +56,7 @@ def test_application_contents_with_expected_data_containing_none_answers(flask_t
     assert b"Fund name:  Community Ownership Fund" in response.data
     assert b"Application submitted: 14 May 2022 at 03:25pm." in response.data
     assert response.status_code == 200
+
 
 @pytest.mark.usefixtures("live_server")
 def test_application_contents_with_unexpected_data(flask_test_client):
@@ -108,6 +113,8 @@ def test_application_map_contents_response(app_context):
     )
 
     assert expected_contents_response in questions.getvalue()
+    assert "Yes" in questions.getvalue().decode()
+    assert "No" in questions.getvalue().decode()
 
 
 def test_application_reminder_contents(app_context):

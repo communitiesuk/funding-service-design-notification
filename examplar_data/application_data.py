@@ -34,6 +34,18 @@ expected_application_data = {
                                     "type": "file",
                                     "answer": "012ba4c7-e4971/test-one_two.three/programmer.jpeg",  # noqa
                                 },
+                                {
+                                    "key": "boolean-question-1",
+                                    "title": "Boolean Question 1 ",
+                                    "type": "list",
+                                    "answer": False,
+                                },
+                                {
+                                    "key": "boolean-question-2",
+                                    "title": "Boolean Question 2",
+                                    "type": "list",
+                                    "answer": True,
+                                },
                             ],
                         }
                     ],
