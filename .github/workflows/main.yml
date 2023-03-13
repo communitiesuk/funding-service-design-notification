@@ -25,3 +25,4 @@ jobs:
       CF_PASSWORD: ${{secrets.CF_PASSWORD}}
       E2E_PAT: ${{secrets.E2E_PAT}}
       RSA256_PUBLIC_KEY_BASE64: ${{secrets.RSA256_PUBLIC_KEY_BASE64}}
+      GOV_NOTIFY_API_KEY: ${{secrets.GOV_NOTIFY_API_KEY}}
