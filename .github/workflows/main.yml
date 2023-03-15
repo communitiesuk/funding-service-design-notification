@@ -10,8 +10,6 @@ jobs:
     uses: communitiesuk/funding-design-service-workflows/.github/workflows/deploy.yml@fs-2415-standardise-github-workflows
     with:
       app_name: ${{ github.event.repository.name }}
-      api: false
-      assets_required: false
       deploy_to_dev: true
       users: 2
       spawn-rate: 2
