@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 
 from config import Config
 
+
 @dataclass
 class MagicLink:
     contact_info: str
@@ -49,9 +50,11 @@ class MagicLink:
             contact_help_email=notification.content.get(
                 NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
             ),
-            reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[notification.content.get(
-                NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
-            )]
+            reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[
+                notification.content.get(
+                    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
+                )
+            ],
         )
 
     @staticmethod
