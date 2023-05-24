@@ -39,19 +39,19 @@ class Notification:
                 )
                 return Notifier.send_magic_link(notification)
 
-            case "APPLICATION_RECORD_OF_SUBMISSION":
+            case NotifyConstants.TEMPLATE_TYPE_APPLICATION:
                 current_app.logger.info(
                     f"Validating template type: {notification.template_type})"
                 )
                 return Notifier.send_submitted_application(notification)
 
-            case "INCOMPLETE_APPLICATION_RECORDS":
+            case NotifyConstants.TEMPLATE_TYPE_INCOMPLETE_APPLICATION:
                 current_app.logger.info(
                     f"Validating template type: {notification.template_type})"
                 )
                 return Notifier.send_incomplete_application(notification)
 
-            case "APPLICATION_DEADLINE_REMINDER":
+            case NotifyConstants.TEMPLATE_TYPE_REMINDER:
                 current_app.logger.info(
                     f"Validating template type: {notification.template_type})"
                 )

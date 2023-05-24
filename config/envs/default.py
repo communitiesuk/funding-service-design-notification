@@ -37,3 +37,9 @@ class DefaultConfig:
 
     # Logging
     FSD_LOG_LEVEL = logging.WARNING
+
+    # E.G. "EMAIL": "GOV_NOTIFY_ID"
+    REPLY_TO_EMAILS_WITH_NOTIFY_ID = {
+        "COF@levellingup.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
+        "transformationfund@levellingup.gov.uk":"25286d9a-8543-41b5-a00f-331b999e51f0"
+    }
