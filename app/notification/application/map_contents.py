@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import collections
+import subprocess
+import sys
 from dataclasses import dataclass
 from datetime import datetime
 from io import BytesIO
@@ -14,6 +16,14 @@ from fsd_utils.config.notify_constants import NotifyConstants
 
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
+
+
+# Having problem installing BeautifulSoup
+try:
+    from bs4 import BeautifulSoup
+except:  # noqa
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "bs4"])
+    from bs4 import BeautifulSoup
 
 
 @dataclass
@@ -98,30 +108,32 @@ class Application:
                     ]:
                         for field in question["fields"]:
                             answer = field.get("answer")
+                            clean_html_answer = cls.remove_html_tags(answer)
+
                             if field["type"] == "file":
                                 # we check if the question type is "file"
                                 # then we remove the aws
                                 # key attached to the answer
 
-                                if isinstance(answer, str):
+                                if isinstance(clean_html_answer, str):
                                     questions_answers[form_name][
                                         field["title"]
-                                    ] = answer.split("/")[-1]
+                                    ] = clean_html_answer.split("/")[-1]
                                 else:
                                     questions_answers[form_name][
                                         field["title"]
-                                    ] = answer
+                                    ] = clean_html_answer
                             elif (
-                                isinstance(answer, bool)
+                                isinstance(clean_html_answer, bool)
                                 and field["type"] == "list"
                             ):
                                 questions_answers[form_name][
                                     field["title"]
-                                ] = ("Yes" if answer else "No")
+                                ] = ("Yes" if clean_html_answer else "No")
                             else:
                                 questions_answers[form_name][
                                     field["title"]
-                                ] = answer
+                                ] = clean_html_answer
         return questions_answers
 
     @classmethod
@@ -157,3 +169,56 @@ class Application:
         convert_to_bytes = bytes(stringIO_data, "utf-8")
         bytes_object = BytesIO(convert_to_bytes)
         return bytes_object
+
+    @classmethod
+    def remove_html_tags(cls, answer):
+        try:
+            if answer is None:
+                return None
+            elif isinstance(answer, bool):
+                return answer
+
+            soup = BeautifulSoup(answer, "html.parser")
+            indent = " " * 5
+
+            if soup.find():
+                if soup.ul:
+                    bullet_points = []
+                    for index, li in enumerate(
+                        soup.ul.find_all("li"), start=1
+                    ):
+                        if li.get_text() != "\xa0":
+                            if index > 1:
+                                bullet_points.append(
+                                    f"{indent}- {li.get_text()}"
+                                )
+                            else:
+                                bullet_points.append(f"- {li.get_text()}")
+                    return "\n".join(bullet_points)
+                elif soup.ol:
+                    numbered_list = []
+                    for index, li in enumerate(
+                        soup.ol.find_all("li"), start=1
+                    ):
+                        if li.get_text() != "\xa0":
+                            if index > 1:
+                                numbered_list.append(
+                                    f"{indent}{index}. {li.get_text()}"
+                                )
+                            else:
+                                numbered_list.append(
+                                    f"{index}. {li.get_text()}"
+                                )
+                    return "\n".join(numbered_list)
+                else:
+                    # Handle other HTML tags
+                    cleaned_text = soup.get_text()
+                    cleaned_text = cleaned_text.replace("\xa0", "")
+                    return cleaned_text.strip()
+            else:
+                return answer.strip()
+        except Exception as e:
+            current_app.logger.error(
+                f"Error occurred while processing HTML text: {answer}", e
+            )
+            return None
