@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 import collections
-import subprocess
-import sys
+import importlib
 from dataclasses import dataclass
 from datetime import datetime
 from io import BytesIO
 from io import StringIO
 from typing import TYPE_CHECKING
 
+import pip
 import pytz
 from config import Config
 from flask import current_app
@@ -19,11 +19,9 @@ if TYPE_CHECKING:
 
 
 # Having problem installing BeautifulSoup
-try:
-    from bs4 import BeautifulSoup
-except:  # noqa
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "bs4"])
-    from bs4 import BeautifulSoup
+pip.main(["install", "bs4"])
+importlib.import_module("bs4")
+from bs4 import BeautifulSoup  # noqa E402
 
 
 @dataclass
@@ -173,9 +171,7 @@ class Application:
     @classmethod
     def remove_html_tags(cls, answer):
         try:
-            if answer is None:
-                return None
-            elif isinstance(answer, bool):
+            if answer is None or isinstance(answer, bool):
                 return answer
 
             soup = BeautifulSoup(answer, "html.parser")
@@ -219,6 +215,6 @@ class Application:
                 return answer.strip()
         except Exception as e:
             current_app.logger.error(
-                f"Error occurred while processing HTML text: {answer}", e
+                f"Error occurred while processing HTML tag: {answer}", e
             )
             return None
