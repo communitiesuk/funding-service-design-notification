@@ -250,9 +250,9 @@ class Application:
 
         return "\n".join(
             [
-                f"{indent}{key}: £{value}"
-                if index != 0
-                else f"{key}: £{value}"
-                for index, (key, value) in enumerate(sorted_data.items())
+                f"{indent}{index}. {key.strip()}: £{value}"
+                if index != 1
+                else f"{index}. {key.strip()}: £{value}"
+                for index, (key, value) in enumerate(sorted_data.items(), start=1)
             ]
         )
