@@ -253,6 +253,8 @@ class Application:
                 f"{indent}{index}. {key.strip()}: £{value}"
                 if index != 1
                 else f"{index}. {key.strip()}: £{value}"
-                for index, (key, value) in enumerate(sorted_data.items(), start=1)
+                for index, (key, value) in enumerate(
+                    sorted_data.items(), start=1
+                )
             ]
         )
