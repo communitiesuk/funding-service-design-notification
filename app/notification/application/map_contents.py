@@ -128,6 +128,16 @@ class Application:
                                 questions_answers[form_name][
                                     field["title"]
                                 ] = ("Yes" if clean_html_answer else "No")
+                            elif (
+                                isinstance(clean_html_answer, list)
+                                and field["type"] == "multiInput"
+                            ):
+
+                                questions_answers[form_name][
+                                    field["title"]
+                                ] = cls.sort_multi_input_data(
+                                    clean_html_answer
+                                )
                             else:
                                 questions_answers[form_name][
                                     field["title"]
@@ -171,7 +181,7 @@ class Application:
     @classmethod
     def remove_html_tags(cls, answer):
         try:
-            if answer is None or isinstance(answer, bool):
+            if answer is None or isinstance(answer, (bool, list)):
                 return answer
 
             soup = BeautifulSoup(answer, "html.parser")
@@ -213,8 +223,36 @@ class Application:
                     return cleaned_text.strip()
             else:
                 return answer.strip()
+
         except Exception as e:
             current_app.logger.error(
                 f"Error occurred while processing HTML tag: {answer}", e
             )
-            return None
+
+            return answer
+
+    @classmethod
+    def sort_multi_input_data(cls, multi_input_data):
+        key = None
+        value = None
+        sorted_data = {}
+        indent = " " * 5
+
+        for items in multi_input_data:
+            for k, v in enumerate(items.items()):
+                index = k
+                value = v[-1]
+                if index == 0:
+                    key = value
+                if index == 1:
+                    value = value
+                sorted_data[key] = value
+
+        return "\n".join(
+            [
+                f"{indent}{key}: £{value}"
+                if index != 0
+                else f"{key}: £{value}"
+                for index, (key, value) in enumerate(sorted_data.items())
+            ]
+        )
