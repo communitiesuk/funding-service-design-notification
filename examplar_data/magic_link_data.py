@@ -3,7 +3,16 @@ from fsd_utils.config.notify_constants import NotifyConstants
 valid_content = {
     NotifyConstants.MAGIC_LINK_URL_FIELD: "MAGIC-LINK-GOES-HERE",
     NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD: "FUND NAME GOES HERE",
-    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: "help@email.com",
+    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: "COF@levellingup.gov.uk",
+    NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD: (
+        "NEW LINK URL GOES HERE"
+    ),
+}
+
+not_valid_content = {
+    NotifyConstants.MAGIC_LINK_URL_FIELD: "MAGIC-LINK-GOES-HERE",
+    NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD: "FUND NAME GOES HERE",
+    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: "nope@wrong.gov.uk",
     NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD: (
         "NEW LINK URL GOES HERE"
     ),
@@ -18,6 +27,12 @@ expected_magic_link_data = {
     NotifyConstants.FIELD_TYPE: "MAGIC_LINK",
     NotifyConstants.FIELD_TO: "test_recipient@email.com",
     NotifyConstants.FIELD_CONTENT: valid_content,
+}
+
+expected_magic_link_unknown_help_email = {
+    NotifyConstants.FIELD_TYPE: "MAGIC_LINK",
+    NotifyConstants.FIELD_TO: "test_recipient@email.com",
+    NotifyConstants.FIELD_CONTENT: not_valid_content,
 }
 
 incorrect_content_key_data = {
