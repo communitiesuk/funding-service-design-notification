@@ -26,7 +26,7 @@ babel==2.10.3
     # via
     #   -r requirements.txt
     #   flask-babel
-bandit==1.7.5
+bandit==1.7.4
     # via -r requirements-dev.in
 black==22.12.0
     # via -r requirements-dev.in
