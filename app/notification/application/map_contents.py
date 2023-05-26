@@ -91,8 +91,14 @@ class Application:
 
     @classmethod
     def get_questions_and_answers(cls, notification: Notification) -> dict:
-        """function takes the form data and returns
-        dict of questions & answers.
+        """
+        Extracts questions and answers from form data.
+
+        Args:
+            notification (Notification): The form data containing the questions and answers.
+
+        Returns:
+            dict: A dictionary mapping form names to their respective questions and answers.
         """
         questions_answers = collections.defaultdict(dict)
         forms = cls.get_forms(notification)
@@ -195,6 +201,31 @@ class Application:
 
     @classmethod
     def remove_html_tags(cls, answer):
+        """
+        Removes HTML tags from the provided answer and returns the cleaned text.
+
+        Args:
+            answer (str): The answer containing HTML tags.
+
+        Returns:
+            str: The cleaned text with HTML tags removed.
+
+        Example with unordered lis (ul) tags:
+        answer = '<ul><li>Item 1</li><li>Item 2</li></ul>'
+        cleaned_text = remove_html_tags(cls, answer)
+        print(cleaned_text)
+        # Output:
+        #     - Item 1
+        #     - Item 2
+
+        Example with ordered list (ol) tags:
+        answer = '<ol><li>First item</li><li>Second item</li></ol>'
+        cleaned_text = remove_html_tags(cls, answer)
+        print(cleaned_text)
+        # Output:
+        #     1. First item
+        #     2. Second item
+        """
         try:
             if answer is None or isinstance(answer, (bool, list)):
                 return answer
@@ -248,19 +279,29 @@ class Application:
 
     @classmethod
     def sort_multi_input_data(cls, multi_input_data):
+        """
+        Sorts and formats multi-input data.
+
+        Args:
+            multi_input_data (list[dict]): A list of dictionaries representing multi-input data.
+            example: [{'GLQlOh': 'cost one', 'JtwkMy': 4444}, {'GLQl6y': 'cost two', 'JtwkMt': 4455}]
+
+        Returns:
+            str: A formatted string representation of the sorted multi-input data.
+            example: A) - cost one: £4444
+                        - cost two: £4455
+        """
         key = None
         value = None
         sorted_data = {}
         indent = " " * 5
 
         for items in multi_input_data:
-            for k, v in enumerate(items.items()):
-                index = k
-                value = v[-1]
+            for index, v in enumerate(items.items()):
                 if index == 0:
-                    key = value
+                    key = v[-1]
                 if index == 1:
-                    value = value
+                    value = v[-1]
                 sorted_data[key] = value
 
         return "\n".join(
