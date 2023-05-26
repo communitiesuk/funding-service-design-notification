@@ -17,5 +17,7 @@ class UnitTestConfig(DefaultConfig):
     REPLY_TO_EMAILS_WITH_NOTIFY_ID = {
         "nope@wrong.gov.uk": "100",
         "COF@levellingup.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
-        "transformationfund@levellingup.gov.uk":"25286d9a-8543-41b5-a00f-331b999e51f0"
+        "transformationfund@levellingup.gov.uk": (
+            "25286d9a-8543-41b5-a00f-331b999e51f0"
+        ),
     }
