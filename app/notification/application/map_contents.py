@@ -267,7 +267,11 @@ class Application:
             [
                 f"{indent}- {key.strip()}: £{value}"
                 if index != 1
+<<<<<<< HEAD
                 else f"- {key.strip()}: £{value}"
+=======
+                else f"{index}. {key.strip()}: £{value}"
+>>>>>>> origin/FS-2789-2791-2792-2838-bug-fixes
                 for index, (key, value) in enumerate(
                     sorted_data.items(), start=1
                 )
