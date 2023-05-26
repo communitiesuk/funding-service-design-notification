@@ -154,9 +154,24 @@ class Application:
         json_file = cls.get_questions_and_answers(notification)
         output = StringIO()
 
-        output.write(f"********* {Config.FUND_NAME} **********\n")
+        output.write(
+            "*********"
+            f" {Config.FUND_NAME}{' ' + ' '.join(list(json_file.keys())[0].split('cof', 1)[-1][1:].upper().split('-')).strip() if 'cof' in list(json_file.keys())[0] else ''} **********\n"  # noqa
+        )
+
         for section_name, values in json_file.items():
-            title = section_name.split("-")
+            title = (
+                [
+                    item
+                    for item in section_name.split("-")[
+                        : section_name.split("-").index("cof")
+                    ]
+                    if "cof" not in item
+                ]
+                if "cof" in section_name.split("-")
+                else section_name.split("-")
+            )
+
             output.write(f"\n* {' '.join(title).capitalize()}\n\n")
             for questions, answers in values.items():
                 output.write(f"  Q) {questions}\n")
@@ -250,9 +265,11 @@ class Application:
 
         return "\n".join(
             [
-                f"{indent}{index}. {key.strip()}: £{value}"
+                f"{indent}- {key.strip()}: £{value}"
                 if index != 1
-                else f"{index}. {key.strip()}: £{value}"
-                for index, (key, value) in enumerate(sorted_data.items(), start=1)
+                else f"- {key.strip()}: £{value}"
+                for index, (key, value) in enumerate(
+                    sorted_data.items(), start=1
+                )
             ]
         )
