@@ -8,6 +8,7 @@ from io import StringIO
 from typing import TYPE_CHECKING
 
 import pytz
+from bs4 import BeautifulSoup
 from config import Config
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
@@ -83,8 +84,14 @@ class Application:
 
     @classmethod
     def get_questions_and_answers(cls, notification: Notification) -> dict:
-        """function takes the form data and returns
-        dict of questions & answers.
+        """
+        Extracts questions and answers from form data.
+
+        Args:
+            notification (Notification): The form data containing the questions and answers.
+
+        Returns:
+            dict: A dictionary mapping form names to their respective questions and answers.
         """
         questions_answers = collections.defaultdict(dict)
         forms = cls.get_forms(notification)
@@ -98,30 +105,42 @@ class Application:
                     ]:
                         for field in question["fields"]:
                             answer = field.get("answer")
+                            clean_html_answer = cls.remove_html_tags(answer)
+
                             if field["type"] == "file":
                                 # we check if the question type is "file"
                                 # then we remove the aws
                                 # key attached to the answer
 
-                                if isinstance(answer, str):
+                                if isinstance(clean_html_answer, str):
                                     questions_answers[form_name][
                                         field["title"]
-                                    ] = answer.split("/")[-1]
+                                    ] = clean_html_answer.split("/")[-1]
                                 else:
                                     questions_answers[form_name][
                                         field["title"]
-                                    ] = answer
+                                    ] = clean_html_answer
                             elif (
-                                isinstance(answer, bool)
+                                isinstance(clean_html_answer, bool)
                                 and field["type"] == "list"
                             ):
                                 questions_answers[form_name][
                                     field["title"]
-                                ] = ("Yes" if answer else "No")
+                                ] = ("Yes" if clean_html_answer else "No")
+                            elif (
+                                isinstance(clean_html_answer, list)
+                                and field["type"] == "multiInput"
+                            ):
+
+                                questions_answers[form_name][
+                                    field["title"]
+                                ] = cls.sort_multi_input_data(
+                                    clean_html_answer
+                                )
                             else:
                                 questions_answers[form_name][
                                     field["title"]
-                                ] = answer
+                                ] = clean_html_answer
         return questions_answers
 
     @classmethod
@@ -134,9 +153,21 @@ class Application:
         json_file = cls.get_questions_and_answers(notification)
         output = StringIO()
 
-        output.write(f"********* {Config.FUND_NAME} **********\n")
+        output.write(f"********* {Config.FUND_NAME} **********\n")  # noqa
+
         for section_name, values in json_file.items():
-            title = section_name.split("-")
+            title = (
+                [
+                    item
+                    for item in section_name.split("-")[
+                        : section_name.split("-").index("cof")
+                    ]
+                    if "cof" not in item
+                ]
+                if "cof" in section_name.split("-")
+                else section_name.split("-")
+            )
+
             output.write(f"\n* {' '.join(title).capitalize()}\n\n")
             for questions, answers in values.items():
                 output.write(f"  Q) {questions}\n")
@@ -157,3 +188,101 @@ class Application:
         convert_to_bytes = bytes(stringIO_data, "utf-8")
         bytes_object = BytesIO(convert_to_bytes)
         return bytes_object
+
+    @classmethod
+    def remove_html_tags(cls, answer):
+        """
+        Removes HTML tags from the provided answer and returns the cleaned text.
+
+        Args:
+            answer (str): The answer containing HTML tags.
+
+        Returns:
+            str: The cleaned text with HTML tags removed.
+
+        Example with unordered lis (ul) tags:
+        answer = '<ul><li>Item 1</li><li>Item 2</li></ul>'
+        cleaned_text = remove_html_tags(cls, answer)
+        print(cleaned_text)
+        # Output:
+        #     - Item 1
+        #     - Item 2
+
+        Example with ordered list (ol) tags:
+        answer = '<ol><li>First item</li><li>Second item</li></ol>'
+        cleaned_text = remove_html_tags(cls, answer)
+        print(cleaned_text)
+        # Output:
+        #     1. First item
+        #     2. Second item
+        """
+
+        try:
+
+            if answer is None or isinstance(answer, (bool, list)):
+                return answer
+
+            soup = BeautifulSoup(answer, "html.parser")
+            indent = " " * 5
+
+            if not soup.find():
+                return answer.strip()
+
+            if not (soup.ul or soup.ol):
+                # Handle other HTML tags
+                cleaned_text = soup.get_text()
+                cleaned_text = cleaned_text.replace("\xa0", "")
+                return cleaned_text.strip()
+
+            soup_list = soup.ul or soup.ol
+            list_items = []
+            for index, li in enumerate(soup_list.find_all("li"), start=1):
+                separator = "-" if soup.ul else f"{index}."
+                if li.get_text() == "\xa0":
+                    continue
+
+                if index > 1:
+                    list_items.append(f"{indent}{separator} {li.get_text()}")
+                else:
+                    list_items.append(f"{separator} {li.get_text()}")
+            return "\n".join(list_items)
+
+        except Exception as e:
+            current_app.logger.error(
+                f"Error occurred while processing HTML tag: {answer}", e
+            )
+            return answer
+
+    @classmethod
+    def sort_multi_input_data(cls, multi_input_data):
+        """
+        Sorts and formats multi-input data.
+
+        Args:
+            multi_input_data (list[dict]): A list of dictionaries representing multi-input data.
+            example: [{'GLQlOh': 'cost one', 'JtwkMy': 4444}, {'GLQl6y': 'cost two', 'JtwkMt': 4455}]
+
+        Returns:
+            str: A formatted string representation of the sorted multi-input data.
+            example: A) - cost one: £4444
+                        - cost two: £4455
+        """
+        key = None
+        value = None
+        sorted_data = {}
+        indent = " " * 5
+
+        for items in multi_input_data:
+            key, value = items.values()
+            sorted_data[key] = value
+
+        return "\n".join(
+            [
+                f"{indent}- {key.strip()}: £{value}"
+                if index != 1
+                else f"- {key.strip()}: £{value}"
+                for index, (key, value) in enumerate(
+                    sorted_data.items(), start=1
+                )
+            ]
+        )
