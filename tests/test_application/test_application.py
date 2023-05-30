@@ -133,6 +133,41 @@ def test_application_reminder_contents(app_context):
     assert "20 May 2022 at 02:47pm" == fund_deadline
 
 
+@pytest.mark.parametrize(
+    "input_value, expected_response",
+    [
+        ("<p> Hello world </p>", "Hello world"),
+        ("<ul><li>Item 1</li><li>Item 2</li></ul>", "- Item 1\n     - Item 2"),
+        (
+            "<ol><li>Item 1</li><li>Item 2</li></ol>",
+            "1. Item 1\n     2. Item 2",
+        ),
+        (None, None),
+        ("['one', 'two']", "['one', 'two']"),
+        (True, True),
+    ],
+)
+def test_remove_html_tags(app_context, input_value, expected_response):
+
+    response = Application.remove_html_tags(input_value)
+    assert response == expected_response
+
+
+@pytest.mark.parametrize(
+    "input_value, expected_response",
+    [
+        (
+            [{'GLQlOh': 'cost one', 'JtwkMy': 4444}, {'GLQl6y': 'cost two','JtwkMt': 4455}],
+            "- cost one: £4444\n     - cost two: £4455",
+        )
+    ],
+)
+def test_sort_multi_input_data(app_context, input_value, expected_response):
+
+    response = Application.sort_multi_input_data(input_value)
+    assert response == expected_response
+
+
 def testHealthcheckEndpoint(flask_test_client):
     response = flask_test_client.get("/healthcheck")
     expected_dict = {"checks": [{"check_flask_running": "OK"}]}
