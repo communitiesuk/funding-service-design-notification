@@ -1,14 +1,12 @@
 from __future__ import annotations
 
 import collections
-import importlib
 from dataclasses import dataclass
 from datetime import datetime
 from io import BytesIO
 from io import StringIO
 from typing import TYPE_CHECKING
 
-import pip
 import pytz
 from config import Config
 from flask import current_app
@@ -17,10 +15,6 @@ from fsd_utils.config.notify_constants import NotifyConstants
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
 
-
-# Having problem installing BeautifulSoup
-pip.main(["install", "bs4"])
-importlib.import_module("bs4")
 from bs4 import BeautifulSoup  # noqa E402
 
 
@@ -226,55 +220,42 @@ class Application:
         #     1. First item
         #     2. Second item
         """
+
         try:
+
             if answer is None or isinstance(answer, (bool, list)):
                 return answer
 
             soup = BeautifulSoup(answer, "html.parser")
             indent = " " * 5
 
-            if soup.find():
-                if soup.ul:
-                    bullet_points = []
-                    for index, li in enumerate(
-                        soup.ul.find_all("li"), start=1
-                    ):
-                        if li.get_text() != "\xa0":
-                            if index > 1:
-                                bullet_points.append(
-                                    f"{indent}- {li.get_text()}"
-                                )
-                            else:
-                                bullet_points.append(f"- {li.get_text()}")
-                    return "\n".join(bullet_points)
-                elif soup.ol:
-                    numbered_list = []
-                    for index, li in enumerate(
-                        soup.ol.find_all("li"), start=1
-                    ):
-                        if li.get_text() != "\xa0":
-                            if index > 1:
-                                numbered_list.append(
-                                    f"{indent}{index}. {li.get_text()}"
-                                )
-                            else:
-                                numbered_list.append(
-                                    f"{index}. {li.get_text()}"
-                                )
-                    return "\n".join(numbered_list)
-                else:
-                    # Handle other HTML tags
-                    cleaned_text = soup.get_text()
-                    cleaned_text = cleaned_text.replace("\xa0", "")
-                    return cleaned_text.strip()
-            else:
+            if not soup.find():
                 return answer.strip()
+
+            if not (soup.ul or soup.ol):
+                # Handle other HTML tags
+                cleaned_text = soup.get_text()
+                cleaned_text = cleaned_text.replace("\xa0", "")
+                return cleaned_text.strip()
+
+            soup_list = soup.ul or soup.ol
+
+            list_items = []
+            for index, li in enumerate(soup_list.find_all("li"), start=1):
+                separator = "-" if soup.ul else f"{index}."
+                if li.get_text() == "\xa0":
+                    continue
+
+                if index > 1:
+                    list_items.append(f"{indent}{separator} {li.get_text()}")
+                else:
+                    list_items.append(f"{separator} {li.get_text()}")
+            return "\n".join(list_items)
 
         except Exception as e:
             current_app.logger.error(
                 f"Error occurred while processing HTML tag: {answer}", e
             )
-
             return answer
 
     @classmethod
@@ -297,12 +278,9 @@ class Application:
         indent = " " * 5
 
         for items in multi_input_data:
-            for index, v in enumerate(items.items()):
-                if index == 0:
-                    key = v[-1]
-                if index == 1:
-                    value = v[-1]
-                sorted_data[key] = value
+            key, value = items.values()
+
+            sorted_data[key] = value
 
         return "\n".join(
             [
