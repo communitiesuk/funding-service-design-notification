@@ -154,10 +154,7 @@ class Application:
         json_file = cls.get_questions_and_answers(notification)
         output = StringIO()
 
-        output.write(
-            "*********"
-            f" {Config.FUND_NAME}{' ' + ' '.join(list(json_file.keys())[0].split('cof', 1)[-1][1:].upper().split('-')).strip() if 'cof' in list(json_file.keys())[0] else ''} **********\n"  # noqa
-        )
+        output.write(f"********* {Config.FUND_NAME} **********\n")  # noqa
 
         for section_name, values in json_file.items():
             title = (
@@ -239,7 +236,6 @@ class Application:
                 return cleaned_text.strip()
 
             soup_list = soup.ul or soup.ol
-
             list_items = []
             for index, li in enumerate(soup_list.find_all("li"), start=1):
                 separator = "-" if soup.ul else f"{index}."
@@ -279,7 +275,6 @@ class Application:
 
         for items in multi_input_data:
             key, value = items.values()
-
             sorted_data[key] = value
 
         return "\n".join(
