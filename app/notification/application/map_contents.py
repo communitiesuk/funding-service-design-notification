@@ -8,15 +8,13 @@ from io import StringIO
 from typing import TYPE_CHECKING
 
 import pytz
+from bs4 import BeautifulSoup
 from config import Config
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
 
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
-
-
-from bs4 import BeautifulSoup  # noqa E402
 
 
 @dataclass
