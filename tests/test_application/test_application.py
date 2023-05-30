@@ -143,7 +143,7 @@ def test_application_reminder_contents(app_context):
             "1. Item 1\n     2. Item 2",
         ),
         (None, None),
-        ("['one', 'two']", "['one', 'two']"),
+        (["one", "two"], ["one", "two"]),
         (True, True),
     ],
 )
@@ -157,7 +157,10 @@ def test_remove_html_tags(app_context, input_value, expected_response):
     "input_value, expected_response",
     [
         (
-            [{'GLQlOh': 'cost one', 'JtwkMy': 4444}, {'GLQl6y': 'cost two','JtwkMt': 4455}],
+            [
+                {"GLQlOh": "cost one", "JtwkMy": 4444},
+                {"GLQl6y": "cost two", "JtwkMt": 4455},
+            ],
             "- cost one: £4444\n     - cost two: £4455",
         )
     ],
