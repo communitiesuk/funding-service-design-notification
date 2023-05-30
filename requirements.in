@@ -26,3 +26,7 @@ connexion
 swagger-ui-bundle
 openapi-spec-validator
 prance
+#-----------------------------------
+#   Beautiful soup
+#-----------------------------------
+beautifulsoup4==4.12.2
