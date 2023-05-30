@@ -142,6 +142,7 @@ def test_application_reminder_contents(app_context):
             "<ol><li>Item 1</li><li>Item 2</li></ol>",
             "1. Item 1\n     2. Item 2",
         ),
+        ("text without html tags", "text without html tags"),
         (None, None),
         (["one", "two"], ["one", "two"]),
         (True, True),
