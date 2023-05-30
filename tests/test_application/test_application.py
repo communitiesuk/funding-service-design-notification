@@ -157,7 +157,10 @@ def test_remove_html_tags(app_context, input_value, expected_response):
     "input_value, expected_response",
     [
         (
-            [{'GLQlOh': 'cost one', 'JtwkMy': 4444}, {'GLQl6y': 'cost two','JtwkMt': 4455}],
+            [
+                {"GLQlOh": "cost one", "JtwkMy": 4444},
+                {"GLQl6y": "cost two", "JtwkMt": 4455},
+            ],
             "- cost one: £4444\n     - cost two: £4455",
         )
     ],
