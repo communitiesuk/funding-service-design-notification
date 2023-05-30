@@ -15,12 +15,7 @@ from fsd_utils.config.notify_constants import NotifyConstants
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
 
-# Having problem installing BeautifulSoup and deploying to dev
-import pip  # noqa E402
-import importlib  # noqa E402
 
-pip.main(["install", "bs4"])
-importlib.import_module("bs4")
 from bs4 import BeautifulSoup  # noqa E402
 
 
