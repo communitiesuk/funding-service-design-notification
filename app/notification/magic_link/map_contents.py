@@ -9,6 +9,8 @@ from fsd_utils.config.notify_constants import NotifyConstants
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
 
+from config import Config
+
 
 @dataclass
 class MagicLink:
@@ -17,6 +19,7 @@ class MagicLink:
     magic_link: str
     request_new_link_url: str
     contact_help_email: str
+    reply_to_email_id: str
 
     @classmethod
     def from_notification(cls, notification: Notification):
@@ -47,6 +50,11 @@ class MagicLink:
             contact_help_email=notification.content.get(
                 NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
             ),
+            reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[
+                notification.content.get(
+                    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
+                )
+            ],
         )
 
     @staticmethod
