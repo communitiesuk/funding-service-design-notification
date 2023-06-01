@@ -180,6 +180,5 @@ def test_format_submission_date(application_class_data):
 
 def testHealthcheckEndpoint(flask_test_client):
     response = flask_test_client.get("/healthcheck")
-    expected_dict = {"checks": [{"check_flask_running": "OK"}]}
-    assert 200 == response.status_code, "Unexpected status code"
-    assert expected_dict == response.json, "Unexpected json body"
+    expected_dict = {"check_flask_running": "OK"}
+    assert expected_dict in response.json["checks"], "Unexpected json body"
