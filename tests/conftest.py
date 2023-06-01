@@ -3,6 +3,7 @@ import platform
 
 import pytest
 from app.create_app import create_app
+from app.notification.application.map_contents import Application
 
 
 if platform.system() == "Darwin":
@@ -30,3 +31,15 @@ def app():
 def app_context():
     with create_app().app_context():
         yield
+
+
+@pytest.fixture(autouse=False)
+def application_class_data():
+    return Application(
+        contact_info="example@example.com",
+        questions=b"",
+        fund_name="Example Fund",
+        round_name="Round 1",
+        reference="ABC123",
+        submission_date="2022-05-14T09:25:44.124542",
+    )
