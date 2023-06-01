@@ -15,6 +15,7 @@ expected_application_data = {
             "fund_id": "fund-a",
             "round_name": "summer",
             "date_submitted": "2022-05-14T09:25:44.124542",
+            "fund_name": "Community Ownership Fund",
             NotifyConstants.APPLICATION_FORMS_FIELD: [
                 {
                     NotifyConstants.APPLICATION_NAME_FIELD: "about-your-org",
@@ -65,6 +66,7 @@ expected_application_data_contains_none_answers = {
             "fund_id": "fund-a",
             "round_name": "summer",
             "date_submitted": "2022-05-14T14:25:44.124542",
+            "fund_name": "Community Ownership Fund",
             NotifyConstants.APPLICATION_FORMS_FIELD: [
                 {
                     NotifyConstants.APPLICATION_NAME_FIELD: "about-your-org",

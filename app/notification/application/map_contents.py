@@ -9,7 +9,6 @@ from typing import TYPE_CHECKING
 
 import pytz
 from bs4 import BeautifulSoup
-from config import Config
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
 
@@ -62,7 +61,7 @@ class Application:
             contact_info=notification.contact_info,
             questions=cls.bytes_object_for_questions_answers(notification),
             submission_date=application_data.get("date_submitted"),
-            fund_name=Config.FUND_NAME,
+            fund_name=application_data.get("fund_name"),
             round_name=application_data.get("round_name"),
             reference=application_data.get("reference"),
         )
@@ -73,6 +72,11 @@ class Application:
             NotifyConstants.APPLICATION_FORMS_FIELD
         ]
         return forms
+
+    @classmethod
+    def get_fund_name(cls, notification):
+        metadata = notification.content[NotifyConstants.APPLICATION_FIELD]
+        return metadata.get("fund_name")
 
     @classmethod
     def get_form_names(cls, notification: Notification) -> list:
@@ -153,7 +157,9 @@ class Application:
         json_file = cls.get_questions_and_answers(notification)
         output = StringIO()
 
-        output.write(f"********* {Config.FUND_NAME} **********\n")  # noqa
+        output.write(
+            f"********* {cls.get_fund_name(notification)} **********\n"
+        )  # noqa
 
         for section_name, values in json_file.items():
             title = (

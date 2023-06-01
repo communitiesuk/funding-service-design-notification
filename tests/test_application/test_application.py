@@ -172,6 +172,12 @@ def test_sort_multi_input_data(app_context, input_value, expected_response):
     assert response == expected_response
 
 
+def test_format_submission_date(application_class_data):
+    application = application_class_data
+    response = application.format_submission_date
+    assert response == "14 May 2022 at 10:25am"
+
+
 def testHealthcheckEndpoint(flask_test_client):
     response = flask_test_client.get("/healthcheck")
     expected_dict = {"check_flask_running": "OK"}
