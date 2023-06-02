@@ -277,8 +277,7 @@ class Application:
                     sorted_data[key] = value
             else:
                 key, *value = item.values()
-
-                sorted_data[key] = value if len(item) > 2 else value[0]
+                sorted_data[key] = value
 
         output = []
         for index, (key, value) in enumerate(sorted_data.items(), start=1):
@@ -289,16 +288,51 @@ class Application:
                     )
 
             except:  # noqa
-                map_values = (
-                    "; ".join(map(str, convert_bool_value(value)))
-                    if isinstance(value, list)
-                    else convert_bool_value(value)
-                )
+                if (
+                    isinstance(value, list)
+                    and len(value) > 0
+                    and isinstance(value[0], dict)
+                ):
+                    formatted_value = []
+                    for inner_items in value:
 
-                output.append(
-                    f"{indent}. {key}:" f" {map_values}"  # noqa
-                    if index != 1
-                    else (f". {key}: {map_values}")  # noqa
-                )
+                        for k, v in inner_items.items():
+                            for iso_keys in ["date", "month", "year"]:
+                                try:
+                                    if iso_keys in k.split("__"):
+
+                                        formatted_value.append(
+                                            f"{iso_keys}: {v}"
+                                        )
+                                        break
+                                except:  # noqa
+
+                                    formatted_value.append(
+                                        ", ".join(
+                                            map(
+                                                lambda item: ", ".join(
+                                                    [
+                                                        f"{k}: {v}"
+                                                        for k, v in item.items()
+                                                    ]
+                                                ),
+                                                value,
+                                            )
+                                        )
+                                    )
+                    output.append(
+                        f"{indent}. {key}: {formatted_value}"
+                        if index != 1
+                        else f". {key}: {formatted_value}"
+                    )
+                else:
+                    output.append(
+                        f"{indent}. {key}: {'; '.join(map(str, convert_bool_value(value))) if isinstance(value, list) else convert_bool_value(value)}"  # noqa
+                        if index != 1
+                        else (
+                            f". {key}:"
+                            f" {'; '.join(map(str, convert_bool_value(value))) if isinstance(value, list) else convert_bool_value(value)}"  # noqa
+                        )
+                    )
 
         return "\n".join(output)
