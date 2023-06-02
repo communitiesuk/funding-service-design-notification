@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import collections
+import uuid
 from dataclasses import dataclass
 from datetime import datetime
 from io import BytesIO
@@ -8,6 +9,8 @@ from io import StringIO
 from typing import TYPE_CHECKING
 
 import pytz
+from app.notification.model.notification_utils import convert_bool_value
+from app.notification.model.notification_utils import format_answer
 from bs4 import BeautifulSoup
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
@@ -72,11 +75,6 @@ class Application:
             NotifyConstants.APPLICATION_FORMS_FIELD
         ]
         return forms
-
-    @classmethod
-    def get_fund_name(cls, notification):
-        metadata = notification.content[NotifyConstants.APPLICATION_FIELD]
-        return metadata.get("fund_name")
 
     @classmethod
     def get_form_names(cls, notification: Notification) -> list:
@@ -148,6 +146,11 @@ class Application:
         return questions_answers
 
     @classmethod
+    def get_fund_name(cls, notification):
+        metadata = notification.content[NotifyConstants.APPLICATION_FIELD]
+        return metadata.get("fund_name")
+
+    @classmethod
     def format_questions_answers_with_stringIO(
         cls,
         notification: Notification,
@@ -177,7 +180,7 @@ class Application:
             output.write(f"\n* {' '.join(title).capitalize()}\n\n")
             for questions, answers in values.items():
                 output.write(f"  Q) {questions}\n")
-                output.write(f"  A) {answers}\n\n")
+                output.write(f"  A) {format_answer(answers)}\n\n")
         return output.getvalue()
 
     @classmethod
@@ -211,8 +214,8 @@ class Application:
         cleaned_text = remove_html_tags(cls, answer)
         print(cleaned_text)
         # Output:
-        #     - Item 1
-        #     - Item 2
+        #     . Item 1
+        #     . Item 2
 
         Example with ordered list (ol) tags:
         answer = '<ol><li>First item</li><li>Second item</li></ol>'
@@ -243,7 +246,7 @@ class Application:
             soup_list = soup.ul or soup.ol
             list_items = []
             for index, li in enumerate(soup_list.find_all("li"), start=1):
-                separator = "-" if soup.ul else f"{index}."
+                separator = "." if soup.ul else f"{index}."
                 if li.get_text() == "\xa0":
                     continue
 
@@ -261,34 +264,41 @@ class Application:
 
     @classmethod
     def sort_multi_input_data(cls, multi_input_data):
-        """
-        Sorts and formats multi-input data.
 
-        Args:
-            multi_input_data (list[dict]): A list of dictionaries representing multi-input data.
-            example: [{'GLQlOh': 'cost one', 'JtwkMy': 4444}, {'GLQl6y': 'cost two', 'JtwkMt': 4455}]
-
-        Returns:
-            str: A formatted string representation of the sorted multi-input data.
-            example: A) - cost one: £4444
-                        - cost two: £4455
-        """
         key = None
         value = None
         sorted_data = {}
         indent = " " * 5
 
-        for items in multi_input_data:
-            key, value = items.values()
-            sorted_data[key] = value
+        for item in multi_input_data:
+            if len(item) < 2:
+                for value in item.values():
+                    key = str(uuid.uuid4())
+                    sorted_data[key] = value
+            else:
+                key, *value = item.values()
 
-        return "\n".join(
-            [
-                f"{indent}- {key.strip()}: £{value}"
-                if index != 1
-                else f"- {key.strip()}: £{value}"
-                for index, (key, value) in enumerate(
-                    sorted_data.items(), start=1
+                sorted_data[key] = value if len(item) > 2 else value[0]
+
+        output = []
+        for index, (key, value) in enumerate(sorted_data.items(), start=1):
+            try:
+                if isinstance(key, str) and uuid.UUID(key, version=4):
+                    output.append(
+                        f"{indent}. {value}" if index != 1 else f". {value}"
+                    )
+
+            except:  # noqa
+                map_values = (
+                    "; ".join(map(str, convert_bool_value(value)))
+                    if isinstance(value, list)
+                    else convert_bool_value(value)
                 )
-            ]
-        )
+
+                output.append(
+                    f"{indent}. {key}:" f" {map_values}"  # noqa
+                    if index != 1
+                    else (f". {key}: {map_values}")  # noqa
+                )
+
+        return "\n".join(output)
