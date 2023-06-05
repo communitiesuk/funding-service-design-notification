@@ -148,24 +148,6 @@ def test_remove_html_tags(app_context, input_value, expected_response):
     assert response == expected_response
 
 
-@pytest.mark.parametrize(
-    "input_value, expected_response",
-    [
-        (
-            [
-                {"GLQlOh": "cost one", "JtwkMy": 4444},
-                {"GLQl6y": "cost two", "JtwkMt": 4455},
-            ],
-            ". cost one: 4444\n     . cost two: 4455",
-        )
-    ],
-)
-def test_sort_multi_input_data(app_context, input_value, expected_response):
-
-    response = Application.map_multi_input_data(input_value)
-    assert response == expected_response
-
-
 def test_format_submission_date(application_class_data):
     application = application_class_data
     response = application.format_submission_date

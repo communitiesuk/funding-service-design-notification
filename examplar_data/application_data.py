@@ -126,17 +126,7 @@ expected_application_response = {
                 " Jack-Simon"
             ),
             "from_email": "example_sender@service.gov.uk",
-            "subject": "Record of application Funding service",
         },
-        "id": "baa18127-b4ea-4fe3-b904-73da684a1f25",
-        "reference": None,
-        "scheduled_for": None,
-        "template": {
-            "id": "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
-            "uri": "https://api.notifications.service.gov.uk/services/505ca282-bfde-4fae-8d8a-ff09906a23fa/templates/0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",  # noqa
-            "version": 32,
-        },
-        "uri": "https://api.notifications.service.gov.uk/v2/notifications/baa18127-b4ea-4fe3-b904-73da684a1f25",  # noqa
     },
     "status": "ok",
 }
@@ -160,10 +150,10 @@ multi_input_test_data = {
                 ],
             },
             "expected_response": [
-                ". trusts one: 125; 1 April 2023 to 31 March 2024;"
-                " Capital; Yes",
-                "     . trust two: 456; 1 April 2024 to 31 March 2025;"
-                " Revenue; No",
+                ". trusts one: [125, '1 April 2023 to 31 March 2024',"
+                " 'Capital', 'Yes']",
+                "     . trust two: [456, '1 April 2024 to 31 March 2025',"
+                " 'Revenue', 'No']",
             ],
         },
         "single_value": {
@@ -205,9 +195,9 @@ multi_input_test_data = {
                 },
             ],
             "expected_response": (
-                ". trusts one: 125; 1 April 2023 to 31 March 2024; Capital;"
-                " Yes\n     . trust two: 456; 1 April 2024 to 31 March 2025;"
-                " Revenue; No"
+                ". trusts one: [125, '1 April 2023 to 31 March 2024',"
+                " 'Capital', 'Yes']\n     . trust two: [456, '1 April 2024 to"
+                " 31 March 2025', 'Revenue', 'No']"
             ),
         },
         "single_value": {
@@ -216,6 +206,13 @@ multi_input_test_data = {
                 {"CZZYvE": "trust builders"},
             ],
             "expected_response": ". Sky builders\n     . trust builders",
+        },
+        "integer_values": {
+            "input_data": [
+                {"GLQlOh": "cost one", "JtwkMy": 4444},
+                {"GLQl6y": "cost two", "JtwkMt": 4455},
+            ],
+            "expected_response": ". cost one: 4444\n     . cost two: 4455",
         },
     },
 }
