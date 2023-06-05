@@ -162,7 +162,7 @@ def test_remove_html_tags(app_context, input_value, expected_response):
 )
 def test_sort_multi_input_data(app_context, input_value, expected_response):
 
-    response = Application.sort_multi_input_data(input_value)
+    response = Application.map_multi_input_data(input_value)
     assert response == expected_response
 
 

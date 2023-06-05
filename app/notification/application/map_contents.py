@@ -9,7 +9,7 @@ from io import StringIO
 from typing import TYPE_CHECKING
 
 import pytz
-from app.notification.model.notification_utils import convert_bool_value
+from app.notification.model.multi_input_data import MultiInput
 from app.notification.model.notification_utils import format_answer
 from bs4 import BeautifulSoup
 from flask import current_app
@@ -136,9 +136,7 @@ class Application:
 
                                 questions_answers[form_name][
                                     field["title"]
-                                ] = cls.sort_multi_input_data(
-                                    clean_html_answer
-                                )
+                                ] = cls.map_multi_input_data(clean_html_answer)
                             else:
                                 questions_answers[form_name][
                                     field["title"]
@@ -263,13 +261,11 @@ class Application:
             return answer
 
     @classmethod
-    def sort_multi_input_data(cls, multi_input_data):
+    def map_multi_input_data(cls, multi_input_data):
 
         key = None
         value = None
         sorted_data = {}
-        indent = " " * 5
-
         for item in multi_input_data:
             if len(item) < 2:
                 for value in item.values():
@@ -279,60 +275,5 @@ class Application:
                 key, *value = item.values()
                 sorted_data[key] = value
 
-        output = []
-        for index, (key, value) in enumerate(sorted_data.items(), start=1):
-            try:
-                if isinstance(key, str) and uuid.UUID(key, version=4):
-                    output.append(
-                        f"{indent}. {value}" if index != 1 else f". {value}"
-                    )
-
-            except:  # noqa
-                if (
-                    isinstance(value, list)
-                    and len(value) > 0
-                    and isinstance(value[0], dict)
-                ):
-                    formatted_value = []
-                    for inner_items in value:
-
-                        for k, v in inner_items.items():
-                            for iso_keys in ["date", "month", "year"]:
-                                try:
-                                    if iso_keys in k.split("__"):
-
-                                        formatted_value.append(
-                                            f"{iso_keys}: {v}"
-                                        )
-                                        break
-                                except:  # noqa
-
-                                    formatted_value.append(
-                                        ", ".join(
-                                            map(
-                                                lambda item: ", ".join(
-                                                    [
-                                                        f"{k}: {v}"
-                                                        for k, v in item.items()
-                                                    ]
-                                                ),
-                                                value,
-                                            )
-                                        )
-                                    )
-                    output.append(
-                        f"{indent}. {key}: {formatted_value}"
-                        if index != 1
-                        else f". {key}: {formatted_value}"
-                    )
-                else:
-                    output.append(
-                        f"{indent}. {key}: {'; '.join(map(str, convert_bool_value(value))) if isinstance(value, list) else convert_bool_value(value)}"  # noqa
-                        if index != 1
-                        else (
-                            f". {key}:"
-                            f" {'; '.join(map(str, convert_bool_value(value))) if isinstance(value, list) else convert_bool_value(value)}"  # noqa
-                        )
-                    )
-
+        output = MultiInput.process_data(sorted_data)
         return "\n".join(output)
