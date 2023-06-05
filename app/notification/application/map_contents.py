@@ -11,6 +11,7 @@ from typing import TYPE_CHECKING
 import pytz
 from app.notification.model.multi_input_data import MultiInput
 from app.notification.model.notification_utils import format_answer
+from app.notification.model.notification_utils import simplify_title
 from bs4 import BeautifulSoup
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
@@ -163,17 +164,8 @@ class Application:
         )  # noqa
 
         for section_name, values in json_file.items():
-            title = (
-                [
-                    item
-                    for item in section_name.split("-")[
-                        : section_name.split("-").index("cof")
-                    ]
-                    if "cof" not in item
-                ]
-                if "cof" in section_name.split("-")
-                else section_name.split("-")
-            )
+
+            title = simplify_title(section_name, remove_text=["cof", "ns"])
 
             output.write(f"\n* {' '.join(title).capitalize()}\n\n")
             for questions, answers in values.items():
@@ -262,6 +254,15 @@ class Application:
 
     @classmethod
     def map_multi_input_data(cls, multi_input_data):
+        """
+        Map the multi-input data to a sorted dictionary and process it.
+
+        Args:
+            multi_input_data (list): The list of dictionaries representing the multi-input data.
+
+        Returns:
+            str: The processed output as a formatted string.
+        """
 
         key = None
         value = None
