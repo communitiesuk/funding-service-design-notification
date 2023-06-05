@@ -19,21 +19,6 @@ class MultiInput:
         return f"{cls.indent}. {value}" if index != 1 else f". {value}"
 
     @classmethod
-    def formatted_values(cls, value):
-        return (
-            ", ".join(
-                map(
-                    str,
-                    convert_bool_value([value])
-                    if len(value) > 1
-                    else convert_bool_value(value),
-                )
-            )
-            if isinstance(value, list)
-            else convert_bool_value(value)
-        )
-
-    @classmethod
     def format_keys_and_values(cls, key, value, index):
 
         """
@@ -46,10 +31,24 @@ class MultiInput:
             str: The formatted string representation of the key-value pair.
         """
 
+        def formatted_values(value):
+            return (
+                ", ".join(
+                    map(
+                        str,
+                        convert_bool_value([value])
+                        if len(value) > 1
+                        else convert_bool_value(value),
+                    )
+                )
+                if isinstance(value, list)
+                else convert_bool_value(value)
+            )
+
         return (
-            f"{cls.indent}. {key}: {cls.formatted_values(value)}"  # noqa
+            f"{cls.indent}. {key}: {formatted_values(value)}"  # noqa
             if index != 1
-            else (f". {key}: {cls.formatted_values(value)}")  # noqa
+            else (f". {key}: {formatted_values(value)}")  # noqa
         )
 
     @classmethod
