@@ -52,6 +52,33 @@ class MultiInput:
         )
 
     @classmethod
+    def format_nested_data(cls, value):
+
+        formatted_nested_values = []
+        for inner_items in value:
+
+            for k, v in inner_items.items():
+                for iso_keys in ["date", "month", "year"]:
+                    try:
+                        if iso_keys in k.split("__"):
+                            formatted_nested_values.append(f"{iso_keys}: {v}")
+                            break
+
+                    # handles all other nested multiple values
+                    except:  # noqa
+                        formatted_nested_values.append(
+                            ", ".join(
+                                map(
+                                    lambda item: ", ".join(
+                                        [f"{k}: {v}" for k, v in item.items()]
+                                    ),
+                                    value,
+                                )
+                            )
+                        )
+        return formatted_nested_values
+
+    @classmethod
     def process_data(cls, data):
         """
         Process the data dictionary and generate a formatted output list.
@@ -70,46 +97,18 @@ class MultiInput:
                 if isinstance(key, str) and uuid.UUID(key, version=4):
                     output.append(cls.format_values(value, index))
 
-            # handles multiple nested values containing year, month formatting
+            # handles multiple nested values containing year, month formatting and others
             except:  # noqa
                 if (
                     isinstance(value, list)
                     and len(value) > 0
                     and isinstance(value[0], dict)
                 ):
-                    formatted_value = []
-                    for inner_items in value:
-
-                        for k, v in inner_items.items():
-                            for iso_keys in ["date", "month", "year"]:
-                                try:
-                                    if iso_keys in k.split("__"):
-
-                                        formatted_value.append(
-                                            f"{iso_keys}: {v}"
-                                        )
-                                        break
-
-                                # handles all other nested multiple values
-                                except:  # noqa
-
-                                    formatted_value.append(
-                                        ", ".join(
-                                            map(
-                                                lambda item: ", ".join(
-                                                    [
-                                                        f"{k}: {v}"
-                                                        for k, v in item.items()
-                                                    ]
-                                                ),
-                                                value,
-                                            )
-                                        )
-                                    )
+                    formatted_nested_values = cls.format_nested_data(value)
                     output.append(
-                        f"{cls.indent}. {key}: {formatted_value}"
+                        f"{cls.indent}. {key}: {formatted_nested_values}"
                         if index != 1
-                        else f". {key}: {formatted_value}"
+                        else f". {key}: {formatted_nested_values}"
                     )
                 # handles all other multiple values
                 else:
