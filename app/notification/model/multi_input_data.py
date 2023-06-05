@@ -1,9 +1,10 @@
-from app.notification.model.notification_utils import convert_bool_value
 import uuid
+
+from app.notification.model.notification_utils import convert_bool_value
 from flask import current_app
 
+
 class MultiInput:
-    
     @classmethod
     def format_values(cls, value, index):
         indent = " " * 5
@@ -23,7 +24,7 @@ class MultiInput:
         )
 
     @classmethod
-    def process_data(cls,data):
+    def process_data(cls, data):
         output = []
         indent = " " * 5
 
@@ -46,7 +47,9 @@ class MultiInput:
                                 try:
                                     if iso_keys in k.split("__"):
 
-                                        formatted_value.append(f"{iso_keys}: {v}")
+                                        formatted_value.append(
+                                            f"{iso_keys}: {v}"
+                                        )
                                         break
                                 except:  # noqa
 
@@ -69,6 +72,8 @@ class MultiInput:
                         else f". {key}: {formatted_value}"
                     )
                 else:
-                    output.append(cls.format_keys_and_values(key, value, index))
+                    output.append(
+                        cls.format_keys_and_values(key, value, index)
+                    )
 
         return output
