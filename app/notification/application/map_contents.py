@@ -198,22 +198,6 @@ class Application:
 
         Returns:
             str: The cleaned text with HTML tags removed.
-
-        Example with unordered lis (ul) tags:
-        answer = '<ul><li>Item 1</li><li>Item 2</li></ul>'
-        cleaned_text = remove_html_tags(cls, answer)
-        print(cleaned_text)
-        # Output:
-        #     . Item 1
-        #     . Item 2
-
-        Example with ordered list (ol) tags:
-        answer = '<ol><li>First item</li><li>Second item</li></ol>'
-        cleaned_text = remove_html_tags(cls, answer)
-        print(cleaned_text)
-        # Output:
-        #     1. First item
-        #     2. Second item
         """
 
         try:
