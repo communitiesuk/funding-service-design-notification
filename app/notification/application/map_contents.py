@@ -86,7 +86,7 @@ class Application:
         return list(dict.fromkeys(form_names))
 
     @classmethod
-    def get_questions_and_answers(cls, notification: Notification) -> dict:
+    def map_questions_and_answers(cls, notification: Notification) -> dict:
         """
         Extracts questions and answers from form data.
 
@@ -101,48 +101,24 @@ class Application:
         form_names = cls.get_form_names(notification)
 
         for form_name in form_names:
-            for form in forms:
-                if form_name in form[NotifyConstants.APPLICATION_NAME_FIELD]:
-                    for question in form[
-                        NotifyConstants.APPLICATION_QUESTIONS_FIELD
-                    ]:
-                        for field in question["fields"]:
-                            answer = field.get("answer")
-                            clean_html_answer = cls.remove_html_tags(answer)
+            try:
+                for form in forms:
+                    if (
+                        form_name
+                        in form[NotifyConstants.APPLICATION_NAME_FIELD]
+                    ):
 
-                            if field["type"] == "file":
-                                # we check if the question type is "file"
-                                # then we remove the aws
-                                # key attached to the answer
+                        from app.notification.application.application_utils import (
+                            sort_questions_and_answers,
+                        )
 
-                                if isinstance(clean_html_answer, str):
-                                    questions_answers[form_name][
-                                        field["title"]
-                                    ] = clean_html_answer.split("/")[-1]
-                                else:
-                                    questions_answers[form_name][
-                                        field["title"]
-                                    ] = clean_html_answer
-                            elif (
-                                isinstance(clean_html_answer, bool)
-                                and field["type"] == "list"
-                            ):
-                                questions_answers[form_name][
-                                    field["title"]
-                                ] = ("Yes" if clean_html_answer else "No")
-                            elif (
-                                isinstance(clean_html_answer, list)
-                                and field["type"] == "multiInput"
-                            ):
-
-                                questions_answers[form_name][
-                                    field["title"]
-                                ] = cls.map_multi_input_data(clean_html_answer)
-                            else:
-                                questions_answers[form_name][
-                                    field["title"]
-                                ] = clean_html_answer
-        return questions_answers
+                        return sort_questions_and_answers(
+                            questions_answers, form, form_name
+                        )
+            except Exception as e:
+                current_app.logger.error(
+                    f"Couldn't map questions answers for form: {form_name}", e
+                )
 
     @classmethod
     def get_fund_name(cls, notification):
@@ -156,7 +132,7 @@ class Application:
     ) -> str:
         """Function formats dict of questions/answers
         for readability with StringIO."""
-        json_file = cls.get_questions_and_answers(notification)
+        json_file = cls.map_questions_and_answers(notification)
         output = StringIO()
 
         output.write(
@@ -251,14 +227,21 @@ class Application:
         key = None
         value = None
         sorted_data = {}
-        for item in multi_input_data:
-            if len(item) < 2:
-                for value in item.values():
-                    key = str(uuid.uuid4())
+        output = []  # Defined an initial empty list for the output
+        try:
+            for item in multi_input_data:
+                if len(item) < 2:
+                    for value in item.values():
+                        key = str(uuid.uuid4())
+                        sorted_data[key] = value
+                else:
+                    key, *value = item.values()
                     sorted_data[key] = value
-            else:
-                key, *value = item.values()
-                sorted_data[key] = value
 
-        output = MultiInput.process_data(sorted_data)
+            output = MultiInput.process_data(sorted_data)
+        except Exception as e:
+            current_app.logger.error(
+                f"Could not map the multi input data: {multi_input_data}", e
+            )
+
         return "\n".join(output)
