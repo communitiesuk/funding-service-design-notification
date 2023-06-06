@@ -17,8 +17,6 @@ from config import Config
 
 @dataclass
 class MagicLink(_NotificationContents):
-    contact_info: str
-    fund_name: str
     magic_link: str
     request_new_link_url: str
     contact_help_email: str

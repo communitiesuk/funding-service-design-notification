@@ -26,9 +26,7 @@ if TYPE_CHECKING:
 
 @dataclass
 class Application(_NotificationContents):
-    contact_info: str
     questions: bytes
-    fund_name: str
     fund_id: str
     round_name: str
     reference: str

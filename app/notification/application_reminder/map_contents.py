@@ -16,8 +16,6 @@ if TYPE_CHECKING:
 
 @dataclass
 class ApplicationReminder(_NotificationContents):
-    contact_info: str
-    fund_name: str
     round_name: str
     reference: str
     deadline_date: str
