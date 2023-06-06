@@ -4,6 +4,9 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import TYPE_CHECKING
 
+from app.notification.notification_contents_base_class import (
+    _NotificationContents,
+)
 from config import Config
 from flask import current_app
 
@@ -12,7 +15,7 @@ if TYPE_CHECKING:
 
 
 @dataclass
-class ApplicationReminder:
+class ApplicationReminder(_NotificationContents):
     contact_info: str
     fund_name: str
     round_name: str
