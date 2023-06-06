@@ -12,7 +12,11 @@ import pytz
 from app.notification.model.multi_input_data import MultiInput
 from app.notification.model.notification_utils import format_answer
 from app.notification.model.notification_utils import simplify_title
+from app.notification.notification_contents_base_class import (
+    _NotificationContents,
+)
 from bs4 import BeautifulSoup
+from config import Config
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
 
@@ -21,12 +25,12 @@ if TYPE_CHECKING:
 
 
 @dataclass
-class Application:
-    contact_info: str
+class Application(_NotificationContents):
     questions: bytes
-    fund_name: str
+    fund_id: str
     round_name: str
     reference: str
+    reply_to_email_id: str
     submission_date: str = None
 
     @property
@@ -66,8 +70,14 @@ class Application:
             questions=cls.bytes_object_for_questions_answers(notification),
             submission_date=application_data.get("date_submitted"),
             fund_name=application_data.get("fund_name"),
+            fund_id=application_data.get("fund_id"),
             round_name=application_data.get("round_name"),
             reference=application_data.get("reference"),
+            reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[
+                notification.content.get(
+                    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
+                )
+            ],
         )
 
     @classmethod

@@ -3,6 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
+from app.notification.notification_contents_base_class import (
+    _NotificationContents,
+)
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
 
@@ -13,9 +16,7 @@ from config import Config
 
 
 @dataclass
-class MagicLink:
-    contact_info: str
-    fund_name: str
+class MagicLink(_NotificationContents):
     magic_link: str
     request_new_link_url: str
     contact_help_email: str

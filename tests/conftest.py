@@ -42,4 +42,6 @@ def application_class_data():
         round_name="Round 1",
         reference="ABC123",
         submission_date="2022-05-14T09:25:44.124542",
+        fund_id="test_fund_id",
+        reply_to_email_id="test_email_address",
     )
