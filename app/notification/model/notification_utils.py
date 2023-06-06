@@ -45,17 +45,15 @@ def format_answer(answer):
 
 
 def simplify_title(section_name, remove_text: list):
+    section = section_name.split("-")
     simplified_title = []
 
-    section = section_name.split("-")
+    for i, text in enumerate(section):
+        if text in remove_text:
+            simplified_title = section[:i]
+            break
 
-    for text in remove_text:
-        if text in section:
-            index = section.index(text)
-            simplified_title = [
-                item for item in section[:index] if text not in item
-            ]
-        else:
-            simplified_title = section
+    if not simplified_title:
+        simplified_title = section
 
     return simplified_title
