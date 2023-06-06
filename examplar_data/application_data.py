@@ -9,10 +9,13 @@ expected_application_data = {
     NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
     NotifyConstants.FIELD_TO: "test_application@example.com",
     NotifyConstants.FIELD_CONTENT: {
+        NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: (
+            "COF@levellingup.gov.uk"
+        ),
         NotifyConstants.APPLICATION_FIELD: {
             "id": "123456789",
             "reference": "1564564564-56-4-54-4654",
-            "fund_id": "fund-a",
+            "fund_id": "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
             "round_name": "summer",
             "date_submitted": "2022-05-14T09:25:44.124542",
             "fund_name": "Community Ownership Fund",
@@ -52,7 +55,7 @@ expected_application_data = {
                     ],
                 }
             ],
-        }
+        },
     },
 }
 
@@ -60,10 +63,13 @@ expected_application_data_contains_none_answers = {
     NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
     NotifyConstants.FIELD_TO: "test_application@example.com",
     NotifyConstants.FIELD_CONTENT: {
+        NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: (
+            "COF@levellingup.gov.uk"
+        ),
         NotifyConstants.APPLICATION_FIELD: {
             "id": "123456789",
             "reference": "1564564564-56-4-54-4654",
-            "fund_id": "fund-a",
+            "fund_id": "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
             "round_name": "summer",
             "date_submitted": "2022-05-14T14:25:44.124542",
             "fund_name": "Community Ownership Fund",
@@ -91,7 +97,7 @@ expected_application_data_contains_none_answers = {
                     ],
                 }
             ],
-        }
+        },
     },
 }
 

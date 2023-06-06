@@ -22,10 +22,18 @@ class DefaultConfig:
     MAGIC_LINK_TEMPLATE_ID = os.environ.get(
         "MAGIC_LINK_TEMPLATE_ID", "02a6d48a-f227-4b9a-9dd7-9e0cf203c8a2"
     )
-    APPLICATION_RECORD_TEMPLATE_ID = os.environ.get(
-        "APPLICATION_RECORD_TEMPLATE_ID",
-        "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
-    )
+
+    APPLICATION_RECORD_TEMPLATE_ID = {
+        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
+            "fund_name": "COF",
+            "template_id": "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
+        },
+        "13b95669-ed98-4840-8652-d6b7a19964db": {
+            "fund_name": "NSTF",
+            "template_id": "487c62f1-9aeb-4cc2-b996-5bdf0d02854b",
+        },
+    }
+
     INCOMPLETE_APPLICATION_TEMPLATE_ID = os.environ.get(
         "INCOMPLETE_APPLICATION_TEMPLATE_ID",
         "fc8cff7c-a595-4590-a1a4-eccda48d8604",
