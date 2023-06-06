@@ -1,7 +1,6 @@
 import uuid
 
 from app.notification.model.notification_utils import convert_bool_value
-from flask import current_app
 
 
 class MultiInput:
@@ -99,7 +98,7 @@ class MultiInput:
                     output.append(cls.format_values(value, index))
 
             # handles multiple nested values containing year, month formatting and others
-            except ValueError:  # noqa
+            except:  # noqa
                 if (
                     isinstance(value, list)
                     and len(value) > 0
@@ -116,11 +115,5 @@ class MultiInput:
                     output.append(
                         cls.format_keys_and_values(key, value, index)
                     )
-            except Exception as e:
-                current_app.logger.error(
-                    "Could not map the multi input data for the following"
-                    f" section: {data}",
-                    e,
-                )
 
         return output
