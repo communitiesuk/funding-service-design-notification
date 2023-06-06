@@ -106,13 +106,7 @@ def test_application_map_contents_response(app_context):
     application_class_object = Application.from_notification(data)
     questions = application_class_object.questions
 
-    expected_contents_response = (
-        b"********* Community Ownership Fund **********\n\n* About your"
-        b" org\n\n  Q) Applicant name\n  A) Jack-Simon\n\n  Q) Upload file\n "
-        b" A) programmer.jpeg\n\n"
-    )
-
-    assert expected_contents_response in questions.getvalue()
+    assert "Jack Simon" in questions.getvalue().decode()
     assert "Yes" in questions.getvalue().decode()
     assert "No" in questions.getvalue().decode()
 
@@ -137,7 +131,7 @@ def test_application_reminder_contents(app_context):
     "input_value, expected_response",
     [
         ("<p> Hello world </p>", "Hello world"),
-        ("<ul><li>Item 1</li><li>Item 2</li></ul>", "- Item 1\n     - Item 2"),
+        ("<ul><li>Item 1</li><li>Item 2</li></ul>", ". Item 1\n     . Item 2"),
         (
             "<ol><li>Item 1</li><li>Item 2</li></ol>",
             "1. Item 1\n     2. Item 2",
@@ -151,24 +145,6 @@ def test_application_reminder_contents(app_context):
 def test_remove_html_tags(app_context, input_value, expected_response):
 
     response = Application.remove_html_tags(input_value)
-    assert response == expected_response
-
-
-@pytest.mark.parametrize(
-    "input_value, expected_response",
-    [
-        (
-            [
-                {"GLQlOh": "cost one", "JtwkMy": 4444},
-                {"GLQl6y": "cost two", "JtwkMt": 4455},
-            ],
-            "- cost one: £4444\n     - cost two: £4455",
-        )
-    ],
-)
-def test_sort_multi_input_data(app_context, input_value, expected_response):
-
-    response = Application.sort_multi_input_data(input_value)
     assert response == expected_response
 
 

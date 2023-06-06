@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import collections
+import uuid
 from dataclasses import dataclass
 from datetime import datetime
 from io import BytesIO
@@ -8,6 +9,9 @@ from io import StringIO
 from typing import TYPE_CHECKING
 
 import pytz
+from app.notification.model.multi_input_data import MultiInput
+from app.notification.model.notification_utils import format_answer
+from app.notification.model.notification_utils import simplify_title
 from bs4 import BeautifulSoup
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
@@ -74,11 +78,6 @@ class Application:
         return forms
 
     @classmethod
-    def get_fund_name(cls, notification):
-        metadata = notification.content[NotifyConstants.APPLICATION_FIELD]
-        return metadata.get("fund_name")
-
-    @classmethod
     def get_form_names(cls, notification: Notification) -> list:
         form_names = []
         forms = cls.get_forms(notification)
@@ -138,14 +137,17 @@ class Application:
 
                                 questions_answers[form_name][
                                     field["title"]
-                                ] = cls.sort_multi_input_data(
-                                    clean_html_answer
-                                )
+                                ] = cls.map_multi_input_data(clean_html_answer)
                             else:
                                 questions_answers[form_name][
                                     field["title"]
                                 ] = clean_html_answer
         return questions_answers
+
+    @classmethod
+    def get_fund_name(cls, notification):
+        metadata = notification.content[NotifyConstants.APPLICATION_FIELD]
+        return metadata.get("fund_name")
 
     @classmethod
     def format_questions_answers_with_stringIO(
@@ -162,22 +164,13 @@ class Application:
         )  # noqa
 
         for section_name, values in json_file.items():
-            title = (
-                [
-                    item
-                    for item in section_name.split("-")[
-                        : section_name.split("-").index("cof")
-                    ]
-                    if "cof" not in item
-                ]
-                if "cof" in section_name.split("-")
-                else section_name.split("-")
-            )
+
+            title = simplify_title(section_name, remove_text=["cof", "ns"])
 
             output.write(f"\n* {' '.join(title).capitalize()}\n\n")
             for questions, answers in values.items():
                 output.write(f"  Q) {questions}\n")
-                output.write(f"  A) {answers}\n\n")
+                output.write(f"  A) {format_answer(answers)}\n\n")
         return output.getvalue()
 
     @classmethod
@@ -205,22 +198,6 @@ class Application:
 
         Returns:
             str: The cleaned text with HTML tags removed.
-
-        Example with unordered lis (ul) tags:
-        answer = '<ul><li>Item 1</li><li>Item 2</li></ul>'
-        cleaned_text = remove_html_tags(cls, answer)
-        print(cleaned_text)
-        # Output:
-        #     - Item 1
-        #     - Item 2
-
-        Example with ordered list (ol) tags:
-        answer = '<ol><li>First item</li><li>Second item</li></ol>'
-        cleaned_text = remove_html_tags(cls, answer)
-        print(cleaned_text)
-        # Output:
-        #     1. First item
-        #     2. Second item
         """
 
         try:
@@ -243,7 +220,7 @@ class Application:
             soup_list = soup.ul or soup.ol
             list_items = []
             for index, li in enumerate(soup_list.find_all("li"), start=1):
-                separator = "-" if soup.ul else f"{index}."
+                separator = "." if soup.ul else f"{index}."
                 if li.get_text() == "\xa0":
                     continue
 
@@ -260,35 +237,28 @@ class Application:
             return answer
 
     @classmethod
-    def sort_multi_input_data(cls, multi_input_data):
+    def map_multi_input_data(cls, multi_input_data):
         """
-        Sorts and formats multi-input data.
+        Map the multi-input data to a sorted dictionary and process it.
 
         Args:
-            multi_input_data (list[dict]): A list of dictionaries representing multi-input data.
-            example: [{'GLQlOh': 'cost one', 'JtwkMy': 4444}, {'GLQl6y': 'cost two', 'JtwkMt': 4455}]
+            multi_input_data (list): The list of dictionaries representing the multi-input data.
 
         Returns:
-            str: A formatted string representation of the sorted multi-input data.
-            example: A) - cost one: £4444
-                        - cost two: £4455
+            str: The processed output as a formatted string.
         """
+
         key = None
         value = None
         sorted_data = {}
-        indent = " " * 5
+        for item in multi_input_data:
+            if len(item) < 2:
+                for value in item.values():
+                    key = str(uuid.uuid4())
+                    sorted_data[key] = value
+            else:
+                key, *value = item.values()
+                sorted_data[key] = value
 
-        for items in multi_input_data:
-            key, value = items.values()
-            sorted_data[key] = value
-
-        return "\n".join(
-            [
-                f"{indent}- {key.strip()}: £{value}"
-                if index != 1
-                else f"- {key.strip()}: £{value}"
-                for index, (key, value) in enumerate(
-                    sorted_data.items(), start=1
-                )
-            ]
-        )
+        output = MultiInput.process_data(sorted_data)
+        return "\n".join(output)

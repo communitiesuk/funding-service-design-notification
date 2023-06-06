@@ -126,17 +126,93 @@ expected_application_response = {
                 " Jack-Simon"
             ),
             "from_email": "example_sender@service.gov.uk",
-            "subject": "Record of application Funding service",
         },
-        "id": "baa18127-b4ea-4fe3-b904-73da684a1f25",
-        "reference": None,
-        "scheduled_for": None,
-        "template": {
-            "id": "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
-            "uri": "https://api.notifications.service.gov.uk/services/505ca282-bfde-4fae-8d8a-ff09906a23fa/templates/0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",  # noqa
-            "version": 32,
-        },
-        "uri": "https://api.notifications.service.gov.uk/v2/notifications/baa18127-b4ea-4fe3-b904-73da684a1f25",  # noqa
     },
     "status": "ok",
+}
+
+
+multi_input_test_data = {
+    "process_data": {
+        "multiple_values": {
+            "input_data": {
+                "trusts one": [
+                    125,
+                    "1 April 2023 to 31 March 2024",
+                    "Capital",
+                    True,
+                ],
+                "trust two": [
+                    456,
+                    "1 April 2024 to 31 March 2025",
+                    "Revenue",
+                    False,
+                ],
+            },
+            "expected_response": [
+                ". trusts one: [125, '1 April 2023 to 31 March 2024',"
+                " 'Capital', 'Yes']",
+                "     . trust two: [456, '1 April 2024 to 31 March 2025',"
+                " 'Revenue', 'No']",
+            ],
+        },
+        "single_value": {
+            "input_data": {
+                "bbd0ec2a-972f-4d06-bf93-bf24786c3859": "Sky builders",
+                "ac8bbdfe-6a39-45b8-8c0a-6558148388d1": "trust builders",
+            },
+            "expected_response": [". Sky builders", "     . trust builders"],
+        },
+        "iso_values": {
+            "input_data": {
+                "Project one": [{"PrulfI__month": 1, "PrulfI__year": 2021}],
+                "Project two": [{"PrulfI__month": 2, "PrulfI__year": 2022}],
+            },
+            "expected_response": (
+                [
+                    ". Project one: ['month: 1', 'year: 2021']",
+                    "     . Project two: ['month: 2', 'year: 2022']",
+                ]
+            ),
+        },
+    },
+    "map_data": {
+        "multiple_values": {
+            "input_data": [
+                {
+                    "AfAKxk": "trusts one",
+                    "CrcLtW": 125,
+                    "ndySbC": "1 April 2023 to 31 March 2024",
+                    "pATWyM": "Capital",
+                    "sIFBGc": True,
+                },
+                {
+                    "AfAKxk": "trust two",
+                    "CrcLtW": 456,
+                    "ndySbC": "1 April 2024 to 31 March 2025",
+                    "pATWyM": "Revenue",
+                    "sIFBGc": False,
+                },
+            ],
+            "expected_response": (
+                ". trusts one: [125, '1 April 2023 to 31 March 2024',"
+                " 'Capital', 'Yes']\n     . trust two: [456, '1 April 2024 to"
+                " 31 March 2025', 'Revenue', 'No']"
+            ),
+        },
+        "single_value": {
+            "input_data": [
+                {"CZZYvE": "Sky builders"},
+                {"CZZYvE": "trust builders"},
+            ],
+            "expected_response": ". Sky builders\n     . trust builders",
+        },
+        "integer_values": {
+            "input_data": [
+                {"GLQlOh": "cost one", "JtwkMy": 4444},
+                {"GLQl6y": "cost two", "JtwkMt": 4455},
+            ],
+            "expected_response": ". cost one: 4444\n     . cost two: 4455",
+        },
+    },
 }
