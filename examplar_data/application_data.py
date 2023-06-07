@@ -222,3 +222,69 @@ multi_input_test_data = {
         },
     },
 }
+
+
+test_data_sort_questions_answers = {
+    "forms": [
+        {
+            "questions": [
+                {
+                    "category": "ZbxIUV",
+                    "question": "Lead contact details",
+                    "fields": [
+                        {
+                            "key": "fUMWcd",
+                            "title": "Name of lead contact",
+                            "type": "text",
+                            "answer": "test name",
+                        },
+                        {
+                            "key": "ayzqnK",
+                            "title": (
+                                "Is the lead contact the same person as the"
+                                " authorised signatory?"
+                            ),
+                            "type": "list",
+                            "answer": True,
+                        },
+                    ],
+                }
+            ],
+            "name": "applicant-information-ns",
+        },
+    ],
+    "form_names": [
+        "objectives-and-activities-ns",
+        "risk-and-deliverability-ns",
+        "applicant-information-ns",
+    ],
+    "questions_answers": {
+        "applicant-information-ns": {
+            "Name of lead contact": "test name",
+            "Is the lead contact the same person as the authorised signatory?": (
+                "Yes"
+            ),
+        }
+    },
+    "incorrect_form_data": [
+        {
+            "questions": [
+                {
+                    "category": "ZbxIUV",
+                    "question": "Lead contact details",
+                    "fields": [
+                        {
+                            "key": "fUMWcd",
+                            "type": "text",
+                            "answer": "test name",
+                        },
+                    ],
+                }
+            ],
+            "name": "applicant-information-ns",
+        },
+    ],
+    "exception_message": (
+        "Could not map the data for form: applicant-information-ns"
+    ),
+}
