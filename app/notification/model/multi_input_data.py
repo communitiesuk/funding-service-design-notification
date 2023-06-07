@@ -132,7 +132,6 @@ class MultiInput:
             str: The processed output as a formatted string.
         """
         try:
-
             key = None
             value = None
             sorted_data = {}

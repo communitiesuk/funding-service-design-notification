@@ -157,5 +157,3 @@ class Application(_NotificationContents):
         convert_to_bytes = bytes(stringIO_data, "utf-8")
         bytes_object = BytesIO(convert_to_bytes)
         return bytes_object
-
-   

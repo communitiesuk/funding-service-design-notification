@@ -1,4 +1,5 @@
 import pytest
+from app.notification.application.application_utils import remove_html_tags
 from app.notification.application.map_contents import Application
 from app.notification.application_reminder.map_contents import (
     ApplicationReminder,
@@ -14,7 +15,6 @@ from examplar_data.application_data import (
 from examplar_data.application_data import (
     unexpected_application_data,
 )
-from app.notification.application.application_utils import remove_html_tags
 
 
 @pytest.mark.usefixtures("live_server")

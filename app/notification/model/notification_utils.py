@@ -1,8 +1,11 @@
 import re
+
 from flask import current_app
+
 
 def convert_bool_value(data):
     try:
+
         def convert_values(value):
             if value is None:
                 return "Not provided"
@@ -27,7 +30,6 @@ def convert_bool_value(data):
         return converted_data
     except Exception as e:
         current_app.logger.error(f"Could not convert boolean values, {e}")
-        
 
 
 def format_answer(answer):
