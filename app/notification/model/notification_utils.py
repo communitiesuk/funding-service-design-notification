@@ -29,11 +29,12 @@ def convert_bool_value(data):
 def format_answer(answer):
     if answer is None:
         return "Not provided"
-    if "-" in answer:
-        return answer.replace("-", " ")
+    if answer.startswith("http://") or answer.startswith("https://"):
+        return answer
     if "null" in answer:
         return re.sub(r"\s*null\s*,?", "", answer)
-
+    if "-" in answer:
+        return answer.replace("-", " ")
     if isinstance(answer, list):
         return [
             a.replace("'", "").replace("-", " ")

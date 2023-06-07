@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import collections
+import json
 import uuid
 from dataclasses import dataclass
 from datetime import datetime
@@ -215,6 +216,10 @@ class Application(_NotificationContents):
             if answer is None or isinstance(answer, (bool, list)):
                 return answer
 
+            # Check if answer looks like a URL
+            if answer.startswith("http://") or answer.startswith("https://"):
+                return answer
+
             soup = BeautifulSoup(answer, "html.parser")
             indent = " " * 5
 
@@ -267,8 +272,22 @@ class Application(_NotificationContents):
                     key = str(uuid.uuid4())
                     sorted_data[key] = value
             else:
-                key, *value = item.values()
-                sorted_data[key] = value
-
+                try:
+                    key, *values = item.values()
+                    sorted_data[key] = values
+                except TypeError:
+                    value = tuple(item.values())
+                    if isinstance(value[0], dict) and isinstance(
+                        value[1], str
+                    ):
+                        *values, key = item.values()
+                        sorted_data[key] = values
+                except:  # noqa
+                    current_app.logger.error(
+                        "Could not format the data correctly for"
+                        f" {multi_input_data}"
+                    )
+                    key, *values = item.values()
+                    sorted_data[json.dumps(key)] = values
         output = MultiInput.process_data(sorted_data)
         return "\n".join(output)
