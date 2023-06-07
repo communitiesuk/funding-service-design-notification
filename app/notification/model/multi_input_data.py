@@ -1,6 +1,8 @@
+import json
 import uuid
 
 from app.notification.model.notification_utils import convert_bool_value
+from flask import current_app
 
 
 class MultiInput:
@@ -16,7 +18,7 @@ class MultiInput:
         Returns:
             str: The formatted string representation of the value.
         """
-        return f"{cls.indent}. {value}" if index != 1 else f". {value}"
+        return f"{cls.indent}- {value}" if index != 1 else f"- {value}"
 
     @classmethod
     def format_keys_and_values(cls, key, value, index):
@@ -46,9 +48,9 @@ class MultiInput:
             )
 
         return (
-            f"{cls.indent}. {key}: {formatted_values(value)}"  # noqa
+            f"{cls.indent}- {key}: {formatted_values(value)}"  # noqa
             if index != 1
-            else (f". {key}: {formatted_values(value)}")  # noqa
+            else (f"- {key}: {formatted_values(value)}")  # noqa
         )
 
     @classmethod
@@ -106,9 +108,9 @@ class MultiInput:
                 ):
                     formatted_nested_values = cls.format_nested_data(value)
                     output.append(
-                        f"{cls.indent}. {key}: {formatted_nested_values}"
+                        f"{cls.indent}- {key}: {formatted_nested_values}"
                         if index != 1
-                        else f". {key}: {formatted_nested_values}"
+                        else f"- {key}: {formatted_nested_values}"
                     )
                 # handles all other multiple values
                 else:
@@ -117,3 +119,52 @@ class MultiInput:
                     )
 
         return output
+
+    @classmethod
+    def map_multi_input_data(cls, multi_input_data):
+        """
+        Map the multi-input data to a sorted dictionary and process it.
+
+        Args:
+            multi_input_data (list): The list of dictionaries representing the multi-input data.
+
+        Returns:
+            str: The processed output as a formatted string.
+        """
+        try:
+
+            key = None
+            value = None
+            sorted_data = {}
+            for item in multi_input_data:
+                if len(item) < 2:
+                    for value in item.values():
+                        key = str(uuid.uuid4())
+                        sorted_data[key] = value
+                else:
+                    try:
+                        key, *values = item.values()
+                        sorted_data[key] = values
+                    except TypeError:
+                        value = tuple(item.values())
+                        if isinstance(value[0], dict) and isinstance(
+                            value[1], str
+                        ):
+                            *values, key = item.values()
+                            sorted_data[key] = values
+                    except:  # noqa
+                        current_app.logger.error(
+                            "Could not format the data correctly for"
+                            f" {multi_input_data}"
+                        )
+                        key, *values = item.values()
+                        sorted_data[json.dumps(key)] = values
+            output = cls.process_data(sorted_data)
+            return "\n".join(output)
+        except Exception as e:
+            current_app.logger.error(
+                f"Error occurred while processing the multi input data: {e}"
+            )
+            current_app.logger.error(
+                f"Couldn't map the multi input data for: {multi_input_data}"
+            )
