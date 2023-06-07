@@ -12,6 +12,6 @@ pytest-selenium==2.0.1
 pip-tools
 axe-selenium-python==2.1.6
 json2html==1.3.0
-selenium==4.5.0
+selenium==4.9.1
 webdriver-manager==3.7.0
 beautifulsoup4==4.12.2
