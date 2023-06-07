@@ -111,4 +111,5 @@ def sort_questions_and_answers(forms, form_names, questions_answers):
             current_app.logger.error(
                 f"Could not map the data for form: {form_name}"
             )
+            raise Exception(f"Could not map the data for form: {form_name}")
     return questions_answers
