@@ -1,5 +1,4 @@
 import pytest
-from app.notification.application.map_contents import Application
 from app.notification.model.multi_input_data import MultiInput
 from examplar_data.application_data import multi_input_test_data
 
@@ -73,6 +72,6 @@ class TestMultiInput:
         self, app_context, input_data, expected_response
     ):
 
-        response = Application.map_multi_input_data(input_data)
+        response = MultiInput.map_multi_input_data(input_data)
 
         assert response == expected_response

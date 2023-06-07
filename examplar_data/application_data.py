@@ -156,9 +156,9 @@ multi_input_test_data = {
                 ],
             },
             "expected_response": [
-                ". trusts one: [125, '1 April 2023 to 31 March 2024',"
+                "- trusts one: [125, '1 April 2023 to 31 March 2024',"
                 " 'Capital', 'Yes']",
-                "     . trust two: [456, '1 April 2024 to 31 March 2025',"
+                "     - trust two: [456, '1 April 2024 to 31 March 2025',"
                 " 'Revenue', 'No']",
             ],
         },
@@ -167,7 +167,7 @@ multi_input_test_data = {
                 "bbd0ec2a-972f-4d06-bf93-bf24786c3859": "Sky builders",
                 "ac8bbdfe-6a39-45b8-8c0a-6558148388d1": "trust builders",
             },
-            "expected_response": [". Sky builders", "     . trust builders"],
+            "expected_response": ["- Sky builders", "     - trust builders"],
         },
         "iso_values": {
             "input_data": {
@@ -176,8 +176,8 @@ multi_input_test_data = {
             },
             "expected_response": (
                 [
-                    ". Project one: ['month: 1', 'year: 2021']",
-                    "     . Project two: ['month: 2', 'year: 2022']",
+                    "- Project one: ['month: 1', 'year: 2021']",
+                    "     - Project two: ['month: 2', 'year: 2022']",
                 ]
             ),
         },
@@ -201,8 +201,8 @@ multi_input_test_data = {
                 },
             ],
             "expected_response": (
-                ". trusts one: [125, '1 April 2023 to 31 March 2024',"
-                " 'Capital', 'Yes']\n     . trust two: [456, '1 April 2024 to"
+                "- trusts one: [125, '1 April 2023 to 31 March 2024',"
+                " 'Capital', 'Yes']\n     - trust two: [456, '1 April 2024 to"
                 " 31 March 2025', 'Revenue', 'No']"
             ),
         },
@@ -211,14 +211,14 @@ multi_input_test_data = {
                 {"CZZYvE": "Sky builders"},
                 {"CZZYvE": "trust builders"},
             ],
-            "expected_response": ". Sky builders\n     . trust builders",
+            "expected_response": "- Sky builders\n     - trust builders",
         },
         "integer_values": {
             "input_data": [
                 {"GLQlOh": "cost one", "JtwkMy": 4444},
                 {"GLQl6y": "cost two", "JtwkMt": 4455},
             ],
-            "expected_response": ". cost one: 4444\n     . cost two: 4455",
+            "expected_response": "- cost one: 4444\n     - cost two: 4455",
         },
     },
 }

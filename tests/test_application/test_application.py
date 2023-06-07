@@ -14,6 +14,7 @@ from examplar_data.application_data import (
 from examplar_data.application_data import (
     unexpected_application_data,
 )
+from app.notification.application.application_utils import remove_html_tags
 
 
 @pytest.mark.usefixtures("live_server")
@@ -106,7 +107,7 @@ def test_application_map_contents_response(app_context):
     application_class_object = Application.from_notification(data)
     questions = application_class_object.questions
 
-    assert "Jack Simon" in questions.getvalue().decode()
+    assert "Jack-Simon" in questions.getvalue().decode()
     assert "Yes" in questions.getvalue().decode()
     assert "No" in questions.getvalue().decode()
 
@@ -131,7 +132,7 @@ def test_application_reminder_contents(app_context):
     "input_value, expected_response",
     [
         ("<p> Hello world </p>", "Hello world"),
-        ("<ul><li>Item 1</li><li>Item 2</li></ul>", ". Item 1\n     . Item 2"),
+        ("<ul><li>Item 1</li><li>Item 2</li></ul>", "- Item 1\n     - Item 2"),
         (
             "<ol><li>Item 1</li><li>Item 2</li></ol>",
             "1. Item 1\n     2. Item 2",
@@ -144,7 +145,7 @@ def test_application_reminder_contents(app_context):
 )
 def test_remove_html_tags(app_context, input_value, expected_response):
 
-    response = Application.remove_html_tags(input_value)
+    response = remove_html_tags(input_value)
     assert response == expected_response
 
 
