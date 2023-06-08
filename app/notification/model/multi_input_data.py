@@ -132,8 +132,6 @@ class MultiInput:
             str: The processed output as a formatted string.
         """
         try:
-            key = None
-            value = None
             sorted_data = {}
             for item in multi_input_data:
                 if len(item) < 2:
