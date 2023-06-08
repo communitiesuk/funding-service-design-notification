@@ -220,6 +220,22 @@ multi_input_test_data = {
             ],
             "expected_response": "- cost one: 4444\n     - cost two: 4455",
         },
+        "nested_dict_value_with_str_value": {
+            "input_data": [
+                {
+                    "PrulfI": {"PrulfI__month": 2, "PrulfI__year": 2022},
+                    "fFIuPP": "Milestone one",
+                },
+                {
+                    "fFIuPP": "Milestone two",
+                    "PrulfI": {"PrulfI__month": 3, "PrulfI__year": 2023},
+                },
+            ],
+            "expected_response": (
+                "- Milestone one: ['month: 2', 'year: 2022']\n     - Milestone"
+                " two: ['month: 3', 'year: 2023']"
+            ),
+        },
     },
 }
 

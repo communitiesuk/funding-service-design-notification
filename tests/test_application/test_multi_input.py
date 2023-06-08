@@ -66,6 +66,14 @@ class TestMultiInput:
                     "expected_response"
                 ],
             ),
+            (
+                multi_input_test_data["map_data"][
+                    "nested_dict_value_with_str_value"
+                ]["input_data"],
+                multi_input_test_data["map_data"][
+                    "nested_dict_value_with_str_value"
+                ]["expected_response"],
+            ),
         ],
     )
     def test_map_multi_input_data(
