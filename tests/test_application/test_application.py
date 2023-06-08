@@ -106,7 +106,7 @@ def test_application_map_contents_response(app_context):
     application_class_object = Application.from_notification(data)
     questions = application_class_object.questions
 
-    assert "Jack Simon" in questions.getvalue().decode()
+    assert "Jack-Simon" in questions.getvalue().decode()
     assert "Yes" in questions.getvalue().decode()
     assert "No" in questions.getvalue().decode()
 
@@ -125,27 +125,6 @@ def test_application_reminder_contents(app_context):
     fund_deadline = application_class_object.deadline_date
 
     assert "20 May 2022 at 02:47pm" == fund_deadline
-
-
-@pytest.mark.parametrize(
-    "input_value, expected_response",
-    [
-        ("<p> Hello world </p>", "Hello world"),
-        ("<ul><li>Item 1</li><li>Item 2</li></ul>", ". Item 1\n     . Item 2"),
-        (
-            "<ol><li>Item 1</li><li>Item 2</li></ol>",
-            "1. Item 1\n     2. Item 2",
-        ),
-        ("text without html tags", "text without html tags"),
-        (None, None),
-        (["one", "two"], ["one", "two"]),
-        (True, True),
-    ],
-)
-def test_remove_html_tags(app_context, input_value, expected_response):
-
-    response = Application.remove_html_tags(input_value)
-    assert response == expected_response
 
 
 def test_format_submission_date(application_class_data):

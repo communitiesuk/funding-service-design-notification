@@ -1,5 +1,4 @@
 import pytest
-from app.notification.application.map_contents import Application
 from app.notification.model.multi_input_data import MultiInput
 from examplar_data.application_data import multi_input_test_data
 
@@ -67,12 +66,20 @@ class TestMultiInput:
                     "expected_response"
                 ],
             ),
+            (
+                multi_input_test_data["map_data"][
+                    "nested_dict_value_with_str_value"
+                ]["input_data"],
+                multi_input_test_data["map_data"][
+                    "nested_dict_value_with_str_value"
+                ]["expected_response"],
+            ),
         ],
     )
     def test_map_multi_input_data(
         self, app_context, input_data, expected_response
     ):
 
-        response = Application.map_multi_input_data(input_data)
+        response = MultiInput.map_multi_input_data(input_data)
 
         assert response == expected_response
