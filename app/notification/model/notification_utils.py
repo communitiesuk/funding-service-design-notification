@@ -64,3 +64,18 @@ def simplify_title(section_name, remove_text: list):
         return simplified_title
     except Exception as e:
         current_app.logger.error(f"Could not simplify the section title, {e}")
+
+
+def format_checkbox(answer):
+    formatted_elements = []
+    indent = " " * 5
+    for index, element in enumerate(answer, start=1):
+        separator = f"{indent}-" if index > 1 else "-"
+        if "-" in element:
+            sub_elements = element.split("-")
+            formatted_sub_elements = " ".join(sub_elements).strip()
+            formatted_elements.append(f"{separator} {formatted_sub_elements}")
+        else:
+            formatted_elements.append(f"{separator} {element}")
+
+    return "\n".join(formatted_elements)
