@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from app.notification.model.multi_input_data import MultiInput
+from app.notification.model.notification_utils import format_checkbox
 from bs4 import BeautifulSoup
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
@@ -31,24 +32,26 @@ def remove_html_tags(answer):
         if not soup.find():
             return answer.strip()
 
-        if not (soup.ul or soup.ol):
-            # Handle other HTML tags
-            cleaned_text = soup.get_text()
-            cleaned_text = cleaned_text.replace("\xa0", "")
-            return cleaned_text.strip()
+        if soup.ol:
+            ol_tags = soup.find_all("ol")
+            for ol in ol_tags:
+                li_tags = ol.find_all("li")
+                for index, li in enumerate(li_tags, start=1):
+                    if li.get_text() == "\xa0":
+                        continue
+                    li.replace_with(f"{indent}{str(index)}. {li.get_text()}\n")
 
-        soup_list = soup.ul or soup.ol
-        list_items = []
-        for index, li in enumerate(soup_list.find_all("li"), start=1):
-            separator = "-" if soup.ul else f"{index}."
-            if li.get_text() == "\xa0":
-                continue
+        if soup.ul:
+            ul_tags = soup.find_all("ul")
+            for ul in ul_tags:
+                li_tags = ul.find_all("li")
+                for index, li in enumerate(li_tags, start=1):
+                    if li.get_text() == "\xa0":
+                        continue
+                    li.replace_with(f"{indent}. {li.get_text()}\n")
 
-            if index > 1:
-                list_items.append(f"{indent}{separator} {li.get_text()}")
-            else:
-                list_items.append(f"{separator} {li.get_text()}")
-        return "\n".join(list_items)
+        plain_text = soup.get_text().strip()
+        return plain_text
 
     except Exception as e:
         current_app.logger.error(
@@ -68,42 +71,56 @@ def sort_questions_and_answers(forms, form_names, questions_answers):
                     ]:
                         for field in question["fields"]:
                             answer = field.get("answer")
-                            clean_html_answer = remove_html_tags(answer)
 
                             if field["type"] == "file":
                                 # we check if the question type is "file"
                                 # then we remove the aws
                                 # key attached to the answer
-
-                                if isinstance(clean_html_answer, str):
+                                if isinstance(answer, str):
                                     questions_answers[form_name][
                                         field["title"]
-                                    ] = clean_html_answer.split("/")[-1]
+                                    ] = answer.split("/")[-1]
                                 else:
                                     questions_answers[form_name][
                                         field["title"]
-                                    ] = clean_html_answer
+                                    ] = answer
+
                             elif (
-                                isinstance(clean_html_answer, bool)
+                                isinstance(answer, bool)
+                                and field["type"] == "list"
+                            ):
+
+                                questions_answers[form_name][
+                                    field["title"]
+                                ] = ("Yes" if answer else "No")
+
+                            elif (
+                                isinstance(answer, list)
+                                and field["type"] == "multiInput"
+                            ):
+                                questions_answers[form_name][
+                                    field["title"]
+                                ] = MultiInput.map_multi_input_data(answer)
+
+                            elif field["type"] == "freeText":
+                                clean_html_answer = remove_html_tags(answer)
+
+                                questions_answers[form_name][
+                                    field["title"]
+                                ] = clean_html_answer
+
+                            elif (
+                                isinstance(answer, list)
                                 and field["type"] == "list"
                             ):
                                 questions_answers[form_name][
                                     field["title"]
-                                ] = ("Yes" if clean_html_answer else "No")
-                            elif (
-                                isinstance(clean_html_answer, list)
-                                and field["type"] == "multiInput"
-                            ):
+                                ] = format_checkbox(answer)
 
-                                questions_answers[form_name][
-                                    field["title"]
-                                ] = MultiInput.map_multi_input_data(
-                                    clean_html_answer
-                                )
                             else:
                                 questions_answers[form_name][
                                     field["title"]
-                                ] = clean_html_answer
+                                ] = answer
         except Exception as e:
             current_app.logger.error(
                 f"Error occurred while processing form data: {e}"
