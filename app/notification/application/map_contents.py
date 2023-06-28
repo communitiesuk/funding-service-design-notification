@@ -11,7 +11,7 @@ from app.notification.notification_contents_base_class import (
 )
 from config import Config
 from flask import current_app
-from fsd_utils import extract_questions_and_answers_from_json_blob
+from fsd_utils import extract_questions_and_answers
 from fsd_utils import generate_text_of_application
 from fsd_utils.config.notify_constants import NotifyConstants
 
@@ -96,7 +96,7 @@ class Application(_NotificationContents):
         """
         forms = cls.get_forms(notification)
 
-        questions_answers = extract_questions_and_answers_from_json_blob(forms)
+        questions_answers = extract_questions_and_answers(forms)
         return questions_answers
 
     @classmethod
