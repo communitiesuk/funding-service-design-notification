@@ -1,10 +1,10 @@
 # The manifest for the "notification" service.
-# Read the full specification for the "Load Balanced Web Service" type at:
-#  https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/
+# Read the full specification for the "Backend Service" type at:
+#  https://aws.github.io/copilot-cli/docs/manifest/backend-service/
 
 # Your service name will be used in naming your resources like log groups, ECS services, etc.
-name: frontend
-type: Load Balanced Web Service
+name: fsd-notification
+type: Backend Service
 
 # Distribute traffic to your service.
 http:
@@ -17,7 +17,7 @@ http:
 # Configuration for your containers and service.
 image:
   # Docker build arguments. For additional overrides: https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#image-build
-  location: ghcr.io/communitiesuk/funding-service-design-notification:v0.0.46
+  location: ghcr.io/communitiesuk/funding-service-design-notification:latest
   # Port exposed through your container to route traffic to it.
   port: 8080
 
@@ -43,7 +43,7 @@ network:
   # notification should be private (internal)
   # vpc:
   #   placement:
-  #     subnets: ["subnet-04851bdddcd8f5bbc"]
+  #     subnets: ["subnet-04851bdddcd8f5bbc", "subnet-0178ac1212c96b6c4"]
 
 # storage:
   # readonly_fs: true       # Limit to read-only access to mounted root filesystems.
