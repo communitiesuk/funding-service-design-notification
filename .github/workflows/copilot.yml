@@ -88,6 +88,6 @@ jobs:
             --deploy
 
       - name: Copilot deploy
-        if: ${{ inputs.init == false }} # Only do this is not initialising - init includes deploy
+        if: ${{ inputs.init == false }} # Only do this if not initialising - init includes deploy
         run: |
           copilot deploy --env ${{ inputs.environment || 'test' }}
