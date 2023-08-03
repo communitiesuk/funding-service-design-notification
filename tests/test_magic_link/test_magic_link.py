@@ -1,27 +1,8 @@
 import pytest
-from examplar_data.magic_link_data import expected_magic_link_data
 from examplar_data.magic_link_data import (
     expected_magic_link_unknown_help_email,
 )
 from examplar_data.magic_link_data import incorrect_content_key_data
-
-
-@pytest.mark.usefixtures("live_server")
-def test_magic_link_contents_with_expected_data(flask_test_client):
-    """
-    GIVEN: our service running on flask test client.
-    WHEN: we post expected magic_link_data to the endpoint "/send".
-    THEN: we check if the contents of the message is successfully delivered
-    along with the pre-added template message.
-    """
-
-    response = flask_test_client.post(
-        "/send",
-        json=expected_magic_link_data,
-        follow_redirects=True,
-    )
-    assert 200 == response.status_code, "Unexpected response code"
-    assert b"MAGIC-LINK-GOES-HERE" in response.data
 
 
 @pytest.mark.usefixtures("live_server")

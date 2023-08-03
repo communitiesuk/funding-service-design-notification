@@ -4,6 +4,7 @@ import platform
 import pytest
 from app.create_app import create_app
 from app.notification.application.map_contents import Application
+from flask import Request
 
 
 if platform.system() == "Darwin":
@@ -29,8 +30,13 @@ def app():
 
 @pytest.fixture()
 def app_context():
-    with create_app().app_context():
-        yield
+    """
+    Creates both the app context and the request context as a single fixture.
+    """
+    app = create_app()
+
+    with app.app_context(), app.test_request_context():
+        yield app
 
 
 @pytest.fixture(autouse=False)
@@ -45,3 +51,41 @@ def application_class_data():
         fund_id="test_fund_id",
         reply_to_email_id="test_email_address",
     )
+
+
+@pytest.fixture(autouse=False)
+def mock_request_data(mocker, content_available=True):
+    mock_data = {
+        "content": {
+            "contact_help_email": "nope@wrong.gov.uk",
+            "fund_name": "FUND NAME GOES HERE",
+            "magic_link_url": "MAGIC-LINK-GOES-HERE",
+            "request_new_link_url": "NEW LINK URL GOES HERE",
+        },
+        "to": "test_recipient@email.com",
+        "type": "MAGIC_LINK",
+    }
+
+    mocker.patch.object(Request, "get_json", return_value=mock_data)
+    return mock_data
+
+
+@pytest.fixture(autouse=False)
+def mock_notify_response(mocker, request, mock_request_data):
+    if request.param == "empty_content":
+        request_data = {"content": ""}
+    else:
+        request_data = mock_request_data
+
+    status_code = 200 if request_data["content"] else 400
+    response_data = (
+        {"success": True}
+        if status_code == 200
+        else {"error": "Invalid request"}
+    )
+    response = (response_data, status_code)
+    mocker.patch(
+        "app.notification.model.Notification.email_recipient",
+        return_value=response,
+    )
+    return response

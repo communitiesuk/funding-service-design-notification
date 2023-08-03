@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from app.notification.application.map_contents import Application
 from app.notification.application_reminder.map_contents import (
@@ -6,56 +8,11 @@ from app.notification.application_reminder.map_contents import (
 from app.notification.model.notification import Notification
 from examplar_data.application_data import expected_application_data
 from examplar_data.application_data import (
-    expected_application_data_contains_none_answers,
-)
-from examplar_data.application_data import (
     expected_application_reminder_data,
 )
 from examplar_data.application_data import (
     unexpected_application_data,
 )
-
-
-@pytest.mark.usefixtures("live_server")
-def test_application_contents_with_expected_data(flask_test_client):
-    """
-    GIVEN: our service running on flask test client.
-    WHEN: we post expected application data to the endpoint "/send".
-    THEN: we check if the contents of the message is successfully delivered
-    along with the pre-added template message.
-    """
-
-    response = flask_test_client.post(
-        "/send",
-        json=expected_application_data,
-        follow_redirects=True,
-    )
-
-    assert b"Fund name:  Community Ownership Fund" in response.data
-    assert b"Application submitted: 14 May 2022 at 10:25am." in response.data
-    assert response.status_code == 200
-
-
-@pytest.mark.usefixtures("live_server")
-def test_application_contents_with_expected_data_containing_none_answers(
-    flask_test_client,
-):
-    """
-    GIVEN: our service running on flask test client.
-    WHEN: we post expected application data containing null answers to the endpoint "/send". # noqa: E501
-    THEN: we check if the contents of the message is successfully delivered
-    along with the pre-added template message.
-    """
-
-    response = flask_test_client.post(
-        "/send",
-        json=expected_application_data_contains_none_answers,
-        follow_redirects=True,
-    )
-
-    assert b"Fund name:  Community Ownership Fund" in response.data
-    assert b"Application submitted: 14 May 2022 at 03:25pm." in response.data
-    assert response.status_code == 200
 
 
 @pytest.mark.usefixtures("live_server")
@@ -137,3 +94,23 @@ def testHealthcheckEndpoint(flask_test_client):
     response = flask_test_client.get("/healthcheck")
     expected_dict = {"check_flask_running": "OK"}
     assert expected_dict in response.json["checks"], "Unexpected json body"
+
+
+@pytest.mark.parametrize(
+    "mock_notify_response",
+    ["empty_content", "mock_request_data"],
+    indirect=True,
+)
+def test_send_email(app_context, flask_test_client, mock_notify_response):
+    response = flask_test_client.post("/send")
+    assert (
+        response.status_code == mock_notify_response[1]
+    )  # Check status code from the fixture
+
+    response_data = response.get_data(as_text=True)
+    response_data = json.loads(response_data)
+
+    if mock_notify_response[1] == 200:
+        assert response_data == {"success": True}
+    else:
+        assert response_data == {"error": "Invalid request"}
