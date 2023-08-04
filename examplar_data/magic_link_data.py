@@ -81,3 +81,20 @@ expected_magic_link_response = {
     },
     "status": "ok",
 }
+
+
+def notification_client_response_data():
+    return {
+        "content": {
+            "body": "You requested a link to start or continue an application"
+        },
+        "id": "431ff6c3",
+        "reference": None,
+        "scheduled_for": None,
+        "template": {
+            "id": "02a6d48a",
+            "uri": "https://api.com/",
+            "version": 11,
+        },
+        "uri": "https://api.com",
+    }
