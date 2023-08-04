@@ -1,6 +1,6 @@
 import pytest
-from examplar_data.magic_link_data import (incorrect_template_type_data) # noqa
-from examplar_data.magic_link_data import incorrect_template_type_key_data # noqa
+from examplar_data.magic_link_data import (incorrect_template_type) # noqa
+from examplar_data.magic_link_data import incorrect_template_type_key # noqa
 
 
 @pytest.mark.usefixtures("live_server")
@@ -14,7 +14,7 @@ def test_template_type_with_unexpected_key_type(flask_test_client):
 
     response = flask_test_client.post(
         "/send",
-        json=incorrect_template_type_key_data,
+        json=incorrect_template_type_key,
         follow_redirects=True,
     )
 
@@ -33,7 +33,7 @@ def test_template_type_with_unexpected_value_type(
 
     response = flask_test_client.post(
         "/send",
-        json=incorrect_template_type_data,
+        json=incorrect_template_type,
         follow_redirects=True,
     )
     assert response.status_code == 400

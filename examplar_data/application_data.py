@@ -1,11 +1,8 @@
+from app.notification.model.notification import Notification
 from fsd_utils.config.notify_constants import NotifyConstants
 
-expected_application_content = (
-    "Key 'content' must contain the required Application data & the data must"
-    " be in the JSON format"
-)
 
-expected_application_data = {
+expected_application_json = {
     NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
     NotifyConstants.FIELD_TO: "test_application@example.com",
     NotifyConstants.FIELD_CONTENT: {
@@ -59,7 +56,7 @@ expected_application_data = {
     },
 }
 
-expected_application_data_contains_none_answers = {
+expected_application_json_with_none_answers = {
     NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
     NotifyConstants.FIELD_TO: "test_application@example.com",
     NotifyConstants.FIELD_CONTENT: {
@@ -102,7 +99,7 @@ expected_application_data_contains_none_answers = {
 }
 
 
-expected_application_reminder_data = {
+expected_application_reminder_json = {
     NotifyConstants.FIELD_TYPE: "APPLICATION_DEADLINE_REMINDER",
     NotifyConstants.FIELD_TO: "test_application_reminder@example.com",
     NotifyConstants.FIELD_CONTENT: {
@@ -114,25 +111,62 @@ expected_application_reminder_data = {
     },
 }
 
-unexpected_application_data = {
+unexpected_application_json = {
     NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
     NotifyConstants.FIELD_TO: "example_email@test.com",
     NotifyConstants.FIELD_CONTENT: {},
 }
 
 
-expected_application_response = {
-    "notify_response": {
-        NotifyConstants.FIELD_CONTENT: {
+expected_application_response = (
+    {
+        "content": {
             "body": (
-                "#Fund name - Funding service   \r\n---\r\nApplication id:"
-                " 123456789 \r\n---\r\nDate submitted: 2022-05-14\r\n---    "
-                " \r\nRound name: summer\r\n---\r\nList of questions & answers"
-                " for application Funding service\r\n---\r\n- Applicant name:"
-                " Jack-Simon"
+                "#Fund name - Night Shelter Transformation Fund"
+                " \r\n---\r\nApplication id: 7bc21539 \r\n---\r\nDate"
+                " submitted: 2023-08-04\r\n---     \r\nRound name: Round"
+                " 2\r\n---\r\n"
             ),
-            "from_email": "example_sender@service.gov.uk",
+            "from_email": "sender@service.gov.uk",
         },
     },
-    "status": "ok",
-}
+)
+
+
+def notification_class_data_for_application(
+    date_submitted=True, deadline_date=True
+):
+    return Notification(
+        template_type="APPLICATION_RECORD_OF_SUBMISSION",
+        contact_info="sender@service.gov.uk",
+        content={
+            "application": {
+                "language": "en",
+                "reference": "NSTF",
+                "id": "7bc21539",
+                "status": "SUBMITTED",
+                "last_edited": "2023-08-04T15:47:21.274900",
+                "started_at": "2023-08-04T15:47:21.274900",
+                "deadline_date": "2023-12-12 15:47:21"
+                if deadline_date
+                else None,
+                "round_name": "Round 2",
+                "forms": [
+                    {
+                        "name": "current-services-ns",
+                        "status": "NOT_STARTED",
+                        "questions": [],
+                    },
+                ],
+                "date_submitted": "2023-08-04T15:47:23.208849"
+                if date_submitted
+                else None,
+                "account_id": "6802f603",
+                "fund_id": "13b95669-ed98-4840-8652-d6b7a19964db",
+                "project_name": None,
+                "round_id": "fc7aa604",
+                "fund_name": "Night Shelter Transformation Fund",
+            },
+            "contact_help_email": "transformationfund@levellingup.gov.uk",
+        },
+    )

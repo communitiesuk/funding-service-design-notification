@@ -6,8 +6,8 @@ from unittest.mock import patch
 import pytest
 from app.create_app import create_app
 from app.notification.application.map_contents import Application
-from app.notification.model.notification import Notification
-from examplar_data.magic_link_data import expected_magic_link_data
+from examplar_data.application_data import expected_application_response
+from examplar_data.magic_link_data import expected_magic_link_response
 from flask import Request
 from notifications_python_client import NotificationsAPIClient
 
@@ -58,20 +58,6 @@ def mock_application_class_data():
     )
 
 
-@pytest.fixture
-def mock_notification_class_data_for_magic_link():
-    return Notification(
-        template_type="MAGIC_LINK",
-        contact_info="testing_magic_link@example.com",
-        content={
-            "contact_help_email": "nope@wrong.gov.uk",
-            "fund_name": "Funding service",
-            "magic_link_url": "https://www.example.com/",
-            "request_new_link_url": "https://www.example.com/new_link",
-        },
-    )
-
-
 @pytest.fixture(autouse=False)
 def mock_request_data(mocker, content_available=True):
     mock_data = {
@@ -116,10 +102,12 @@ def mock_notifications_api_client(request):
 
     if mock_data == 1:
         mock_data = (
-            expected_magic_link_data()
-        )  # EXPECTED MAGIC LINK RESPONSE DATA
+            expected_magic_link_response  # EXPECTED DATA FOR MAGIC LINK
+        )
     elif mock_data == 2:
-        mock_data = ""
+        mock_data = (
+            expected_application_response  # EXPECTED DATA FOR APPLICATION
+        )
 
     notifications_client = Mock(spec=NotificationsAPIClient)
     notifications_client.send_email_notification.return_value = (
