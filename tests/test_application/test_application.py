@@ -84,8 +84,8 @@ def test_application_reminder_contents(app_context):
     assert "20 May 2022 at 02:47pm" == fund_deadline
 
 
-def test_format_submission_date(application_class_data):
-    application = application_class_data
+def test_format_submission_date(mock_application_class_data):
+    application = mock_application_class_data
     response = application.format_submission_date
     assert response == "14 May 2022 at 10:25am"
 

@@ -83,7 +83,7 @@ expected_magic_link_response = {
 }
 
 
-def notification_client_response_data():
+def expected_magic_link_data():
     return {
         "content": {
             "body": "You requested a link to start or continue an application"

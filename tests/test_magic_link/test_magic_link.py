@@ -4,7 +4,7 @@ from examplar_data.magic_link_data import (
     expected_magic_link_unknown_help_email,
 )
 from examplar_data.magic_link_data import incorrect_content_key_data
-from tests.conftest import notification_client_response_data
+from tests.conftest import expected_magic_link_data
 
 
 @pytest.mark.usefixtures("live_server")
@@ -58,15 +58,20 @@ def test_magic_link_contents_with_none_contents(flask_test_client):
     assert response.status_code == 400
 
 
+@pytest.mark.parametrize(
+    "mock_notifications_api_client",
+    [1],
+    indirect=True,
+)
 def test_send_magic_link(
     app_context,
     mock_notifier_api_client,
-    mock_notification_class_data,
+    mock_notification_class_data_for_magic_link,
     mock_notifications_api_client,
 ):
 
     response, code = Notifier.send_magic_link(
-        mock_notification_class_data, code=200
+        mock_notification_class_data_for_magic_link, code=200
     )
 
-    assert response == (notification_client_response_data(), code)
+    assert response == (expected_magic_link_data(), code)
