@@ -1,61 +1,22 @@
+import json
+
 import pytest
 from app.notification.application.map_contents import Application
 from app.notification.application_reminder.map_contents import (
     ApplicationReminder,
 )
 from app.notification.model.notification import Notification
-from examplar_data.application_data import expected_application_data
+from app.notification.model.notifier import Notifier
+from examplar_data.application_data import expected_application_json
 from examplar_data.application_data import (
-    expected_application_data_contains_none_answers,
+    expected_application_reminder_json,
 )
 from examplar_data.application_data import (
-    expected_application_reminder_data,
+    notification_class_data_for_application,
 )
 from examplar_data.application_data import (
-    unexpected_application_data,
+    unexpected_application_json,
 )
-
-
-@pytest.mark.usefixtures("live_server")
-def test_application_contents_with_expected_data(flask_test_client):
-    """
-    GIVEN: our service running on flask test client.
-    WHEN: we post expected application data to the endpoint "/send".
-    THEN: we check if the contents of the message is successfully delivered
-    along with the pre-added template message.
-    """
-
-    response = flask_test_client.post(
-        "/send",
-        json=expected_application_data,
-        follow_redirects=True,
-    )
-
-    assert b"Fund name:  Community Ownership Fund" in response.data
-    assert b"Application submitted: 14 May 2022 at 10:25am." in response.data
-    assert response.status_code == 200
-
-
-@pytest.mark.usefixtures("live_server")
-def test_application_contents_with_expected_data_containing_none_answers(
-    flask_test_client,
-):
-    """
-    GIVEN: our service running on flask test client.
-    WHEN: we post expected application data containing null answers to the endpoint "/send". # noqa: E501
-    THEN: we check if the contents of the message is successfully delivered
-    along with the pre-added template message.
-    """
-
-    response = flask_test_client.post(
-        "/send",
-        json=expected_application_data_contains_none_answers,
-        follow_redirects=True,
-    )
-
-    assert b"Fund name:  Community Ownership Fund" in response.data
-    assert b"Application submitted: 14 May 2022 at 03:25pm." in response.data
-    assert response.status_code == 200
 
 
 @pytest.mark.usefixtures("live_server")
@@ -69,7 +30,7 @@ def test_application_contents_with_unexpected_data(flask_test_client):
 
     response = flask_test_client.post(
         "/send",
-        json=unexpected_application_data,
+        json=unexpected_application_json,
         follow_redirects=True,
     )
 
@@ -101,7 +62,7 @@ def test_application_map_contents_response(app_context):
     THEN: we check if expected output is returned.
     """
 
-    expected_json = expected_application_data
+    expected_json = expected_application_json
     data = Notification.from_json(expected_json)
     application_class_object = Application.from_notification(data)
     questions = application_class_object.questions
@@ -119,7 +80,7 @@ def test_application_reminder_contents(app_context):
     THEN: we check if expected output is returned.
     """
 
-    expected_json = expected_application_reminder_data
+    expected_json = expected_application_reminder_json
     data = Notification.from_json(expected_json)
     application_class_object = ApplicationReminder.from_notification(data)
     fund_deadline = application_class_object.deadline_date
@@ -127,8 +88,8 @@ def test_application_reminder_contents(app_context):
     assert "20 May 2022 at 02:47pm" == fund_deadline
 
 
-def test_format_submission_date(application_class_data):
-    application = application_class_data
+def test_format_submission_date(mock_application_class_data):
+    application = mock_application_class_data
     response = application.format_submission_date
     assert response == "14 May 2022 at 10:25am"
 
@@ -137,3 +98,83 @@ def testHealthcheckEndpoint(flask_test_client):
     response = flask_test_client.get("/healthcheck")
     expected_dict = {"check_flask_running": "OK"}
     assert expected_dict in response.json["checks"], "Unexpected json body"
+
+
+@pytest.mark.parametrize(
+    "mock_notify_response",
+    ["empty_content", "mock_request_data"],
+    indirect=True,
+)
+def test_send_email(app_context, flask_test_client, mock_notify_response):
+    response = flask_test_client.post("/send")
+    assert (
+        response.status_code == mock_notify_response[1]
+    )  # Check status code from the fixture
+
+    response_data = response.get_data(as_text=True)
+    response_data = json.loads(response_data)
+
+    if mock_notify_response[1] == 200:
+        assert response_data == {"success": True}
+    else:
+        assert response_data == {"error": "Invalid request"}
+
+
+@pytest.mark.parametrize(
+    "mock_notifications_api_client",
+    [2],
+    indirect=True,
+)
+def test_send_submitted_application(
+    app_context,
+    mock_notifier_api_client,
+    mock_notifications_api_client,
+):
+
+    _, code = Notifier.send_submitted_application(
+        notification_class_data_for_application(
+            date_submitted=True, deadline_date=False
+        )
+    )
+
+    assert code == 200
+
+
+@pytest.mark.parametrize(
+    "mock_notifications_api_client",
+    [2],
+    indirect=True,
+)
+def test_send_incomplete_application(
+    app_context,
+    mock_notifier_api_client,
+    mock_notifications_api_client,
+):
+
+    _, code = Notifier.send_submitted_application(
+        notification_class_data_for_application(
+            date_submitted=False, deadline_date=False
+        )
+    )
+
+    assert code == 200
+
+
+@pytest.mark.parametrize(
+    "mock_notifications_api_client",
+    [2],
+    indirect=True,
+)
+def test_send_application_reminder(
+    app_context,
+    mock_notifier_api_client,
+    mock_notifications_api_client,
+):
+
+    _, code = Notifier.send_application_reminder(
+        notification_class_data_for_application(
+            date_submitted=False, deadline_date=True
+        )
+    )
+
+    assert code == 200

@@ -1,11 +1,7 @@
 # from app.notification.model.template_types import email_recipient
 from app.notification.model.notification import Notification
-from config import Config
 from flask import request
-from notifications_python_client.notifications import NotificationsAPIClient
 from requests import Response
-
-notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
 
 
 def send_email() -> Response:
