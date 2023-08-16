@@ -59,7 +59,7 @@ jobs:
       postgres_unit_testing: false
   copilot_build:
     if: ${{ github.event.inputs.copilot && !always() }}
-    needs: [test_and_deploy]
+    needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-${{ inputs.environment || 'test' }}
     permissions:
       id-token: write # This is required for requesting the JWT
