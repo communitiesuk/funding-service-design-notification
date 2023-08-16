@@ -58,7 +58,7 @@ jobs:
     with:
       postgres_unit_testing: false
   copilot_build:
-    if: ${{ github.event.inputs.copilot && !always() }}
+    if: ${{ github.event.inputs.copilot }}
     needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-${{ inputs.environment || 'test' }}
     permissions:
