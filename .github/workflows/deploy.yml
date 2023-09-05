@@ -91,7 +91,7 @@ jobs:
 
     - name: Inject replacement image into manifest
       run: |
-        yq -i '.image.location = "ghcr.io/communitiesuk/funding-service-design-notification:${{ github.ref_name }}"'  copilot/fsd-notification/manifest.yml
+        yq -i '.image.location = "ghcr.io/communitiesuk/funding-service-design-notification:${{ github.ref_name == 'main' && 'latest' || github.ref_name }}"'  copilot/fsd-notification/manifest.yml
 
     - name: Copilot deploy
       run: |
