@@ -38,4 +38,3 @@ Outputs:
   DeadLetterQueueARN:
     Description: "ARN of dead-letter queue"
     Value: !GetAtt DeadLetterQueue.Arn
-
