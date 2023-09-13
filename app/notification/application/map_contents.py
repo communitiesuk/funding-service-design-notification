@@ -102,7 +102,12 @@ class Application(_NotificationContents):
     @classmethod
     def get_fund_name(cls, notification):
         metadata = notification.content[NotifyConstants.APPLICATION_FIELD]
-        return metadata.get("fund_name")
+        fund_name = metadata.get("fund_name")
+        return (
+            f"{fund_name} {round_name}"
+            if (round_name := metadata.get("round_name"))
+            else fund_name
+        )
 
     @classmethod
     def bytes_object_for_questions_answers(
