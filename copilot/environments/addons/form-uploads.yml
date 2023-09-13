@@ -7,12 +7,13 @@ Parameters:
     Description: The environment name your service, job, or workflow is being deployed to.
 
 Resources:
-  formuploadsBucket:
+  FormUploadsBucket:
     Metadata:
       'aws:copilot:description': 'An Amazon S3 bucket, form-uploads, for storing and retrieving objects'
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: Private
+      BucketName: !Sub fsd-form-uploads-${Env}
       BucketEncryption:
         ServerSideEncryptionConfiguration:
         - ServerSideEncryptionByDefault:
@@ -26,7 +27,7 @@ Resources:
         Rules:
           - ObjectOwnership: BucketOwnerEnforced
 
-  formuploadsBucketPolicy:
+  FormUploadsBucketPolicy:
     Metadata:
       'aws:copilot:description': 'A bucket policy to deny unencrypted access to the bucket and its contents'
     Type: AWS::S3::BucketPolicy
@@ -40,21 +41,21 @@ Resources:
             Principal: '*'
             Action: 's3:*'
             Resource:
-              - !Sub ${ formuploadsBucket.Arn}/*
-              - !Sub ${ formuploadsBucket.Arn}
+              - !Sub ${ FormUploadsBucket.Arn}/*
+              - !Sub ${ FormUploadsBucket.Arn}
             Condition:
               Bool:
                 "aws:SecureTransport": false
-      Bucket: !Ref formuploadsBucket
+      Bucket: !Ref FormUploadsBucket
 
 Outputs:
-  formuploadsName:
+  FormUploadsName:
     Description: "The name of a user-defined bucket."
-    Value: !Ref formuploadsBucket
+    Value: !Ref FormUploadsBucket
     Export:
-      Name: !Sub fsd-form-uploads-${Env}
-  formuploadsBucketARN:
+      Name: !Sub ${App}-${Env}-FormUploadsBucket
+  FormUploadsBucketARN:
     Description: "The ARN of the form-uploads bucket."
-    Value: !GetAtt formuploadsBucket.Arn
+    Value: !GetAtt FormUploadsBucket.Arn
     Export:
-      Name: !Sub ${App}-${Env}-formuploadsBucketARN
+      Name: !Sub ${App}-${Env}-FormUploadsBucketARN
