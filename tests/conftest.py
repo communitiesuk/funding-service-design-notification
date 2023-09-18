@@ -119,7 +119,7 @@ def mock_notifications_api_client(request):
 
 @pytest.fixture
 def mock_notifier_api_client(mock_notifications_api_client):
-    mock_api_key = "MOCK_API_KEY"
+    mock_api_key = "MOCK_API_KEY"  # pragma: allowlist secret
     with patch(
         "app.notification.model.notifier.NotificationsAPIClient",
         return_value=mock_notifications_api_client,

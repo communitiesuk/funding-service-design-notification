@@ -51,7 +51,10 @@ Then run:
     https://docs.notifications.service.gov.uk/python.html#api-keys
 
     Set it as an environment variable e.g.
-    `export GOV_NOTIFY_API_KEY="api-key-value"`
+    ```
+    // pragma: allowlist secret
+    export GOV_NOTIFY_API_KEY="api-key-value
+    ```
 
     Note: For unit (integration) testing, you also need to set this in `pytest.ini`
 
