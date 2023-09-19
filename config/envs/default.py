@@ -52,5 +52,5 @@ class DefaultConfig:
         "transformationfund@levellingup.gov.uk": (
             "25286d9a-8543-41b5-a00f-331b999e51f0"
         ),
-        "cyprfund@levellingup.gov.uk": "205dc7fd-605c-4656-8e93-ed764f6740ef",
+        "cyprfund@levellingup.gov.uk": "72bb79a8-2748-4404-9f01-14690bee3843",
     }
