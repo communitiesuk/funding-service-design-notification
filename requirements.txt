@@ -6,8 +6,6 @@
 #
 alembic==1.11.1
     # via flask-migrate
-async-timeout==4.0.2
-    # via redis
 attrs==21.4.0
     # via jsonschema
 babel==2.10.3
@@ -168,8 +166,6 @@ rich==12.4.4
     # via funding-service-design-utils
 ruamel-yaml==0.17.21
     # via prance
-ruamel-yaml-clib==0.2.6
-    # via ruamel-yaml
 s3transfer==0.6.1
     # via boto3
 semver==2.13.0

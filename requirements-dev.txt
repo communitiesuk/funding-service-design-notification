@@ -10,10 +10,6 @@ alembic==1.11.1
     #   flask-migrate
 async-generator==1.10
     # via trio
-async-timeout==4.0.2
-    # via
-    #   -r requirements.txt
-    #   redis
 attrs==21.4.0
     # via
     #   -r requirements.txt
@@ -359,10 +355,6 @@ ruamel-yaml==0.17.21
     # via
     #   -r requirements.txt
     #   prance
-ruamel-yaml-clib==0.2.6
-    # via
-    #   -r requirements.txt
-    #   ruamel-yaml
 s3transfer==0.6.1
     # via
     #   -r requirements.txt
@@ -419,12 +411,6 @@ thrift==0.16.0
     # via
     #   -r requirements.txt
     #   flipper-client
-tomli==2.0.1
-    # via
-    #   black
-    #   build
-    #   pyproject-hooks
-    #   pytest
 trio==0.22.0
     # via
     #   selenium
