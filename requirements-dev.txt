@@ -368,7 +368,7 @@ semver==2.13.0
     # via
     #   -r requirements.txt
     #   prance
-sentry-sdk[flask]==1.9.9
+sentry-sdk[flask]==1.16.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
