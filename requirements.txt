@@ -106,6 +106,7 @@ markupsafe==2.1.1
     # via
     #   jinja2
     #   mako
+    #   sentry-sdk
     #   werkzeug
 notifications-python-client==6.3.0
     # via -r requirements.in
@@ -170,8 +171,10 @@ s3transfer==0.6.1
     # via boto3
 semver==2.13.0
     # via prance
-sentry-sdk[flask]==1.16.0
-    # via funding-service-design-utils
+sentry-sdk[flask]==1.31.0
+    # via
+    #   -r requirements.in
+    #   funding-service-design-utils
 six==1.16.0
     # via
     #   flask-talisman

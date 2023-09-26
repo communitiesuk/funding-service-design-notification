@@ -30,3 +30,5 @@ prance
 #   Beautiful soup
 #-----------------------------------
 beautifulsoup4==4.12.2
+
+sentry-sdk[flask]>=1.18.0,<2.0.0
