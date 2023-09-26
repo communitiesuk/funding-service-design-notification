@@ -32,6 +32,10 @@ class DefaultConfig:
             "fund_name": "NSTF",
             "template_id": "487c62f1-9aeb-4cc2-b996-5bdf0d02854b",
         },
+        "1baa0f68-4e0a-4b02-9dfe-b5646f089e65": {
+            "fund_name": "CYP",
+            "template_id": "1c69f104-edfa-49d7-9bab-cbbd30c323f3",
+        },
     }
 
     INCOMPLETE_APPLICATION_TEMPLATE_ID = os.environ.get(
