@@ -1,7 +1,7 @@
 #-----------------------------------
 #   FSD Utils
 #-----------------------------------
-funding-service-design-utils>=2.0.20,<2.1.0
+funding-service-design-utils>=2.0.21,<2.1.0
 requests
 
 #-----------------------------------
@@ -30,5 +30,3 @@ prance
 #   Beautiful soup
 #-----------------------------------
 beautifulsoup4==4.12.2
-
-sentry-sdk[flask]>=1.18.0,<2.0.0
