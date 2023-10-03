@@ -19,6 +19,16 @@ on:
         default: false
         type: boolean
         description: Deploy to CloudFoundry dev?
+      run_performance_tests:
+        required: false
+        default: false
+        type: boolean
+        description: Run performance tests
+      run_e2e_tests:
+        required: false
+        default: false
+        type: boolean
+        description: Run e2e tests
 
   push:
     paths-ignore:
@@ -102,5 +112,8 @@ jobs:
     secrets:
       E2E_PAT: ${{secrets.E2E_PAT}}
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@FS-3337 #main
+    with:
+      run_performance_tests: ${{ inputs.run_performance_tests }}
+      run_e2e_tests: ${{ inputs.run_e2e_tests }}
 
 
