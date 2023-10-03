@@ -96,3 +96,9 @@ jobs:
     - name: Copilot deploy
       run: |
         copilot deploy --env ${{ inputs.environment || 'test' }}
+  post_deploy_tests:
+    if: ${{ github.event.inputs.copilot }}
+    needs: copilot_build
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@FS-3337 #main
+
+
