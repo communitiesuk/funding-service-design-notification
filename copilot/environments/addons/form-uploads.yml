@@ -13,6 +13,17 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: Private
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - PUT
+            AllowedOrigins:
+              - 'https://*.test.levellingup.gov.uk'
+              - 'https://*.access-funding.levellingup.gov.uk'
+            Id: FSDCORSRuleId1
+            MaxAge: 3000
       BucketName: !Sub fsd-form-uploads-${Env}
       BucketEncryption:
         ServerSideEncryptionConfiguration:
