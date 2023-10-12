@@ -5,7 +5,7 @@ on:
       - '**/README.md'
 jobs:
   test_and_deploy:
-    if: ${{ github.actor != 'dependabot[bot]' && !github.event.inputs.copilot }}
+    if: ${{ github.actor != 'dependabot[bot]' }}
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/deploy.yml@main
     with:
       app_name: ${{ github.event.repository.name }}
