@@ -52,16 +52,16 @@ network:
 #
 # Pass environment variables as key value pairs.
 variables:
-  # SENTRY_DSN: "https://8092c54bdc3a4b4ba124dea42b836504@o1432034.ingest.sentry.io/4503918903820288"
+  SENTRY_DSN: "https://8092c54bdc3a4b4ba124dea42b836504@o1432034.ingest.sentry.io/4503918903820288"
   FLASK_ENV: ${COPILOT_ENVIRONMENT_NAME}
   PORT: 8080
 
+secrets:
+  GOV_NOTIFY_API_KEY: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/GOV_NOTIFY_API_KEY
+
 # You can override any of the values defined above by environment.
-# environments:
-#   production:
-#     count: 2               # Number of tasks to run for the "prod" environment.
-#     variables:
-#       http:
-#       alias: funding-service-design-fund-store-production.apps.internal
-#     image:
-#       location: ghcr.io/communitiesuk/funding-service-design-notification:production
+environments:
+  production:
+    count: 2               # Number of tasks to run for the "prod" environment.
+    image:
+      location: ghcr.io/communitiesuk/funding-service-design-notification:production # Have only production-ready tagged images deploy in production
