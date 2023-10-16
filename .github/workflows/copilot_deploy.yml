@@ -89,7 +89,7 @@ jobs:
     secrets:
       E2E_PAT: ${{secrets.E2E_PAT}}
       GOV_NOTIFY_API_KEY: ${{secrets.GOV_NOTIFY_API_KEY}}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@FS-3337 #main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@main
     with:
       run_performance_tests: ${{ inputs.run_performance_tests }}
       run_e2e_tests: ${{ inputs.run_e2e_tests }}
