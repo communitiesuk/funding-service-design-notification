@@ -1,6 +1,5 @@
 name: Deploy to Gov PaaS
 on:
-
   push:
     paths-ignore:
       - '**/README.md'
