@@ -85,7 +85,6 @@ jobs:
       run: |
         copilot svc deploy --env ${{ inputs.environment || 'test' }}
   post_deploy_tests:
-    if: ${{ github.event.inputs.copilot }}
     #needs: copilot_build
     secrets:
       E2E_PAT: ${{secrets.E2E_PAT}}
