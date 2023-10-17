@@ -32,7 +32,7 @@ jobs:
     if: github.event.pull_request.merged == true
     permissions:
       packages: write
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/package.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/package.yml
     with:
       version_to_build: $(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
       owner: ${{ github.repository_owner }}
@@ -42,12 +42,12 @@ jobs:
     secrets:
       E2E_PAT: ${{secrets.E2E_PAT}}
       GOV_NOTIFY_API_KEY: ${{secrets.GOV_NOTIFY_API_KEY}}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/pre-deploy.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/pre-deploy.yml
     with:
       postgres_unit_testing: false
   copilot_build:
-    #if: github.event.pull_request.merged == true
-    #needs: [pre_deploy_tests, paketo_build]
+    if: github.event.pull_request.merged == true
+    needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-${{ inputs.environment || 'test' }}
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -88,7 +88,7 @@ jobs:
     needs: copilot_build
     secrets:
       E2E_PAT: ${{secrets.E2E_PAT}}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@FS-3337 #main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml
     with:
       run_performance_tests: ${{ inputs.run_performance_tests }}
       run_e2e_tests: ${{ inputs.run_e2e_tests }}
