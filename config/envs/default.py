@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 from pathlib import Path
@@ -80,3 +81,43 @@ class DefaultConfig:
             "73eecbb1-5dbc-4653-8c58-46aa79151210"
         ),
     }
+
+    if "PRIMARY_QUEUE_URL" in os.environ:
+        AWS_REGION = os.environ.get("AWS_REGION")
+        AWS_PRIMARY_QUEUE_URL = os.environ.get("PRIMARY_QUEUE_URL")
+        AWS_SECONDARY_QUEUE_URL = os.environ.get("DEAD_LETTER_QUEUE_URL")
+    elif "VCAP_SERVICES" in os.environ:
+        vcap_services = json.loads(os.environ["VCAP_SERVICES"])
+        if "aws-sqs-queue" in vcap_services:
+            sqs_credentials = vcap_services["aws-sqs-queue"][0]["credentials"]
+            AWS_REGION = sqs_credentials["aws_region"]
+            AWS_ACCESS_KEY_ID = sqs_credentials["aws_access_key_id"]
+            AWS_SECRET_ACCESS_KEY = sqs_credentials["aws_secret_access_key"]
+            AWS_PRIMARY_QUEUE_URL = sqs_credentials["primary_queue_url"]
+            AWS_SECONDARY_QUEUE_URL = sqs_credentials["secondary_queue_url"]
+    else:
+        AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+        AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+        AWS_REGION = os.environ.get("AWS_REGION")
+        AWS_PRIMARY_QUEUE_URL = ""
+        AWS_SECONDARY_QUEUE_URL = ""
+    AWS_DLQ_ASSESSMENT_IMPORT_MAX_RECIEVE_COUNT = int(
+        os.environ.get("AWS_DLQ_ASSESSMENT_IMPORT_MAX_RECIEVE_COUNT", 3)
+    )
+
+    # ---------------
+    # SQS Config
+    # ---------------
+    SQS_WAIT_TIME = int(
+        os.environ.get("SQS_WAIT_TIME", 2)
+    )  # max time to wait (in sec) before returning
+    SQS_BATCH_SIZE = int(
+        os.environ.get("SQS_BATCH_SIZE", 1)
+    )  # MaxNumber Of Messages to process
+    SQS_VISIBILITY_TIME = int(
+        os.environ.get("SQS_VISIBILITY_TIME", 1)
+    )  # time for message to temporarily invisible to others (in sec)
+    SQS_RECEIVE_MESSAGE_CYCLE_TIME = int(
+        os.environ.get("SQS_RECEIVE_MESSAGE_CYCLE_TIME", 60)
+    )  # Run the job every 'x' seconds
+

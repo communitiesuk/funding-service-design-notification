@@ -19,50 +19,48 @@ class Notification:
         json contents
         """
         current_app.logger.info(f"Application's raw json: {data}")
-        notification_data = Notification(
+        notification = Notification(
             template_type=data.get("type"),
             contact_info=data.get("to"),
             content=data.get("content"),
         )
-        return notification_data
+        return notification
 
-    @staticmethod
-    def email_recipient(json_data: dict):
+    def email_recipient(self):
         """
         Function matches with the correct template type &
         calls the relevant function.
         """
-        notification = Notification.from_json(json_data)
-        match json_data.get("type"):
+        match self.template_type:
             case NotifyConstants.TEMPLATE_TYPE_MAGIC_LINK:
                 current_app.logger.info(
-                    f"Validating template type: {notification.template_type}"
+                    f"Validating template type: {self.template_type}"
                 )
-                return Notifier.send_magic_link(notification)
+                return Notifier.send_magic_link(self)
 
             case NotifyConstants.TEMPLATE_TYPE_APPLICATION:
                 current_app.logger.info(
-                    f"Validating template type: {notification.template_type})"
+                    f"Validating template type: {self.template_type})"
                 )
-                return Notifier.send_submitted_application(notification)
+                return Notifier.send_submitted_application(self)
 
             case NotifyConstants.TEMPLATE_TYPE_INCOMPLETE_APPLICATION:
                 current_app.logger.info(
-                    f"Validating template type: {notification.template_type})"
+                    f"Validating template type: {self.template_type})"
                 )
-                return Notifier.send_incomplete_application(notification)
+                return Notifier.send_incomplete_application(self)
 
             case NotifyConstants.TEMPLATE_TYPE_REMINDER:
                 current_app.logger.info(
-                    f"Validating template type: {notification.template_type})"
+                    f"Validating template type: {self.template_type})"
                 )
-                return Notifier.send_application_reminder(notification)
+                return Notifier.send_application_reminder(self)
 
             case "NOTIFICATION" | "AWARD":
                 return f"Currently {notification.template_type} service is not available."  # noqa
 
             case _:
                 current_app.logger.exception(
-                    f"Incorrect template type {notification.template_type}"
+                    f"Incorrect template type {self.template_type}"
                 )
-                return template_type_error(json_data)
+                return template_type_error(self.template_type)
