@@ -22,8 +22,12 @@ on:
         type: boolean
         description: Run e2e tests
   push:
-    paths: # Ignore README markdown and only deploy when something in the copilot folder has changed
+    # Ignore README markdown
+    # Only automatically deploy when something in the app or tests folder has changed
+    paths:
       - '!**/README.md'
+      - 'app/**'
+      - 'tests/**'
 
 jobs:
   paketo_build:
@@ -124,88 +128,6 @@ jobs:
       id: test_build
       run: |
         copilot svc deploy --env test
-
-  copilot_deploy_uat:
-    if: (inputs.environment == 'uat' || inputs.environment == '') || (github.event.pull_request.merged == true && github.ref.name == 'main')
-    needs: [pre_deploy_tests, paketo_build]
-    concurrency: deploy-uat
-    permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read  # This is required for actions/checkout
-    runs-on: ubuntu-latest
-    environment: 'uat'
-    steps:
-    - name: Git clone the repository
-      uses: actions/checkout@v3
-
-    - name: Get current date
-      id: currentdatetime
-      run: echo "datetime=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
-
-    - name: configure aws credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/GithubCopilotDeploy
-        role-session-name: NOTIFICATION_UAT_COPILOT_${{ steps.currentdatetime.outputs.datetime }}
-        aws-region: eu-west-2
-
-    - name: Install AWS Copilot CLI
-      run: |
-        curl -Lo aws-copilot https://github.com/aws/copilot-cli/releases/latest/download/copilot-linux && chmod +x aws-copilot && sudo mv aws-copilot /usr/local/bin/copilot
-
-    - name: Inject Git SHA into manifest
-      run: |
-        yq -i '.variables.GITHUB_SHA = "${{ github.sha }}"'  copilot/fsd-notification/manifest.yml
-
-    - name: Inject replacement image into manifest
-      run: |
-        yq -i '.image.location = "ghcr.io/communitiesuk/funding-service-design-notification:${{ github.ref_name == 'main' && 'latest' || github.ref_name }}"'  copilot/fsd-notification/manifest.yml
-
-    - name: Copilot deploy uat
-      id: uat_build
-      run: |
-        copilot svc deploy --env uat
-
-  copilot_deploy_prod:
-    if: (inputs.environment == 'prod' || inputs.environment == '') || (github.event.pull_request.merged == true && github.ref.name == 'main')
-    needs: [pre_deploy_tests, paketo_build]
-    concurrency: deploy-prod
-    permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read  # This is required for actions/checkout
-    runs-on: ubuntu-latest
-    environment: 'prod'
-    steps:
-    - name: Git clone the repository
-      uses: actions/checkout@v3
-
-    - name: Get current date
-      id: currentdatetime
-      run: echo "datetime=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
-
-    - name: configure aws credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/GithubCopilotDeploy
-        role-session-name: NOTIFICATION_PROD_COPILOT_${{ steps.currentdatetime.outputs.datetime }}
-        aws-region: eu-west-2
-
-    - name: Install AWS Copilot CLI
-      run: |
-        curl -Lo aws-copilot https://github.com/aws/copilot-cli/releases/latest/download/copilot-linux && chmod +x aws-copilot && sudo mv aws-copilot /usr/local/bin/copilot
-
-    - name: Inject Git SHA into manifest
-      run: |
-        yq -i '.variables.GITHUB_SHA = "${{ github.sha }}"'  copilot/fsd-notification/manifest.yml
-
-    - name: Inject replacement image into manifest
-      run: |
-        yq -i '.image.location = "ghcr.io/communitiesuk/funding-service-design-notification:${{ github.ref_name == 'main' && 'latest' || github.ref_name }}"'  copilot/fsd-notification/manifest.yml
-
-    - name: Copilot deploy prod
-      id: prod_build
-      run: |
-        copilot svc deploy --env prod
 
   post_deploy_tests:
       needs: copilot_deploy_test
