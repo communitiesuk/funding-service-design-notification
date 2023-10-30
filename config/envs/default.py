@@ -7,7 +7,6 @@ from fsd_utils import configclass
 
 @configclass
 class DefaultConfig:
-
     FUND_NAME = "Community Ownership Fund"
 
     SECRET_KEY = os.environ.get("SECRET_KEY")

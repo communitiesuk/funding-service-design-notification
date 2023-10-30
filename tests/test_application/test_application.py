@@ -130,7 +130,6 @@ def test_send_submitted_application(
     mock_notifier_api_client,
     mock_notifications_api_client,
 ):
-
     _, code = Notifier.send_submitted_application(
         notification_class_data_for_application(
             date_submitted=True, deadline_date=False
@@ -150,7 +149,6 @@ def test_send_incomplete_application(
     mock_notifier_api_client,
     mock_notifications_api_client,
 ):
-
     _, code = Notifier.send_submitted_application(
         notification_class_data_for_application(
             date_submitted=False, deadline_date=False
@@ -170,7 +168,6 @@ def test_send_application_reminder(
     mock_notifier_api_client,
     mock_notifications_api_client,
 ):
-
     _, code = Notifier.send_application_reminder(
         notification_class_data_for_application(
             date_submitted=False, deadline_date=True
