@@ -61,6 +61,8 @@ secrets:
 
 # You can override any of the values defined above by environment.
 environments:
+  uat:
+    count: 2
   production:
     count: 2               # Number of tasks to run for the "prod" environment.
     image:
