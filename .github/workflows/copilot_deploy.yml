@@ -63,6 +63,24 @@ jobs:
     with:
       workspace: 'test'
 
+  # Allow the capability to override UAT with another branch, but ideally uat and production should be in sync as much as possible
+  copilot_deploy_uat:
+    if: inputs.environment == 'uat' || inputs.environment == ''
+    needs: [pre_deploy_tests, paketo_build]
+    concurrency: deploy-uat
+    uses: ./.github/workflows/environment.yml
+    with:
+      workspace: 'uat'
+
+  # Only run this if the branch being deployed is main
+  copilot_deploy_production:
+    if: (inputs.environment == 'production' || inputs.environment == '') && github.ref == 'refs/heads/main'
+    needs: [pre_deploy_tests, paketo_build]
+    concurrency: deploy-production
+    uses: ./.github/workflows/environment.yml
+    with:
+      workspace: 'production'
+
   post_deploy_tests:
       needs: copilot_deploy_test
       secrets:
