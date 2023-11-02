@@ -47,42 +47,62 @@ jobs:
     with:
       postgres_unit_testing: false
 
-  copilot_deploy_dev:
+  dev_copilot_deploy:
     if: inputs.environment == 'dev' || inputs.environment == ''
     needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-dev
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    secrets:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     uses: ./.github/workflows/environment.yml
     with:
       workspace: 'dev'
 
-  copilot_deploy_test:
+  test_copilot_deploy:
     if: inputs.environment == 'test' || inputs.environment == ''
     needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-test
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    secrets:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     uses: ./.github/workflows/environment.yml
     with:
       workspace: 'test'
 
   # Allow the capability to override UAT with another branch, but ideally uat and production should be in sync as much as possible
-  copilot_deploy_uat:
+  uat_copilot_deploy:
     if: inputs.environment == 'uat' || inputs.environment == ''
     needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-uat
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    secrets:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     uses: ./.github/workflows/environment.yml
     with:
       workspace: 'uat'
 
   # Only run this if the branch being deployed is main
-  copilot_deploy_production:
+  production_copilot_deploy:
     if: (inputs.environment == 'production' || inputs.environment == '') && github.ref == 'refs/heads/main'
     needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-production
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    secrets:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     uses: ./.github/workflows/environment.yml
     with:
       workspace: 'production'
 
   post_deploy_tests:
-      needs: copilot_deploy_test
+      needs: test_copilot_deploy
       secrets:
         E2E_PAT: ${{secrets.E2E_PAT}}
       uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@main
