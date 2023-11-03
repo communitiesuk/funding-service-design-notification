@@ -17,8 +17,6 @@ from notifications_python_client import prepare_upload
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
 
-notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
-
 
 class Notifier:
     """Class holds notification operations"""
@@ -32,9 +30,14 @@ class Notifier:
 
         Raises HTTPError if any of the required contents are incorrect
         or missing.
+
         """
         try:
+            notifications_client = NotificationsAPIClient(
+                Config.GOV_NOTIFY_API_KEY
+            )
             contents = MagicLink.from_notification(notification)
+
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 template_id=Config.MAGIC_LINK_TEMPLATE_ID,
@@ -69,6 +72,9 @@ class Notifier:
         or missing.
         """
         try:
+            notifications_client = NotificationsAPIClient(
+                Config.GOV_NOTIFY_API_KEY
+            )
             contents = Application.from_notification(notification)
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
@@ -108,6 +114,9 @@ class Notifier:
         or missing.
         """
         try:
+            notifications_client = NotificationsAPIClient(
+                Config.GOV_NOTIFY_API_KEY
+            )
             contents = Application.from_notification(notification)
 
             response = notifications_client.send_email_notification(
@@ -144,6 +153,9 @@ class Notifier:
         or missing.
         """
         try:
+            notifications_client = NotificationsAPIClient(
+                Config.GOV_NOTIFY_API_KEY
+            )
             contents = ApplicationReminder.from_notification(notification)
 
             response = notifications_client.send_email_notification(
@@ -166,7 +178,3 @@ class Notifier:
             return invalid_data_error(
                 Application.from_notification(notification)
             )
-
-    @staticmethod
-    def send_award(json_data):
-        pass

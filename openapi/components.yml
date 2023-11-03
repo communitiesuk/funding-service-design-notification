@@ -76,6 +76,10 @@ components:
         content:
           type: object
           properties:
+            contact_help_email:
+               type: string
+               format: email
+               pattern: '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'
             application:
               type: object
               additionalProperties: true
@@ -107,12 +111,6 @@ components:
                               items:
                                 type: object
                                 additionalProperties: true
-                          required:
-                            - question
-                            - fields
-                    required:
-                      - name
-                      - questions
               required:
                 - reference
                 - round_name
@@ -120,6 +118,7 @@ components:
                 - fund_name
           required:
             - application
+            - contact_help_email
       required:
         - type
         - to
