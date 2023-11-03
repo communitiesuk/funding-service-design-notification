@@ -19,7 +19,7 @@ from fsd_utils.config.notify_constants import NotifyConstants
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
 
-
+# Dummy change to prove deploy
 @dataclass
 class Application(_NotificationContents):
     questions: bytes
