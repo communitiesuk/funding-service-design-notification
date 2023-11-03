@@ -362,7 +362,7 @@ s3transfer==0.6.1
     # via
     #   -r requirements.txt
     #   boto3
-selenium==4.5.0
+selenium==4.11.2
     # via
     #   -r requirements-dev.in
     #   axe-selenium-python
