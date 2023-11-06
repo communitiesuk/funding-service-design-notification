@@ -24,7 +24,7 @@ botocore==1.29.140
     #   s3transfer
 cachetools==5.3.0
     # via flipper-client
-certifi==2022.6.15
+certifi==2023.7.22
     # via
     #   requests
     #   sentry-sdk
@@ -172,7 +172,9 @@ s3transfer==0.6.1
 semver==2.13.0
     # via prance
 sentry-sdk[flask]==1.31.0
-    # via funding-service-design-utils
+    # via
+    #   funding-service-design-utils
+    #   sentry-sdk
 six==1.16.0
     # via
     #   flask-talisman

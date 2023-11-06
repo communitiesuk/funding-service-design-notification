@@ -50,7 +50,7 @@ cachetools==5.3.0
     # via
     #   -r requirements.txt
     #   flipper-client
-certifi==2022.6.15
+certifi==2023.7.22
     # via
     #   -r requirements.txt
     #   requests
@@ -260,6 +260,7 @@ pyjwt[crypto]==2.4.0
     #   -r requirements.txt
     #   funding-service-design-utils
     #   notifications-python-client
+    #   pyjwt
 pyparsing==3.0.9
     # via
     #   -r requirements.txt
@@ -373,6 +374,7 @@ sentry-sdk[flask]==1.31.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
+    #   sentry-sdk
 six==1.16.0
     # via
     #   -r requirements.txt
