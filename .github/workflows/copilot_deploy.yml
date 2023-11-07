@@ -35,6 +35,15 @@ on:
       - '.github/workflows/copilot_deploy.yml'
 
 jobs:
+  tag_version:
+    runs-on: ubuntu-latest
+    outputs:
+      version_to_tag: ${{ steps.notification_tagging.outputs.tag_value }}
+    steps:
+      - id: notification_tagging
+        run: |
+          echo "tag_value=$(echo '${{ github.ref }}' | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_OUTPUT
+
   pre_deploy_tests:
     secrets:
       E2E_PAT: ${{ secrets.E2E_PAT }}
@@ -44,12 +53,13 @@ jobs:
       postgres_unit_testing: false
 
   paketo_build:
+    needs: [ tag_version ]
     concurrency: build-notification-pack
     permissions:
       packages: write
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/package.yml@main
     with:
-      version_to_build: $(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+      version_to_build: ${{ needs.tag_version.outputs.version_to_tag }}
       owner: ${{ github.repository_owner }}
       application: funding-service-design-notification
 
@@ -73,7 +83,7 @@ jobs:
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
-    needs: [ pre_deploy_tests, paketo_build, copilot_environments_workflow_setup ]
+    needs: [ tag_version, pre_deploy_tests, paketo_build, copilot_environments_workflow_setup ]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -106,7 +116,7 @@ jobs:
 
     - name: Inject replacement image into manifest
       run: |
-        yq -i '.image.location = "ghcr.io/communitiesuk/funding-service-design-notification:${{ github.ref_name == 'main' && 'latest' || github.ref_name }}"'  copilot/fsd-notification/manifest.yml
+        yq -i '.image.location = "ghcr.io/communitiesuk/funding-service-design-notification:${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}"'  copilot/fsd-notification/manifest.yml
 
     - name: Copilot ${{ matrix.value }} deploy
       id: deploy_build
@@ -114,7 +124,7 @@ jobs:
         copilot svc deploy --env ${{ matrix.value }} --app pre-award
 
   post_deploy_tests:
-    if: inputs.environment == 'test' || inputs.environment == ''
+    if: inputs.environment == 'test' || inputs.environment == 'dev' || inputs.environment == ''
     needs: copilot_environments_deploy
     secrets:
       E2E_PAT: ${{secrets.E2E_PAT}}
@@ -123,3 +133,4 @@ jobs:
       run_performance_tests: ${{ inputs.run_performance_tests }}
       run_e2e_tests: ${{ inputs.run_e2e_tests }}
       app_name: notification
+      environment: ${{ inputs.environment == '' && 'test' || inputs.environment }}
