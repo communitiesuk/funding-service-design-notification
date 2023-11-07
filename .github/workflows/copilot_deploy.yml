@@ -80,7 +80,7 @@ jobs:
 
   # Allow the capability to override UAT with another branch, but ideally uat and production should be in sync as much as possible
   uat_copilot_deploy:
-    if: (inputs.environment == 'uat' || inputs.environment == '') && github.ref == 'refs/heads/main'
+    if: inputs.environment == 'uat' || (inputs.environment == '' && github.ref == 'refs/heads/main')
     needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-uat
     permissions:
@@ -94,7 +94,7 @@ jobs:
 
   # Only run this if the branch being deployed is main
   production_copilot_deploy:
-    if: (inputs.environment == 'production' || inputs.environment == '') && github.ref == 'refs/heads/main'
+    if: inputs.environment == 'production' || (inputs.environment == '' && github.ref == 'refs/heads/main')
     needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-production
     permissions:
