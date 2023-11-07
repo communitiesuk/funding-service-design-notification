@@ -60,12 +60,13 @@ jobs:
       contents: read  # This is required for actions/checkout
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-    uses: ./.github/workflows/environment.yml
+    uses: ./.github/workflows/copilot_service.yml
     with:
       workspace: 'dev'
 
+  # Autodeploy if the branch being deployed is main
   test_copilot_deploy:
-    if: inputs.environment == 'test' || inputs.environment == ''
+    if: inputs.environment == 'test' || (inputs.environment == '' && github.ref == 'refs/heads/main')
     needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-test
     permissions:
@@ -73,13 +74,13 @@ jobs:
       contents: read  # This is required for actions/checkout
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-    uses: ./.github/workflows/environment.yml
+    uses: ./.github/workflows/copilot_service.yml
     with:
       workspace: 'test'
 
   # Allow the capability to override UAT with another branch, but ideally uat and production should be in sync as much as possible
   uat_copilot_deploy:
-    if: inputs.environment == 'uat' || inputs.environment == ''
+    if: (inputs.environment == 'uat' || inputs.environment == '') && github.ref == 'refs/heads/main'
     needs: [pre_deploy_tests, paketo_build]
     concurrency: deploy-uat
     permissions:
@@ -87,7 +88,7 @@ jobs:
       contents: read  # This is required for actions/checkout
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-    uses: ./.github/workflows/environment.yml
+    uses: ./.github/workflows/copilot_service.yml
     with:
       workspace: 'uat'
 
@@ -101,7 +102,7 @@ jobs:
       contents: read  # This is required for actions/checkout
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-    uses: ./.github/workflows/environment.yml
+    uses: ./.github/workflows/copilot_service.yml
     with:
       workspace: 'production'
 
