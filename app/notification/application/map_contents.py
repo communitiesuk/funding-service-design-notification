@@ -20,6 +20,7 @@ if TYPE_CHECKING:
     from app.notification.model.notification import Notification
 
 
+# Dummy change to prove deploy
 @dataclass
 class Application(_NotificationContents):
     questions: bytes
