@@ -70,7 +70,7 @@ jobs:
     steps:
       - id: copilot_env_matrix
         run: |
-          if [ "${{ inputs.environment }}" != '' ]; then
+          if [ "${{ inputs.environment }}" != "" ]; then
             echo "env_list=[\"${{ inputs.environment }}\"]" >> $GITHUB_OUTPUT
           elif [ "${{ github.ref }}" == 'refs/heads/main' ]; then
             echo "env_list=[\"dev\", \"test\", \"uat\", \"production\"]" >> $GITHUB_OUTPUT
@@ -78,16 +78,21 @@ jobs:
             echo "env_list=[\"dev\", \"test\"]" >> $GITHUB_OUTPUT
           fi
 
-  copilot_environments_deploy:
-    concurrency: notification-environment-deploy
+  copilot_env_deploy:
+    concurrency:
+      group: '${{ github.workflow }} @ ${{ github.ref }}'
+      cancel-in-progress: false
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
     needs: [ tag_version, pre_deploy_tests, paketo_build, copilot_environments_workflow_setup ]
     runs-on: ubuntu-latest
+    continue-on-error: true
     strategy:
+      max-parallel: 1
       matrix:
         value: ${{ fromJSON(needs.copilot_environments_workflow_setup.outputs.matrix) }}
+      fail-fast: false
     environment: ${{ matrix.value }}
     steps:
     - name: Git clone the repository
@@ -125,12 +130,12 @@ jobs:
 
   post_deploy_tests:
     if: inputs.environment == 'test' || inputs.environment == 'dev' || inputs.environment == ''
-    needs: copilot_environments_deploy
+    needs: copilot_env_deploy
     secrets:
       E2E_PAT: ${{secrets.E2E_PAT}}
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@main
     with:
-      run_performance_tests: ${{ inputs.run_performance_tests }}
-      run_e2e_tests: ${{ inputs.run_e2e_tests }}
+      run_performance_tests: ${{ inputs.run_performance_tests || false }}
+      run_e2e_tests: ${{ inputs.run_e2e_tests || true }}
       app_name: notification
       environment: ${{ inputs.environment == '' && 'test' || inputs.environment }}
