@@ -6,7 +6,6 @@ from fsd_utils import configclass
 
 @configclass
 class UnitTestConfig(DefaultConfig):
-
     #  Application Config
     SECRET_KEY = "dev"  # pragma: allowlist secret
     SESSION_COOKIE_NAME = "session_cookie"
