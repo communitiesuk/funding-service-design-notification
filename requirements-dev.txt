@@ -140,8 +140,10 @@ funding-service-design-utils==2.0.31
     # via -r requirements.txt
 gitdb==4.0.10
     # via gitpython
-gitpython==3.1.31
+gitpython==3.1.37
     # via bandit
+greenlet==3.0.1
+    # via sqlalchemy
 gunicorn==20.1.0
     # via
     #   -r requirements.txt
