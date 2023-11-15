@@ -247,7 +247,7 @@ platformdirs==3.5.1
     #   virtualenv
 pluggy==1.0.0
     # via pytest
-prance==0.21.8.0
+prance==23.6.21.0
     # via -r requirements.txt
 pre-commit==3.3.2
     # via -r requirements-dev.in

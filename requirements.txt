@@ -130,7 +130,7 @@ packaging==21.3
     # via connexion
 pathable==0.4.3
     # via jsonschema-path
-prance==0.21.8.0
+prance==23.6.21.0
     # via -r requirements.in
 pycparser==2.21
     # via cffi
