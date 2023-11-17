@@ -61,9 +61,29 @@ secrets:
 
 # You can override any of the values defined above by environment.
 environments:
+  test:
+    deployment:
+      rolling: 'recreate'
   uat:
-    count: 2
+    count:
+      range: 2-4
+      cooldown:
+        in: 60s
+        out: 30s
+      cpu_percentage:
+        value: 70
+      memory_percentage:
+        value: 80
+      requests: 30
+      response_time: 2s
   production:
-    count: 2               # Number of tasks to run for the "prod" environment.
-    image:
-      location: ghcr.io/communitiesuk/funding-service-design-notification:production # Have only production-ready tagged images deploy in production
+    count:
+      range: 2-4
+      cooldown:
+        in: 60s
+        out: 30s
+      cpu_percentage:
+        value: 70
+      memory_percentage:
+        value: 80
+      requests: 30
