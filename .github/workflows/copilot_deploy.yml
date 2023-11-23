@@ -80,7 +80,7 @@ jobs:
             echo "pre_deploy_list=[\"dev\", \"test\"]" >> $GITHUB_OUTPUT
           fi
 
-  copilot_individual_deploy:
+  individual_deploy:
     if: inputs.environment != ''
     concurrency:
       group: 'fsd-preaward-copilot-individual-${{ matrix.value }}'
@@ -139,7 +139,7 @@ jobs:
       run: |
         copilot svc deploy --env ${{ matrix.value }} --app pre-award
 
-  copilot_sandbox_deploy:
+  sandbox_deploy:
     if: ${{ needs.copilot_environments_workflow_setup.outputs.pre_matrix != '' && toJson(fromJson(needs.copilot_environments_workflow_setup.outputs.pre_matrix)) != '[]' }}
     concurrency:
       group: 'fsd-preaward-copilot-sandbox-${{ matrix.value }}'
@@ -200,7 +200,7 @@ jobs:
 
   post_deploy_tests:
     if: inputs.environment == 'test' || inputs.environment == 'dev' || inputs.environment == ''
-    needs: copilot_sandbox_deploy
+    needs: sandbox_deploy
     secrets:
       E2E_PAT: ${{secrets.E2E_PAT}}
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@main
@@ -210,7 +210,7 @@ jobs:
       app_name: notification
       environment: ${{ inputs.environment == '' && 'test' || inputs.environment }}
 
-  copilot_release_deploy:
+  release_deploy:
     if: ${{ needs.copilot_environments_workflow_setup.outputs.post_matrix != '' && toJson(fromJson(needs.copilot_environments_workflow_setup.outputs.post_matrix)) != '[]' }}
     concurrency:
       group: 'fsd-preaward-copilot-release-${{ matrix.value }}'
