@@ -23,7 +23,7 @@ class ApplicationReminder(_NotificationContents):
     @classmethod
     def format_deadline_date(cls, date):
         return (
-            datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+            datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
             .strftime(f"{'%d %B %Y'} at {'%I:%M%p'}")
             .replace("AM", "am")
             .replace("PM", "pm")
@@ -44,6 +44,7 @@ class ApplicationReminder(_NotificationContents):
             f"Mapping contents for {notification.template_type}"
         )
         application_data = notification.content["application"]
+        current_app.logger.info(f"Mapping contents for {application_data}")
         return cls(
             contact_info=notification.contact_info,
             deadline_date=cls.format_deadline_date(
