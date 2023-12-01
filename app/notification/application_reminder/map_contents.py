@@ -44,7 +44,6 @@ class ApplicationReminder(_NotificationContents):
             f"Mapping contents for {notification.template_type}"
         )
         application_data = notification.content["application"]
-        current_app.logger.info(f"Mapping contents for {application_data}")
         return cls(
             contact_info=notification.contact_info,
             deadline_date=cls.format_deadline_date(
