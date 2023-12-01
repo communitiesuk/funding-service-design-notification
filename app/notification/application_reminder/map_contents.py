@@ -23,7 +23,7 @@ class ApplicationReminder(_NotificationContents):
     @classmethod
     def format_deadline_date(cls, date):
         return (
-            datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+            datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
             .strftime(f"{'%d %B %Y'} at {'%I:%M%p'}")
             .replace("AM", "am")
             .replace("PM", "pm")

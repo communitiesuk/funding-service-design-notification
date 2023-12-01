@@ -23,15 +23,15 @@ image:
 
 # Valid values: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html
 # Number of CPU units for the task.
-cpu: 256
+cpu: 512
 # Amount of memory in MiB used by the task.
-memory: 512
+memory: 1024
 
 # See https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#platform
 platform: linux/x86_64
 
 # Number of tasks that should be running in your service.
-count: 1
+count: 2
 
 # Enable running commands in your container.
 exec: true
@@ -61,9 +61,31 @@ secrets:
 
 # You can override any of the values defined above by environment.
 environments:
+  test:
+    deployment:
+      rolling: 'recreate'
   uat:
-    count: 2
-  production:
-    count: 2               # Number of tasks to run for the "prod" environment.
-    image:
-      location: ghcr.io/communitiesuk/funding-service-design-notification:production # Have only production-ready tagged images deploy in production
+    count:
+      range: 2-4
+      cooldown:
+        in: 60s
+        out: 30s
+      cpu_percentage:
+        value: 70
+      memory_percentage:
+        value: 80
+      requests: 30
+      response_time: 2s
+  prod:
+    count:
+      range: 2-4
+      cooldown:
+        in: 60s
+        out: 30s
+      cpu_percentage:
+        value: 70
+      memory_percentage:
+        value: 80
+      requests: 30
+    variables:
+      FLASK_ENV: production
