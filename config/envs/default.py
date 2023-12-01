@@ -7,7 +7,9 @@ from fsd_utils import configclass
 
 @configclass
 class DefaultConfig:
-    FUND_NAME = "Community Ownership Fund"
+    FUND_NAME = (  # TODO This should not be hard coded
+        "Digital Planning Improvement Fund"
+    )
 
     SECRET_KEY = os.environ.get("SECRET_KEY")
     SESSION_COOKIE_NAME = os.environ.get("SESSION_COOKIE_NAME")
