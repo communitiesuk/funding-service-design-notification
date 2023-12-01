@@ -106,7 +106,7 @@ expected_application_reminder_json = {
         NotifyConstants.APPLICATION_FIELD: {
             "round_name": "WINDOW 2 ROUND 2",
             "reference": "WUHJFDWJ",
-            "deadline_date": "2022-05-20 14:47:12",
+            "deadline_date": "2022-05-20T14:47:12",
         }
     },
 }
@@ -147,7 +147,7 @@ def notification_class_data_for_application(
                 "status": "SUBMITTED",
                 "last_edited": "2023-08-04T15:47:21.274900",
                 "started_at": "2023-08-04T15:47:21.274900",
-                "deadline_date": "2023-12-12 15:47:21"
+                "deadline_date": "2023-12-12T15:47:21"
                 if deadline_date
                 else None,
                 "round_name": "Round 2",
