@@ -12,10 +12,11 @@ async-timeout==4.0.3
     # via
     #   -r requirements.txt
     #   redis
-attrs==21.4.0
+attrs==23.1.0
     # via
     #   -r requirements.txt
     #   jsonschema
+    #   referencing
 babel==2.10.3
     # via
     #   -r requirements.txt
@@ -180,11 +181,24 @@ jmespath==1.0.1
     #   botocore
 json2html==1.3.0
     # via -r requirements-dev.in
-jsonschema==4.6.1
+jsonschema==4.19.2
     # via
     #   -r requirements.txt
     #   connexion
     #   openapi-schema-validator
+    #   openapi-spec-validator
+jsonschema-path==0.3.1
+    # via
+    #   -r requirements.txt
+    #   openapi-spec-validator
+jsonschema-specifications==2023.7.1
+    # via
+    #   -r requirements.txt
+    #   jsonschema
+    #   openapi-schema-validator
+lazy-object-proxy==1.9.0
+    # via
+    #   -r requirements.txt
     #   openapi-spec-validator
 mako==1.2.4
     # via
@@ -203,11 +217,11 @@ nodeenv==1.8.0
     # via pre-commit
 notifications-python-client==6.3.0
     # via -r requirements.txt
-openapi-schema-validator==0.2.3
+openapi-schema-validator==0.6.2
     # via
     #   -r requirements.txt
     #   openapi-spec-validator
-openapi-spec-validator==0.4.0
+openapi-spec-validator==0.7.1
     # via -r requirements.txt
 ordered-set==4.1.0
     # via deepdiff
@@ -217,6 +231,10 @@ packaging==21.3
     #   build
     #   connexion
     #   pytest
+pathable==0.4.3
+    # via
+    #   -r requirements.txt
+    #   jsonschema-path
 pathspec==0.11.1
     # via black
 pbr==5.11.1
@@ -229,7 +247,7 @@ platformdirs==3.5.1
     #   virtualenv
 pluggy==1.0.0
     # via pytest
-prance==0.21.8.0
+prance==23.6.21.0
     # via -r requirements.txt
 pre-commit==3.3.2
     # via -r requirements-dev.in
@@ -257,10 +275,6 @@ pyparsing==3.0.9
     #   packaging
 pyproject-hooks==1.0.0
     # via build
-pyrsistent==0.18.1
-    # via
-    #   -r requirements.txt
-    #   jsonschema
 pytest==7.3.1
     # via
     #   -r requirements-dev.in
@@ -302,25 +316,41 @@ pyyaml==6.0
     #   clickclick
     #   connexion
     #   funding-service-design-utils
-    #   openapi-spec-validator
+    #   jsonschema-path
     #   pre-commit
 redis==4.5.5
     # via
     #   -r requirements.txt
     #   flask-redis
     #   flipper-client
+referencing==0.30.2
+    # via
+    #   -r requirements.txt
+    #   jsonschema
+    #   jsonschema-path
+    #   jsonschema-specifications
 requests==2.31.0
     # via
     #   -r requirements.txt
     #   connexion
     #   funding-service-design-utils
+    #   jsonschema-path
     #   notifications-python-client
     #   prance
     #   python-consul
+rfc3339-validator==0.1.4
+    # via
+    #   -r requirements.txt
+    #   openapi-schema-validator
 rich==12.4.4
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
+rpds-py==0.12.0
+    # via
+    #   -r requirements.txt
+    #   jsonschema
+    #   referencing
 ruamel-yaml==0.17.21
     # via
     #   -r requirements.txt
@@ -349,6 +379,7 @@ six==1.16.0
     #   prance
     #   python-consul
     #   python-dateutil
+    #   rfc3339-validator
     #   thrift
 smmap==5.0.0
     # via gitdb
