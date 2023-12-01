@@ -90,7 +90,7 @@ cryptography==41.0.6
     #   pyjwt
 debugpy==1.6.7
     # via -r requirements-dev.in
-deepdiff==6.3.0
+deepdiff==6.7.1
     # via -r requirements-dev.in
 distlib==0.3.6
     # via virtualenv
