@@ -230,6 +230,7 @@ packaging==21.3
     #   -r requirements.txt
     #   build
     #   connexion
+    #   prance
     #   pytest
 pathable==0.4.3
     # via
@@ -275,7 +276,7 @@ pyparsing==3.0.9
     #   packaging
 pyproject-hooks==1.0.0
     # via build
-pytest==7.3.1
+pytest==7.4.3
     # via
     #   -r requirements-dev.in
     #   pytest-env
@@ -364,9 +365,7 @@ s3transfer==0.6.1
     #   -r requirements.txt
     #   boto3
 semver==2.13.0
-    # via
-    #   -r requirements.txt
-    #   prance
+    # via -r requirements.txt
 sentry-sdk[flask]==1.31.0
     # via
     #   -r requirements.txt
