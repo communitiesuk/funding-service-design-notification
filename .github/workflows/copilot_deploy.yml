@@ -138,6 +138,20 @@ jobs:
       run: |
         copilot svc deploy --env ${{ matrix.value }} --app pre-award
 
+  post_individual_deploy_tests:
+    needs: individual_deploy
+    concurrency:
+      group: 'fsd-preaward-indiv-test'
+      cancel-in-progress: false
+    secrets:
+      FSD_GH_APP_ID: ${{ secrets.FSD_GH_APP_ID }}
+      FSD_GH_APP_KEY: ${{ secrets.FSD_GH_APP_KEY }}
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@main
+    with:
+      run_performance_tests: ${{ inputs.run_performance_tests || true }}
+      run_e2e_tests: ${{ inputs.run_e2e_tests || true }}
+      environment: ${{ inputs.environment }}
+
   dev_deploy:
     if: ${{ needs.copilot_environments_workflow_setup.outputs.pre_matrix != '' && toJson(fromJson(needs.copilot_environments_workflow_setup.outputs.pre_matrix)) != '[]' }}
     concurrency:
