@@ -127,7 +127,9 @@ openapi-schema-validator==0.6.2
 openapi-spec-validator==0.7.1
     # via -r requirements.in
 packaging==21.3
-    # via connexion
+    # via
+    #   connexion
+    #   prance
 pathable==0.4.3
     # via jsonschema-path
 prance==23.6.21.0
@@ -195,8 +197,6 @@ ruamel-yaml-clib==0.2.8
     # via ruamel-yaml
 s3transfer==0.6.1
     # via boto3
-semver==2.13.0
-    # via prance
 sentry-sdk[flask]==1.31.0
     # via
     #   funding-service-design-utils
@@ -218,7 +218,7 @@ sqlalchemy==2.0.15
     #   sqlalchemy-utils
 sqlalchemy-utils==0.41.1
     # via funding-service-design-utils
-swagger-ui-bundle==0.0.9
+swagger-ui-bundle==1.1.0
     # via -r requirements.in
 thrift==0.16.0
     # via flipper-client

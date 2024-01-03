@@ -230,6 +230,7 @@ packaging==21.3
     #   -r requirements.txt
     #   build
     #   connexion
+    #   prance
     #   pytest
 pathable==0.4.3
     # via
@@ -363,10 +364,6 @@ s3transfer==0.6.1
     # via
     #   -r requirements.txt
     #   boto3
-semver==2.13.0
-    # via
-    #   -r requirements.txt
-    #   prance
 sentry-sdk[flask]==1.31.0
     # via
     #   -r requirements.txt
@@ -399,7 +396,7 @@ sqlalchemy-utils==0.41.1
     #   funding-service-design-utils
 stevedore==5.1.0
     # via bandit
-swagger-ui-bundle==0.0.9
+swagger-ui-bundle==1.1.0
     # via -r requirements.txt
 thrift==0.16.0
     # via
