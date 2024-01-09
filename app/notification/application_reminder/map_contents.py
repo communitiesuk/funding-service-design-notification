@@ -47,11 +47,12 @@ class ApplicationReminder(_NotificationContents):
         )
         try:
             application_data = notification.content["application"]
+            deadline_date = cls.format_deadline_date(
+                application_data.get("deadline_date")
+            )
             return cls(
                 contact_info=notification.contact_info,
-                deadline_date=cls.format_deadline_date(
-                    application_data.get("deadline_date")
-                ),
+                deadline_date=deadline_date,
                 fund_name=application_data.get("fund_name"),
                 round_name=application_data.get("round_name"),
                 reference=application_data.get("reference"),
