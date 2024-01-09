@@ -163,6 +163,7 @@ class Notifier:
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 template_id=Config.APPLICATION_DEADLINE_REMINDER_TEMPLATE_ID,
+                email_reply_to_id=contents.reply_to_email_id,
                 personalisation={
                     "name of fund": contents.fund_name,
                     "application reference": contents.reference,
