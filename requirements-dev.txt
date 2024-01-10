@@ -141,7 +141,7 @@ funding-service-design-utils==2.0.31
     # via -r requirements.txt
 gitdb==4.0.10
     # via gitpython
-gitpython==3.1.37
+gitpython==3.1.41
     # via bandit
 greenlet==3.0.1
     # via
@@ -230,6 +230,7 @@ packaging==21.3
     #   -r requirements.txt
     #   build
     #   connexion
+    #   prance
     #   pytest
 pathable==0.4.3
     # via
@@ -364,9 +365,7 @@ s3transfer==0.6.1
     #   -r requirements.txt
     #   boto3
 semver==2.13.0
-    # via
-    #   -r requirements.txt
-    #   prance
+    # via -r requirements.txt
 sentry-sdk[flask]==1.31.0
     # via
     #   -r requirements.txt
