@@ -107,6 +107,7 @@ expected_application_reminder_json = {
             "round_name": "WINDOW 2 ROUND 2",
             "reference": "WUHJFDWJ",
             "deadline_date": "2022-05-20T14:47:12",
+            "contact_help_email": "COF@levellingup.gov.uk",
         }
     },
 }
