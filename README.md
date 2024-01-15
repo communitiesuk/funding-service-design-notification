@@ -82,7 +82,9 @@ Paketo is used to build the docker image which gets deployed to our test and pro
 ## How to post data for notification service.
 
 Go to relevant service. See example
-path: app/notification/magic_link/README.md
+[Magic links](app/notification/magic_link/README.md)
+[Application Record of Submission](app/notification/application/README.md)
+[Application Deadline Reminder](app/notification/application_reminder/README.md)
 
 # Pipelines
 
