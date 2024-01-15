@@ -8,7 +8,7 @@ This repository hosts a Flask web service for Funding Service Design Notificatio
 [Developer setup guide](https://github.com/communitiesuk/funding-service-design-workflows/blob/main/readmes/python-repos-setup.md)
 
 This service depends on:
--funding-service-design-utils
+-[utils](https://github.com/communitiesuk/funding-service-design-utils)
 
 # IDE Setup
 [Python IDE Setup](https://github.com/communitiesuk/funding-service-design-workflows/blob/main/readmes/python-repos-ide-setup.md)
