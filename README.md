@@ -8,7 +8,8 @@ This repository hosts a Flask web service for Funding Service Design Notificatio
 [Developer setup guide](https://github.com/communitiesuk/funding-service-design-workflows/blob/main/readmes/python-repos-setup.md)
 
 This service depends on:
--[utils](https://github.com/communitiesuk/funding-service-design-utils)
+- [utils](https://github.com/communitiesuk/funding-service-design-utils)
+- Gov Notify
 
 # IDE Setup
 [Python IDE Setup](https://github.com/communitiesuk/funding-service-design-workflows/blob/main/readmes/python-repos-ide-setup.md)
@@ -82,9 +83,9 @@ Paketo is used to build the docker image which gets deployed to our test and pro
 ## How to post data for notification service.
 
 Go to relevant service. See example
-[Magic links](app/notification/magic_link/README.md)
-[Application Record of Submission](app/notification/application/README.md)
-[Application Deadline Reminder](app/notification/application_reminder/README.md)
+- [Magic links](app/notification/magic_link/README.md)
+- [Application Record of Submission](app/notification/application/README.md)
+- [Application Deadline Reminder](app/notification/application_reminder/README.md)
 
 # Pipelines
 
