@@ -66,41 +66,41 @@ jobs:
   copilot_environments_workflow_setup:
     runs-on: ubuntu-latest
     outputs:
-      env_list: ${{ steps.copilot_env_list.outputs.env_list }}
-      ind_list: ${{ steps.copilot_env_list.outputs.ind_list }}
+      ind_deploy: ${{ steps.copilot_env_list.outputs.ind_deploy }}
+      pre_deploy: ${{ steps.copilot_env_list.outputs.pre_deploy }}
+      post_deploy: ${{ steps.copilot_env_list.outputs.post_deploy }}
     steps:
-      - id: copilot_env_matrix
+      - id: copilot_env_list
         run: |
-          echo "ind_list=[]" >> $GITHUB_OUTPUT
-          echo "env_list=[]" >> $GITHUB_OUTPUT
           if [ "${{ inputs.environment }}" != "" ]; then
-            echo "ind_list=[\"${{ inputs.environment }}\"]" >> $GITHUB_OUTPUT
+            echo "ind_deploy=${{ inputs.environment }}" >> $GITHUB_OUTPUT
           elif [ "${{ github.ref }}" == 'refs/heads/main' ]; then
-            echo "env_list=[\"dev\", \"test\", \"uat\", \"prod\"]" >> $GITHUB_OUTPUT
+            echo "pre_deploy=yes">> $GITHUB_OUTPUT
+            echo "post_deploy=yes">> $GITHUB_OUTPUT
           else
-            echo "env_list=[\"dev\", \"test\"]" >> $GITHUB_OUTPUT
+            echo "pre_deploy=yes">> $GITHUB_OUTPUT
           fi
 
   ind_deploy:
-    if: ${{ needs.copilot_environments_workflow_setup.outputs.ind_list != '[]' }}
-    concurrency:
-      group: 'fsd-preaward-copilot-dev'
-      cancel-in-progress: false
+    needs: [ pre_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
+    if: ${{ needs.copilot_environments_workflow_setup.outputs.ind_deploy != '' }}
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
+    secrets:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
-      env: 'dev'
+      environment: ${{ needs.copilot_environments_workflow_setup.outputs.ind_deploy }}
       app_name: 'notification'
       version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
 
   dev_deploy:
-    if: ${{ contains(needs.copilot_environments_workflow_setup.outputs.env_list, 'dev')
-    concurrency:
-      group: 'fsd-preaward-copilot-dev'
-      cancel-in-progress: false
+    needs: [ pre_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
+    if: ${{ needs.copilot_environments_workflow_setup.outputs.pre_deploy == 'yes' }}
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
+    secrets:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
-      env: 'dev'
-      app_name: 'notification'
+      environment: dev
+      app_name: notification
       version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
 
   post_dev_deploy_tests:
@@ -118,16 +118,15 @@ jobs:
       environment: dev
 
   test_deploy:
-    if: ${{ contains(needs.copilot_environments_workflow_setup.outputs.env_list, 'test')
-    concurrency:
-      group: 'fsd-preaward-copilot-dev'
-      cancel-in-progress: false
+    needs: [ post_dev_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
+    if: ${{ needs.copilot_environments_workflow_setup.outputs.pre_deploy == 'yes' }}
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
+    secrets:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
-      env: 'test'
+      environment: 'test'
       app_name: 'notification'
       version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
-    needs: [ tag_version, copilot_environments_workflow_setup ]
 
   post_test_deploy_tests:
     needs: test_deploy
@@ -144,16 +143,15 @@ jobs:
       environment: test
 
   uat_deploy:
-    if: ${{ contains(needs.copilot_environments_workflow_setup.outputs.env_list, 'uat')
-    concurrency:
-      group: 'fsd-preaward-copilot-dev'
-      cancel-in-progress: false
+    needs: [ post_test_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
+    if: ${{ needs.copilot_environments_workflow_setup.outputs.post_deploy == 'yes' }}
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
+    secrets:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
-      env: 'uat'
+      environment: 'uat'
       app_name: 'notification'
       version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
-    needs: [ tag_version, post_test_deploy_tests, copilot_environments_workflow_setup ]
 
   post_uat_deploy_tests:
     needs: uat_deploy
@@ -170,13 +168,12 @@ jobs:
       environment: uat
 
   prod_deploy:
-    if: ${{ contains(needs.copilot_environments_workflow_setup.outputs.env_list, 'prod')
-    concurrency:
-      group: 'fsd-preaward-copilot-dev'
-      cancel-in-progress: false
+    needs: [ post_uat_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
+    if: ${{ needs.copilot_environments_workflow_setup.outputs.post_deploy == 'yes' }}
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
+    secrets:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
-      env: 'prod'
+      environment: 'prod'
       app_name: 'notification'
       version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
-    needs: [ tag_version, post_uat_deploy_tests, copilot_environments_workflow_setup ]
