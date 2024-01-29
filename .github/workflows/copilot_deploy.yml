@@ -18,7 +18,7 @@ on:
         description: Run performance tests
       run_e2e_tests:
         required: false
-        default: true
+        default: false
         type: boolean
         description: Run e2e tests
   push:
@@ -36,15 +36,22 @@ on:
       - '.github/workflows/copilot_deploy.yml'
 
 jobs:
-  tag_version:
+  setup:
     runs-on: ubuntu-latest
     outputs:
-      version_to_tag: ${{ steps.notification_tagging.outputs.tag_value }}
+      jobs_to_run: ${{ steps.determine-jobs.outputs.job_list }}
     steps:
-      - id: notification_tagging
+      - id: determine-jobs
         run: |
-          echo "tag_value=$(echo '${{ github.ref }}' | sed -e 's,.*/\(.*\),\1,')" >> $GITHUB_OUTPUT
-
+          if [ "${{ inputs.environment }}" != '' ]; then
+            export jobs='["${{ inputs.environment }}"]'
+          elif [ "${{ github.ref }}" == 'refs/heads/main' ]; then
+            export jobs='["dev", "test", "uat", "prod"]'
+          else
+            export jobs='["dev", "test"]'
+          fi
+          echo "job_list=$(jq -cn --argjson keys "$jobs" '$keys')" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
   pre_deploy_tests:
     secrets:
       GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
@@ -53,55 +60,26 @@ jobs:
       postgres_unit_testing: false
 
   paketo_build:
-    needs: [ tag_version ]
+    needs: setup
     concurrency: build-notification-pack
     permissions:
       packages: write
     uses: communitiesuk/funding-service-design-workflows/.github/workflows/package.yml@main
     with:
-      version_to_build: ${{ needs.tag_version.outputs.version_to_tag }}
+      version_to_build: sha-${{ github.sha }}
       owner: ${{ github.repository_owner }}
       application: funding-service-design-notification
 
-  copilot_environments_workflow_setup:
-    runs-on: ubuntu-latest
-    outputs:
-      ind_deploy: ${{ steps.copilot_env_list.outputs.ind_deploy }}
-      pre_deploy: ${{ steps.copilot_env_list.outputs.pre_deploy }}
-      post_deploy: ${{ steps.copilot_env_list.outputs.post_deploy }}
-    steps:
-      - id: copilot_env_list
-        run: |
-          if [ "${{ inputs.environment }}" != "" ]; then
-            echo "ind_deploy=${{ inputs.environment }}" >> $GITHUB_OUTPUT
-          elif [ "${{ github.ref }}" == 'refs/heads/main' ]; then
-            echo "pre_deploy=yes">> $GITHUB_OUTPUT
-            echo "post_deploy=yes">> $GITHUB_OUTPUT
-          else
-            echo "pre_deploy=yes">> $GITHUB_OUTPUT
-          fi
-
-  ind_deploy:
-    needs: [ pre_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
-    if: ${{ needs.copilot_environments_workflow_setup.outputs.ind_deploy != '' }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
-    secrets:
-      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-    with:
-      environment: ${{ needs.copilot_environments_workflow_setup.outputs.ind_deploy }}
-      app_name: 'notification'
-      version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
-
   dev_deploy:
-    needs: [ pre_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
-    if: ${{ needs.copilot_environments_workflow_setup.outputs.pre_deploy == 'yes' }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
+    needs: [ pre_deploy_tests, paketo_build, setup ]
+    if: ${{ contains(fromJSON(needs.setup.outputs.jobs_to_run), 'dev') }}
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@main
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
       environment: dev
       app_name: notification
-      version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
+      version: sha-${{ github.sha }}
 
   post_dev_deploy_tests:
     needs: dev_deploy
@@ -118,15 +96,15 @@ jobs:
       environment: dev
 
   test_deploy:
-    needs: [ post_dev_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
-    if: ${{ needs.copilot_environments_workflow_setup.outputs.pre_deploy == 'yes' }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
+    needs: [ post_dev_deploy_tests, paketo_build, setup ]
+    if: ${{ always() && contains(fromJSON(needs.setup.outputs.jobs_to_run), 'test') && (needs.post_dev_deploy_tests.result == 'success' || needs.post_dev_deploy_tests.result == 'skipped') && needs.paketo_build.result == 'success' }}
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@main
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
       environment: 'test'
       app_name: 'notification'
-      version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
+      version: sha-${{ github.sha }}
 
   post_test_deploy_tests:
     needs: test_deploy
@@ -143,15 +121,15 @@ jobs:
       environment: test
 
   uat_deploy:
-    needs: [ post_test_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
-    if: ${{ needs.copilot_environments_workflow_setup.outputs.post_deploy == 'yes' }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
+    needs: [ post_test_deploy_tests, paketo_build, setup ]
+    if: ${{ always() && contains(fromJSON(needs.setup.outputs.jobs_to_run), 'uat') && (needs.post_test_deploy_tests.result == 'success' || needs.post_test_deploy_tests.result == 'skipped') && needs.paketo_build.result == 'success' }}
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@main
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
       environment: 'uat'
       app_name: 'notification'
-      version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
+      version: sha-${{ github.sha }}
 
   post_uat_deploy_tests:
     needs: uat_deploy
@@ -168,12 +146,12 @@ jobs:
       environment: uat
 
   prod_deploy:
-    needs: [ post_uat_deploy_tests, paketo_build, tag_version, copilot_environments_workflow_setup ]
-    if: ${{ needs.copilot_environments_workflow_setup.outputs.post_deploy == 'yes' }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@BAU_standardise_deploy
+    needs: [ post_uat_deploy_tests, paketo_build, setup ]
+    if: ${{ always() && contains(fromJSON(needs.setup.outputs.jobs_to_run), 'prod') && (needs.post_uat_deploy_tests.result == 'success' || needs.post_uat_deploy_tests.result == 'skipped') && needs.paketo_build.result == 'success' }}
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@main
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
       environment: 'prod'
       app_name: 'notification'
-      version: ${{ github.ref_name == 'main' && 'latest' || needs.tag_version.outputs.version_to_tag }}
+      version: sha-${{ github.sha }}
