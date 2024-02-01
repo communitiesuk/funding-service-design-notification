@@ -63,7 +63,7 @@ jobs:
       postgres_unit_testing: false
 
   paketo_build:
-    needs: setup
+    needs: [ setup ]
     concurrency: build-notification-pack
     permissions:
       packages: write
@@ -105,8 +105,8 @@ jobs:
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
-      environment: 'test'
-      app_name: 'notification'
+      environment: test
+      app_name: notification
       version: sha-${{ github.sha }}
 
   post_test_deploy_tests:
@@ -131,8 +131,8 @@ jobs:
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
-      environment: 'uat'
-      app_name: 'notification'
+      environment: uat
+      app_name: notification
       version: sha-${{ github.sha }}
 
   post_uat_deploy_tests:
@@ -157,6 +157,6 @@ jobs:
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
-      environment: 'prod'
-      app_name: 'notification'
+      environment: prod
+      app_name: notification
       version: sha-${{ github.sha }}
