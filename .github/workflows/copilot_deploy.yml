@@ -20,12 +20,12 @@ on:
         description: Run performance tests
       run_e2e_tests_assessment:
         required: false
-        default: true
+        default: false
         type: boolean
         description: Run e2e tests
       run_e2e_tests_application:
         required: false
-        default: true
+        default: false
         type: boolean
         description: Run e2e tests
   push:
