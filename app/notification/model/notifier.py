@@ -121,6 +121,7 @@ class Notifier:
 
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
+                email_reply_to_id=contents.reply_to_email_id,
                 template_id=Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[
                     contents.fund_id
                 ]["template_id"],
