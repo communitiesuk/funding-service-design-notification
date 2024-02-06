@@ -93,8 +93,14 @@ docopt==0.6.2
     # via
     #   -r requirements.txt
     #   notifications-python-client
+exceptiongroup==1.2.0
+    # via pytest
 filelock==3.12.0
     # via virtualenv
+flake8==7.0.0
+    # via flake8-pyproject
+flake8-pyproject==1.2.3
+    # via -r requirements-dev.in
 flask==2.2.5
     # via
     #   -r requirements.txt
@@ -199,6 +205,8 @@ markupsafe==2.1.1
     #   mako
     #   sentry-sdk
     #   werkzeug
+mccabe==0.7.0
+    # via flake8
 mypy-extensions==1.0.0
     # via black
 nodeenv==1.8.0
@@ -238,6 +246,8 @@ prance==23.6.21.0
     # via -r requirements.txt
 pre-commit==3.3.2
     # via -r requirements-dev.in
+pycodestyle==2.11.1
+    # via flake8
 pycparser==2.21
     # via
     #   -r requirements.txt
@@ -246,6 +256,8 @@ pyee==6.0.0
     # via
     #   -r requirements.txt
     #   flipper-client
+pyflakes==3.2.0
+    # via flake8
 pygments==2.15.0
     # via
     #   -r requirements.txt
@@ -344,6 +356,8 @@ s3transfer==0.6.1
     # via
     #   -r requirements.txt
     #   boto3
+semver==2.13.0
+    # via -r requirements.txt
 sentry-sdk[flask]==1.31.0
     # via
     #   -r requirements.txt
@@ -376,6 +390,13 @@ thrift==0.16.0
     # via
     #   -r requirements.txt
     #   flipper-client
+tomli==2.0.1
+    # via
+    #   black
+    #   build
+    #   flake8-pyproject
+    #   pyproject-hooks
+    #   pytest
 typing-extensions==4.6.2
     # via
     #   -r requirements.txt
