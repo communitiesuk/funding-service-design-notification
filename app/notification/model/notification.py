@@ -10,6 +10,7 @@ from fsd_utils.config.notify_constants import NotifyConstants
 class Notification:
     template_type: str
     contact_info: str
+    contact_name: str
     content: dict
 
     @staticmethod
@@ -22,6 +23,7 @@ class Notification:
         notification_data = Notification(
             template_type=data.get("type"),
             contact_info=data.get("to"),
+            contact_name=data.get("full_name"),
             content=data.get("content"),
         )
         return notification_data
@@ -57,6 +59,23 @@ class Notification:
                     f"Validating template type: {notification.template_type})"
                 )
                 return Notifier.send_application_reminder(notification)
+
+            case "Full pass":  # TODO: Add `NotifyConstants.TEMPLATE_TYPE_EOI_PASS` in utils:
+                current_app.logger.info(
+                    f"Validating template type: {notification.template_type})"
+                )
+                return Notifier.send_submitted_eoi(
+                    notification=notification, template_name="Full pass"
+                )
+
+            case "Pass with caveats":  # TODO: Add `NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS` in utils:
+                current_app.logger.info(
+                    f"Validating template type: {notification.template_type})"
+                )
+                return Notifier.send_submitted_eoi(
+                    notification=notification,
+                    template_name="Pass with caveats",
+                )
 
             case "NOTIFICATION" | "AWARD":
                 return f"Currently {notification.template_type} service is not available."  # noqa
