@@ -52,6 +52,7 @@ class ApplicationReminder(_NotificationContents):
             )
             return cls(
                 contact_info=notification.contact_info,
+                contact_name=notification.contact_name,
                 deadline_date=deadline_date,
                 fund_name=application_data.get("fund_name"),
                 round_name=application_data.get("round_name"),

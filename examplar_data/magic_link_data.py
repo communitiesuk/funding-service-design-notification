@@ -65,6 +65,7 @@ def notification_class_data_for_magic_link():
     return Notification(
         template_type="MAGIC_LINK",
         contact_info="testing_magic_link@example.com",
+        contact_name="Test User",
         content={
             "contact_help_email": "nope@wrong.gov.uk",
             "fund_name": "Funding service",

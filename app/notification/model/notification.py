@@ -23,7 +23,7 @@ class Notification:
         notification_data = Notification(
             template_type=data.get("type"),
             contact_info=data.get("to"),
-            contact_name=data.get("full_name"),
+            contact_name=data.get("full_name", ""),
             content=data.get("content"),
         )
         return notification_data

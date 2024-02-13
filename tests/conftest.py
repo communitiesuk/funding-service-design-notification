@@ -48,6 +48,7 @@ def app_context():
 def mock_application_class_data():
     return Application(
         contact_info="example@example.com",
+        contact_name="Test User",
         questions=b"",
         fund_name="Example Fund",
         round_name="Round 1",

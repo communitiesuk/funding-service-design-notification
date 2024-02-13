@@ -140,6 +140,7 @@ def notification_class_data_for_application(
     return Notification(
         template_type="APPLICATION_RECORD_OF_SUBMISSION",
         contact_info="sender@service.gov.uk",
+        contact_name="Test User",
         content={
             "application": {
                 "language": "en",
