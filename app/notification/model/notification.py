@@ -60,21 +60,22 @@ class Notification:
                 )
                 return Notifier.send_application_reminder(notification)
 
-            case "Full pass":  # TODO: Add `NotifyConstants.TEMPLATE_TYPE_EOI_PASS` in utils:
-                current_app.logger.info(
-                    f"Validating template type: {notification.template_type})"
-                )
-                return Notifier.send_submitted_eoi(
-                    notification=notification, template_name="Full pass"
-                )
-
-            case "Pass with caveats":  # TODO: Add `NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS` in utils:
+            case NotifyConstants.TEMPLATE_TYPE_EOI_PASS:
                 current_app.logger.info(
                     f"Validating template type: {notification.template_type})"
                 )
                 return Notifier.send_submitted_eoi(
                     notification=notification,
-                    template_name="Pass with caveats",
+                    template_name=NotifyConstants.TEMPLATE_TYPE_EOI_PASS,
+                )
+
+            case NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS:
+                current_app.logger.info(
+                    f"Validating template type: {notification.template_type})"
+                )
+                return Notifier.send_submitted_eoi(
+                    notification=notification,
+                    template_name=NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS,
                 )
 
             case "NOTIFICATION" | "AWARD":

@@ -62,7 +62,9 @@ class Application(_NotificationContents):
         application_data = notification.content[
             NotifyConstants.APPLICATION_FIELD
         ]
-        caveats = notification.content.get("caveats", None)
+        caveats = notification.content.get(
+            NotifyConstants.APPLICATION_CAVEATS, None
+        )
         return cls(
             contact_info=notification.contact_info,
             contact_name=notification.contact_name,
