@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 
 from fsd_utils import configclass
+from fsd_utils import NotifyConstants
 
 
 @configclass
@@ -23,6 +24,19 @@ class DefaultConfig:
     MAGIC_LINK_TEMPLATE_ID = os.environ.get(
         "MAGIC_LINK_TEMPLATE_ID", "02a6d48a-f227-4b9a-9dd7-9e0cf203c8a2"
     )
+
+    EXPRESSION_OF_INTEREST_TEMPLATE_ID = {
+        "54c11ec2-0b16-46bb-80d2-f210e47a8791": {
+            NotifyConstants.TEMPLATE_TYPE_EOI_PASS: {
+                "fund_name": "COF",
+                "template_id": "04db42f4-a74e-4ab3-b9e2-565592fd6f46",
+            },
+            NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS: {
+                "fund_name": "COF",
+                "template_id": "705684c7-6985-4d4c-9170-08a85f47b8e1",
+            },
+        },
+    }
 
     APPLICATION_RECORD_TEMPLATE_ID = {
         "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {

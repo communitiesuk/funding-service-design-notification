@@ -135,7 +135,7 @@ flipper-client==1.3.2
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
-funding-service-design-utils==2.0.31
+funding-service-design-utils==2.0.41
     # via -r requirements.txt
 greenlet==3.0.1
     # via
@@ -224,6 +224,7 @@ packaging==21.3
     #   -r requirements.txt
     #   build
     #   connexion
+    #   prance
     #   pytest
 pathable==0.4.3
     # via
@@ -231,8 +232,6 @@ pathable==0.4.3
     #   jsonschema-path
 pathspec==0.11.1
     # via black
-pbr==5.11.1
-    # via stevedore
 pip-tools==6.13.0
     # via -r requirements-dev.in
 platformdirs==3.5.1
@@ -262,7 +261,6 @@ pyjwt[crypto]==2.4.0
     #   -r requirements.txt
     #   funding-service-design-utils
     #   notifications-python-client
-    #   pyjwt
 pyparsing==3.0.9
     # via
     #   -r requirements.txt
@@ -356,15 +354,10 @@ s3transfer==0.6.1
     # via
     #   -r requirements.txt
     #   boto3
-semver==2.13.0
-    # via
-    #   -r requirements.txt
-    #   prance
 sentry-sdk[flask]==1.31.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
-    #   sentry-sdk
 six==1.16.0
     # via
     #   -r requirements.txt
@@ -374,8 +367,6 @@ six==1.16.0
     #   python-dateutil
     #   rfc3339-validator
     #   thrift
-smmap==5.0.0
-    # via gitdb
 soupsieve==2.4.1
     # via
     #   -r requirements.txt
@@ -400,7 +391,6 @@ tomli==2.0.1
     # via
     #   black
     #   build
-    #   pyproject-hooks
     #   pytest
 typing-extensions==4.6.2
     # via

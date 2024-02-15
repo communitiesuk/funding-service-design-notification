@@ -39,6 +39,7 @@ class MagicLink(_NotificationContents):
 
         return cls(
             contact_info=notification.contact_info,
+            contact_name=notification.contact_name,
             fund_name=notification.content.get(
                 NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD
             ),

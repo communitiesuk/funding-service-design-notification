@@ -7,6 +7,7 @@ import pytest
 from app.create_app import create_app
 from app.notification.application.map_contents import Application
 from examplar_data.application_data import expected_application_response
+from examplar_data.application_data import expected_eoi_application_response
 from examplar_data.magic_link_data import expected_magic_link_response
 from flask import Request
 from notifications_python_client import NotificationsAPIClient
@@ -48,6 +49,7 @@ def app_context():
 def mock_application_class_data():
     return Application(
         contact_info="example@example.com",
+        contact_name="Test User",
         questions=b"",
         fund_name="Example Fund",
         round_name="Round 1",
@@ -108,6 +110,8 @@ def mock_notifications_api_client(request):
         mock_data = (
             expected_application_response  # EXPECTED DATA FOR APPLICATION
         )
+    elif mock_data == 3:
+        mock_data = expected_eoi_application_response  # EXPECTED DATA FOR EOI APPLICATION
 
     notifications_client = Mock(spec=NotificationsAPIClient)
     notifications_client.send_email_notification.return_value = (

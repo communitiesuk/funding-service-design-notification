@@ -102,6 +102,50 @@ class Notifier:
             )
 
     @staticmethod
+    def send_submitted_eoi(
+        notification: Notification, code: int = 200, template_name: str = ""
+    ) -> tuple:
+        """Function makes a call to govuk-notify-service with mapped contents
+        that are expected by the govuk-notify-service template.
+
+        Args: Takes an instance of Notification class.
+
+        Raises HTTPError if any of the required contents are incorrect
+        or missing.
+        """
+        try:
+            notifications_client = NotificationsAPIClient(
+                Config.GOV_NOTIFY_API_KEY
+            )
+            contents = Application.from_notification(notification)
+            response = notifications_client.send_email_notification(
+                email_address=contents.contact_info,
+                template_id=Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[
+                    contents.fund_id
+                ][template_name]["template_id"],
+                email_reply_to_id=contents.reply_to_email_id,
+                personalisation={
+                    "name of fund": contents.fund_name,
+                    "application reference": contents.reference,
+                    "date submitted": contents.format_submission_date,
+                    "round name": contents.round_name,
+                    "question": prepare_upload(contents.questions),
+                    "caveats": contents.caveats,
+                    "full name": contents.contact_name,
+                },
+            )
+            current_app.logger.info("Call made to govuk Notify API")
+            return response, code
+
+        except errors.HTTPError:
+            current_app.logger.exception(
+                "HTTPError while sending notification"
+            )
+            return invalid_data_error(
+                Application.from_notification(notification)
+            )
+
+    @staticmethod
     def send_incomplete_application(
         notification: Notification, code: int = 200
     ) -> tuple:

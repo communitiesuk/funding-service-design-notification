@@ -28,6 +28,7 @@ class Application(_NotificationContents):
     reference: str
     reply_to_email_id: str
     submission_date: str = None
+    caveats: str = None
 
     @property
     def format_submission_date(self):
@@ -61,8 +62,12 @@ class Application(_NotificationContents):
         application_data = notification.content[
             NotifyConstants.APPLICATION_FIELD
         ]
+        caveats = notification.content.get(
+            NotifyConstants.APPLICATION_CAVEATS, None
+        )
         return cls(
             contact_info=notification.contact_info,
+            contact_name=notification.contact_name,
             questions=cls.bytes_object_for_questions_answers(notification),
             submission_date=application_data.get("date_submitted"),
             fund_name=application_data.get("fund_name"),
@@ -74,6 +79,7 @@ class Application(_NotificationContents):
                     NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
                 )
             ],
+            caveats=caveats,
         )
 
     @classmethod

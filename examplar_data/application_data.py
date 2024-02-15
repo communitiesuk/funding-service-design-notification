@@ -133,6 +133,20 @@ expected_application_response = (
     },
 )
 
+expected_eoi_application_response = (
+    {
+        "content": {
+            "body": (
+                "#Fund name - Expression Of Interest"
+                " \r\n---\r\nApplication id: 7bc21539 \r\n---\r\nDate"
+                " submitted: 2023-08-04\r\n---     \r\nRound name: Round"
+                " 2\r\n---\r\n"
+            ),
+            "from_email": "sender@service.gov.uk",
+        },
+    },
+)
+
 
 def notification_class_data_for_application(
     date_submitted=True, deadline_date=True
@@ -140,6 +154,7 @@ def notification_class_data_for_application(
     return Notification(
         template_type="APPLICATION_RECORD_OF_SUBMISSION",
         contact_info="sender@service.gov.uk",
+        contact_name="Test User",
         content={
             "application": {
                 "language": "en",
@@ -169,5 +184,46 @@ def notification_class_data_for_application(
                 "fund_name": "Night Shelter Transformation Fund",
             },
             "contact_help_email": "transformationfund@levellingup.gov.uk",
+        },
+    )
+
+
+def notification_class_data_for_eoi(date_submitted=True, deadline_date=True):
+    return Notification(
+        template_type="APPLICATION_RECORD_OF_SUBMISSION",
+        contact_info="sender@service.gov.uk",
+        contact_name="Test User",
+        content={
+            "application": {
+                "language": "en",
+                "reference": "EOI",
+                "id": "7bc21539",
+                "status": "SUBMITTED",
+                "last_edited": "2023-08-04T15:47:21.274900",
+                "started_at": "2023-08-04T15:47:21.274900",
+                "deadline_date": "2023-12-12T15:47:21"
+                if deadline_date
+                else None,
+                "round_name": "Round 2",
+                "forms": [
+                    {
+                        "name": "current-services-ns",
+                        "status": "NOT_STARTED",
+                        "questions": [],
+                    },
+                ],
+                "date_submitted": "2023-08-04T15:47:23.208849"
+                if date_submitted
+                else None,
+                "account_id": "6802f603",
+                "fund_id": "54c11ec2-0b16-46bb-80d2-f210e47a8791",
+                "project_name": None,
+                "round_id": "fc7aa604",
+                "fund_name": "Expression Of Interest",
+            },
+            "contact_help_email": "transformationfund@levellingup.gov.uk",
+            "caveats": [
+                "Stop cutting trees to be eligible for applying for the fund"
+            ],
         },
     )

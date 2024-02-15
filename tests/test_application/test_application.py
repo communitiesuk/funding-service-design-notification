@@ -14,6 +14,7 @@ from examplar_data.application_data import (
 from examplar_data.application_data import (
     notification_class_data_for_application,
 )
+from examplar_data.application_data import notification_class_data_for_eoi
 from examplar_data.application_data import (
     unexpected_application_json,
 )
@@ -134,6 +135,26 @@ def test_send_submitted_application(
         notification_class_data_for_application(
             date_submitted=True, deadline_date=False
         )
+    )
+
+    assert code == 200
+
+
+@pytest.mark.parametrize(
+    "mock_notifications_api_client",
+    [3],
+    indirect=True,
+)
+def test_send_submitted_eoi(
+    app_context,
+    mock_notifier_api_client,
+    mock_notifications_api_client,
+):
+    _, code = Notifier.send_submitted_eoi(
+        notification=notification_class_data_for_eoi(
+            date_submitted=True, deadline_date=False
+        ),
+        template_name="Pass with caveats",
     )
 
     assert code == 200
