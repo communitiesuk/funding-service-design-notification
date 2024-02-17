@@ -83,7 +83,7 @@ commonmark==0.9.1
     #   rich
 connexion==2.14.2
     # via -r requirements.txt
-cryptography==41.0.7
+cryptography==42.0.2
     # via
     #   -r requirements.txt
     #   pyjwt
@@ -261,6 +261,7 @@ pyjwt[crypto]==2.4.0
     #   -r requirements.txt
     #   funding-service-design-utils
     #   notifications-python-client
+    #   pyjwt
 pyparsing==3.0.9
     # via
     #   -r requirements.txt
@@ -358,6 +359,7 @@ sentry-sdk[flask]==1.31.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
+    #   sentry-sdk
 six==1.16.0
     # via
     #   -r requirements.txt
@@ -391,6 +393,7 @@ tomli==2.0.1
     # via
     #   black
     #   build
+    #   pyproject-hooks
     #   pytest
 typing-extensions==4.6.2
     # via
