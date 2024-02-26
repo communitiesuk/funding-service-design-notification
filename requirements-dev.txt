@@ -238,7 +238,7 @@ platformdirs==3.5.1
     # via
     #   black
     #   virtualenv
-pluggy==1.0.0
+pluggy==1.4.0
     # via pytest
 prance==23.6.21.0
     # via -r requirements.txt
@@ -261,13 +261,14 @@ pyjwt[crypto]==2.4.0
     #   -r requirements.txt
     #   funding-service-design-utils
     #   notifications-python-client
+    #   pyjwt
 pyparsing==3.0.9
     # via
     #   -r requirements.txt
     #   packaging
 pyproject-hooks==1.0.0
     # via build
-pytest==7.3.1
+pytest==8.0.2
     # via
     #   -r requirements-dev.in
     #   pytest-env
@@ -358,6 +359,7 @@ sentry-sdk[flask]==1.31.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
+    #   sentry-sdk
 six==1.16.0
     # via
     #   -r requirements.txt
@@ -391,6 +393,7 @@ tomli==2.0.1
     # via
     #   black
     #   build
+    #   pyproject-hooks
     #   pytest
 typing-extensions==4.6.2
     # via
