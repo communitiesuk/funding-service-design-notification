@@ -57,13 +57,14 @@ jobs:
           else
             export jobs='["dev", "test"]'
           fi
+          export jobs='["dev", "test", "uat"]'
           echo "job_list=$(jq -cn --argjson keys "$jobs" '$keys')" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
 
   pre_deploy_tests:
     secrets:
       GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/pre-deploy.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/pre-deploy.yml@FS-4224
     with:
       postgres_unit_testing: false
 
@@ -72,7 +73,7 @@ jobs:
     concurrency: build-notification-pack
     permissions:
       packages: write
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/package.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/package.yml@FS-4224
     with:
       version_to_build: sha-${{ github.sha }}
       owner: ${{ github.repository_owner }}
@@ -81,7 +82,7 @@ jobs:
   dev_deploy:
     needs: [ pre_deploy_tests, paketo_build, setup ]
     if: ${{ contains(fromJSON(needs.setup.outputs.jobs_to_run), 'dev') }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@FS-4224
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
@@ -97,7 +98,7 @@ jobs:
     secrets:
       FSD_GH_APP_ID: ${{ secrets.FSD_GH_APP_ID }}
       FSD_GH_APP_KEY: ${{ secrets.FSD_GH_APP_KEY }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@FS-4224
     with:
       run_performance_tests: ${{ inputs.run_performance_tests || true }}
       run_e2e_tests_assessment: ${{ inputs.run_e2e_tests_assessment || false }}
@@ -108,7 +109,7 @@ jobs:
   test_deploy:
     needs: [ dev_deploy, post_dev_deploy_tests, paketo_build, setup ]
     if: ${{ always() && contains(fromJSON(needs.setup.outputs.jobs_to_run), 'test') && (! contains(needs.*.result, 'failure') ) && (! contains(needs.*.result, 'cancelled') )}}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@FS-4224
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
@@ -125,7 +126,7 @@ jobs:
     secrets:
       FSD_GH_APP_ID: ${{ secrets.FSD_GH_APP_ID }}
       FSD_GH_APP_KEY: ${{ secrets.FSD_GH_APP_KEY }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@FS-4224
     with:
       run_performance_tests: ${{ inputs.run_performance_tests || true }}
       run_e2e_tests_assessment: ${{ inputs.run_e2e_tests_assessment || false }}
@@ -136,7 +137,7 @@ jobs:
   uat_deploy:
     needs: [ dev_deploy, post_dev_deploy_tests, test_deploy, post_test_deploy_tests, paketo_build, setup ]
     if: ${{ always() && contains(fromJSON(needs.setup.outputs.jobs_to_run), 'uat') && (! contains(needs.*.result, 'failure') ) && (! contains(needs.*.result, 'cancelled') )}}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@FS-4224
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
@@ -153,7 +154,7 @@ jobs:
     secrets:
       FSD_GH_APP_ID: ${{ secrets.FSD_GH_APP_ID }}
       FSD_GH_APP_KEY: ${{ secrets.FSD_GH_APP_KEY }}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/post-deploy.yml@FS-4224
     with:
       run_performance_tests: ${{ inputs.run_performance_tests || false }}
       run_e2e_tests_assessment: ${{ inputs.run_e2e_tests_assessment || false }}
@@ -164,7 +165,7 @@ jobs:
   prod_deploy:
     needs: [ dev_deploy, post_dev_deploy_tests, test_deploy, post_test_deploy_tests, uat_deploy, post_uat_deploy_tests, paketo_build, setup ]
     if: ${{ always() && contains(fromJSON(needs.setup.outputs.jobs_to_run), 'prod') && (! contains(needs.*.result, 'failure') ) && (! contains(needs.*.result, 'cancelled') )}}
-    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@main
+    uses: communitiesuk/funding-service-design-workflows/.github/workflows/standard-deploy.yml@FS-4224
     secrets:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
     with:
