@@ -149,7 +149,7 @@ expected_eoi_application_response = (
 
 
 def notification_class_data_for_application(
-    date_submitted=True, deadline_date=True
+    date_submitted=True, deadline_date=True, language="en"
 ):
     return Notification(
         template_type="APPLICATION_RECORD_OF_SUBMISSION",
@@ -157,7 +157,7 @@ def notification_class_data_for_application(
         contact_name="Test User",
         content={
             "application": {
-                "language": "en",
+                "language": language,
                 "reference": "NSTF",
                 "id": "7bc21539",
                 "status": "SUBMITTED",
@@ -188,14 +188,16 @@ def notification_class_data_for_application(
     )
 
 
-def notification_class_data_for_eoi(date_submitted=True, deadline_date=True):
+def notification_class_data_for_eoi(
+    date_submitted=True, deadline_date=True, language="en"
+):
     return Notification(
         template_type="APPLICATION_RECORD_OF_SUBMISSION",
         contact_info="sender@service.gov.uk",
         contact_name="Test User",
         content={
             "application": {
-                "language": "en",
+                "language": language,
                 "reference": "EOI",
                 "id": "7bc21539",
                 "status": "SUBMITTED",
