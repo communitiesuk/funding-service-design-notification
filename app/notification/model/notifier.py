@@ -122,7 +122,7 @@ class Notifier:
                 email_address=contents.contact_info,
                 template_id=Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[
                     contents.fund_id
-                ][template_name]["template_id"],
+                ][template_name]["template_id"].get(contents.language, "en"),
                 email_reply_to_id=contents.reply_to_email_id,
                 personalisation={
                     "name of fund": contents.fund_name,

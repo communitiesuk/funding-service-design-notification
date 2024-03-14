@@ -29,6 +29,7 @@ class Application(_NotificationContents):
     reply_to_email_id: str
     submission_date: str = None
     caveats: str = None
+    language: str = None
 
     @property
     def format_submission_date(self):
@@ -74,6 +75,7 @@ class Application(_NotificationContents):
             fund_id=application_data.get("fund_id"),
             round_name=application_data.get("round_name"),
             reference=application_data.get("reference"),
+            language=application_data.get("language"),
             reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[
                 notification.content.get(
                     NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
