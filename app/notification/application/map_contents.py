@@ -104,7 +104,9 @@ class Application(_NotificationContents):
         """
         forms = cls.get_forms(notification)
 
-        questions_answers = extract_questions_and_answers(forms)
+        questions_answers = extract_questions_and_answers(
+            forms, notification.content["application"]["language"]
+        )
         return questions_answers
 
     @classmethod
