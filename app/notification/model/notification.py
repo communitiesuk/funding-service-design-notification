@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 
-from app.notification.model.notifier import Notifier
-from app.notification.model.response import template_type_error
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
+
+from app.notification.model.notifier import Notifier
+from app.notification.model.response import template_type_error
 
 
 @dataclass

@@ -1,4 +1,5 @@
 import pytest
+
 from examplar_data.magic_link_data import incorrect_content_body_key
 
 

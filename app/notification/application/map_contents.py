@@ -6,15 +6,13 @@ from io import BytesIO
 from typing import TYPE_CHECKING
 
 import pytz
-from app.notification.notification_contents_base_class import (
-    _NotificationContents,
-)
-from config import Config
 from flask import current_app
 from fsd_utils import extract_questions_and_answers
 from fsd_utils import generate_text_of_application
 from fsd_utils.config.notify_constants import NotifyConstants
 
+from app.notification.notification_contents_base_class import _NotificationContents
+from config import Config
 
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
@@ -57,15 +55,9 @@ class Application(_NotificationContents):
         Returns:
             Application object containing application contents.
         """
-        current_app.logger.info(
-            f"Mapping contents for {notification.template_type}"
-        )
-        application_data = notification.content[
-            NotifyConstants.APPLICATION_FIELD
-        ]
-        caveats = notification.content.get(
-            NotifyConstants.APPLICATION_CAVEATS, None
-        )
+        current_app.logger.info(f"Mapping contents for {notification.template_type}")
+        application_data = notification.content[NotifyConstants.APPLICATION_FIELD]
+        caveats = notification.content.get(NotifyConstants.APPLICATION_CAVEATS, None)
         return cls(
             contact_info=notification.contact_info,
             contact_name=notification.contact_name,

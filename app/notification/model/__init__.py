@@ -1,7 +1,8 @@
 # from app.notification.model.template_types import email_recipient
-from app.notification.model.notification import Notification
 from flask import request
 from requests import Response
+
+from app.notification.model.notification import Notification
 
 
 def send_email() -> Response:
