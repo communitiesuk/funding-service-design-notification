@@ -14,6 +14,7 @@ expected_application_json = {
             "round_name": "summer",
             "date_submitted": "2022-05-14T09:25:44.124542",
             "fund_name": "Community Ownership Fund",
+            "language": "en",
             NotifyConstants.APPLICATION_FORMS_FIELD: [
                 {
                     NotifyConstants.APPLICATION_NAME_FIELD: "about-your-org",
