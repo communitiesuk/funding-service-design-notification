@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 @dataclass
 class Application(_NotificationContents):
-    questions: bytes
+    questions: BytesIO
     fund_id: str
     round_name: str
     reference: str
@@ -129,7 +129,10 @@ class Application(_NotificationContents):
         """
         q_and_a = cls.get_questions_and_answers(notification)
         fund_name = cls.get_fund_name(notification)
-        stringIO_data = generate_text_of_application(q_and_a, fund_name)
+        language = notification.content["application"]["language"]
+        stringIO_data = generate_text_of_application(
+            q_and_a, fund_name, language
+        )
         convert_to_bytes = bytes(stringIO_data, "utf-8")
         bytes_object = BytesIO(convert_to_bytes)
         return bytes_object
