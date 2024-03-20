@@ -1,9 +1,8 @@
 import pytest
+
 from app.notification.model.notifier import Notifier
 from examplar_data.magic_link_data import incorrect_content_body_key
-from examplar_data.magic_link_data import (
-    notification_class_data_for_magic_link,
-)
+from examplar_data.magic_link_data import notification_class_data_for_magic_link
 
 
 @pytest.mark.usefixtures("live_server")

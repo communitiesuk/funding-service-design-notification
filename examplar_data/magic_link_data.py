@@ -1,5 +1,6 @@
-from app.notification.model.notification import Notification
 from fsd_utils.config.notify_constants import NotifyConstants
+
+from app.notification.model.notification import Notification
 
 valid_content_body = {
     NotifyConstants.MAGIC_LINK_URL_FIELD: "MAGIC-LINK-GOES-HERE",

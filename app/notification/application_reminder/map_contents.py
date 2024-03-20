@@ -4,11 +4,10 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from app.notification.notification_contents_base_class import (
-    _NotificationContents,
-)
-from config import Config
 from flask import current_app
+
+from app.notification.notification_contents_base_class import _NotificationContents
+from config import Config
 
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification

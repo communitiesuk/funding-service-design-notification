@@ -4,14 +4,14 @@ from unittest.mock import Mock
 from unittest.mock import patch
 
 import pytest
+from flask import Request
+from notifications_python_client import NotificationsAPIClient
+
 from app.create_app import create_app
 from app.notification.application.map_contents import Application
 from examplar_data.application_data import expected_application_response
 from examplar_data.application_data import expected_eoi_application_response
 from examplar_data.magic_link_data import expected_magic_link_response
-from flask import Request
-from notifications_python_client import NotificationsAPIClient
-
 
 if platform.system() == "Darwin":
     multiprocessing.set_start_method("fork")  # Required on macOSX

@@ -1,6 +1,6 @@
-from app.notification.model.notification import Notification
 from fsd_utils.config.notify_constants import NotifyConstants
 
+from app.notification.model.notification import Notification
 
 expected_application_json = {
     NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,

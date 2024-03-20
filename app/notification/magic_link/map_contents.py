@@ -3,11 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from app.notification.notification_contents_base_class import (
-    _NotificationContents,
-)
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
+
+from app.notification.notification_contents_base_class import _NotificationContents
 
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification

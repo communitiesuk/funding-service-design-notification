@@ -2,8 +2,8 @@ import logging
 import os
 from pathlib import Path
 
-from fsd_utils import configclass
 from fsd_utils import NotifyConstants
+from fsd_utils import configclass
 
 
 @configclass
