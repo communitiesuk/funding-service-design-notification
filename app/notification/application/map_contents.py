@@ -57,15 +57,9 @@ class Application(_NotificationContents):
         Returns:
             Application object containing application contents.
         """
-        current_app.logger.info(
-            f"Mapping contents for {notification.template_type}"
-        )
-        application_data = notification.content[
-            NotifyConstants.APPLICATION_FIELD
-        ]
-        caveats = notification.content.get(
-            NotifyConstants.APPLICATION_CAVEATS, None
-        )
+        current_app.logger.info(f"Mapping contents for {notification.template_type}")
+        application_data = notification.content[NotifyConstants.APPLICATION_FIELD]
+        caveats = notification.content.get(NotifyConstants.APPLICATION_CAVEATS, None)
         return cls(
             contact_info=notification.contact_info,
             contact_name=notification.contact_name,

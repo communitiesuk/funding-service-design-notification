@@ -42,9 +42,7 @@ class ApplicationReminder(_NotificationContents):
         Returns:
             Application object containing application contents.
         """
-        current_app.logger.info(
-            f"Mapping contents for {notification.template_type}"
-        )
+        current_app.logger.info(f"Mapping contents for {notification.template_type}")
         try:
             application_data = notification.content["application"]
             deadline_date = cls.format_deadline_date(
@@ -65,6 +63,5 @@ class ApplicationReminder(_NotificationContents):
 
         except Exception as e:
             current_app.logger.error(
-                "Could not map the contents for"
-                f" {notification.template_type} {e}"
+                "Could not map the contents for" f" {notification.template_type} {e}"
             )

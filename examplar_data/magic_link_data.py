@@ -4,21 +4,15 @@ from fsd_utils.config.notify_constants import NotifyConstants
 valid_content_body = {
     NotifyConstants.MAGIC_LINK_URL_FIELD: "MAGIC-LINK-GOES-HERE",
     NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD: "FUND NAME GOES HERE",
-    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: (
-        "COF@levellingup.gov.uk"
-    ),
-    NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD: (
-        "NEW LINK URL GOES HERE"
-    ),
+    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: ("COF@levellingup.gov.uk"),
+    NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD: ("NEW LINK URL GOES HERE"),
 }
 
 invalid_content_body = {
     NotifyConstants.MAGIC_LINK_URL_FIELD: "MAGIC-LINK-GOES-HERE",
     NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD: "FUND NAME GOES HERE",
     NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: "nope@wrong.gov.uk",
-    NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD: (
-        "NEW LINK URL GOES HERE"
-    ),
+    NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD: ("NEW LINK URL GOES HERE"),
 }
 
 expected_magic_link_unknown_help_email = {
@@ -46,9 +40,7 @@ incorrect_template_type = {
 }
 
 expected_magic_link_response = {
-    "content": {
-        "body": "You requested a link to start or continue an application"
-    },
+    "content": {"body": "You requested a link to start or continue an application"},
     "id": "431ff6c3",
     "reference": None,
     "scheduled_for": None,
