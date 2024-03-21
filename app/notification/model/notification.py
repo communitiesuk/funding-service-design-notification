@@ -1,15 +1,17 @@
 from dataclasses import dataclass
 
-from app.notification.model.notifier import Notifier
-from app.notification.model.response import template_type_error
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
+
+from app.notification.model.notifier import Notifier
+from app.notification.model.response import template_type_error
 
 
 @dataclass
 class Notification:
     template_type: str
     contact_info: str
+    contact_name: str
     content: dict
 
     @staticmethod
@@ -22,6 +24,7 @@ class Notification:
         notification_data = Notification(
             template_type=data.get("type"),
             contact_info=data.get("to"),
+            contact_name=data.get("full_name", ""),
             content=data.get("content"),
         )
         return notification_data
@@ -57,6 +60,24 @@ class Notification:
                     f"Validating template type: {notification.template_type})"
                 )
                 return Notifier.send_application_reminder(notification)
+
+            case NotifyConstants.TEMPLATE_TYPE_EOI_PASS:
+                current_app.logger.info(
+                    f"Validating template type: {notification.template_type})"
+                )
+                return Notifier.send_submitted_eoi(
+                    notification=notification,
+                    template_name=NotifyConstants.TEMPLATE_TYPE_EOI_PASS,
+                )
+
+            case NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS:
+                current_app.logger.info(
+                    f"Validating template type: {notification.template_type})"
+                )
+                return Notifier.send_submitted_eoi(
+                    notification=notification,
+                    template_name=NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS,
+                )
 
             case "NOTIFICATION" | "AWARD":
                 return f"Currently {notification.template_type} service is not available."  # noqa

@@ -4,13 +4,14 @@ from unittest.mock import Mock
 from unittest.mock import patch
 
 import pytest
-from app.create_app import create_app
-from app.notification.application.map_contents import Application
-from examplar_data.application_data import expected_application_response
-from examplar_data.magic_link_data import expected_magic_link_response
 from flask import Request
 from notifications_python_client import NotificationsAPIClient
 
+from app.create_app import create_app
+from app.notification.application.map_contents import Application
+from examplar_data.application_data import expected_application_response
+from examplar_data.application_data import expected_eoi_application_response
+from examplar_data.magic_link_data import expected_magic_link_response
 
 if platform.system() == "Darwin":
     multiprocessing.set_start_method("fork")  # Required on macOSX
@@ -48,6 +49,7 @@ def app_context():
 def mock_application_class_data():
     return Application(
         contact_info="example@example.com",
+        contact_name="Test User",
         questions=b"",
         fund_name="Example Fund",
         round_name="Round 1",
@@ -84,9 +86,7 @@ def mock_notify_response(mocker, request, mock_request_data):
 
     status_code = 200 if request_data["content"] else 400
     response_data = (
-        {"success": True}
-        if status_code == 200
-        else {"error": "Invalid request"}
+        {"success": True} if status_code == 200 else {"error": "Invalid request"}
     )
     response = (response_data, status_code)
     mocker.patch(
@@ -101,12 +101,12 @@ def mock_notifications_api_client(request):
     mock_data = request.param
 
     if mock_data == 1:
-        mock_data = (
-            expected_magic_link_response  # EXPECTED DATA FOR MAGIC LINK
-        )
+        mock_data = expected_magic_link_response  # EXPECTED DATA FOR MAGIC LINK
     elif mock_data == 2:
+        mock_data = expected_application_response  # EXPECTED DATA FOR APPLICATION
+    elif mock_data == 3:
         mock_data = (
-            expected_application_response  # EXPECTED DATA FOR APPLICATION
+            expected_eoi_application_response  # EXPECTED DATA FOR EOI APPLICATION
         )
 
     notifications_client = Mock(spec=NotificationsAPIClient)

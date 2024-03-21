@@ -1,22 +1,17 @@
 import json
+from unittest.mock import ANY
 
 import pytest
+
 from app.notification.application.map_contents import Application
-from app.notification.application_reminder.map_contents import (
-    ApplicationReminder,
-)
+from app.notification.application_reminder.map_contents import ApplicationReminder
 from app.notification.model.notification import Notification
 from app.notification.model.notifier import Notifier
 from examplar_data.application_data import expected_application_json
-from examplar_data.application_data import (
-    expected_application_reminder_json,
-)
-from examplar_data.application_data import (
-    notification_class_data_for_application,
-)
-from examplar_data.application_data import (
-    unexpected_application_json,
-)
+from examplar_data.application_data import expected_application_reminder_json
+from examplar_data.application_data import notification_class_data_for_application
+from examplar_data.application_data import notification_class_data_for_eoi
+from examplar_data.application_data import unexpected_application_json
 
 
 @pytest.mark.usefixtures("live_server")
@@ -83,9 +78,9 @@ def test_application_reminder_contents(app_context):
     expected_json = expected_application_reminder_json
     data = Notification.from_json(expected_json)
     application_class_object = ApplicationReminder.from_notification(data)
-    fund_deadline = application_class_object.deadline_date
+    deadline_date = application_class_object.deadline_date
 
-    assert "20 May 2022 at 02:47pm" == fund_deadline
+    assert "20 May 2022 at 02:47pm" == deadline_date
 
 
 def test_format_submission_date(mock_application_class_data):
@@ -140,6 +135,40 @@ def test_send_submitted_application(
 
 
 @pytest.mark.parametrize(
+    "mock_notifications_api_client, language, template_id",
+    [
+        (3, "en", "705684c7-6985-4d4c-9170-08a85f47b8e1"),
+        (3, "cy", "ead6bfc2-f3a1-468c-8d5a-87a32bf31311"),
+    ],
+    indirect=["mock_notifications_api_client"],
+)
+def test_send_submitted_eoi(
+    app_context,
+    mock_notifier_api_client,
+    mock_notifications_api_client,
+    language,
+    template_id,
+):
+    _, code = Notifier.send_submitted_eoi(
+        notification=notification_class_data_for_eoi(
+            date_submitted=True,
+            deadline_date=False,
+            language=language,
+        ),
+        template_name="Pass with caveats",
+    )
+
+    mock_notifications_api_client.send_email_notification.assert_called_with(
+        email_address=ANY,
+        template_id=template_id,
+        email_reply_to_id=ANY,
+        personalisation=ANY,
+    )
+
+    assert code == 200
+
+
+@pytest.mark.parametrize(
     "mock_notifications_api_client",
     [2],
     indirect=True,
@@ -152,25 +181,6 @@ def test_send_incomplete_application(
     _, code = Notifier.send_submitted_application(
         notification_class_data_for_application(
             date_submitted=False, deadline_date=False
-        )
-    )
-
-    assert code == 200
-
-
-@pytest.mark.parametrize(
-    "mock_notifications_api_client",
-    [2],
-    indirect=True,
-)
-def test_send_application_reminder(
-    app_context,
-    mock_notifier_api_client,
-    mock_notifications_api_client,
-):
-    _, code = Notifier.send_application_reminder(
-        notification_class_data_for_application(
-            date_submitted=False, deadline_date=True
         )
     )
 

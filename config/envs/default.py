@@ -2,6 +2,7 @@ import logging
 import os
 from pathlib import Path
 
+from fsd_utils import NotifyConstants
 from fsd_utils import configclass
 
 
@@ -16,13 +17,30 @@ class DefaultConfig:
     FLASK_ROOT = str(Path(__file__).parent.parent.parent)
     FLASK_ENV = os.environ.get("FLASK_ENV")
 
-    GOV_NOTIFY_API_KEY = os.environ.get(
-        "GOV_NOTIFY_API_KEY", "gov_notify_api_key"
-    )
+    GOV_NOTIFY_API_KEY = os.environ.get("GOV_NOTIFY_API_KEY", "gov_notify_api_key")
 
     MAGIC_LINK_TEMPLATE_ID = os.environ.get(
         "MAGIC_LINK_TEMPLATE_ID", "02a6d48a-f227-4b9a-9dd7-9e0cf203c8a2"
     )
+
+    EXPRESSION_OF_INTEREST_TEMPLATE_ID = {
+        "54c11ec2-0b16-46bb-80d2-f210e47a8791": {
+            NotifyConstants.TEMPLATE_TYPE_EOI_PASS: {
+                "fund_name": "COF",
+                "template_id": {
+                    "en": "04db42f4-a74e-4ab3-b9e2-565592fd6f46",
+                    "cy": "46915152-ee11-4bce-a0e1-ce1033078640",
+                },
+            },
+            NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS: {
+                "fund_name": "COF",
+                "template_id": {
+                    "en": "705684c7-6985-4d4c-9170-08a85f47b8e1",
+                    "cy": "ead6bfc2-f3a1-468c-8d5a-87a32bf31311",
+                },
+            },
+        },
+    }
 
     APPLICATION_RECORD_TEMPLATE_ID = {
         "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
