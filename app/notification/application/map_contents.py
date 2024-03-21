@@ -6,15 +6,13 @@ from io import BytesIO
 from typing import TYPE_CHECKING
 
 import pytz
-from app.notification.notification_contents_base_class import (
-    _NotificationContents,
-)
-from config import Config
 from flask import current_app
 from fsd_utils import extract_questions_and_answers
 from fsd_utils import generate_text_of_application
 from fsd_utils.config.notify_constants import NotifyConstants
 
+from app.notification.notification_contents_base_class import _NotificationContents
+from config import Config
 
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
@@ -28,6 +26,8 @@ class Application(_NotificationContents):
     reference: str
     reply_to_email_id: str
     submission_date: str = None
+    caveats: str = None
+    language: str = None
 
     @property
     def format_submission_date(self):
@@ -55,25 +55,25 @@ class Application(_NotificationContents):
         Returns:
             Application object containing application contents.
         """
-        current_app.logger.info(
-            f"Mapping contents for {notification.template_type}"
-        )
-        application_data = notification.content[
-            NotifyConstants.APPLICATION_FIELD
-        ]
+        current_app.logger.info(f"Mapping contents for {notification.template_type}")
+        application_data = notification.content[NotifyConstants.APPLICATION_FIELD]
+        caveats = notification.content.get(NotifyConstants.APPLICATION_CAVEATS, None)
         return cls(
             contact_info=notification.contact_info,
+            contact_name=notification.contact_name,
             questions=cls.bytes_object_for_questions_answers(notification),
             submission_date=application_data.get("date_submitted"),
             fund_name=application_data.get("fund_name"),
             fund_id=application_data.get("fund_id"),
             round_name=application_data.get("round_name"),
             reference=application_data.get("reference"),
+            language=application_data.get("language"),
             reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[
                 notification.content.get(
                     NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
                 )
             ],
+            caveats=caveats,
         )
 
     @classmethod
@@ -96,7 +96,9 @@ class Application(_NotificationContents):
         """
         forms = cls.get_forms(notification)
 
-        questions_answers = extract_questions_and_answers(forms)
+        questions_answers = extract_questions_and_answers(
+            forms, notification.content["application"]["language"]
+        )
         return questions_answers
 
     @classmethod

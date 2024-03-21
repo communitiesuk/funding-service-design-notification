@@ -3,11 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from app.notification.notification_contents_base_class import (
-    _NotificationContents,
-)
 from flask import current_app
 from fsd_utils.config.notify_constants import NotifyConstants
+
+from app.notification.notification_contents_base_class import _NotificationContents
 
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
@@ -33,18 +32,15 @@ class MagicLink(_NotificationContents):
         Returns:
             MagicLink class object containing magic link contents.
         """
-        current_app.logger.info(
-            f"Mapping contents for {notification.template_type}"
-        )
+        current_app.logger.info(f"Mapping contents for {notification.template_type}")
 
         return cls(
             contact_info=notification.contact_info,
+            contact_name=notification.contact_name,
             fund_name=notification.content.get(
                 NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD
             ),
-            magic_link=notification.content.get(
-                NotifyConstants.MAGIC_LINK_URL_FIELD
-            ),
+            magic_link=notification.content.get(NotifyConstants.MAGIC_LINK_URL_FIELD),
             request_new_link_url=notification.content.get(
                 NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD
             ),
