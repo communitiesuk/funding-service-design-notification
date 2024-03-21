@@ -102,9 +102,7 @@ def testHealthcheckEndpoint(flask_test_client):
 )
 def test_send_email(app_context, flask_test_client, mock_notify_response):
     response = flask_test_client.post("/send")
-    assert (
-        response.status_code == mock_notify_response[1]
-    )  # Check status code from the fixture
+    assert response.status_code == mock_notify_response[1]  # Check status code from the fixture
 
     response_data = response.get_data(as_text=True)
     response_data = json.loads(response_data)
@@ -126,9 +124,7 @@ def test_send_submitted_application(
     mock_notifications_api_client,
 ):
     _, code = Notifier.send_submitted_application(
-        notification_class_data_for_application(
-            date_submitted=True, deadline_date=False
-        )
+        notification_class_data_for_application(date_submitted=True, deadline_date=False)
     )
 
     assert code == 200
@@ -179,9 +175,7 @@ def test_send_incomplete_application(
     mock_notifications_api_client,
 ):
     _, code = Notifier.send_submitted_application(
-        notification_class_data_for_application(
-            date_submitted=False, deadline_date=False
-        )
+        notification_class_data_for_application(date_submitted=False, deadline_date=False)
     )
 
     assert code == 200

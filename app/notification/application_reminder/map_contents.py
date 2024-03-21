@@ -44,9 +44,7 @@ class ApplicationReminder(_NotificationContents):
         current_app.logger.info(f"Mapping contents for {notification.template_type}")
         try:
             application_data = notification.content["application"]
-            deadline_date = cls.format_deadline_date(
-                application_data.get("deadline_date")
-            )
+            deadline_date = cls.format_deadline_date(application_data.get("deadline_date"))
             return cls(
                 contact_info=notification.contact_info,
                 contact_name=notification.contact_name,
@@ -55,12 +53,8 @@ class ApplicationReminder(_NotificationContents):
                 round_name=application_data.get("round_name"),
                 reference=application_data.get("reference"),
                 contact_help_email=application_data.get("contact_help_email"),
-                reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[
-                    application_data["contact_help_email"]
-                ],
+                reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[application_data["contact_help_email"]],
             )
 
         except Exception as e:
-            current_app.logger.error(
-                "Could not map the contents for" f" {notification.template_type} {e}"
-            )
+            current_app.logger.error("Could not map the contents for" f" {notification.template_type} {e}")

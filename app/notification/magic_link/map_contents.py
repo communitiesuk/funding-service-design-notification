@@ -37,20 +37,12 @@ class MagicLink(_NotificationContents):
         return cls(
             contact_info=notification.contact_info,
             contact_name=notification.contact_name,
-            fund_name=notification.content.get(
-                NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD
-            ),
+            fund_name=notification.content.get(NotifyConstants.MAGIC_LINK_FUND_NAME_FIELD),
             magic_link=notification.content.get(NotifyConstants.MAGIC_LINK_URL_FIELD),
-            request_new_link_url=notification.content.get(
-                NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD
-            ),
-            contact_help_email=notification.content.get(
-                NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
-            ),
+            request_new_link_url=notification.content.get(NotifyConstants.MAGIC_LINK_REQUEST_NEW_LINK_URL_FIELD),
+            contact_help_email=notification.content.get(NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD),
             reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[
-                notification.content.get(
-                    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
-                )
+                notification.content.get(NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD)
             ],
         )
 
@@ -63,10 +55,6 @@ class MagicLink(_NotificationContents):
             data (dict): takes instance of Notification class
         """
         notification.content.update(
-            {
-                NotifyConstants.FIELD_FUND_NAME: notification.content.get(
-                    NotifyConstants.FIELD_FUND_NAME, "Funds"
-                )
-            }
+            {NotifyConstants.FIELD_FUND_NAME: notification.content.get(NotifyConstants.FIELD_FUND_NAME, "Funds")}
         )
         return notification
