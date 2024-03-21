@@ -2,17 +2,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from flask import current_app
+from notifications_python_client import NotificationsAPIClient
+from notifications_python_client import errors
+from notifications_python_client import prepare_upload
+
 from app.notification.application.map_contents import Application
-from app.notification.application_reminder.map_contents import (
-    ApplicationReminder,
-)
+from app.notification.application_reminder.map_contents import ApplicationReminder
 from app.notification.magic_link.map_contents import MagicLink
 from app.notification.model.response import invalid_data_error
 from config import Config
-from flask import current_app
-from notifications_python_client import errors
-from notifications_python_client import NotificationsAPIClient
-from notifications_python_client import prepare_upload
 
 if TYPE_CHECKING:
     from app.notification.model.notification import Notification
@@ -33,9 +32,7 @@ class Notifier:
 
         """
         try:
-            notifications_client = NotificationsAPIClient(
-                Config.GOV_NOTIFY_API_KEY
-            )
+            notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = MagicLink.from_notification(notification)
 
             response = notifications_client.send_email_notification(
@@ -52,12 +49,8 @@ class Notifier:
             current_app.logger.info("Call made to govuk Notify API")
             return response, code
         except errors.HTTPError:
-            current_app.logger.exception(
-                "HTTPError while sending notification"
-            )
-            return invalid_data_error(
-                MagicLink.from_notification(notification)
-            )
+            current_app.logger.exception("HTTPError while sending notification")
+            return invalid_data_error(MagicLink.from_notification(notification))
 
     @staticmethod
     def send_submitted_application(
@@ -72,15 +65,13 @@ class Notifier:
         or missing.
         """
         try:
-            notifications_client = NotificationsAPIClient(
-                Config.GOV_NOTIFY_API_KEY
-            )
+            notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
-                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID[
-                    contents.fund_id
-                ]["template_id"],
+                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id][
+                    "template_id"
+                ],
                 email_reply_to_id=contents.reply_to_email_id,
                 personalisation={
                     "name of fund": contents.fund_name,
@@ -94,12 +85,8 @@ class Notifier:
             return response, code
 
         except errors.HTTPError:
-            current_app.logger.exception(
-                "HTTPError while sending notification"
-            )
-            return invalid_data_error(
-                Application.from_notification(notification)
-            )
+            current_app.logger.exception("HTTPError while sending notification")
+            return invalid_data_error(Application.from_notification(notification))
 
     @staticmethod
     def send_submitted_eoi(
@@ -114,15 +101,13 @@ class Notifier:
         or missing.
         """
         try:
-            notifications_client = NotificationsAPIClient(
-                Config.GOV_NOTIFY_API_KEY
-            )
+            notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
-                template_id=Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[
-                    contents.fund_id
-                ][template_name]["template_id"].get(contents.language, "en"),
+                template_id=Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[contents.fund_id][
+                    template_name
+                ]["template_id"].get(contents.language, "en"),
                 email_reply_to_id=contents.reply_to_email_id,
                 personalisation={
                     "name of fund": contents.fund_name,
@@ -138,12 +123,8 @@ class Notifier:
             return response, code
 
         except errors.HTTPError:
-            current_app.logger.exception(
-                "HTTPError while sending notification"
-            )
-            return invalid_data_error(
-                Application.from_notification(notification)
-            )
+            current_app.logger.exception("HTTPError while sending notification")
+            return invalid_data_error(Application.from_notification(notification))
 
     @staticmethod
     def send_incomplete_application(
@@ -158,17 +139,15 @@ class Notifier:
         or missing.
         """
         try:
-            notifications_client = NotificationsAPIClient(
-                Config.GOV_NOTIFY_API_KEY
-            )
+            notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
 
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 email_reply_to_id=contents.reply_to_email_id,
-                template_id=Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[
-                    contents.fund_id
-                ]["template_id"],
+                template_id=Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id][
+                    "template_id"
+                ],
                 personalisation={
                     "name of fund": contents.fund_name,
                     "application reference": contents.reference,
@@ -180,17 +159,11 @@ class Notifier:
             return response, code
 
         except errors.HTTPError:
-            current_app.logger.exception(
-                "HTTPError while sending notification"
-            )
-            return invalid_data_error(
-                Application.from_notification(notification)
-            )
+            current_app.logger.exception("HTTPError while sending notification")
+            return invalid_data_error(Application.from_notification(notification))
 
     @staticmethod
-    def send_application_reminder(
-        notification: Notification, code: int = 200
-    ) -> tuple:
+    def send_application_reminder(notification: Notification, code: int = 200) -> tuple:
         """Function makes a call to govuk-notify-service with mapped contents
         that are expected by the govuk-notify-service template.
 
@@ -200,9 +173,7 @@ class Notifier:
         or missing.
         """
         try:
-            notifications_client = NotificationsAPIClient(
-                Config.GOV_NOTIFY_API_KEY
-            )
+            notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = ApplicationReminder.from_notification(notification)
 
             response = notifications_client.send_email_notification(
@@ -220,9 +191,5 @@ class Notifier:
             return response, code
 
         except errors.HTTPError:
-            current_app.logger.exception(
-                "HTTPError while sending notification"
-            )
-            return invalid_data_error(
-                Application.from_notification(notification)
-            )
+            current_app.logger.exception("HTTPError while sending notification")
+            return invalid_data_error(Application.from_notification(notification))

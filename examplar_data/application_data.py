@@ -1,14 +1,12 @@
-from app.notification.model.notification import Notification
 from fsd_utils.config.notify_constants import NotifyConstants
 
+from app.notification.model.notification import Notification
 
 expected_application_json = {
     NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
     NotifyConstants.FIELD_TO: "test_application@example.com",
     NotifyConstants.FIELD_CONTENT: {
-        NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: (
-            "COF@levellingup.gov.uk"
-        ),
+        NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: ("COF@levellingup.gov.uk"),
         NotifyConstants.APPLICATION_FIELD: {
             "id": "123456789",
             "reference": "1564564564-56-4-54-4654",
@@ -61,9 +59,7 @@ expected_application_json_with_none_answers = {
     NotifyConstants.FIELD_TYPE: NotifyConstants.TEMPLATE_TYPE_APPLICATION,
     NotifyConstants.FIELD_TO: "test_application@example.com",
     NotifyConstants.FIELD_CONTENT: {
-        NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: (
-            "COF@levellingup.gov.uk"
-        ),
+        NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD: ("COF@levellingup.gov.uk"),
         NotifyConstants.APPLICATION_FIELD: {
             "id": "123456789",
             "reference": "1564564564-56-4-54-4654",
@@ -164,9 +160,7 @@ def notification_class_data_for_application(
                 "status": "SUBMITTED",
                 "last_edited": "2023-08-04T15:47:21.274900",
                 "started_at": "2023-08-04T15:47:21.274900",
-                "deadline_date": "2023-12-12T15:47:21"
-                if deadline_date
-                else None,
+                "deadline_date": ("2023-12-12T15:47:21" if deadline_date else None),
                 "round_name": "Round 2",
                 "forms": [
                     {
@@ -175,9 +169,9 @@ def notification_class_data_for_application(
                         "questions": [],
                     },
                 ],
-                "date_submitted": "2023-08-04T15:47:23.208849"
-                if date_submitted
-                else None,
+                "date_submitted": (
+                    "2023-08-04T15:47:23.208849" if date_submitted else None
+                ),
                 "account_id": "6802f603",
                 "fund_id": "13b95669-ed98-4840-8652-d6b7a19964db",
                 "project_name": None,
@@ -204,9 +198,7 @@ def notification_class_data_for_eoi(
                 "status": "SUBMITTED",
                 "last_edited": "2023-08-04T15:47:21.274900",
                 "started_at": "2023-08-04T15:47:21.274900",
-                "deadline_date": "2023-12-12T15:47:21"
-                if deadline_date
-                else None,
+                "deadline_date": ("2023-12-12T15:47:21" if deadline_date else None),
                 "round_name": "Round 2",
                 "forms": [
                     {
@@ -215,9 +207,9 @@ def notification_class_data_for_eoi(
                         "questions": [],
                     },
                 ],
-                "date_submitted": "2023-08-04T15:47:23.208849"
-                if date_submitted
-                else None,
+                "date_submitted": (
+                    "2023-08-04T15:47:23.208849" if date_submitted else None
+                ),
                 "account_id": "6802f603",
                 "fund_id": "54c11ec2-0b16-46bb-80d2-f210e47a8791",
                 "project_name": None,
@@ -225,8 +217,6 @@ def notification_class_data_for_eoi(
                 "fund_name": "Expression Of Interest",
             },
             "contact_help_email": "transformationfund@levellingup.gov.uk",
-            "caveats": [
-                "Stop cutting trees to be eligible for applying for the fund"
-            ],
+            "caveats": ["Stop cutting trees to be eligible for applying for the fund"],
         },
     )

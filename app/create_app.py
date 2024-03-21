@@ -1,11 +1,12 @@
 import connexion
-from config import Config
 from connexion.resolver import MethodViewResolver
 from flask import Flask
 from fsd_utils import init_sentry
 from fsd_utils.healthchecks.checkers import FlaskRunningChecker
 from fsd_utils.healthchecks.healthcheck import Healthcheck
 from fsd_utils.logging import logging
+
+from config import Config
 from openapi.utils import get_bundled_specs
 
 

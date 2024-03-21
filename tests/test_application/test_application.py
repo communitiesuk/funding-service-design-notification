@@ -2,23 +2,16 @@ import json
 from unittest.mock import ANY
 
 import pytest
+
 from app.notification.application.map_contents import Application
-from app.notification.application_reminder.map_contents import (
-    ApplicationReminder,
-)
+from app.notification.application_reminder.map_contents import ApplicationReminder
 from app.notification.model.notification import Notification
 from app.notification.model.notifier import Notifier
 from examplar_data.application_data import expected_application_json
-from examplar_data.application_data import (
-    expected_application_reminder_json,
-)
-from examplar_data.application_data import (
-    notification_class_data_for_application,
-)
+from examplar_data.application_data import expected_application_reminder_json
+from examplar_data.application_data import notification_class_data_for_application
 from examplar_data.application_data import notification_class_data_for_eoi
-from examplar_data.application_data import (
-    unexpected_application_json,
-)
+from examplar_data.application_data import unexpected_application_json
 
 
 @pytest.mark.usefixtures("live_server")

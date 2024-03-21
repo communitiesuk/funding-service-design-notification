@@ -1,9 +1,8 @@
 import pytest
+
 from app.notification.model.notifier import Notifier
 from examplar_data.magic_link_data import incorrect_content_body_key
-from examplar_data.magic_link_data import (
-    notification_class_data_for_magic_link,
-)
+from examplar_data.magic_link_data import notification_class_data_for_magic_link
 
 
 @pytest.mark.usefixtures("live_server")
@@ -50,8 +49,6 @@ def test_send_magic_link(
     mock_notifier_api_client,
     mock_notifications_api_client,
 ):
-    response, code = Notifier.send_magic_link(
-        notification_class_data_for_magic_link()
-    )
+    response, code = Notifier.send_magic_link(notification_class_data_for_magic_link())
 
     assert code == 200
