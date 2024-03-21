@@ -85,9 +85,7 @@ def mock_notify_response(mocker, request, mock_request_data):
         request_data = mock_request_data
 
     status_code = 200 if request_data["content"] else 400
-    response_data = (
-        {"success": True} if status_code == 200 else {"error": "Invalid request"}
-    )
+    response_data = {"success": True} if status_code == 200 else {"error": "Invalid request"}
     response = (response_data, status_code)
     mocker.patch(
         "app.notification.model.Notification.email_recipient",
@@ -105,9 +103,7 @@ def mock_notifications_api_client(request):
     elif mock_data == 2:
         mock_data = expected_application_response  # EXPECTED DATA FOR APPLICATION
     elif mock_data == 3:
-        mock_data = (
-            expected_eoi_application_response  # EXPECTED DATA FOR EOI APPLICATION
-        )
+        mock_data = expected_eoi_application_response  # EXPECTED DATA FOR EOI APPLICATION
 
     notifications_client = Mock(spec=NotificationsAPIClient)
     notifications_client.send_email_notification.return_value = (

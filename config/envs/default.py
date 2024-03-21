@@ -8,9 +8,7 @@ from fsd_utils import configclass
 
 @configclass
 class DefaultConfig:
-    FUND_NAME = (  # TODO This should not be hard coded
-        "Digital Planning Improvement Fund"
-    )
+    FUND_NAME = "Digital Planning Improvement Fund"  # TODO This should not be hard coded
 
     SECRET_KEY = os.environ.get("SECRET_KEY")
     SESSION_COOKIE_NAME = os.environ.get("SESSION_COOKIE_NAME")
@@ -19,9 +17,7 @@ class DefaultConfig:
 
     GOV_NOTIFY_API_KEY = os.environ.get("GOV_NOTIFY_API_KEY", "gov_notify_api_key")
 
-    MAGIC_LINK_TEMPLATE_ID = os.environ.get(
-        "MAGIC_LINK_TEMPLATE_ID", "02a6d48a-f227-4b9a-9dd7-9e0cf203c8a2"
-    )
+    MAGIC_LINK_TEMPLATE_ID = os.environ.get("MAGIC_LINK_TEMPLATE_ID", "02a6d48a-f227-4b9a-9dd7-9e0cf203c8a2")
 
     EXPRESSION_OF_INTEREST_TEMPLATE_ID = {
         "54c11ec2-0b16-46bb-80d2-f210e47a8791": {
@@ -91,11 +87,7 @@ class DefaultConfig:
     # E.G. "EMAIL": "GOV_NOTIFY_ID"
     REPLY_TO_EMAILS_WITH_NOTIFY_ID = {
         "COF@levellingup.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
-        "transformationfund@levellingup.gov.uk": (
-            "25286d9a-8543-41b5-a00f-331b999e51f0"
-        ),
+        "transformationfund@levellingup.gov.uk": ("25286d9a-8543-41b5-a00f-331b999e51f0"),
         "cyprfund@levellingup.gov.uk": "72bb79a8-2748-4404-9f01-14690bee3843",
-        "digitalplanningteam@levellingup.gov.uk": (
-            "73eecbb1-5dbc-4653-8c58-46aa79151210"
-        ),
+        "digitalplanningteam@levellingup.gov.uk": ("73eecbb1-5dbc-4653-8c58-46aa79151210"),
     }
