@@ -38,11 +38,7 @@ class Application(_NotificationContents):
                 datetime.strptime(self.submission_date, "%Y-%m-%dT%H:%M:%S.%f")
             ).astimezone(UK_timezone)
 
-            return (
-                UK_datetime.strftime(f"{'%d %B %Y'} at {'%I:%M%p'}")
-                .replace("AM", "am")
-                .replace("PM", "pm")
-            )
+            return UK_datetime.strftime(f"{'%d %B %Y'} at {'%I:%M%p'}").replace("AM", "am").replace("PM", "pm")
 
     @classmethod
     def from_notification(cls, notification: Notification):
@@ -69,18 +65,14 @@ class Application(_NotificationContents):
             reference=application_data.get("reference"),
             language=application_data.get("language"),
             reply_to_email_id=Config.REPLY_TO_EMAILS_WITH_NOTIFY_ID[
-                notification.content.get(
-                    NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD
-                )
+                notification.content.get(NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD)
             ],
             caveats=caveats,
         )
 
     @classmethod
     def get_forms(cls, notification: Notification) -> list:
-        forms = notification.content[NotifyConstants.APPLICATION_FIELD][
-            NotifyConstants.APPLICATION_FORMS_FIELD
-        ]
+        forms = notification.content[NotifyConstants.APPLICATION_FIELD][NotifyConstants.APPLICATION_FORMS_FIELD]
         return forms
 
     @classmethod
@@ -96,20 +88,14 @@ class Application(_NotificationContents):
         """
         forms = cls.get_forms(notification)
 
-        questions_answers = extract_questions_and_answers(
-            forms, notification.content["application"]["language"]
-        )
+        questions_answers = extract_questions_and_answers(forms, notification.content["application"]["language"])
         return questions_answers
 
     @classmethod
     def get_fund_name(cls, notification):
         metadata = notification.content[NotifyConstants.APPLICATION_FIELD]
         fund_name = metadata.get("fund_name")
-        return (
-            f"{fund_name} {round_name}"
-            if (round_name := metadata.get("round_name"))
-            else fund_name
-        )
+        return f"{fund_name} {round_name}" if (round_name := metadata.get("round_name")) else fund_name
 
     @classmethod
     def bytes_object_for_questions_answers(

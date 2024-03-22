@@ -53,9 +53,7 @@ class Notifier:
             return invalid_data_error(MagicLink.from_notification(notification))
 
     @staticmethod
-    def send_submitted_application(
-        notification: Notification, code: int = 200
-    ) -> tuple:
+    def send_submitted_application(notification: Notification, code: int = 200) -> tuple:
         """Function makes a call to govuk-notify-service with mapped contents
         that are expected by the govuk-notify-service template.
 
@@ -69,9 +67,7 @@ class Notifier:
             contents = Application.from_notification(notification)
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
-                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id][
-                    "template_id"
-                ],
+                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id]["template_id"],
                 email_reply_to_id=contents.reply_to_email_id,
                 personalisation={
                     "name of fund": contents.fund_name,
@@ -89,9 +85,7 @@ class Notifier:
             return invalid_data_error(Application.from_notification(notification))
 
     @staticmethod
-    def send_submitted_eoi(
-        notification: Notification, code: int = 200, template_name: str = ""
-    ) -> tuple:
+    def send_submitted_eoi(notification: Notification, code: int = 200, template_name: str = "") -> tuple:
         """Function makes a call to govuk-notify-service with mapped contents
         that are expected by the govuk-notify-service template.
 
@@ -105,9 +99,9 @@ class Notifier:
             contents = Application.from_notification(notification)
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
-                template_id=Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[contents.fund_id][
-                    template_name
-                ]["template_id"].get(contents.language, "en"),
+                template_id=Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[contents.fund_id][template_name][
+                    "template_id"
+                ].get(contents.language, "en"),
                 email_reply_to_id=contents.reply_to_email_id,
                 personalisation={
                     "name of fund": contents.fund_name,
@@ -127,9 +121,7 @@ class Notifier:
             return invalid_data_error(Application.from_notification(notification))
 
     @staticmethod
-    def send_incomplete_application(
-        notification: Notification, code: int = 200
-    ) -> tuple:
+    def send_incomplete_application(notification: Notification, code: int = 200) -> tuple:
         """Function makes a call to govuk-notify-service with mapped contents
         that are expected by the govuk-notify-service template.
 
@@ -145,9 +137,7 @@ class Notifier:
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 email_reply_to_id=contents.reply_to_email_id,
-                template_id=Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id][
-                    "template_id"
-                ],
+                template_id=Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id]["template_id"],
                 personalisation={
                     "name of fund": contents.fund_name,
                     "application reference": contents.reference,
