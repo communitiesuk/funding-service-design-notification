@@ -73,8 +73,6 @@ clickclick==20.10.2
     # via
     #   -r requirements.txt
     #   connexion
-colorama==0.4.6
-    # via -r requirements.txt
 commonmark==0.9.1
     # via
     #   -r requirements.txt
@@ -211,7 +209,7 @@ mypy-extensions==1.0.0
     # via black
 nodeenv==1.8.0
     # via pre-commit
-notifications-python-client==6.3.0
+notifications-python-client==9.0.0
     # via -r requirements.txt
 openapi-schema-validator==0.6.2
     # via
