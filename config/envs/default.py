@@ -55,6 +55,10 @@ class DefaultConfig:
             "fund_name": "DPI",
             "template_id": "6e1d80ac-c843-4b47-9946-ecad542dd5de",
         },
+        "1e4bd8b0-b399-466d-bbd1-572171bbc7bd": {
+            "fund_name": "HSRA",
+            "template_id": "52decdde-e796-4b16-a1a0-5f56c9a61b0f",
+        },
     }
 
     INCOMPLETE_APPLICATION_TEMPLATE_ID = {
@@ -74,6 +78,10 @@ class DefaultConfig:
             "fund_name": "DPI",
             "template_id": "7980eee3-5a40-42b8-98dc-ba3b11ea4e65",
         },
+        "1e4bd8b0-b399-466d-bbd1-572171bbc7bd": {
+            "fund_name": "HSRA",
+            "template_id": "b577de1a-7242-4f9b-b823-6d4f50ad5f19",
+        },
     }
 
     APPLICATION_DEADLINE_REMINDER_TEMPLATE_ID = os.environ.get(
@@ -90,4 +98,5 @@ class DefaultConfig:
         "transformationfund@levellingup.gov.uk": ("25286d9a-8543-41b5-a00f-331b999e51f0"),
         "cyprfund@levellingup.gov.uk": "72bb79a8-2748-4404-9f01-14690bee3843",
         "digitalplanningteam@levellingup.gov.uk": ("73eecbb1-5dbc-4653-8c58-46aa79151210"),
+        "HighStreetRentalAuctions@levellingup.gov.uk": ("0874cafb-a297-4f3c-bb3f-99bc578cce4a"),
     }
