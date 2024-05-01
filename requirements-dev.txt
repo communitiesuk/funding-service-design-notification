@@ -279,7 +279,7 @@ pytest==8.1.1
     #   pytest-mock
 pytest-env==1.1.3
     # via -r requirements-dev.in
-pytest-flask==1.2.0
+pytest-flask==1.3.0
     # via -r requirements-dev.in
 pytest-mock==3.12.0
     # via -r requirements-dev.in
