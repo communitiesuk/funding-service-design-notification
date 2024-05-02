@@ -80,7 +80,7 @@ greenlet==3.0.1
     # via sqlalchemy
 gunicorn==20.1.0
     # via funding-service-design-utils
-idna==3.3
+idna==3.7
     # via requests
 inflection==0.5.1
     # via connexion
