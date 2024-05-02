@@ -118,7 +118,7 @@ markupsafe==2.1.1
     #   mako
     #   sentry-sdk
     #   werkzeug
-notifications-python-client==6.3.0
+notifications-python-client==9.0.0
     # via -r requirements.in
 openapi-schema-validator==0.6.2
     # via openapi-spec-validator
