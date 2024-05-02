@@ -8,9 +8,7 @@ from fsd_utils import configclass
 
 @configclass
 class DefaultConfig:
-    FUND_NAME = (  # TODO This should not be hard coded
-        "Digital Planning Improvement Fund"
-    )
+    FUND_NAME = "Digital Planning Improvement Fund"  # TODO This should not be hard coded
 
     SECRET_KEY = os.environ.get("SECRET_KEY")
     SESSION_COOKIE_NAME = os.environ.get("SESSION_COOKIE_NAME")
@@ -19,9 +17,7 @@ class DefaultConfig:
 
     GOV_NOTIFY_API_KEY = os.environ.get("GOV_NOTIFY_API_KEY", "gov_notify_api_key")
 
-    MAGIC_LINK_TEMPLATE_ID = os.environ.get(
-        "MAGIC_LINK_TEMPLATE_ID", "02a6d48a-f227-4b9a-9dd7-9e0cf203c8a2"
-    )
+    MAGIC_LINK_TEMPLATE_ID = os.environ.get("MAGIC_LINK_TEMPLATE_ID", "02a6d48a-f227-4b9a-9dd7-9e0cf203c8a2")
 
     EXPRESSION_OF_INTEREST_TEMPLATE_ID = {
         "54c11ec2-0b16-46bb-80d2-f210e47a8791": {
@@ -59,6 +55,10 @@ class DefaultConfig:
             "fund_name": "DPI",
             "template_id": "6e1d80ac-c843-4b47-9946-ecad542dd5de",
         },
+        "1e4bd8b0-b399-466d-bbd1-572171bbc7bd": {
+            "fund_name": "HSRA",
+            "template_id": "52decdde-e796-4b16-a1a0-5f56c9a61b0f",
+        },
     }
 
     INCOMPLETE_APPLICATION_TEMPLATE_ID = {
@@ -78,6 +78,10 @@ class DefaultConfig:
             "fund_name": "DPI",
             "template_id": "7980eee3-5a40-42b8-98dc-ba3b11ea4e65",
         },
+        "1e4bd8b0-b399-466d-bbd1-572171bbc7bd": {
+            "fund_name": "HSRA",
+            "template_id": "b577de1a-7242-4f9b-b823-6d4f50ad5f19",
+        },
     }
 
     APPLICATION_DEADLINE_REMINDER_TEMPLATE_ID = os.environ.get(
@@ -91,11 +95,8 @@ class DefaultConfig:
     # E.G. "EMAIL": "GOV_NOTIFY_ID"
     REPLY_TO_EMAILS_WITH_NOTIFY_ID = {
         "COF@levellingup.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
-        "transformationfund@levellingup.gov.uk": (
-            "25286d9a-8543-41b5-a00f-331b999e51f0"
-        ),
+        "transformationfund@levellingup.gov.uk": ("25286d9a-8543-41b5-a00f-331b999e51f0"),
         "cyprfund@levellingup.gov.uk": "72bb79a8-2748-4404-9f01-14690bee3843",
-        "digitalplanningteam@levellingup.gov.uk": (
-            "73eecbb1-5dbc-4653-8c58-46aa79151210"
-        ),
+        "digitalplanningteam@levellingup.gov.uk": ("73eecbb1-5dbc-4653-8c58-46aa79151210"),
+        "HighStreetRentalAuctions@levellingup.gov.uk": ("0874cafb-a297-4f3c-bb3f-99bc578cce4a"),
     }

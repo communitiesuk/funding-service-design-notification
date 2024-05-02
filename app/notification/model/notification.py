@@ -38,42 +38,30 @@ class Notification:
         notification = Notification.from_json(json_data)
         match json_data.get("type"):
             case NotifyConstants.TEMPLATE_TYPE_MAGIC_LINK:
-                current_app.logger.info(
-                    f"Validating template type: {notification.template_type}"
-                )
+                current_app.logger.info(f"Validating template type: {notification.template_type}")
                 return Notifier.send_magic_link(notification)
 
             case NotifyConstants.TEMPLATE_TYPE_APPLICATION:
-                current_app.logger.info(
-                    f"Validating template type: {notification.template_type})"
-                )
+                current_app.logger.info(f"Validating template type: {notification.template_type})")
                 return Notifier.send_submitted_application(notification)
 
             case NotifyConstants.TEMPLATE_TYPE_INCOMPLETE_APPLICATION:
-                current_app.logger.info(
-                    f"Validating template type: {notification.template_type})"
-                )
+                current_app.logger.info(f"Validating template type: {notification.template_type})")
                 return Notifier.send_incomplete_application(notification)
 
             case NotifyConstants.TEMPLATE_TYPE_REMINDER:
-                current_app.logger.info(
-                    f"Validating template type: {notification.template_type})"
-                )
+                current_app.logger.info(f"Validating template type: {notification.template_type})")
                 return Notifier.send_application_reminder(notification)
 
             case NotifyConstants.TEMPLATE_TYPE_EOI_PASS:
-                current_app.logger.info(
-                    f"Validating template type: {notification.template_type})"
-                )
+                current_app.logger.info(f"Validating template type: {notification.template_type})")
                 return Notifier.send_submitted_eoi(
                     notification=notification,
                     template_name=NotifyConstants.TEMPLATE_TYPE_EOI_PASS,
                 )
 
             case NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS:
-                current_app.logger.info(
-                    f"Validating template type: {notification.template_type})"
-                )
+                current_app.logger.info(f"Validating template type: {notification.template_type})")
                 return Notifier.send_submitted_eoi(
                     notification=notification,
                     template_name=NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS,
@@ -83,7 +71,5 @@ class Notification:
                 return f"Currently {notification.template_type} service is not available."  # noqa
 
             case _:
-                current_app.logger.exception(
-                    f"Incorrect template type {notification.template_type}"
-                )
+                current_app.logger.exception(f"Incorrect template type {notification.template_type}")
                 return template_type_error(json_data)

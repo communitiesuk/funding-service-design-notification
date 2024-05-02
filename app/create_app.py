@@ -38,9 +38,7 @@ def create_app() -> Flask:
         return dict(
             stage="beta",
             service_title="Funding Service Design - Notification Hub",
-            service_meta_description=(
-                "Funding Service Design Iteration - Notification Hub"
-            ),
+            service_meta_description=("Funding Service Design Iteration - Notification Hub"),
             service_meta_keywords="Funding Service Design - Notification Hub",
             service_meta_author="DLUHC",
         )
