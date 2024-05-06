@@ -242,7 +242,7 @@ pluggy==1.4.0
     # via pytest
 prance==23.6.21.0
     # via -r requirements.txt
-pre-commit==3.3.2
+pre-commit==3.7.0
     # via -r requirements-dev.in
 pycodestyle==2.11.1
     # via flake8
