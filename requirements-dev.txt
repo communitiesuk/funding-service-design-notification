@@ -238,7 +238,7 @@ platformdirs==3.5.1
     # via
     #   black
     #   virtualenv
-pluggy==1.4.0
+pluggy==1.5.0
     # via pytest
 prance==23.6.21.0
     # via -r requirements.txt
@@ -271,7 +271,7 @@ pyparsing==3.0.9
     #   packaging
 pyproject-hooks==1.0.0
     # via build
-pytest==8.1.1
+pytest==8.2.0
     # via
     #   -r requirements-dev.in
     #   pytest-env
