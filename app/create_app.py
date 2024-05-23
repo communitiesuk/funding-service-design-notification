@@ -1,4 +1,5 @@
 import connexion
+from apscheduler.schedulers.background import BackgroundScheduler
 from connexion.resolver import MethodViewResolver
 from flask import Flask
 from fsd_utils import init_sentry
@@ -6,6 +7,9 @@ from fsd_utils.healthchecks.checkers import FlaskRunningChecker
 from fsd_utils.healthchecks.healthcheck import Healthcheck
 from fsd_utils.logging import logging
 
+from app.notification.schedular.context_aware_executor import ContextAwareExecutor
+from app.notification.schedular.scheduler_service import scheduler_executor
+from app.notification.schedular.task_executer_service import TaskExecutorService
 from config import Config
 from openapi.utils import get_bundled_specs
 
@@ -38,15 +42,36 @@ def create_app() -> Flask:
         return dict(
             stage="beta",
             service_title="Funding Service Design - Notification Hub",
-            service_meta_description=("Funding Service Design Iteration - Notification Hub"),
+            service_meta_description="Funding Service Design Iteration - Notification Hub",
             service_meta_keywords="Funding Service Design - Notification Hub",
             service_meta_author="DLUHC",
         )
 
+    executor = ContextAwareExecutor(
+        max_workers=Config.TASK_EXECUTOR_MAX_THREAD, thread_name_prefix="NotifTask", flask_app=flask_app
+    )
+    # Configure Task Executor service
+    task_executor_service = TaskExecutorService(flask_app=flask_app, executor=executor)
+    # Configurations for Flask-Apscheduler
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(
+        func=scheduler_executor,
+        trigger="interval",
+        seconds=flask_app.config["SQS_RECEIVE_MESSAGE_CYCLE_TIME"],  # Run the job every 'x' seconds
+        kwargs={"task_executor_service": task_executor_service},
+    )
+    scheduler.start()
+
     health = Healthcheck(flask_app)
     health.add_check(FlaskRunningChecker())
 
-    return flask_app
+    try:
+        # To keep the main thread alive (scheduler to run only on main thread)
+        return flask_app
+    except Exception:
+        # shutdown if execption occurs when returning app
+        task_executor_service.shutdown()
+        return scheduler.shutdown()
 
 
 app = create_app()
