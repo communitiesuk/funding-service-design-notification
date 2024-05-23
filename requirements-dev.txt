@@ -222,6 +222,7 @@ ordered-set==4.1.0
 packaging==22.0
     # via
     #   -r requirements.txt
+    #   black
     #   build
     #   connexion
     #   prance
@@ -242,7 +243,7 @@ pluggy==1.5.0
     # via pytest
 prance==23.6.21.0
     # via -r requirements.txt
-pre-commit==3.3.2
+pre-commit==3.7.1
     # via -r requirements-dev.in
 pycodestyle==2.11.1
     # via flake8
@@ -266,9 +267,7 @@ pyjwt[crypto]==2.4.0
     #   funding-service-design-utils
     #   notifications-python-client
 pyparsing==3.0.9
-    # via
-    #   -r requirements.txt
-    #   packaging
+    # via -r requirements.txt
 pyproject-hooks==1.0.0
     # via build
 pytest==8.2.1
