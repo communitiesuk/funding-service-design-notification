@@ -123,16 +123,3 @@ class TaskExecutorService:
     def shutdown(self):
         self.executor.shutdown()
 
-    def _testing_data_creation(self):
-        for x in range(10):
-            with open(
-                "/Users/nuwansamarasinghe1/Documents/fund_projects/funding-service-design-notification/app"
-                "/notification/schedular/application_complete.json",
-                "r",
-            ) as file:
-                self.sqs_extended_client.submit_single_message(
-                    queue_url=Config.AWS_SQS_NOTIF_APP_PRIMARY_QUEUE_URL,
-                    message=file.read(),
-                    message_group_id="import_applications_group",
-                    message_deduplication_id=str(uuid4()),  # ensures message uniqueness
-                )
