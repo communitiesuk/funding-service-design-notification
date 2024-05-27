@@ -266,8 +266,6 @@ pyjwt[crypto]==2.4.0
     #   -r requirements.txt
     #   funding-service-design-utils
     #   notifications-python-client
-pyparsing==3.0.9
-    # via -r requirements.txt
 pyproject-hooks==1.0.0
     # via
     #   build
@@ -325,7 +323,7 @@ referencing==0.30.2
     #   jsonschema
     #   jsonschema-path
     #   jsonschema-specifications
-requests==2.32.0
+requests==2.32.2
     # via
     #   -r requirements.txt
     #   connexion
