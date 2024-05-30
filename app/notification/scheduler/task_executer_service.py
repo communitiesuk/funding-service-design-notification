@@ -116,4 +116,3 @@ class TaskExecutorService:
                 Config.AWS_SQS_NOTIF_APP_PRIMARY_QUEUE_URL,
                 receipt_handles_to_delete,
             )
-

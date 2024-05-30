@@ -37,7 +37,7 @@ class TestTaskExecutorService(unittest.TestCase):
         self._add_data_to_queue()
 
         with patch(
-                "app.notification.model.notifier.Notifier.send_submitted_application"
+            "app.notification.model.notifier.Notifier.send_submitted_application"
         ) as mocked_send_submitted_application:
             mocked_send_submitted_application.side_effect = Exception("Error calling notification service")
             self.task_executor.process_messages()
