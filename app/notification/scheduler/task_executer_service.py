@@ -11,7 +11,7 @@ from config import Config
 
 
 class TaskExecutorService:
-    def __init__(self, flask_app=None, executor=None):
+    def __init__(self, flask_app, executor):
         self.logger = flask_app.logger
         self.logger.info("Creating a thread pool executor to process messages in notification SQS queue")
         self.executor = executor
@@ -26,7 +26,7 @@ class TaskExecutorService:
             logger=self.logger,
         )
 
-    def process_message(self):
+    def process_messages(self):
         """
         Scheduler calling this method based on a cron job for every given second then messages will be read
         from the SQS queue in AWS and if S3 usage is allowed then it will interact each other to retrieve the messages
@@ -67,14 +67,11 @@ class TaskExecutorService:
         running_threads = []
         read_msg_ids = []
         if Config.TASK_EXECUTOR_MAX_THREAD >= self.executor.queue_size():
-            batch_size = Config.SQS_BATCH_SIZE
-            visibility_time = Config.SQS_VISIBILITY_TIME
-            wait_time = Config.SQS_WAIT_TIME
             notification_messages = self.sqs_extended_client.receive_messages(
                 Config.AWS_SQS_NOTIF_APP_PRIMARY_QUEUE_URL,
-                batch_size,
-                visibility_time,
-                wait_time,
+                Config.SQS_BATCH_SIZE,
+                Config.SQS_VISIBILITY_TIME,
+                Config.SQS_WAIT_TIME,
             )
             self.logger.debug(f"{thread_id} Message Count [{len(notification_messages)}]")
             if notification_messages:
@@ -120,5 +117,3 @@ class TaskExecutorService:
                 receipt_handles_to_delete,
             )
 
-    def shutdown(self):
-        self.executor.shutdown()

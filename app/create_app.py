@@ -7,9 +7,9 @@ from fsd_utils.healthchecks.checkers import FlaskRunningChecker
 from fsd_utils.healthchecks.healthcheck import Healthcheck
 from fsd_utils.logging import logging
 
-from app.notification.schedular.context_aware_executor import ContextAwareExecutor
-from app.notification.schedular.scheduler_service import scheduler_executor
-from app.notification.schedular.task_executer_service import TaskExecutorService
+from app.notification.scheduler.context_aware_executor import ContextAwareExecutor
+from app.notification.scheduler.scheduler_service import scheduler_executor
+from app.notification.scheduler.task_executer_service import TaskExecutorService
 from config import Config
 from openapi.utils import get_bundled_specs
 
@@ -65,13 +65,7 @@ def create_app() -> Flask:
     health = Healthcheck(flask_app)
     health.add_check(FlaskRunningChecker())
 
-    try:
-        # To keep the main thread alive (scheduler to run only on main thread)
-        return flask_app
-    except Exception:
-        # shutdown if execption occurs when returning app
-        task_executor_service.shutdown()
-        return scheduler.shutdown()
+    return flask_app
 
 
 app = create_app()
