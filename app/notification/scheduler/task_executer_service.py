@@ -2,7 +2,6 @@ import json
 import threading
 from concurrent.futures import as_completed
 from os import getenv
-from uuid import uuid4
 
 from fsd_utils.services.aws_extended_client import SQSExtendedClient
 
