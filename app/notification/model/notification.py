@@ -20,12 +20,17 @@ class Notification:
         Function will be  called in relevant services to map
         json contents
         """
-        current_app.logger.info(f"Application's raw json: {data}")
+        current_app.logger.debug(f"Application's raw json: ({data})")
         notification_data = Notification(
             template_type=data.get("type"),
             contact_info=data.get("to"),
             contact_name=data.get("full_name", ""),
             content=data.get("content"),
+        )
+        current_app.logger.info(
+            f"Notification data template_type: ({notification_data.template_type}) "
+            f"contact_info=({notification_data.contact_info}) "
+            f"contact_name=({notification_data.contact_name}) "
         )
         return notification_data
 

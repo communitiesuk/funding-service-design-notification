@@ -70,6 +70,9 @@ Based on the attributes set on the template during its creation, ensure that all
 ### Configuring new fund on Notification service
 - Refer to the documentation [here](https://dluhcdigital.atlassian.net/wiki/spaces/FS/pages/45973632/Configuring+Notification+service+for+New+Funds+and+Templates)
 
+### Run docker localstack before this service and it will create the relevant services
+
+- [Refer Docker Runner](https://github.com/communitiesuk/funding-service-design-docker-runner/blob/main/README.md#localstack)
 
 ### To run the service locally
 
