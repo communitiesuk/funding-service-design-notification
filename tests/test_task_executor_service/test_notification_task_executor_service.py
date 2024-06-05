@@ -6,15 +6,17 @@ from uuid import uuid4
 
 import boto3
 import pytest
+from fsd_utils.sqs_scheduler.context_aware_executor import ContextAwareExecutor
 from moto import mock_aws
 
-from app.notification.scheduler.context_aware_executor import ContextAwareExecutor
-from app.notification.scheduler.task_executer_service import TaskExecutorService
+from app.notification.scheduler.notification_task_executor_service import (
+    NotificationTaskExecutorService,
+)
 from config import Config
 from tests.test_task_executor_service.test_data_util import send_message_to_queue
 
 
-class TestTaskExecutorService(unittest.TestCase):
+class TestNotificationTaskExecutorService(unittest.TestCase):
 
     @mock_aws
     @pytest.mark.usefixtures("live_server")
@@ -59,7 +61,6 @@ class TestTaskExecutorService(unittest.TestCase):
         """
         self.flask_app = MagicMock()
         self.executor = ContextAwareExecutor(max_workers=10, thread_name_prefix="NotifTask", flask_app=self.flask_app)
-        self.task_executor = TaskExecutorService(flask_app=MagicMock(), executor=self.executor)
         s3_connection = boto3.client(
             "s3", region_name="us-east-1", aws_access_key_id="test_accesstoken", aws_secret_access_key="secret_key"
         )
@@ -70,9 +71,23 @@ class TestTaskExecutorService(unittest.TestCase):
         self.queue_response = sqs_connection.create_queue(
             QueueName="notif-queue.fifo", Attributes={"FifoQueue": "true"}
         )
+        Config.AWS_SQS_NOTIF_APP_PRIMARY_QUEUE_URL = self.queue_response["QueueUrl"]
+        self.task_executor = NotificationTaskExecutorService(
+            flask_app=MagicMock(),
+            executor=self.executor,
+            s3_bucket=Config.AWS_MSG_BUCKET_NAME,
+            sqs_primary_url=Config.AWS_SQS_NOTIF_APP_PRIMARY_QUEUE_URL,
+            task_executor_max_thread=Config.TASK_EXECUTOR_MAX_THREAD,
+            sqs_batch_size=Config.SQS_BATCH_SIZE,
+            visibility_time=Config.SQS_VISIBILITY_TIME,
+            sqs_wait_time=Config.SQS_WAIT_TIME,
+            region_name=Config.AWS_REGION,
+            endpoint_url_override=Config.AWS_ENDPOINT_OVERRIDE,
+            aws_access_key_id=Config.AWS_SQS_ACCESS_KEY_ID,
+            aws_secret_access_key=Config.AWS_SQS_ACCESS_KEY_ID,
+        )
         self.task_executor.sqs_extended_client.sqs_client = sqs_connection
         self.task_executor.sqs_extended_client.s3_client = s3_connection
-        Config.AWS_SQS_NOTIF_APP_PRIMARY_QUEUE_URL = self.queue_response["QueueUrl"]
 
     def _add_data_to_queue(self):
         """
