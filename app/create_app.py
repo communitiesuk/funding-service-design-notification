@@ -57,7 +57,7 @@ def create_app() -> Flask:
     scheduler.add_job(
         func=scheduler_executor,
         trigger="interval",
-        seconds=flask_app.config["SQS_RECEIVE_MESSAGE_CYCLE_TIME"],  # Run the job every 'x' seconds
+        seconds=Config.SQS_RECEIVE_MESSAGE_CYCLE_TIME,  # Run the job every 'x' seconds
         kwargs={"task_executor_service": task_executor_service},
     )
     scheduler.start()

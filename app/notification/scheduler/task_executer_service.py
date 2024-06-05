@@ -48,14 +48,14 @@ class TaskExecutorService:
         current_thread = threading.current_thread()
         thread_id = f"[{current_thread.name}:{current_thread.ident}]"
         self.logger.info(f"[{thread_id}] Notification Triggered")
-        massage_id = message["sqs"]["MessageId"]
+        message_id = message["sqs"]["MessageId"]
         try:
             message_body = json.loads(message["s3"])
             Notification.email_recipient(message_body)
-            self.logger.info(f"{thread_id} Processed the message: {massage_id}")
+            self.logger.info(f"{thread_id} Processed the message: {message_id}")
             return message
         except Exception as e:
-            self.logger.error(f"An error occurred while processing the message {massage_id}", e)
+            self.logger.error(f"An error occurred while processing the message {message_id}", e)
 
     def _handle_message_receiving_and_processing(self):
         """
@@ -109,7 +109,7 @@ class TaskExecutorService:
             except Exception as e:
                 self.logger.error(f"{thread_id} An error occurred while processing the message {e}")
         dif_msg_ids = [i for i in read_msg_ids if i not in completed_msg_ids]
-        self.logger.debug(f"No of massages not processed [{len(dif_msg_ids)}] and msg ids are {dif_msg_ids}")
+        self.logger.debug(f"No of messages not processed [{len(dif_msg_ids)}] and msg ids are {dif_msg_ids}")
         if receipt_handles_to_delete:
             self.sqs_extended_client.delete_messages(
                 Config.AWS_SQS_NOTIF_APP_PRIMARY_QUEUE_URL,

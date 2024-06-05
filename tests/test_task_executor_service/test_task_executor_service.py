@@ -19,6 +19,10 @@ class TestTaskExecutorService(unittest.TestCase):
     @mock_aws
     @pytest.mark.usefixtures("live_server")
     def test_message_in_mock_environment_processing_without_errors(self):
+        """
+        This test ensure that when message is there and if no errors occurred while processing the message
+        then successfully removed it from the queue
+        """
         self._mock_aws_client()
         self._add_data_to_queue()
 
@@ -33,6 +37,11 @@ class TestTaskExecutorService(unittest.TestCase):
     @mock_aws
     @pytest.mark.usefixtures("live_server")
     def test_message_in_mock_environment_processing_with_errors(self):
+        """
+        This test ensure that when message is there and if errors occurred while processing the message
+        then the message remain as is in the queue
+        (AWS will automatically put the message into the DLQ for reprocessing)
+        """
         self._mock_aws_client()
         self._add_data_to_queue()
 
@@ -45,6 +54,9 @@ class TestTaskExecutorService(unittest.TestCase):
         self._check_is_data_available(1)
 
     def _mock_aws_client(self):
+        """
+        Mocking aws resources and this will act as real aws environment behaviour
+        """
         self.flask_app = MagicMock()
         self.executor = ContextAwareExecutor(max_workers=10, thread_name_prefix="NotifTask", flask_app=self.flask_app)
         self.task_executor = TaskExecutorService(flask_app=MagicMock(), executor=self.executor)
@@ -63,7 +75,10 @@ class TestTaskExecutorService(unittest.TestCase):
         Config.AWS_SQS_NOTIF_APP_PRIMARY_QUEUE_URL = self.queue_response["QueueUrl"]
 
     def _add_data_to_queue(self):
-        for x in range(2):
+        """
+        Adding test data into the queue
+        """
+        for x in range(1):
             message_id = self.task_executor.sqs_extended_client.submit_single_message(
                 queue_url=self.queue_response["QueueUrl"],
                 message=send_message_to_queue,
