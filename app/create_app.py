@@ -9,11 +9,12 @@ from fsd_utils.logging import logging
 from fsd_utils.sqs_scheduler.context_aware_executor import ContextAwareExecutor
 from fsd_utils.sqs_scheduler.scheduler_service import scheduler_executor
 
+from app.feature_flag.feature_flags import FeatureFlags
+from app.feature_flag.feature_flags import HandleFeatureFlags
 from app.notification.scheduler.notification_task_executor_service import (
     NotificationTaskExecutorService,
 )
 from config import Config
-from app.feature_flag.feature_flags import FeatureFlags, HandleFeatureFlags
 from openapi.utils import get_bundled_specs
 
 

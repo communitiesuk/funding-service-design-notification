@@ -1,6 +1,7 @@
 import unittest
 
-from app.feature_flag.feature_flags import HandleFeatureFlags, FeatureFlags
+from app.feature_flag.feature_flags import FeatureFlags
+from app.feature_flag.feature_flags import HandleFeatureFlags
 from config import Config
 
 
