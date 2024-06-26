@@ -26,8 +26,6 @@ botocore==1.29.140
     #   s3transfer
 cachetools==5.3.0
     # via flipper-client
-apscheduler==3.10.4
-    # via flask-apscheduler
 certifi==2023.7.22
     # via
     #   requests
@@ -144,8 +142,6 @@ pyjwt[crypto]==2.4.0
     # via
     #   funding-service-design-utils
     #   notifications-python-client
-pyparsing==3.0.9
-    # via packaging
 python-consul==1.1.0
     # via flipper-client
 python-dateutil==2.8.2
@@ -174,7 +170,7 @@ referencing==0.30.2
     #   jsonschema
     #   jsonschema-path
     #   jsonschema-specifications
-requests==2.32.0
+requests==2.32.3
     # via
     #   -r requirements.in
     #   connexion
