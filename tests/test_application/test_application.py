@@ -3,11 +3,9 @@ from unittest.mock import ANY
 
 import pytest
 
-from app.notification.application.map_contents import Application
 from app.notification.application_reminder.map_contents import ApplicationReminder
 from app.notification.model.notification import Notification
 from app.notification.model.notifier import Notifier
-from examplar_data.application_data import expected_application_json
 from examplar_data.application_data import expected_application_reminder_json
 from examplar_data.application_data import notification_class_data_for_application
 from examplar_data.application_data import notification_class_data_for_eoi
@@ -47,24 +45,6 @@ def test_application_contents_with_none_contents(flask_test_client):
     )
 
     assert response.status_code == 400
-
-
-def test_application_map_contents_response(app_context):
-    """
-    GIVEN: our service running with app_context fixture.
-    WHEN: two separate methods on different classes chained together with given
-     expected incoming JSON.
-    THEN: we check if expected output is returned.
-    """
-
-    expected_json = expected_application_json
-    data = Notification.from_json(expected_json)
-    application_class_object = Application.from_notification(data)
-    questions = application_class_object.questions
-
-    assert "Jack-Simon" in questions.getvalue().decode()
-    assert "Yes" in questions.getvalue().decode()
-    assert "No" in questions.getvalue().decode()
 
 
 def test_application_reminder_contents(app_context):

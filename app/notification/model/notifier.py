@@ -74,7 +74,12 @@ class Notifier:
                     "application reference": contents.reference,
                     "date submitted": contents.format_submission_date,
                     "round name": contents.round_name,
-                    "question": prepare_upload(contents.questions),
+                    "question": {
+                        "file": contents.questions,
+                        "filename": None,
+                        "confirm_email_before_download": None,
+                        "retention_period": None,
+                    },
                 },
             )
             current_app.logger.info("Call made to govuk Notify API")
@@ -108,7 +113,12 @@ class Notifier:
                     "application reference": contents.reference,
                     "date submitted": contents.format_submission_date,
                     "round name": contents.round_name,
-                    "question": prepare_upload(contents.questions),
+                    "question": {
+                        "file": contents.questions,
+                        "filename": None,
+                        "confirm_email_before_download": None,
+                        "retention_period": None,
+                    },
                     "caveats": contents.caveats,
                     "full name": contents.contact_name,
                 },
@@ -142,7 +152,12 @@ class Notifier:
                     "name of fund": contents.fund_name,
                     "application reference": contents.reference,
                     "round name": contents.round_name,
-                    "question": prepare_upload(contents.questions),
+                    "question": {
+                        "file": contents.questions,
+                        "filename": None,
+                        "confirm_email_before_download": None,
+                        "retention_period": None,
+                    },
                 },
             )
             current_app.logger.info("Call made to govuk Notify API")
