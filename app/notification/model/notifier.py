@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 from flask import current_app
 from notifications_python_client import NotificationsAPIClient
 from notifications_python_client import errors
-from notifications_python_client import prepare_upload
 
 from app.notification.application.map_contents import Application
 from app.notification.application_reminder.map_contents import ApplicationReminder
