@@ -26,8 +26,6 @@ botocore==1.29.140
     #   s3transfer
 cachetools==5.3.0
     # via flipper-client
-apscheduler==3.10.4
-    # via flask-apscheduler
 certifi==2023.7.22
     # via
     #   requests
@@ -120,7 +118,7 @@ markupsafe==2.1.1
     #   mako
     #   sentry-sdk
     #   werkzeug
-notifications-python-client==9.0.0
+notifications-python-client==10.0.0
     # via -r requirements.in
 openapi-schema-validator==0.6.2
     # via openapi-spec-validator
@@ -144,8 +142,6 @@ pyjwt[crypto]==2.4.0
     # via
     #   funding-service-design-utils
     #   notifications-python-client
-pyparsing==3.0.9
-    # via packaging
 python-consul==1.1.0
     # via flipper-client
 python-dateutil==2.8.2

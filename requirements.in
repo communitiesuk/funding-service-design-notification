@@ -17,7 +17,7 @@ flask-talisman==1.1.0
 #-----------------------------------
 #   Notification API
 #-----------------------------------
-notifications_python_client==9.0.0
+notifications_python_client==10.0.0
 
 #-----------------------------------
 #   Connexion APIs
