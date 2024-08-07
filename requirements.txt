@@ -13,6 +13,8 @@ anyio==4.4.0
     #   httpx
     #   starlette
     #   watchfiles
+apscheduler==3.10.4
+    # via -r requirements.in
 asgiref==3.8.1
     # via
     #   connexion
@@ -33,9 +35,9 @@ blinker==1.8.2
     # via
     #   flask
     #   sentry-sdk
-boto3==1.34.154
+boto3==1.34.155
     # via flipper-client
-botocore==1.34.154
+botocore==1.34.155
     # via
     #   boto3
     #   s3transfer
@@ -47,7 +49,7 @@ certifi==2024.7.4
     #   httpx
     #   requests
     #   sentry-sdk
-cffi==1.16.0
+cffi==1.17.0
     # via cryptography
 chardet==5.2.0
     # via prance
@@ -183,9 +185,10 @@ python-multipart==0.0.9
     # via connexion
 pytz==2024.1
     # via
+    #   apscheduler
     #   flask-babel
     #   funding-service-design-utils
-pyyaml==6.0.1
+pyyaml==6.0.2
     # via
     #   connexion
     #   funding-service-design-utils
@@ -213,7 +216,7 @@ rfc3339-validator==0.1.4
     # via openapi-schema-validator
 rich==12.6.0
     # via funding-service-design-utils
-rpds-py==0.19.1
+rpds-py==0.20.0
     # via
     #   jsonschema
     #   referencing
@@ -227,6 +230,7 @@ sentry-sdk[flask]==2.12.0
     # via funding-service-design-utils
 six==1.16.0
     # via
+    #   apscheduler
     #   prance
     #   python-consul
     #   python-dateutil
@@ -262,6 +266,8 @@ typing-extensions==4.12.2
     #   connexion
     #   sqlalchemy
     #   uvicorn
+tzlocal==5.2
+    # via apscheduler
 urllib3==2.2.2
     # via
     #   botocore
@@ -271,7 +277,7 @@ uvicorn[standard]==0.30.5
     # via connexion
 uvloop==0.19.0
     # via uvicorn
-watchfiles==0.22.0
+watchfiles==0.23.0
     # via uvicorn
 websockets==12.0
     # via uvicorn
