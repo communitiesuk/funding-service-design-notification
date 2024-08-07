@@ -1,7 +1,7 @@
 import connexion
 from apscheduler.schedulers.background import BackgroundScheduler
-from connexion.resolver import MethodViewResolver
-from flask import Flask
+from connexion import FlaskApp
+from connexion.resolver import MethodResolver
 from fsd_utils import init_sentry
 from fsd_utils.healthchecks.checkers import FlaskRunningChecker
 from fsd_utils.healthchecks.healthcheck import Healthcheck
@@ -16,19 +16,16 @@ from config import Config
 from openapi.utils import get_bundled_specs
 
 
-def create_app() -> Flask:
+def create_app() -> FlaskApp:
     init_sentry()
 
-    connexion_options = {"swagger_url": "/"}
-    connexion_app = connexion.FlaskApp(
+    connexion_app = connexion.App(
         __name__,
-        specification_dir=Config.FLASK_ROOT + "/openapi/",
-        options=connexion_options,
     )
     connexion_app.add_api(
         get_bundled_specs("/openapi/api.yml"),
         validate_responses=True,
-        resolver=MethodViewResolver("api"),
+        resolver=MethodResolver("api"),
     )
 
     # Configure Flask App
@@ -77,10 +74,12 @@ def create_app() -> Flask:
     )
     scheduler.start()
 
+    # Add healthchecks to flask_app
     health = Healthcheck(flask_app)
     health.add_check(FlaskRunningChecker())
 
-    return flask_app
+    return connexion_app
 
 
 app = create_app()
+application = app.app
