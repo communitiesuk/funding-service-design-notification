@@ -72,7 +72,7 @@ def test_format_submission_date(mock_application_class_data):
 def testHealthcheckEndpoint(flask_test_client):
     response = flask_test_client.get("/healthcheck")
     expected_dict = {"check_flask_running": "OK"}
-    assert expected_dict in response.json["checks"], "Unexpected json body"
+    assert expected_dict in response.json()["checks"], "Unexpected json body"
 
 
 @pytest.mark.parametrize(
@@ -80,12 +80,11 @@ def testHealthcheckEndpoint(flask_test_client):
     ["empty_content", "mock_request_data"],
     indirect=True,
 )
-def test_send_email(app_context, flask_test_client, mock_notify_response):
-    response = flask_test_client.post("/send")
+def test_send_email(app_context, flask_test_client, mock_notify_response, mock_request_data):
+    response = flask_test_client.post("/send", json=mock_request_data)
     assert response.status_code == mock_notify_response[1]  # Check status code from the fixture
 
-    response_data = response.get_data(as_text=True)
-    response_data = json.loads(response_data)
+    response_data = json.loads(response.content)
 
     if mock_notify_response[1] == 200:
         assert response_data == {"success": True}

@@ -31,7 +31,7 @@ def flask_test_client():
 @pytest.fixture(scope="session")
 def app():
     app = create_app()
-    return app
+    yield app.app
 
 
 @pytest.fixture()
@@ -41,8 +41,8 @@ def app_context():
     """
     app = create_app()
 
-    with app.app_context(), app.test_request_context():
-        yield app
+    with app.app.app_context(), app.app.test_request_context():
+        yield app.app
 
 
 @pytest.fixture(autouse=False)
