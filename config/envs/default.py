@@ -89,6 +89,14 @@ class DefaultConfig:
         "e41cc73d-6947-4cbb-aedd-4ab2f470a2d2",
     )
 
+    ASSESSMENT_APPLICATION_ASSIGNED = os.environ.get(
+        "ASSESSMENT_APPLICATION_ASSIGNED", "d4bdc13e-93b4-48ba-8d22-71bf4f480128"
+    )
+
+    ASSESSMENT_APPLICATION_UNASSIGNED = os.environ.get(
+        "ASSESSMENT_APPLICATION_UNASSIGNED", "9cfaa46c-f122-4532-a9f6-b3c773de6555"
+    )
+
     # Logging
     FSD_LOG_LEVEL = logging.WARNING
 
