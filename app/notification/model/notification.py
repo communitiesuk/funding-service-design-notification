@@ -72,6 +72,18 @@ class Notification:
                     template_name=NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS,
                 )
 
+            case NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_ASSIGNED:
+                current_app.logger.info(f"Validating template type: {notification.template_type})")
+                return Notifier.send_assessment_assigned(
+                    notification=notification,
+                )
+
+            case NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_UNASSIGNED:
+                current_app.logger.info(f"Validating template type: {notification.template_type})")
+                return Notifier.send_assessment_unassigned(
+                    notification=notification,
+                )
+
             case "NOTIFICATION" | "AWARD":
                 return f"Currently {notification.template_type} service is not available."  # noqa
 

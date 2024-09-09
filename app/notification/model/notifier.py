@@ -8,6 +8,7 @@ from notifications_python_client import errors
 
 from app.notification.application.map_contents import Application
 from app.notification.application_reminder.map_contents import ApplicationReminder
+from app.notification.assessment.map_contents import Assignment
 from app.notification.magic_link.map_contents import MagicLink
 from app.notification.model.response import invalid_data_error
 from config import Config
@@ -197,3 +198,54 @@ class Notifier:
         except errors.HTTPError:
             current_app.logger.exception("HTTPError while sending notification")
             return invalid_data_error(Application.from_notification(notification))
+
+    @staticmethod
+    def send_assessment_assigned(notification: Notification, code: int = 200) -> tuple:
+        try:
+            notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
+            contents = Assignment.from_notification(notification)
+
+            # Note that this uses the default Notify account reply-to unless we specify otherwise
+            response = notifications_client.send_email_notification(
+                email_address=contents.contact_info,
+                template_id=Config.ASSESSMENT_APPLICATION_ASSIGNED,
+                personalisation={
+                    "fund_name": contents.fund_name,
+                    "reference_number": contents.reference_number,
+                    "project_name": contents.project_name,
+                    "message": contents.message,
+                    "assessment_link": contents.assessment_link,
+                    "contact_email_address": contents.lead_assessor_email,
+                },
+            )
+            current_app.logger.info("Call made to govuk Notify API")
+            return response, code
+
+        except errors.HTTPError:
+            current_app.logger.exception("HTTPError while sending notification")
+            return invalid_data_error(Assignment.from_notification(notification))
+
+    @staticmethod
+    def send_assessment_unassigned(notification: Notification, code: int = 200) -> tuple:
+        try:
+            notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
+            contents = Assignment.from_notification(notification)
+
+            # Note that this uses the default Notify account reply-to unless we specify otherwise
+            response = notifications_client.send_email_notification(
+                email_address=contents.contact_info,
+                template_id=Config.ASSESSMENT_APPLICATION_UNASSIGNED,
+                personalisation={
+                    "fund_name": contents.fund_name,
+                    "reference_number": contents.reference_number,
+                    "project_name": contents.project_name,
+                    "message": contents.message,
+                    "contact_email_address": contents.lead_assessor_email,
+                },
+            )
+            current_app.logger.info("Call made to govuk Notify API")
+            return response, code
+
+        except errors.HTTPError:
+            current_app.logger.exception("HTTPError while sending notification")
+            return invalid_data_error(Assignment.from_notification(notification))
