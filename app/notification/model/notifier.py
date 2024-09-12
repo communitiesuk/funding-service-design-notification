@@ -213,9 +213,9 @@ class Notifier:
                     "fund_name": contents.fund_name,
                     "reference_number": contents.reference_number,
                     "project_name": contents.project_name,
-                    "message": contents.message,
-                    "assessment_link": contents.assessment_link,
-                    "contact_email_address": contents.lead_assessor_email,
+                    "assignment message": contents.message,
+                    "assessment link": contents.assessment_link,
+                    "lead assessor email": contents.lead_assessor_email,
                 },
             )
             current_app.logger.info("Call made to govuk Notify API")
@@ -239,8 +239,9 @@ class Notifier:
                     "fund_name": contents.fund_name,
                     "reference_number": contents.reference_number,
                     "project_name": contents.project_name,
-                    "message": contents.message,
-                    "contact_email_address": contents.lead_assessor_email,
+                    "assignment message": contents.message,
+                    "assessment link": contents.assessment_link,
+                    "lead assessor email": contents.lead_assessor_email,
                 },
             )
             current_app.logger.info("Call made to govuk Notify API")
