@@ -98,9 +98,7 @@ commonmark==0.9.1
     #   -r requirements.txt
     #   rich
 connexion[flask,swagger-ui,uvicorn]==3.1.0
-    # via
-    #   -r requirements.txt
-    #   connexion
+    # via -r requirements.txt
 cryptography==43.0.0
     # via
     #   -r requirements.txt
@@ -131,7 +129,6 @@ flask[async]==3.0.3
     # via
     #   -r requirements.txt
     #   connexion
-    #   flask
     #   flask-babel
     #   flask-migrate
     #   flask-redis
@@ -160,6 +157,8 @@ flask-talisman==1.1.0
     # via -r requirements.txt
 funding-service-design-utils==5.0.8
     # via -r requirements.txt
+greenlet==3.1.1
+    # via sqlalchemy
 gunicorn==22.0.0
     # via
     #   -r requirements.txt
@@ -246,10 +245,8 @@ markupsafe==2.1.5
     #   werkzeug
 mccabe==0.7.0
     # via flake8
-moto[s3,sqs]==5.0.10
-    # via
-    #   -r requirements-dev.in
-    #   moto
+moto[s3,sqs]==5.0.16
+    # via -r requirements-dev.in
 mypy-extensions==1.0.0
     # via black
 nodeenv==1.9.1
@@ -290,7 +287,7 @@ prance==23.6.21.0
     # via -r requirements.txt
 pre-commit==3.8.0
     # via -r requirements-dev.in
-py-partiql-parser==0.5.5
+py-partiql-parser==0.5.6
     # via moto
 pycodestyle==2.12.1
     # via flake8
@@ -309,7 +306,6 @@ pyjwt[crypto]==2.9.0
     #   -r requirements.txt
     #   funding-service-design-utils
     #   notifications-python-client
-    #   pyjwt
 pyproject-hooks==1.1.0
     # via
     #   build
@@ -411,7 +407,6 @@ sentry-sdk[flask]==2.12.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
-    #   sentry-sdk
 six==1.16.0
     # via
     #   -r requirements.txt
@@ -480,7 +475,6 @@ uvicorn[standard]==0.30.5
     # via
     #   -r requirements.txt
     #   connexion
-    #   uvicorn
 uvloop==0.19.0
     # via
     #   -r requirements.txt
