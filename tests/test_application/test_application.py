@@ -8,6 +8,7 @@ from app.notification.model.notification import Notification
 from app.notification.model.notifier import Notifier
 from examplar_data.application_data import expected_application_reminder_json
 from examplar_data.application_data import notification_class_data_for_application
+from examplar_data.application_data import notification_class_data_for_cof_application
 from examplar_data.application_data import notification_class_data_for_eoi
 from examplar_data.application_data import unexpected_application_json
 
@@ -104,6 +105,39 @@ def test_send_submitted_application(
 ):
     _, code = Notifier.send_submitted_application(
         notification_class_data_for_application(date_submitted=True, deadline_date=False)
+    )
+
+    assert code == 200
+
+
+@pytest.mark.parametrize(
+    "mock_notifications_api_client, language, template_id",
+    [
+        (2, "en", "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb"),
+        (2, "cy", "06098445-3630-47cb-b00a-3c5e939f70b3"),
+    ],
+    indirect=["mock_notifications_api_client"],
+)
+def test_send_submitted_lang(
+    app_context,
+    mock_notifier_api_client,
+    mock_notifications_api_client,
+    language,
+    template_id,
+):
+    _, code = Notifier.send_submitted_application(
+        notification=notification_class_data_for_cof_application(
+            date_submitted=True,
+            deadline_date=False,
+            language=language,
+        )
+    )
+
+    mock_notifications_api_client.send_email_notification.assert_called_with(
+        email_address=ANY,
+        template_id=template_id,
+        email_reply_to_id=ANY,
+        personalisation=ANY,
     )
 
     assert code == 200

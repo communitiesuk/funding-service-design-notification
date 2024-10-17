@@ -84,6 +84,40 @@ def notification_class_data_for_application(date_submitted=True, deadline_date=T
     )
 
 
+def notification_class_data_for_cof_application(date_submitted=True, deadline_date=True, language="en"):
+    return Notification(
+        template_type="APPLICATION_RECORD_OF_SUBMISSION",
+        contact_info="sender@service.gov.uk",
+        contact_name="Test User",
+        content={
+            "application": {
+                "language": language,
+                "reference": "COF",
+                "id": "7bc21539",
+                "status": "SUBMITTED",
+                "last_edited": "2023-08-04T15:47:21.274900",
+                "started_at": "2023-08-04T15:47:21.274900",
+                "deadline_date": ("2023-12-12T15:47:21" if deadline_date else None),
+                "round_name": "Round 4",
+                "forms": [
+                    {
+                        "name": "current-services-cof",
+                        "status": "NOT_STARTED",
+                        "questions": [],
+                    },
+                ],
+                "date_submitted": ("2023-08-04T15:47:23.208849" if date_submitted else None),
+                "account_id": "6802f603",
+                "fund_id": "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
+                "project_name": None,
+                "round_id": "fc7aa604",
+                "fund_name": "Community Ownership Fund",
+            },
+            "contact_help_email": "transformationfund@levellingup.gov.uk",
+        },
+    )
+
+
 def notification_class_data_for_eoi(date_submitted=True, deadline_date=True, language="en"):
     return Notification(
         template_type="APPLICATION_RECORD_OF_SUBMISSION",

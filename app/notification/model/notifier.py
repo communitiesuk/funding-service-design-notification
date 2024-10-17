@@ -67,7 +67,9 @@ class Notifier:
             contents = Application.from_notification(notification)
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
-                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id]["template_id"],
+                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id]["template_id"].get(
+                    contents.language, "en"
+                ),
                 email_reply_to_id=contents.reply_to_email_id,
                 personalisation={
                     "name of fund": contents.fund_name,
