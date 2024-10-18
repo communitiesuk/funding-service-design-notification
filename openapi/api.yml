@@ -30,7 +30,7 @@ paths:
                 "magic_link_url": "https://www.example.com/",
                 "fund_name": "Funding service",
                 "request_new_link_url": "https://www.example.com/new_link",
-                "contact_help_email": "COF@levellingup.gov.uk"
+                "contact_help_email": "COF@communities.gov.uk"
               }
       responses:
         200:
