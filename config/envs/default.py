@@ -42,7 +42,10 @@ class DefaultConfig:
     APPLICATION_RECORD_TEMPLATE_ID = {
         "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
             "fund_name": "COF",
-            "template_id": "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
+            "template_id": {
+                "en": "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
+                "cy": "8ffc87bc-16d8-4273-82bf-c06bdf0cf047",
+            },
         },
         "13b95669-ed98-4840-8652-d6b7a19964db": {
             "fund_name": "NSTF",
