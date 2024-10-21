@@ -37,6 +37,20 @@ class DefaultConfig:
                 },
             },
         },
+        "4db6072c-4657-458d-9f57-9ca59638317b": {
+            NotifyConstants.TEMPLATE_TYPE_EOI_PASS: {
+                "fund_name": "COF25-EOI",
+                "template_id": {
+                    "en": "55cfe35e-f7d4-43b9-b557-8a20dd5bccda"
+                },
+            },
+            NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS: {
+                "fund_name": "COF25-EOI",
+                "template_id": {
+                    "en": "589b5574-fd78-4904-b240-13b12b5c0109",
+                },
+            },
+        },
     }
 
     APPLICATION_RECORD_TEMPLATE_ID = {
@@ -45,6 +59,13 @@ class DefaultConfig:
             "template_id": {
                 "en": "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
                 "cy": "8ffc87bc-16d8-4273-82bf-c06bdf0cf047",
+            },
+        },
+        "604450fe-65c0-4a2e-a4ba-30ccf256056b": {
+            "fund_name": "COF25",
+            "template_id": {
+                "en": "6441da8a-1a42-4fe1-ad05-b7fb5f46a761",
+                "cy": "129490b8-4e35-4dc2-a8fb-bfd3be9e90d0",
             },
         },
         "13b95669-ed98-4840-8652-d6b7a19964db": {
@@ -69,6 +90,10 @@ class DefaultConfig:
         "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
             "fund_name": "COF",
             "template_id": "fc8cff7c-a595-4590-a1a4-eccda48d8604",
+        },
+        "604450fe-65c0-4a2e-a4ba-30ccf256056b": {
+            "fund_name": "COF25",
+            "template_id": "98ad5284-b3eb-4520-b367-3fbc56b36c16",
         },
         "13b95669-ed98-4840-8652-d6b7a19964db": {
             "fund_name": "NSTF",
