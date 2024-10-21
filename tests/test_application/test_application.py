@@ -114,7 +114,7 @@ def test_send_submitted_application(
     "mock_notifications_api_client, language, template_id",
     [
         (2, "en", "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb"),
-        (2, "cy", "06098445-3630-47cb-b00a-3c5e939f70b3"),
+        (2, "cy", "8ffc87bc-16d8-4273-82bf-c06bdf0cf047"),
     ],
     indirect=["mock_notifications_api_client"],
 )

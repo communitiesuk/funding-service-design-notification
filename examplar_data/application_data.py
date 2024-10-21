@@ -58,7 +58,7 @@ def notification_class_data_for_application(date_submitted=True, deadline_date=T
         content={
             "application": {
                 "language": language,
-                "reference": "NSTF",
+                "reference": "COF",
                 "id": "7bc21539",
                 "status": "SUBMITTED",
                 "last_edited": "2023-08-04T15:47:21.274900",
@@ -74,7 +74,7 @@ def notification_class_data_for_application(date_submitted=True, deadline_date=T
                 ],
                 "date_submitted": ("2023-08-04T15:47:23.208849" if date_submitted else None),
                 "account_id": "6802f603",
-                "fund_id": "13b95669-ed98-4840-8652-d6b7a19964db",
+                "fund_id": "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
                 "project_name": None,
                 "round_id": "fc7aa604",
                 "fund_name": "Night Shelter Transformation Fund",
