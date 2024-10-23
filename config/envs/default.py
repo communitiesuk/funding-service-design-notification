@@ -40,12 +40,16 @@ class DefaultConfig:
         "4db6072c-4657-458d-9f57-9ca59638317b": {
             NotifyConstants.TEMPLATE_TYPE_EOI_PASS: {
                 "fund_name": "COF25-EOI",
-                "template_id": {"en": "55cfe35e-f7d4-43b9-b557-8a20dd5bccda"},
+                "template_id": {
+                    "en": "55cfe35e-f7d4-43b9-b557-8a20dd5bccda",
+                    "cy": "08141b92-f7d2-4c41-b15d-6d0a0a6a85df",
+                },
             },
             NotifyConstants.TEMPLATE_TYPE_EOI_PASS_W_CAVEATS: {
                 "fund_name": "COF25-EOI",
                 "template_id": {
                     "en": "589b5574-fd78-4904-b240-13b12b5c0109",
+                    "cy": "4d010700-f5e1-41cb-a7e8-6eda2fa8b484",
                 },
             },
         },
