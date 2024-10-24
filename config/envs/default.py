@@ -72,19 +72,31 @@ class DefaultConfig:
         },
         "13b95669-ed98-4840-8652-d6b7a19964db": {
             "fund_name": "NSTF",
-            "template_id": "487c62f1-9aeb-4cc2-b996-5bdf0d02854b",
+            "template_id": {
+                "en": "487c62f1-9aeb-4cc2-b996-5bdf0d02854b",
+                "cy": "487c62f1-9aeb-4cc2-b996-5bdf0d02854b"
+            },
         },
         "1baa0f68-4e0a-4b02-9dfe-b5646f089e65": {
             "fund_name": "CYP",
-            "template_id": "1c69f104-edfa-49d7-9bab-cbbd30c323f3",
+            "template_id": {
+                "en": "1c69f104-edfa-49d7-9bab-cbbd30c323f3",
+                "cy": "1c69f104-edfa-49d7-9bab-cbbd30c323f3"
+            },
         },
         "f493d512-5eb4-11ee-8c99-0242ac120002": {
             "fund_name": "DPI",
-            "template_id": "6e1d80ac-c843-4b47-9946-ecad542dd5de",
+            "template_id": {
+                "en": "6e1d80ac-c843-4b47-9946-ecad542dd5de",
+                "cy": "6e1d80ac-c843-4b47-9946-ecad542dd5de"
+            },
         },
         "1e4bd8b0-b399-466d-bbd1-572171bbc7bd": {
             "fund_name": "HSRA",
-            "template_id": "52decdde-e796-4b16-a1a0-5f56c9a61b0f",
+            "template_id": {
+                "en": "52decdde-e796-4b16-a1a0-5f56c9a61b0f",
+                "cy": "52decdde-e796-4b16-a1a0-5f56c9a61b0f"
+            },
         },
     }
 

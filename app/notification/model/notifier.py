@@ -66,12 +66,11 @@ class Notifier:
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
-            template_id = Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id]["template_id"]
-            current_app.logger.info(
-                f"Getting template for fund id [{contents.fund_id}] and template id {template_id}")
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
-                template_id= template_id.get(contents.language, "en") if isinstance(template_id, dict) else template_id,
+                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id]["template_id"].get(
+                    contents.language, "en"
+                ),
                 email_reply_to_id=contents.reply_to_email_id,
                 personalisation={
                     "name of fund": contents.fund_name,
@@ -106,12 +105,11 @@ class Notifier:
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
-            template_id = Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[contents.fund_id]["template_id"]
-            current_app.logger.info(
-                f"Getting template for fund id [{contents.fund_id}] and template id {template_id}")
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
-                template_id=template_id.get(contents.language, "en") if isinstance(template_id, dict) else template_id,
+                template_id=Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[contents.fund_id][template_name][
+                    "template_id"
+                ].get(contents.language, "en"),
                 email_reply_to_id=contents.reply_to_email_id,
                 personalisation={
                     "name of fund": contents.fund_name,
