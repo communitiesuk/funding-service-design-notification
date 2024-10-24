@@ -91,6 +91,8 @@ flask-talisman==1.1.0
     # via -r requirements.in
 funding-service-design-utils==5.0.8
     # via -r requirements.in
+greenlet==3.1.1
+    # via sqlalchemy
 gunicorn==22.0.0
     # via funding-service-design-utils
 h11==0.14.0
@@ -216,9 +218,7 @@ ruamel-yaml-clib==0.2.8
 s3transfer==0.10.2
     # via boto3
 sentry-sdk[flask]==2.12.0
-    # via
-    #   funding-service-design-utils
-    #   sentry-sdk
+    # via funding-service-design-utils
 six==1.16.0
     # via
     #   apscheduler
@@ -238,7 +238,7 @@ sqlalchemy==2.0.32
     #   sqlalchemy-utils
 sqlalchemy-utils==0.41.2
     # via funding-service-design-utils
-starlette==0.38.2
+starlette==0.40.0
     # via connexion
 swagger-ui-bundle==1.1.0
     # via
@@ -261,9 +261,7 @@ urllib3==2.2.2
     #   requests
     #   sentry-sdk
 uvicorn[standard]==0.30.5
-    # via
-    #   connexion
-    #   uvicorn
+    # via connexion
 uvloop==0.19.0
     # via uvicorn
 watchfiles==0.23.0
