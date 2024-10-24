@@ -157,6 +157,10 @@ flask-talisman==1.1.0
     # via -r requirements.txt
 funding-service-design-utils==5.0.8
     # via -r requirements.txt
+greenlet==3.1.1
+    # via
+    #   -r requirements.txt
+    #   sqlalchemy
 gunicorn==22.0.0
     # via
     #   -r requirements.txt
@@ -431,7 +435,7 @@ sqlalchemy-utils==0.41.2
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
-starlette==0.38.2
+starlette==0.40.0
     # via
     #   -r requirements.txt
     #   connexion
