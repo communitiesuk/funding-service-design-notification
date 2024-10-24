@@ -34,7 +34,8 @@ class Notifier:
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = MagicLink.from_notification(notification)
-
+            current_app.logger.info(
+                f"Getting template for fund id [{contents.fund_id}] and template id {Config.MAGIC_LINK_TEMPLATE_ID}")
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 template_id=Config.MAGIC_LINK_TEMPLATE_ID,
@@ -65,6 +66,8 @@ class Notifier:
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
+            current_app.logger.info(
+                f"Getting template for fund id [{contents.fund_id}] and template id {Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id]['template_id']}")
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 template_id=Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id]["template_id"].get(
@@ -104,6 +107,8 @@ class Notifier:
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
+            current_app.logger.info(
+                f"Getting template for fund id [{contents.fund_id}] and template id {Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[contents.fund_id][template_name]['template_id']}")
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 template_id=Config.EXPRESSION_OF_INTEREST_TEMPLATE_ID[contents.fund_id][template_name][
@@ -145,7 +150,8 @@ class Notifier:
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
-
+            current_app.logger.info(
+                f"Getting template for fund id [{contents.fund_id}] and template id {Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id]['template_id']}")
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 email_reply_to_id=contents.reply_to_email_id,
@@ -182,7 +188,8 @@ class Notifier:
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = ApplicationReminder.from_notification(notification)
-
+            current_app.logger.info(
+                f"Getting template for fund id [{contents.fund_id}] and template id {Config.APPLICATION_DEADLINE_REMINDER_TEMPLATE_ID}")
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 template_id=Config.APPLICATION_DEADLINE_REMINDER_TEMPLATE_ID,
@@ -206,7 +213,8 @@ class Notifier:
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Assignment.from_notification(notification)
-
+            current_app.logger.info(
+                f"Getting template for fund id [{contents.fund_id}] and template id {Config.ASSESSMENT_APPLICATION_ASSIGNED}")
             # Note that this uses the default Notify account reply-to unless we specify otherwise
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
@@ -232,7 +240,8 @@ class Notifier:
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Assignment.from_notification(notification)
-
+            current_app.logger.info(
+                f"Getting template for fund id [{contents.fund_id}] and template id {Config.ASSESSMENT_APPLICATION_UNASSIGNED}")
             # Note that this uses the default Notify account reply-to unless we specify otherwise
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
