@@ -146,7 +146,8 @@ class Notifier:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
             current_app.logger.info(
-                f"Getting template for fund id [{contents.fund_id}] and template id {Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id]['template_id']}"
+                f"Getting template for fund id [{contents.fund_id}] "
+                f"and template id {Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id]['template_id']}"
             )
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
