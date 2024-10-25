@@ -94,4 +94,4 @@ class Notification:
 
         except Exception as e:
             current_app.logger.error("An exception occurred while selecting email template to send", e)
-            raise KeyError("An exception occurred while selecting email template to send")
+            raise Exception("An error occurred while selecting email template to send") from e
