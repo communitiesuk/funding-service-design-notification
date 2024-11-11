@@ -13,4 +13,4 @@ class DevelopmentConfig(DefaultConfig):
     FLASK_ENV = "development"
 
     # Logging
-    FSD_LOG_LEVEL = logging.DEBUG
+    FSD_LOG_LEVEL = logging.INFO
