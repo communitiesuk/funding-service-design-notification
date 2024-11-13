@@ -76,7 +76,7 @@ Based on the attributes set on the template during its creation, ensure that all
 
 ### To run the service locally
 
-    `flask run`
+    `uv run flask run`
 
 Note: This service is an internal service so it doesn't have the frontend.
 
