@@ -70,6 +70,13 @@ class DefaultConfig:
                 "cy": "129490b8-4e35-4dc2-a8fb-bfd3be9e90d0",
             },
         },
+        "3dcfa617-cff8-4c2c-9edd-9568aa367d13": {
+            "fund_name": "CTDF",
+            "template_id": {
+                "en": "6441da8a-1a42-4fe1-ad05-b7fb5f46a761",
+                "cy": "129490b8-4e35-4dc2-a8fb-bfd3be9e90d0",
+            },
+        },
         "13b95669-ed98-4840-8652-d6b7a19964db": {
             "fund_name": "NSTF",
             "template_id": {"en": "487c62f1-9aeb-4cc2-b996-5bdf0d02854b", "cy": "487c62f1-9aeb-4cc2-b996-5bdf0d02854b"},
@@ -133,6 +140,7 @@ class DefaultConfig:
 
     # E.G. "EMAIL": "GOV_NOTIFY_ID"
     REPLY_TO_EMAILS_WITH_NOTIFY_ID = {
+        "FundingService@communities.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
         "COF@levellingup.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
         "COF@communities.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
         "transformationfund@levellingup.gov.uk": "25286d9a-8543-41b5-a00f-331b999e51f0",
