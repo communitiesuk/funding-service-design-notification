@@ -531,7 +531,7 @@ dependencies = [
     { name = "swagger-ui-bundle" },
 ]
 
-[package.dependency-groups]
+[package.dev-dependencies]
 dev = [
     { name = "apscheduler" },
     { name = "beautifulsoup4" },
@@ -550,33 +550,33 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "apscheduler", specifier = ">=3.10.4" },
+    { name = "apscheduler", specifier = "==3.10.4" },
     { name = "beautifulsoup4", specifier = "==4.12.3" },
-    { name = "connexion", extras = ["flask", "swagger-ui", "uvicorn"], specifier = ">=3.1.0" },
+    { name = "connexion", extras = ["flask", "swagger-ui", "uvicorn"], specifier = "==3.1.0" },
     { name = "flask", specifier = "==3.0.3" },
     { name = "flask-talisman", specifier = "==1.1.0" },
-    { name = "funding-service-design-utils", specifier = ">=5.0.8" },
+    { name = "funding-service-design-utils", specifier = "==5.0.8" },
     { name = "notifications-python-client", specifier = "==10.0.0" },
-    { name = "openapi-spec-validator", specifier = ">=0.7.1" },
+    { name = "openapi-spec-validator", specifier = "==0.7.1" },
     { name = "prance", specifier = "==23.6.21.0" },
     { name = "requests", specifier = "==2.32.3" },
     { name = "swagger-ui-bundle", specifier = "==1.1.0" },
 ]
 
-[package.metadata.dependency-groups]
+[package.metadata.requires-dev]
 dev = [
-    { name = "apscheduler", specifier = ">=3.10.4" },
+    { name = "apscheduler", specifier = "==3.10.4" },
     { name = "beautifulsoup4", specifier = "==4.12.3" },
-    { name = "black", specifier = ">=24.8.0" },
-    { name = "debugpy", specifier = ">=1.8.5" },
-    { name = "deepdiff", specifier = ">=7.0.1" },
-    { name = "flake8-pyproject", specifier = ">=1.2.3" },
+    { name = "black", specifier = "==24.8.0" },
+    { name = "debugpy", specifier = "==1.8.5" },
+    { name = "deepdiff", specifier = "==7.0.1" },
+    { name = "flake8-pyproject", specifier = "==1.2.3" },
     { name = "json2html", specifier = "==1.3.0" },
     { name = "moto", extras = ["s3", "sqs"], specifier = "==5.0.10" },
-    { name = "pre-commit", specifier = "~=4.0.0" },
-    { name = "pytest", specifier = ">=8.3.2" },
-    { name = "pytest-env", specifier = ">=1.1.3" },
-    { name = "pytest-flask", specifier = ">=1.3.0" },
+    { name = "pre-commit", specifier = "==4.0.1" },
+    { name = "pytest", specifier = "==8.3.2" },
+    { name = "pytest-env", specifier = "==1.1.3" },
+    { name = "pytest-flask", specifier = "==1.3.0" },
     { name = "pytest-mock", specifier = "==3.14.0" },
 ]
 
