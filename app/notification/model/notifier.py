@@ -87,7 +87,7 @@ class Notifier:
                         "confirm_email_before_download": None,
                         "retention_period": None,
                     },
-                    "URL of prospectus": "fake url",
+                    "URL of prospectus": contents.prospectus_url,
                     "contact email": notification.content.get(NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD),
                 },
             }
