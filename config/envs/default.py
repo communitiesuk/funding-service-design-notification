@@ -55,72 +55,16 @@ class DefaultConfig:
         },
     }
 
-    APPLICATION_RECORD_TEMPLATE_ID = {
-        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
-            "fund_name": "COF",
-            "template_id": {
-                "en": "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb",
-                "cy": "8ffc87bc-16d8-4273-82bf-c06bdf0cf047",
-            },
-        },
-        "604450fe-65c0-4a2e-a4ba-30ccf256056b": {
-            "fund_name": "COF25",
-            "template_id": {
-                "en": "6441da8a-1a42-4fe1-ad05-b7fb5f46a761",
-                "cy": "129490b8-4e35-4dc2-a8fb-bfd3be9e90d0",
-            },
-        },
-        "3dcfa617-cff8-4c2c-9edd-9568aa367d13": {
-            "fund_name": "CTDF",
-            "template_id": {
-                "en": "6441da8a-1a42-4fe1-ad05-b7fb5f46a761",
-                "cy": "129490b8-4e35-4dc2-a8fb-bfd3be9e90d0",
-            },
-        },
-        "13b95669-ed98-4840-8652-d6b7a19964db": {
-            "fund_name": "NSTF",
-            "template_id": {"en": "487c62f1-9aeb-4cc2-b996-5bdf0d02854b", "cy": "487c62f1-9aeb-4cc2-b996-5bdf0d02854b"},
-        },
-        "1baa0f68-4e0a-4b02-9dfe-b5646f089e65": {
-            "fund_name": "CYP",
-            "template_id": {"en": "1c69f104-edfa-49d7-9bab-cbbd30c323f3", "cy": "1c69f104-edfa-49d7-9bab-cbbd30c323f3"},
-        },
-        "f493d512-5eb4-11ee-8c99-0242ac120002": {
-            "fund_name": "DPI",
-            "template_id": {"en": "6e1d80ac-c843-4b47-9946-ecad542dd5de", "cy": "6e1d80ac-c843-4b47-9946-ecad542dd5de"},
-        },
-        "1e4bd8b0-b399-466d-bbd1-572171bbc7bd": {
-            "fund_name": "HSRA",
-            "template_id": {"en": "52decdde-e796-4b16-a1a0-5f56c9a61b0f", "cy": "52decdde-e796-4b16-a1a0-5f56c9a61b0f"},
-        },
-    }
+    APPLICATION_SUBMISSION_TEMPLATE_ID_EN = os.environ.get(
+        "APPLICATION_SUBMISSION_TEMPLATE_ID_EN", "6adbba70-2fde-4ca7-94cb-7f7eb264efaa"
+    )
+    APPLICATION_SUBMISSION_TEMPLATE_ID_CY = os.environ.get(
+        "APPLICATION_SUBMISSION_TEMPLATE_ID_CY", "6adbba70-2fde-4ca7-94cb-7f7eb264efaa"
+    )  # TODO update once translation received
 
-    INCOMPLETE_APPLICATION_TEMPLATE_ID = {
-        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
-            "fund_name": "COF",
-            "template_id": "fc8cff7c-a595-4590-a1a4-eccda48d8604",
-        },
-        "604450fe-65c0-4a2e-a4ba-30ccf256056b": {
-            "fund_name": "COF25",
-            "template_id": "98ad5284-b3eb-4520-b367-3fbc56b36c16",
-        },
-        "13b95669-ed98-4840-8652-d6b7a19964db": {
-            "fund_name": "NSTF",
-            "template_id": "d4c9cb6f-c36d-4157-a5e4-0b7bc323e332",
-        },
-        "1baa0f68-4e0a-4b02-9dfe-b5646f089e65": {
-            "fund_name": "CYP",
-            "template_id": "5e308d1e-4d1d-4572-9c99-9a8396224aed",
-        },
-        "f493d512-5eb4-11ee-8c99-0242ac120002": {
-            "fund_name": "DPI",
-            "template_id": "7980eee3-5a40-42b8-98dc-ba3b11ea4e65",
-        },
-        "1e4bd8b0-b399-466d-bbd1-572171bbc7bd": {
-            "fund_name": "HSRA",
-            "template_id": "b577de1a-7242-4f9b-b823-6d4f50ad5f19",
-        },
-    }
+    APPLICATION_INCOMPLETE_TEMPLATE_ID = os.environ.get(
+        "APPLICATION_INCOMPLETE_TEMPLATE_ID", "944cb37d-c9e0-4731-88f5-d752514da57f"
+    )
 
     APPLICATION_DEADLINE_REMINDER_TEMPLATE_ID = os.environ.get(
         "APPLICATION_DEADLINE_REMINDER_TEMPLATE_ID",
