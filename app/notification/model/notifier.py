@@ -92,11 +92,10 @@ class Notifier:
                 },
             }
             response = notifications_client.send_email_notification(**notify_payload)
-            current_app.logger.info("Call made to govuk Notify API")
             return response, 200
 
         except errors.HTTPError as e:
-            current_app.logger.exception("HTTPError while sending notification: {error}", extra=dict(error=str(e)))
+            current_app.logger.error("HTTPError while sending notification: {error}", extra=dict(error=str(e)))
             return invalid_data_error(Application.from_notification(notification))
 
     @staticmethod

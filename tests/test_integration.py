@@ -57,4 +57,5 @@ def test_send_real_notification(flask_test_client, template_type, data_to_send):
     """
     with flask_test_client.app.app.test_request_context():
         data_to_send["type"] = template_type
-        Notification.email_recipient(json_data=data_to_send)
+        _, code = Notification.email_recipient(json_data=data_to_send)
+        assert code == 200
