@@ -12,12 +12,12 @@ dependencies = [
     "connexion[flask,swagger-ui,uvicorn]==3.1.0",
     "flask-talisman==1.1.0",
     "flask==3.0.3",
-    "funding-service-design-utils==5.0.8",
     "notifications-python-client==10.0.0",
     "openapi-spec-validator==0.7.1",
     "prance==23.6.21.0",
     "requests==2.32.3",
     "swagger-ui-bundle==1.1.0",
+    "funding-service-design-utils",
 ]
 
 [tool.isort]
@@ -33,6 +33,9 @@ max-line-length = 120
 count = true
 
 [tool.uv]
+
+[tool.uv.sources]
+funding-service-design-utils = { git = "https://github.com/communitiesuk/funding-service-design-utils", branch = "investigate/s3-sqs" }
 
 [dependency-groups]
 dev = [
