@@ -154,13 +154,12 @@ class Notifier:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
             current_app.logger.info(
-                f"Getting template for fund id [{contents.fund_id}] "
-                f"and template id {Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id]['template_id']}"
+                "Sending incomplete application email for {app_ref}", extra=dict(app_ref=contents.reference)
             )
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 email_reply_to_id=contents.reply_to_email_id,
-                template_id=Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id]["template_id"],
+                template_id=Config.APPLICATION_INCOMPLETE_TEMPLATE_ID,
                 personalisation={
                     "name of fund": contents.fund_name,
                     "application reference": contents.reference,
@@ -171,9 +170,9 @@ class Notifier:
                         "confirm_email_before_download": None,
                         "retention_period": None,
                     },
+                    "contact email": notification.content.get(NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD),
                 },
             )
-            current_app.logger.info("Call made to govuk Notify API")
             return response, code
 
         except errors.HTTPError:
