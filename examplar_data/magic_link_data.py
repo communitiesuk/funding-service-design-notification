@@ -54,7 +54,7 @@ expected_magic_link_response = {
 }
 
 
-def notification_class_data_for_magic_link():
+def notification_class_data_for_magic_link(govuk_notify_reference=None):
     return Notification(
         template_type="MAGIC_LINK",
         contact_info="testing_magic_link@example.com",
@@ -65,4 +65,5 @@ def notification_class_data_for_magic_link():
             "magic_link_url": "https://www.example.com/",
             "request_new_link_url": "https://www.example.com/new_link",
         },
+        govuk_notify_reference=govuk_notify_reference,
     )

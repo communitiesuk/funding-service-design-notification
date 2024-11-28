@@ -50,11 +50,14 @@ expected_eoi_application_response = (
 )
 
 
-def notification_class_data_for_application(date_submitted=True, deadline_date=True, language="en"):
+def notification_class_data_for_application(
+    date_submitted=True, deadline_date=True, language="en", govuk_notify_reference=None
+):
     return Notification(
         template_type="APPLICATION_RECORD_OF_SUBMISSION",
         contact_info="sender@service.gov.uk",
         contact_name="Test User",
+        govuk_notify_reference=govuk_notify_reference,
         content={
             "application": {
                 "language": language,
@@ -84,11 +87,14 @@ def notification_class_data_for_application(date_submitted=True, deadline_date=T
     )
 
 
-def notification_class_data_for_cof_application(date_submitted=True, deadline_date=True, language="en"):
+def notification_class_data_for_cof_application(
+    date_submitted=True, deadline_date=True, language="en", govuk_notify_reference=None
+):
     return Notification(
         template_type="APPLICATION_RECORD_OF_SUBMISSION",
         contact_info="sender@service.gov.uk",
         contact_name="Test User",
+        govuk_notify_reference=govuk_notify_reference,
         content={
             "application": {
                 "language": language,
@@ -118,11 +124,14 @@ def notification_class_data_for_cof_application(date_submitted=True, deadline_da
     )
 
 
-def notification_class_data_for_eoi(date_submitted=True, deadline_date=True, language="en"):
+def notification_class_data_for_eoi(
+    date_submitted=True, deadline_date=True, language="en", govuk_notify_reference=None
+):
     return Notification(
         template_type="APPLICATION_RECORD_OF_SUBMISSION",
         contact_info="sender@service.gov.uk",
         contact_name="Test User",
+        govuk_notify_reference=govuk_notify_reference,
         content={
             "application": {
                 "language": language,

@@ -13,6 +13,7 @@ class Notification:
     contact_info: str
     contact_name: str
     content: dict
+    govuk_notify_reference: str | None
 
     @staticmethod
     def from_json(data: dict):
@@ -26,6 +27,7 @@ class Notification:
             contact_info=data.get("to"),
             contact_name=data.get("full_name", ""),
             content=data.get("content"),
+            govuk_notify_reference=data.get("govuk_notify_reference"),
         )
         current_app.logger.info(
             f"Notification data template_type: ({notification_data.template_type}) "
