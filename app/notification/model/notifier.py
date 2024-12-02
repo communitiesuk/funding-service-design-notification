@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from flask import current_app
+from fsd_utils.config.notify_constants import NotifyConstants
 from notifications_python_client import NotificationsAPIClient
 from notifications_python_client import errors
 
@@ -53,7 +54,7 @@ class Notifier:
             return invalid_data_error(MagicLink.from_notification(notification))
 
     @staticmethod
-    def send_submitted_application(notification: Notification, code: int = 200) -> tuple:
+    def send_submitted_application(notification: Notification) -> tuple:
         """Function makes a call to govuk-notify-service with mapped contents
         that are expected by the govuk-notify-service template.
 
@@ -62,16 +63,20 @@ class Notifier:
         Raises HTTPError if any of the required contents are incorrect
         or missing.
         """
+
         try:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
-            response = notifications_client.send_email_notification(
-                email_address=contents.contact_info,
-                template_id=Config.APPLICATION_RECORD_TEMPLATE_ID[contents.fund_id]["template_id"].get(
-                    contents.language, "en"
-                ),
-                email_reply_to_id=contents.reply_to_email_id,
-                personalisation={
+            template_id = (
+                Config.APPLICATION_SUBMISSION_TEMPLATE_ID_CY
+                if contents.language == "cy"
+                else Config.APPLICATION_SUBMISSION_TEMPLATE_ID_EN
+            )
+            notify_payload = {
+                "email_address": contents.contact_info,
+                "template_id": template_id,
+                "email_reply_to_id": contents.reply_to_email_id,
+                "personalisation": {
                     "name of fund": contents.fund_name,
                     "application reference": contents.reference,
                     "date submitted": contents.format_submission_date,
@@ -82,13 +87,15 @@ class Notifier:
                         "confirm_email_before_download": None,
                         "retention_period": None,
                     },
+                    "URL of prospectus": contents.prospectus_url,
+                    "contact email": notification.content.get(NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD),
                 },
-            )
-            current_app.logger.info("Call made to govuk Notify API")
-            return response, code
+            }
+            response = notifications_client.send_email_notification(**notify_payload)
+            return response, 200
 
-        except errors.HTTPError:
-            current_app.logger.exception("HTTPError while sending notification")
+        except errors.HTTPError as e:
+            current_app.logger.error("HTTPError while sending notification: {error}", extra=dict(error=str(e)))
             return invalid_data_error(Application.from_notification(notification))
 
     @staticmethod
@@ -146,13 +153,12 @@ class Notifier:
             notifications_client = NotificationsAPIClient(Config.GOV_NOTIFY_API_KEY)
             contents = Application.from_notification(notification)
             current_app.logger.info(
-                f"Getting template for fund id [{contents.fund_id}] "
-                f"and template id {Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id]['template_id']}"
+                "Sending incomplete application email for {app_ref}", extra=dict(app_ref=contents.reference)
             )
             response = notifications_client.send_email_notification(
                 email_address=contents.contact_info,
                 email_reply_to_id=contents.reply_to_email_id,
-                template_id=Config.INCOMPLETE_APPLICATION_TEMPLATE_ID[contents.fund_id]["template_id"],
+                template_id=Config.APPLICATION_INCOMPLETE_TEMPLATE_ID,
                 personalisation={
                     "name of fund": contents.fund_name,
                     "application reference": contents.reference,
@@ -163,9 +169,9 @@ class Notifier:
                         "confirm_email_before_download": None,
                         "retention_period": None,
                     },
+                    "contact email": notification.content.get(NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD),
                 },
             )
-            current_app.logger.info("Call made to govuk Notify API")
             return response, code
 
         except errors.HTTPError:

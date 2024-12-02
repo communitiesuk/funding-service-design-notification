@@ -6,6 +6,7 @@ import pytest
 from app.notification.application_reminder.map_contents import ApplicationReminder
 from app.notification.model.notification import Notification
 from app.notification.model.notifier import Notifier
+from config import Config
 from examplar_data.application_data import expected_application_reminder_json
 from examplar_data.application_data import notification_class_data_for_application
 from examplar_data.application_data import notification_class_data_for_cof_application
@@ -113,8 +114,8 @@ def test_send_submitted_application(
 @pytest.mark.parametrize(
     "mock_notifications_api_client, language, template_id",
     [
-        (2, "en", "0ddadcb3-ebe7-44f9-90e6-80ff3b61e0cb"),
-        (2, "cy", "8ffc87bc-16d8-4273-82bf-c06bdf0cf047"),
+        (2, "en", Config.APPLICATION_SUBMISSION_TEMPLATE_ID_EN),
+        (2, "cy", Config.APPLICATION_SUBMISSION_TEMPLATE_ID_CY),
     ],
     indirect=["mock_notifications_api_client"],
 )

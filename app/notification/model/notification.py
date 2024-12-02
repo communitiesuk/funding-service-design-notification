@@ -93,5 +93,8 @@ class Notification:
                     return template_type_error(json_data)
 
         except Exception as e:
-            current_app.logger.error("An exception occurred while selecting email template to send", e)
+            current_app.logger.error(
+                "An exception occurred while selecting email template to send: {error_msg}",
+                extra=dict(error_msg=str(e)),
+            )
             raise Exception("An error occurred while selecting email template to send") from e

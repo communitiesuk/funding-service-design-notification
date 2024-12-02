@@ -25,6 +25,7 @@ class Application(_NotificationContents):
     submission_date: str = None
     caveats: str = None
     language: str = None
+    prospectus_url: str = None
 
     @property
     def format_submission_date(self):
@@ -65,4 +66,5 @@ class Application(_NotificationContents):
                 notification.content.get(NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD)
             ],
             caveats=caveats,
+            prospectus_url=application_data.get("prospectus_url", ""),
         )
