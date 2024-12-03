@@ -46,6 +46,7 @@ class Notifier:
                     "request new link url": contents.request_new_link_url,
                     "contact details": contents.contact_help_email,
                 },
+                reference=notification.govuk_notify_reference,
             )
             current_app.logger.info("Call made to govuk Notify API")
             return response, code
@@ -74,6 +75,7 @@ class Notifier:
             )
             notify_payload = {
                 "email_address": contents.contact_info,
+                "reference": notification.govuk_notify_reference,
                 "template_id": template_id,
                 "email_reply_to_id": contents.reply_to_email_id,
                 "personalisation": {
@@ -92,6 +94,7 @@ class Notifier:
                 },
             }
             response = notifications_client.send_email_notification(**notify_payload)
+            current_app.logger.info("Call made to govuk Notify API")
             return response, 200
 
         except errors.HTTPError as e:
@@ -131,6 +134,7 @@ class Notifier:
                     "caveats": contents.caveats,
                     "full name": contents.contact_name,
                 },
+                reference=notification.govuk_notify_reference,
             )
             current_app.logger.info("Call made to govuk Notify API")
             return response, code
@@ -171,6 +175,7 @@ class Notifier:
                     },
                     "contact email": notification.content.get(NotifyConstants.MAGIC_LINK_CONTACT_HELP_EMAIL_FIELD),
                 },
+                reference=notification.govuk_notify_reference,
             )
             return response, code
 
@@ -202,6 +207,7 @@ class Notifier:
                     "round name": contents.round_name,
                     "application deadline": contents.deadline_date,
                 },
+                reference=notification.govuk_notify_reference,
             )
             current_app.logger.info("Call made to govuk Notify API")
             return response, code
@@ -228,6 +234,7 @@ class Notifier:
                     "assessment link": contents.assessment_link,
                     "lead assessor email": contents.lead_assessor_email,
                 },
+                reference=notification.govuk_notify_reference,
             )
             current_app.logger.info("Call made to govuk Notify API")
             return response, code
@@ -254,6 +261,7 @@ class Notifier:
                     "assessment link": contents.assessment_link,
                     "lead assessor email": contents.lead_assessor_email,
                 },
+                reference=notification.govuk_notify_reference,
             )
             current_app.logger.info("Call made to govuk Notify API")
             return response, code

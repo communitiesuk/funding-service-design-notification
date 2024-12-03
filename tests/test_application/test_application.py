@@ -139,6 +139,7 @@ def test_send_submitted_lang(
         template_id=template_id,
         email_reply_to_id=ANY,
         personalisation=ANY,
+        reference=None,
     )
 
     assert code == 200
@@ -164,6 +165,7 @@ def test_send_submitted_eoi(
             date_submitted=True,
             deadline_date=False,
             language=language,
+            govuk_notify_reference="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
         ),
         template_name="Pass with caveats",
     )
@@ -173,6 +175,7 @@ def test_send_submitted_eoi(
         template_id=template_id,
         email_reply_to_id=ANY,
         personalisation=ANY,
+        reference="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     )
 
     assert code == 200
