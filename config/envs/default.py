@@ -89,7 +89,7 @@ class DefaultConfig:
         "COF@communities.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
         "transformationfund@levellingup.gov.uk": "25286d9a-8543-41b5-a00f-331b999e51f0",
         "cyprfund@levellingup.gov.uk": "72bb79a8-2748-4404-9f01-14690bee3843",
-        "digitalplanningteam@levellingup.gov.uk": "73eecbb1-5dbc-4653-8c58-46aa79151210",
+        "digitalplanningteam@communities.gov.uk": "73eecbb1-5dbc-4653-8c58-46aa79151210",
         "HighStreetRentalAuctions@levellingup.gov.uk": "0874cafb-a297-4f3c-bb3f-99bc578cce4a",
     }
 
