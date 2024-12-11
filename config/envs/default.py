@@ -84,6 +84,7 @@ class DefaultConfig:
 
     # E.G. "EMAIL": "GOV_NOTIFY_ID"
     REPLY_TO_EMAILS_WITH_NOTIFY_ID = {
+        "LocalPlansandGreenBeltFunding@communities.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
         "FundingService@communities.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
         "COF@levellingup.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
         "COF@communities.gov.uk": "10668b8d-9472-4ce8-ae07-4fcc7bf93a9d",
