@@ -43,7 +43,7 @@ dev = [
     "deepdiff==7.0.1",
     "flake8-pyproject==1.2.3",
     "json2html==1.3.0",
-    "moto[s3,sqs]==5.0.10",
+    "moto[s3,sqs]==5.0.26",
     "pre-commit==4.0.1",
     "pytest==8.3.2",
     "pytest-env==1.1.3",
