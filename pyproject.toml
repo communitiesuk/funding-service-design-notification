@@ -45,7 +45,7 @@ dev = [
     "json2html==1.3.0",
     "moto[s3,sqs]==5.0.10",
     "pre-commit==4.0.1",
-    "pytest==8.3.2",
+    "pytest==8.3.4",
     "pytest-env==1.1.3",
     "pytest-flask==1.3.0",
     "pytest-mock==3.14.0",
