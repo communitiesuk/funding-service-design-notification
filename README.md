@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This repository/service is no longer in use, and we are instead [making synchronous calls to GOV.UK Notify for now](https://github.com/communitiesuk/funding-service-requests-for-comments/discussions/18).
+
 # funding-service-design-notification-hub
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
